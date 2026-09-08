@@ -1,0 +1,63 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}Test Materials{% endblock %}
+{% block header %}Test Materials{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Testing content</div>
+    <h1>Reading, Writing & Listening materials</h1>
+    <p>
+      Upload passages, prompts, audio, transcripts, answer keys and attachments before converting reviewed content into the question bank.
+    </p>
+  </div>
+
+  <a class="pv2-btn pv2-btn-primary" href="{% url 'academy_management:test_material_create' %}">
+    + Upload Test Material
+  </a>
+</div>
+
+<div class="pv2-filterbar">
+  <a class="pv2-admin-mini-btn" href="{% url 'academy_management:test_materials' %}">All</a>
+  <a class="pv2-admin-mini-btn" href="?skill=reading">Reading</a>
+  <a class="pv2-admin-mini-btn" href="?skill=listening">Listening</a>
+  <a class="pv2-admin-mini-btn" href="?skill=writing">Writing</a>
+</div>
+
+<div class="pv2-card pv2-panel pv2-table-scroll">
+  <table class="pv2-admin-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Test System</th>
+        <th>Skill</th>
+        <th>Course</th>
+        <th>Audio / File</th>
+        <th>Published</th>
+        <th>Question-bank ready</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for material in materials %}
+      <tr>
+        <td><strong>{{ material.title }}</strong><br><span style="color:var(--pv2-muted)">{{ material.source_note|default:"No source note" }}</span></td>
+        <td>{{ material.program.short_name|default:material.program.name }}</td>
+        <td>{{ material.get_skill_display }}</td>
+        <td>{{ material.course.title|default:"—" }}</td>
+        <td>
+          {% if material.audio_file %}<a href="{{ material.audio_file.url }}" target="_blank">Audio</a>{% endif %}
+          {% if material.attachment %}<a href="{{ material.attachment.url }}" target="_blank">File</a>{% endif %}
+          {% if not material.audio_file and not material.attachment %}Text only{% endif %}
+        </td>
+        <td>{% if material.is_published %}<span class="pv2-status good">Published</span>{% else %}<span class="pv2-status">Draft</span>{% endif %}</td>
+        <td>{% if material.is_question_bank_ready %}<span class="pv2-status good">Ready</span>{% else %}<span class="pv2-status">Needs review</span>{% endif %}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="7">No uploaded test materials yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

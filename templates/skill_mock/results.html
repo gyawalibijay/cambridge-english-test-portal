@@ -1,0 +1,33 @@
+{% extends 'skill_mock/base.html' %}
+{% block title %}{{ skill|title }} Mock Result{% endblock %}
+{% block heading %}{{ skill|title }} Mock Result{% endblock %}
+{% block content %}
+<div class="mock-detail">
+  <h1>Test finished</h1>
+  <p class="mock-summary">{{ answered }} of {{ total }} answers saved</p>
+  <div class="mock-score">
+    {% if pending %}<strong>Submitted for review</strong><p>Your answers are saved. Speaking and writing scores appear when review is complete.</p>
+    {% else %}<span>Your score</span><strong>{{ score|floatformat:'-2' }} / {{ attempt.max_score|floatformat:'-2' }}</strong>{% endif %}
+  </div>
+  <p class="mock-footnote">Preparation feedback only — not an official Cambridge result.</p>
+  <h2>Your answers</h2>
+  <div class="mock-responses">
+  {% for response in responses %}
+    <details class="mock-response">
+      <summary>Question {{ forloop.counter }} <span>{% if response.final_score != None %}{{ response.final_score|floatformat:'-2' }} / {{ response.attempt_question.points|floatformat:'-2' }}{% else %}Pending review{% endif %}</span></summary>
+      <p>{{ response.attempt_question.question.prompt_text }}</p>
+      {% if response.text_response %}<p class="mock-answer">{{ response.text_response }}</p>{% endif %}
+      {% if response.answer_data.text %}<p>Your answer: {{ response.answer_data.text }}</p>{% endif %}
+      {% if response.answer_data.option %}{% for option in response.attempt_question.question.options.all %}{% if option.pk|stringformat:'s' == response.answer_data.option %}<p>Your answer: {{ option.text }}</p>{% endif %}{% endfor %}{% endif %}
+      {% if response.audio_response %}<audio controls preload="none" src="{{ response.audio_response.url }}"></audio>{% endif %}
+      {% if response.feedback %}<p>{{ response.feedback }}</p>{% endif %}
+      {% if response.ai_feedback.feedback %}<p>{{ response.ai_feedback.feedback }}</p>{% endif %}
+      {% if response.ai_feedback.summary %}<p>{{ response.ai_feedback.summary }}</p>{% endif %}
+    </details>
+  {% endfor %}
+  </div>
+  {% if pending %}<a class="mock-button mock-button-secondary" href="{% url 'attempts:complete' attempt.pk %}">Refresh result</a>{% endif %}
+  <a class="mock-button" href="{% url 'student_mock_tests' %}">Back to Mock Test</a>
+  <a class="mock-text-link" href="{% url 'student_practice_hub' %}">Continue with Practice →</a>
+</div>
+{% endblock %}

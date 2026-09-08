@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Create student account | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body>
+<div class="pv2-auth">
+  <section class="pv2-auth-brand">
+    <div class="pv2-brand">
+      <span class="pv2-brand-mark">ST</span>
+      <span>Upskill Practice<small>by Surakshya Technologies</small></span>
+    </div>
+
+    <div class="pv2-auth-copy">
+      <span class="tag">Student account registration</span>
+      <h1>Start your English practice <span>journey today.</span></h1>
+      <p>
+        Create one student profile for Speaking, Listening, Reading and Writing.
+        Your attempts, recordings, scores and feedback stay connected to the same account.
+      </p>
+
+      <ul class="pv2-auth-benefits">
+        <li>Four-skill section practice</li>
+        <li>Automatic objective scoring</li>
+        <li>Speaking and Writing practice feedback</li>
+        <li>Progress and result history</li>
+      </ul>
+    </div>
+
+    <div class="pv2-auth-foot">© 2026 Surakshya Technologies</div>
+  </section>
+
+  <main class="pv2-auth-main">
+    <div class="pv2-auth-top">
+      <a class="pv2-btn pv2-btn-outline" href="{% url 'login' %}">← Sign in</a>
+      <button type="button" class="pv2-theme-toggle" data-theme-toggle>
+        <span data-theme-icon>☾</span>
+      </button>
+    </div>
+
+    <div class="pv2-auth-card wide">
+      <div class="pv2-eyebrow">Free student account</div>
+      <h2>Create your account</h2>
+      <p class="sub">Enter your details to set up your student profile.</p>
+
+      {% if form.non_field_errors %}
+      <div class="pv2-error">{{ form.non_field_errors|striptags }}</div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="pv2-form-grid">
+          {% for field in form %}
+            {% if field.name != "agreed_terms" %}
+            <div class="pv2-field {% if field.name == 'email' or field.name == 'password1' or field.name == 'password2' %}full{% endif %}">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+              <div class="pv2-field-error">{{ field.errors|striptags }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="pv2-divider"></div>
+
+        <label class="pv2-terms">
+          {{ form.agreed_terms }}
+          <span>I agree to the Terms & Privacy notice for this practice portal.</span>
+        </label>
+        {% if form.agreed_terms.errors %}
+        <div class="pv2-field-error">{{ form.agreed_terms.errors|striptags }}</div>
+        {% endif %}
+
+        <button type="submit" class="pv2-btn pv2-btn-primary pv2-submit">
+          Create Student Account →
+        </button>
+      </form>
+
+      <div class="pv2-divider"></div>
+
+      <div class="pv2-auth-actions">
+        <span>Already have an account?</span>
+        <a href="{% url 'login' %}">Sign in →</a>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

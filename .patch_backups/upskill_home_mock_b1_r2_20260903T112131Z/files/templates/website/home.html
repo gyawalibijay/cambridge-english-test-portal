@@ -1,0 +1,417 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Upskill Practice | English Test Preparation Portal</title>
+  <meta
+    name="description"
+    content="Unified English practice for Cambridge-style tests, IELTS Academic, IELTS General Training and UK student interview preparation."
+  >
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<main>
+<section class="pub4-hero premium-hero">
+  <div class="pub4-shell premium-hero-grid">
+
+    <div class="premium-hero-copy">
+      <div class="premium-hero-eyebrow">
+        <span class="premium-live-dot"></span>
+        One student account · Cambridge · IELTS · UKVI
+      </div>
+
+      <h1>
+        Prepare smarter.
+        <span>Build confidence before test day.</span>
+      </h1>
+
+      <p class="premium-hero-description">
+        Courses, section practice, recorded Speaking, Listening, Reading,
+        Writing and results — organised inside one clean student portal.
+      </p>
+
+      <div class="premium-hero-actions">
+        {% if request.user.is_authenticated %}
+        <a class="premium-btn premium-btn-primary" href="{% url 'dashboard' %}">
+          Open dashboard
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4 10h11M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="premium-btn premium-btn-secondary" href="/store/">
+          Manage test access
+        </a>
+        {% else %}
+        <a class="premium-btn premium-btn-primary" href="{% url 'signup' %}">
+          Start your preparation
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M4 10h11M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="premium-btn premium-btn-secondary" href="{% url 'website:programs' %}">
+          Explore programs
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="premium-hero-stats">
+        <div class="premium-stat">
+          <strong>4</strong>
+          <span>Preparation pathways</span>
+        </div>
+
+        <div class="premium-stat">
+          <strong>4 skills</strong>
+          <span>Speaking · Listening · Reading · Writing</span>
+        </div>
+
+        <div class="premium-stat">
+          <strong>NPR 1,000</strong>
+          <span>Simple test-access pricing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="premium-dashboard-wrap">
+      <div class="premium-dashboard-glow"></div>
+
+      <div class="premium-dashboard-card">
+        <div class="premium-dashboard-top">
+          <div class="premium-window-dots">
+            <i></i><i></i><i></i>
+          </div>
+          <span>Student dashboard</span>
+          <span class="premium-ready-badge">Ready to practise</span>
+        </div>
+
+        <div class="premium-dashboard-banner">
+          <div>
+            <small>YOUR PROGRESS</small>
+            <h3>Continue where you left off.</h3>
+            <p>
+              Keep courses, practice and results connected to one account.
+            </p>
+          </div>
+
+          <div class="premium-progress-badge">
+            <strong>68%</strong>
+            <span>weekly progress</span>
+          </div>
+
+          <div class="premium-progress-track">
+            <span></span>
+          </div>
+        </div>
+
+        <div class="premium-skill-grid">
+          <div class="premium-skill-card">
+            <div class="premium-skill-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 14a4 4 0 0 0 4-4V6a4 4 0 1 0-8 0v4a4 4 0 0 0 4 4Zm0 0v4m-4 0h8M5 10a7 7 0 0 0 14 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <span>Speaking</span>
+              <strong>Record & replay</strong>
+            </div>
+          </div>
+
+          <div class="premium-skill-card">
+            <div class="premium-skill-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a1 1 0 0 1-1-1v-5Zm16 0h-3v6h2a1 1 0 0 0 1-1v-5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <span>Listening</span>
+              <strong>Audio practice</strong>
+            </div>
+          </div>
+
+          <div class="premium-skill-card">
+            <div class="premium-skill-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H11v16H7.5A2.5 2.5 0 0 0 5 21.5v-16Zm14 0A2.5 2.5 0 0 0 16.5 3H13v16h3.5a2.5 2.5 0 0 1 2.5 2.5v-16Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <span>Reading</span>
+              <strong>Timed sections</strong>
+            </div>
+          </div>
+
+          <div class="premium-skill-card">
+            <div class="premium-skill-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m4 20 4.2-1 10.7-10.7a2 2 0 0 0-2.8-2.8L5.4 16.2 4 20Zm10.7-12.9 2.8 2.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <span>Writing</span>
+              <strong>Autosave & word count</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="premium-dashboard-bottom">
+          <div>
+            <span>Latest practice</span>
+            <strong>Speaking Part 1</strong>
+          </div>
+
+          <div class="premium-score-pill">
+            <strong>82%</strong>
+            <span>practice score</span>
+          </div>
+
+          <div class="premium-dashboard-link">
+            View report
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M4 10h11M11 6l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="premium-mini-card premium-mini-card-one">
+        <span>Next focus</span>
+        <strong>Listening Part 2</strong>
+      </div>
+
+      <div class="premium-mini-card premium-mini-card-two">
+        <span>Course library</span>
+        <strong>Resources ready</strong>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <section class="pub4-section alt">
+    <div class="pub4-shell">
+      <div class="pub4-section-head">
+        <div class="pub4-eyebrow">Choose your pathway</div>
+        <h2>One platform for every major English preparation route</h2>
+        <p>
+          Whether the student needs Cambridge-style practice, IELTS preparation or UKVI interview work,
+          the experience stays consistent, simple and professionally organised.
+        </p>
+      </div>
+
+      <div class="pub4-program-grid">
+        {% for card in program_cards %}
+        <article class="pub4-program-card">
+          <div class="pub4-program-icon">{{ card.presentation.icon }}</div>
+          <span class="pub4-program-badge">{{ card.presentation.badge }}</span>
+
+          <h3>{{ card.presentation.short_title }}</h3>
+          <p>{{ card.presentation.summary }}</p>
+
+          <div class="pub4-program-meta">
+            <span>{{ card.test_count }} published practice set{{ card.test_count|pluralize }}</span>
+            <span>{{ card.course_count }} course{{ card.course_count|pluralize }}</span>
+          </div>
+
+          <a
+            class="pub4-card-link"
+            href="{% url 'website:program_detail' card.program.code %}"
+          >
+            Explore program →
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="pub4-section">
+    <div class="pub4-shell">
+      <div class="pub4-section-head">
+        <div class="pub4-eyebrow">Built around real student needs</div>
+        <h2>A complete preparation ecosystem, not just a mock-test page</h2>
+        <p>
+          Newcomers can quickly understand what the platform does, what they can buy,
+          how they can learn and how their results will be reviewed.
+        </p>
+      </div>
+
+      <div class="pub4-feature-grid">
+        <article class="pub4-feature-card">
+          <div class="pub4-feature-icon">◉</div>
+          <h3>Recorded Speaking</h3>
+          <p>
+            Microphone check, timed recording, replay support and blank-audio protection for cleaner practice.
+          </p>
+        </article>
+
+        <article class="pub4-feature-card">
+          <div class="pub4-feature-icon">♫</div>
+          <h3>Listening flow</h3>
+          <p>
+            Audio-led questions and answer-key-driven objective marking where supported.
+          </p>
+        </article>
+
+        <article class="pub4-feature-card">
+          <div class="pub4-feature-icon">▤</div>
+          <h3>Reading practice</h3>
+          <p>
+            Short texts, comprehension work and structured reading activities in dedicated layouts.
+          </p>
+        </article>
+
+        <article class="pub4-feature-card">
+          <div class="pub4-feature-icon">✎</div>
+          <h3>Writing workspace</h3>
+          <p>
+            Live word count, autosave and cleaner writing screens to reduce distractions.
+          </p>
+        </article>
+
+        <article class="pub4-feature-card">
+          <div class="pub4-feature-icon">↗</div>
+          <h3>Results & history</h3>
+          <p>
+            Students can reopen attempts, view reports and identify the next skill to improve.
+          </p>
+        </article>
+
+        <article class="pub4-feature-card">
+          <div class="pub4-feature-icon">▣</div>
+          <h3>Courses & materials</h3>
+          <p>
+            Reading, Writing and Listening resources can be uploaded and organised by program.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pub4-section alt">
+    <div class="pub4-shell">
+      <div class="pub4-section-head">
+        <div class="pub4-eyebrow">Simple access flow</div>
+        <h2>From first visit to active practice in four easy steps</h2>
+      </div>
+
+      <div class="pub4-flow">
+        <article class="pub4-flow-card">
+          <h3>Create an account</h3>
+          <p>Register once and keep your profile, purchases and result history together.</p>
+        </article>
+
+        <article class="pub4-flow-card">
+          <h3>Choose your test package</h3>
+          <p>Select Cambridge, IELTS or UKVI access according to your preparation goal.</p>
+        </article>
+
+        <article class="pub4-flow-card">
+          <h3>Activate access</h3>
+          <p>Submit purchase details so the admin team can verify and enable your package.</p>
+        </article>
+
+        <article class="pub4-flow-card">
+          <h3>Learn, practise, review</h3>
+          <p>Open courses, complete practice sections and use the report to plan your next step.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pub4-section">
+    <div class="pub4-shell">
+      <div class="pub4-section-head">
+        <div class="pub4-eyebrow">Current packages</div>
+        <h2>Clear pricing with a more polished student-facing presentation</h2>
+        <p>
+          No confusing plans. Just clearly structured access packages with related test materials and practice history.
+        </p>
+      </div>
+
+      <div class="pub4-price-grid">
+        {% for package in packages %}
+        <article class="pub4-price-card {% if forloop.counter == 2 %}featured{% endif %}">
+          <div class="pub4-eyebrow">Test access</div>
+          <h3 style="font-size:1.12rem;margin:8px 0">{{ package.title }}</h3>
+
+          <div class="pub4-price">
+            <strong>{{ package.price|floatformat:0 }}</strong>
+            <span>{{ package.currency }}</span>
+          </div>
+
+          <p style="color:var(--pv2-muted)">
+            {{ package.short_description }}
+          </p>
+
+          <ul class="pub4-price-list">
+            {% for program in package.programs.all %}
+            <li>{{ program.short_name|default:program.name }}</li>
+            {% endfor %}
+            <li>Student results history</li>
+            <li>Published course resources</li>
+          </ul>
+
+          {% if request.user.is_authenticated %}
+          <a class="pub4-btn primary" style="width:100%" href="/store/">
+            View / purchase access →
+          </a>
+          {% else %}
+          <a class="pub4-btn primary" style="width:100%" href="{% url 'signup' %}">
+            Create account →
+          </a>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="pub4-cta">
+    <div class="pub4-shell">
+      <div class="pub4-cta-box">
+        <h2>Give students a smoother and more professional start.</h2>
+        <p>
+          Create your profile, choose your program and keep your practice, courses and results all in one polished portal.
+        </p>
+
+        <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+          {% if request.user.is_authenticated %}
+          <a class="pub4-btn" style="background:#fff;color:#24459c" href="{% url 'dashboard' %}">
+            Open Dashboard →
+          </a>
+          {% else %}
+          <a class="pub4-btn" style="background:#fff;color:#24459c" href="{% url 'signup' %}">
+            Create account →
+          </a>
+          <a class="pub4-btn" style="border:1px solid rgba(255,255,255,.42);color:#fff" href="{% url 'login' %}">
+            Sign in
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

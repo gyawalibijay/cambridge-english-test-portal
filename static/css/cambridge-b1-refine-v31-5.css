@@ -1,0 +1,380 @@
+/* CAMBRIDGE_B1_REFINE_V31_5_20260906
+   Requested refinements only:
+   1) compact dark desktop opening CTA
+   2) footer copy readability
+   3) darker course typography
+   4) uncropped UPSKILL B1 + stronger bottom image overlay
+   5) carry forward sticky CTA mobile/brand treatment
+*/
+
+
+/* ======================================================================
+   A. DESKTOP OPENING SECTION -> SMALL DARK CTA
+   Mobile WebVeda/photo hero from V31/V31.1 is intentionally untouched.
+   ====================================================================== */
+@media (min-width:701px){
+  .b1x-page .b1x-hero,
+  .b1x-page .b1x-hero-v5,
+  .b1x-page .b1x-hero-v24{
+    min-height:330px!important;
+    height:330px!important;
+    max-height:330px!important;
+    overflow:hidden!important;
+    color:#fff!important;
+    background:
+      radial-gradient(circle at 82% 15%,rgba(232,61,85,.13),transparent 26%),
+      radial-gradient(circle at 16% 88%,rgba(70,88,232,.16),transparent 31%),
+      linear-gradient(135deg,#07172f 0%,#0b1f42 52%,#0c234b 100%)!important;
+  }
+
+  .b1x-page .b1x-hero-v24::before{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    z-index:0!important;
+    display:block!important;
+    opacity:.42!important;
+    background:
+      linear-gradient(120deg,transparent 0 57%,rgba(255,255,255,.045) 57.2% 57.5%,transparent 57.7%),
+      radial-gradient(circle at 74% 50%,transparent 0 155px,rgba(255,255,255,.055) 156px 157px,transparent 158px)!important;
+    pointer-events:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24::after{
+    display:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo,
+  .b1x-page .b1x-hero-v24 .b1x-hero-shade,
+  .b1x-page .b1x-hero-v24 .b1x-hero-person-mobile{
+    display:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{
+    position:relative!important;
+    z-index:3!important;
+    min-height:330px!important;
+    height:330px!important;
+    padding:34px 0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-copy{
+    width:min(100%,760px)!important;
+    max-width:760px!important;
+    margin:0 auto!important;
+    text-align:center!important;
+  }
+
+  /* A small conversion CTA should not repeat extra proof/features. */
+  .b1x-page .b1x-hero-v24 .b1x-proof,
+  .b1x-page .b1x-hero-v24 .b1x-hero-features,
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{
+    display:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24 h1{
+    margin:0!important;
+    color:#fff!important;
+    font-size:clamp(2.7rem,4.2vw,4rem)!important;
+    font-weight:780!important;
+    line-height:.98!important;
+    letter-spacing:-.055em!important;
+    text-align:center!important;
+  }
+
+  .b1x-page .b1x-hero-v24 h1 span{
+    color:#fff!important;
+  }
+
+  .b1x-page .b1x-hero-v24 h1 em{
+    color:#f2c85f!important;
+    font-family:var(--b1x-nepali)!important;
+    font-style:normal!important;
+    font-weight:650!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-lead{
+    max-width:570px!important;
+    margin:14px auto 0!important;
+    color:rgba(255,255,255,.82)!important;
+    font-size:16px!important;
+    line-height:1.5!important;
+    text-align:center!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions{
+    margin:20px auto 0!important;
+    display:flex!important;
+    justify-content:center!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions .b1x-button-blue{
+    min-width:245px!important;
+    min-height:52px!important;
+    gap:12px!important;
+    padding:0 20px!important;
+    color:#fff!important;
+    border:1px solid rgba(255,255,255,.18)!important;
+    border-radius:999px!important;
+    background:linear-gradient(135deg,#344ae0,#465cf0)!important;
+    box-shadow:0 13px 28px rgba(3,11,38,.29)!important;
+    font-size:14px!important;
+    font-weight:750!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions .b1x-button-blue::after{
+    content:"↗"!important;
+    display:grid!important;
+    width:28px!important;
+    height:28px!important;
+    place-items:center!important;
+    border-radius:50%!important;
+    color:#fff!important;
+    background:#e83d55!important;
+    box-shadow:0 5px 12px rgba(232,61,85,.27)!important;
+    font-size:13px!important;
+  }
+}
+
+
+/* ======================================================================
+   B. FOOTER INFORMATION
+   ====================================================================== */
+.b1x-page .b1x-footer-brand p{
+  max-width:560px!important;
+  color:#aeb4bf!important;
+  font-size:14px!important;
+  line-height:1.7!important;
+}
+
+
+/* ======================================================================
+   C. COURSE FOCUS: DARKER BLUE TEXT + IMAGE / LABEL VISIBILITY
+   ====================================================================== */
+.b1x-page .b1x-course-focus-head h2{
+  color:#091c3e!important;
+}
+
+.b1x-page .b1x-course-focus-head>p:last-child{
+  color:#334968!important;
+}
+
+/* Right-side type is intentionally made darker/navier, not bright teal/blue. */
+.b1x-page .b1x-course-details{
+  color:#11284b!important;
+}
+
+.b1x-page .b1x-course-stats strong{
+  color:#123e73!important;
+}
+
+.b1x-page .b1x-course-stats span{
+  color:#435776!important;
+}
+
+.b1x-page .b1x-course-accordion summary{
+  color:#10284d!important;
+}
+
+.b1x-page .b1x-course-accordion details[open] summary{
+  color:#163f82!important;
+  background:#f6f8fe!important;
+}
+
+.b1x-page .b1x-course-accordion summary em{
+  color:#153f75!important;
+  background:#e9effb!important;
+}
+
+.b1x-page .b1x-course-panel{
+  color:#3c506f!important;
+}
+
+.b1x-page .b1x-course-panel li::before{
+  background:#234d9b!important;
+}
+
+
+/* Keep the whole coach image inside the frame. */
+.b1x-page .b1x-course-coach>img{
+  z-index:2!important;
+  right:0!important;
+  bottom:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+}
+
+/* UPSKILL B1 is now completely inside the image, never cropped by the edge. */
+.b1x-page .b1x-course-coach-type{
+  z-index:5!important;
+  top:28px!important;
+  left:28px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  transform:none!important;
+  transform-origin:initial!important;
+  color:rgba(255,255,255,.94)!important;
+  line-height:.82!important;
+  text-shadow:0 3px 14px rgba(0,0,0,.28)!important;
+}
+
+.b1x-page .b1x-course-coach-type span{
+  font-size:22px!important;
+  letter-spacing:.14em!important;
+}
+
+.b1x-page .b1x-course-coach-type strong{
+  margin-top:8px!important;
+  color:#f3c86a!important;
+  font-size:76px!important;
+  line-height:.8!important;
+}
+
+/* Stronger lower overlay so the coach-copy can always be read. */
+.b1x-page .b1x-course-coach::after{
+  position:absolute!important;
+  z-index:3!important;
+  inset:0!important;
+  content:""!important;
+  background:
+    linear-gradient(
+      0deg,
+      rgba(3,12,28,.98) 0%,
+      rgba(3,12,28,.88) 17%,
+      rgba(3,12,28,.60) 34%,
+      rgba(3,12,28,.24) 53%,
+      rgba(3,12,28,.05) 70%,
+      transparent 82%
+    )!important;
+  pointer-events:none!important;
+}
+
+.b1x-page .b1x-course-coach-copy{
+  z-index:6!important;
+  text-shadow:0 3px 15px rgba(0,0,0,.56)!important;
+}
+
+.b1x-page .b1x-course-coach-copy>span{
+  color:#c9d2ff!important;
+}
+
+.b1x-page .b1x-course-coach-copy p{
+  color:rgba(255,255,255,.90)!important;
+}
+
+
+/* ======================================================================
+   D. PREVIOUS STICKY CTA REQUESTS, RETAINED IN THIS CUMULATIVE PATCH
+   ====================================================================== */
+.b1x-page .b1x-sticky-cta>div strong{
+  display:flex!important;
+  align-items:baseline!important;
+  flex-wrap:wrap!important;
+  column-gap:.42em!important;
+  row-gap:2px!important;
+}
+
+.b1x-page .b1x-sticky-copy-en{
+  font-family:var(--b1x-hero-font)!important;
+  font-weight:650!important;
+}
+
+.b1x-page .b1x-sticky-copy-ne{
+  font-family:var(--b1x-nepali)!important;
+  font-weight:600!important;
+}
+
+.b1x-page .b1x-sticky-cta>a{
+  position:relative!important;
+  gap:14px!important;
+  color:#fff!important;
+  background:linear-gradient(135deg,#243ac7 0%,#4056e9 58%,#495ef0 100%)!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  box-shadow:0 12px 28px rgba(37,59,199,.24)!important;
+}
+
+.b1x-page .b1x-sticky-cta>a>span{
+  display:grid!important;
+  width:30px!important;
+  height:30px!important;
+  min-width:30px!important;
+  place-items:center!important;
+  border-radius:50%!important;
+  color:#fff!important;
+  background:#e83d55!important;
+  box-shadow:0 6px 14px rgba(232,61,85,.28)!important;
+}
+
+
+/* ======================================================================
+   E. MOBILE: course image fix + prior second-line sticky copy.
+   Existing mobile hero remains untouched.
+   ====================================================================== */
+@media (max-width:700px){
+  .b1x-page .b1x-course-coach>img{
+    right:0!important;
+    bottom:0!important;
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    object-position:center bottom!important;
+  }
+
+  .b1x-page .b1x-course-coach-type{
+    top:22px!important;
+    left:21px!important;
+  }
+
+  .b1x-page .b1x-course-coach-type span{
+    font-size:17px!important;
+  }
+
+  .b1x-page .b1x-course-coach-type strong{
+    margin-top:6px!important;
+    font-size:60px!important;
+  }
+
+  .b1x-page .b1x-course-coach-copy{
+    right:22px!important;
+    bottom:23px!important;
+    left:22px!important;
+  }
+
+  .b1x-page .b1x-sticky-cta>div strong{
+    display:block!important;
+    width:100%!important;
+    text-align:center!important;
+    line-height:1.3!important;
+  }
+
+  .b1x-page .b1x-sticky-copy-en{
+    display:block!important;
+    width:100%!important;
+    font-size:14px!important;
+    line-height:1.3!important;
+  }
+
+  .b1x-page .b1x-sticky-copy-ne{
+    display:block!important;
+    width:100%!important;
+    margin-top:5px!important;
+    font-family:var(--b1x-nepali)!important;
+    font-size:15px!important;
+    font-weight:600!important;
+    line-height:1.35!important;
+  }
+
+  .b1x-page .b1x-sticky-cta>a{
+    min-height:56px!important;
+    justify-content:center!important;
+    border-radius:999px!important;
+    font-size:14px!important;
+  }
+}

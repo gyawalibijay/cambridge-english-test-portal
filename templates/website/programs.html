@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Programs | Arya Academy</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<section class="pub4-page-hero">
+  <div class="pub4-shell">
+    <div class="pub4-eyebrow">Programs</div>
+    <h1>Professional pathways designed for different English preparation goals.</h1>
+    <p>
+      Every pathway keeps the same polished student experience while allowing different test content,
+      courses, materials and pricing access in the background.
+    </p>
+  </div>
+</section>
+
+<section class="pub4-section" style="padding-top:12px">
+  <div class="pub4-shell">
+    <div class="pub4-program-grid">
+      {% for card in program_cards %}
+      <article class="pub4-program-card">
+        <div class="pub4-program-icon">{{ card.presentation.icon }}</div>
+        <span class="pub4-program-badge">{{ card.presentation.badge }}</span>
+        <h3>{{ card.presentation.short_title }}</h3>
+        <p>{{ card.presentation.summary }}</p>
+        <div class="pub4-program-meta">
+          <span>{{ card.test_count }} practice set{{ card.test_count|pluralize }}</span>
+          <span>{{ card.course_count }} course{{ card.course_count|pluralize }}</span>
+        </div>
+        <a class="pub4-card-link" href="{% url 'website:program_detail' card.program.code %}">
+          View details →
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="pub4-cta">
+  <div class="pub4-shell">
+    <div class="pub4-cta-box">
+      <h2>Need help choosing the right program?</h2>
+      <p>
+        If you are unsure whether you need Cambridge, IELTS or UKVI-focused practice,
+        contact the team and they can guide you to the correct package.
+      </p>
+      <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+        <a class="pub4-btn" style="background:#fff;color:#24459c" href="{% url 'website:contact' %}">Ask for guidance →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

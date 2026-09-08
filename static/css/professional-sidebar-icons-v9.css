@@ -1,0 +1,196 @@
+/* =========================================================
+   PROFESSIONAL SIDEBAR ICONS V9
+   - CSS only
+   - exactly one icon per navigation item
+   - no injected SVG duplication
+   - logo/brand is untouched
+   ========================================================= */
+
+:root{
+  --ps9-blue:#1729b8;
+  --ps9-muted:#64748b;
+  --ps9-active-bg:#e8efff;
+}
+
+/* Known student-navigation links only. Never touches the logo. */
+.sf-sidebar a[href*="/dashboard"],
+.sf-sidebar a[href*="/practice"],
+.sf-sidebar a[href*="/mock-tests"],
+.sf-sidebar a[href*="/mock/"],
+.sf-sidebar a[href*="/learn"],
+.sf-sidebar a[href*="/courses"],
+.sf-sidebar a[href*="/progress"],
+.sf-sidebar a[href*="/results"],
+.sf-sidebar a[href*="/certificates"],
+.sf-sidebar a[href*="/profile"]{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:11px!important;
+}
+
+/* Hide ALL previous icon elements inside the actual menu links. */
+.sf-sidebar a[href*="/dashboard"] svg,
+.sf-sidebar a[href*="/dashboard"] i,
+.sf-sidebar a[href*="/dashboard"] .icon,
+.sf-sidebar a[href*="/dashboard"] .nav-icon,
+.sf-sidebar a[href*="/dashboard"] .sf-nav-icon,
+.sf-sidebar a[href*="/dashboard"] .sf-side-icon,
+.sf-sidebar a[href*="/dashboard"] .sf-ref-nav-icon,
+.sf-sidebar a[href*="/dashboard"] .sf-ref-nav-icon-v7,
+
+.sf-sidebar a[href*="/practice"] svg,
+.sf-sidebar a[href*="/practice"] i,
+.sf-sidebar a[href*="/practice"] .icon,
+.sf-sidebar a[href*="/practice"] .nav-icon,
+.sf-sidebar a[href*="/practice"] .sf-nav-icon,
+.sf-sidebar a[href*="/practice"] .sf-side-icon,
+.sf-sidebar a[href*="/practice"] .sf-ref-nav-icon,
+.sf-sidebar a[href*="/practice"] .sf-ref-nav-icon-v7,
+
+.sf-sidebar a[href*="/mock-tests"] svg,
+.sf-sidebar a[href*="/mock-tests"] i,
+.sf-sidebar a[href*="/mock-tests"] .icon,
+.sf-sidebar a[href*="/mock-tests"] .nav-icon,
+.sf-sidebar a[href*="/mock-tests"] .sf-nav-icon,
+.sf-sidebar a[href*="/mock-tests"] .sf-side-icon,
+.sf-sidebar a[href*="/mock-tests"] .sf-ref-nav-icon,
+.sf-sidebar a[href*="/mock-tests"] .sf-ref-nav-icon-v7,
+
+.sf-sidebar a[href*="/learn"] svg,
+.sf-sidebar a[href*="/learn"] i,
+.sf-sidebar a[href*="/learn"] .icon,
+.sf-sidebar a[href*="/learn"] .nav-icon,
+.sf-sidebar a[href*="/learn"] .sf-nav-icon,
+.sf-sidebar a[href*="/learn"] .sf-side-icon,
+.sf-sidebar a[href*="/learn"] .sf-ref-nav-icon,
+.sf-sidebar a[href*="/learn"] .sf-ref-nav-icon-v7,
+
+.sf-sidebar a[href*="/progress"] svg,
+.sf-sidebar a[href*="/progress"] i,
+.sf-sidebar a[href*="/progress"] .icon,
+.sf-sidebar a[href*="/progress"] .nav-icon,
+.sf-sidebar a[href*="/progress"] .sf-nav-icon,
+.sf-sidebar a[href*="/progress"] .sf-side-icon,
+.sf-sidebar a[href*="/progress"] .sf-ref-nav-icon,
+.sf-sidebar a[href*="/progress"] .sf-ref-nav-icon-v7,
+
+.sf-sidebar a[href*="/certificates"] svg,
+.sf-sidebar a[href*="/certificates"] i,
+.sf-sidebar a[href*="/certificates"] .icon,
+.sf-sidebar a[href*="/certificates"] .nav-icon,
+.sf-sidebar a[href*="/certificates"] .sf-nav-icon,
+.sf-sidebar a[href*="/certificates"] .sf-side-icon,
+.sf-sidebar a[href*="/certificates"] .sf-ref-nav-icon,
+.sf-sidebar a[href*="/certificates"] .sf-ref-nav-icon-v7,
+
+.sf-sidebar a[href*="/profile"] svg,
+.sf-sidebar a[href*="/profile"] i,
+.sf-sidebar a[href*="/profile"] .icon,
+.sf-sidebar a[href*="/profile"] .nav-icon,
+.sf-sidebar a[href*="/profile"] .sf-nav-icon,
+.sf-sidebar a[href*="/profile"] .sf-side-icon,
+.sf-sidebar a[href*="/profile"] .sf-ref-nav-icon,
+.sf-sidebar a[href*="/profile"] .sf-ref-nav-icon-v7{
+  display:none!important;
+}
+
+/* If an old icon was wrapped in a first child span, hide only the icon wrapper. */
+.sf-sidebar a[href*="/dashboard"] > span:first-child:has(svg),
+.sf-sidebar a[href*="/practice"] > span:first-child:has(svg),
+.sf-sidebar a[href*="/mock-tests"] > span:first-child:has(svg),
+.sf-sidebar a[href*="/learn"] > span:first-child:has(svg),
+.sf-sidebar a[href*="/progress"] > span:first-child:has(svg),
+.sf-sidebar a[href*="/certificates"] > span:first-child:has(svg),
+.sf-sidebar a[href*="/profile"] > span:first-child:has(svg){
+  display:none!important;
+}
+
+/* One icon is drawn by CSS. */
+.sf-sidebar a[href*="/dashboard"]::before,
+.sf-sidebar a[href*="/practice"]::before,
+.sf-sidebar a[href*="/mock-tests"]::before,
+.sf-sidebar a[href*="/mock/"]::before,
+.sf-sidebar a[href*="/learn"]::before,
+.sf-sidebar a[href*="/courses"]::before,
+.sf-sidebar a[href*="/progress"]::before,
+.sf-sidebar a[href*="/results"]::before,
+.sf-sidebar a[href*="/certificates"]::before,
+.sf-sidebar a[href*="/profile"]::before{
+  content:""!important;
+  width:18px!important;
+  height:18px!important;
+  min-width:18px!important;
+  display:block!important;
+  background-color:var(--ps9-muted)!important;
+  -webkit-mask-repeat:no-repeat!important;
+  mask-repeat:no-repeat!important;
+  -webkit-mask-position:center!important;
+  mask-position:center!important;
+  -webkit-mask-size:18px 18px!important;
+  mask-size:18px 18px!important;
+}
+
+/* Home — clean four-square grid */
+.sf-sidebar a[href*="/dashboard"]::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8'%3E%3Crect x='4' y='4' width='6' height='6' rx='1'/%3E%3Crect x='14' y='4' width='6' height='6' rx='1'/%3E%3Crect x='4' y='14' width='6' height='6' rx='1'/%3E%3Crect x='14' y='14' width='6' height='6' rx='1'/%3E%3C/g%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8'%3E%3Crect x='4' y='4' width='6' height='6' rx='1'/%3E%3Crect x='14' y='4' width='6' height='6' rx='1'/%3E%3Crect x='4' y='14' width='6' height='6' rx='1'/%3E%3Crect x='14' y='14' width='6' height='6' rx='1'/%3E%3C/g%3E%3C/svg%3E")!important;
+}
+
+/* Practice — target */
+.sf-sidebar a[href*="/practice"]::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Ccircle cx='12' cy='12' r='1.2' fill='%23000'/%3E%3C/g%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Ccircle cx='12' cy='12' r='1.2' fill='%23000'/%3E%3C/g%3E%3C/svg%3E")!important;
+}
+
+/* Mock Tests — stopwatch */
+.sf-sidebar a[href*="/mock-tests"]::before,
+.sf-sidebar a[href*="/mock/"]::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='13' r='7.5'/%3E%3Cpath d='M9 3h6M12 5.5V8M17.4 7.6l1.5-1.5'/%3E%3C/g%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='13' r='7.5'/%3E%3Cpath d='M9 3h6M12 5.5V8M17.4 7.6l1.5-1.5'/%3E%3C/g%3E%3C/svg%3E")!important;
+}
+
+/* Learn — graduation cap */
+.sf-sidebar a[href*="/learn"]::before,
+.sf-sidebar a[href*="/courses"]::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z'/%3E%3Cpath d='M6.5 11.5v4c3 2 8 2 11 0v-4M20 10v5'/%3E%3C/g%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z'/%3E%3Cpath d='M6.5 11.5v4c3 2 8 2 11 0v-4M20 10v5'/%3E%3C/g%3E%3C/svg%3E")!important;
+}
+
+/* Progress — analytics bars */
+.sf-sidebar a[href*="/progress"]::before,
+.sf-sidebar a[href*="/results"]::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 19V10M10 19V5M15 19v-7M20 19V8M3.5 19.5h18'/%3E%3C/g%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M5 19V10M10 19V5M15 19v-7M20 19V8M3.5 19.5h18'/%3E%3C/g%3E%3C/svg%3E")!important;
+}
+
+/* Certificates — medal */
+.sf-sidebar a[href*="/certificates"]::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='9' r='4'/%3E%3Cpath d='m9.5 12.5-1 7 3.5-2 3.5 2-1-7'/%3E%3C/g%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='9' r='4'/%3E%3Cpath d='m9.5 12.5-1 7 3.5-2 3.5 2-1-7'/%3E%3C/g%3E%3C/svg%3E")!important;
+}
+
+/* Profile — user */
+.sf-sidebar a[href*="/profile"]::before{
+  -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='3.5'/%3E%3Cpath d='M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6'/%3E%3C/g%3E%3C/svg%3E")!important;
+  mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='3.5'/%3E%3Cpath d='M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6'/%3E%3C/g%3E%3C/svg%3E")!important;
+}
+
+/* Active item */
+.sf-sidebar a.active::before,
+.sf-sidebar a[aria-current="page"]::before{
+  background-color:var(--ps9-blue)!important;
+}
+
+.sf-sidebar a.active,
+.sf-sidebar a[aria-current="page"]{
+  background:var(--ps9-active-bg)!important;
+  color:var(--ps9-blue)!important;
+}
+
+/* Keep brand area exactly as it is. */
+.sf-sidebar .sf-brand::before,
+.sf-sidebar .brand::before,
+.sf-sidebar .logo::before{
+  content:none!important;
+}

@@ -1,0 +1,11 @@
+/* ARYA_ACADEMY_OFFICIAL_BRAND_V35_4 — branding geometry only */
+.aa-official-logo{display:block;max-width:100%;object-fit:contain;object-position:left center}
+.sf-brand .aa-official-logo{width:104px;height:72px;margin:-10px 0 -9px}
+.sf-mobile-brand .aa-official-logo,.ref-mobile-brand .aa-official-logo{width:66px;height:50px}
+.pv2-app-brand .aa-official-logo{width:82px;height:58px}
+.cam-side-brand .aa-official-logo{width:92px;height:70px}
+.aa-base-brand .aa-official-logo{width:78px;height:58px}
+.exam-brand.aa-exam-brand{display:flex;align-items:center;gap:8px}
+.exam-brand.aa-exam-brand .aa-official-logo{width:54px;height:44px}
+.exam-brand.aa-exam-brand>span{font-weight:900;color:#17354a}
+@media(max-width:860px){.sf-mobile-brand .aa-official-logo,.ref-mobile-brand .aa-official-logo{width:58px;height:46px}}

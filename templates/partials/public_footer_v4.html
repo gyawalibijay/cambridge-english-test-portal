@@ -1,0 +1,21 @@
+{% load static website_tags %}
+{% public_site_settings as portal_site %}
+<footer class="up-footer">
+  <div class="up-shell up-footer-main">
+    <div>
+      <a class="up-footer-brand" href="{% url 'website:home' %}" aria-label="Arya Academy home"><img class="up-brand-image" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy"></a>
+      <p>{{ portal_site.footer_text|default:"Focused preparation for English tests and UK student interviews." }}</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <a href="{% url 'website:cambridge_landing' %}">Cambridge English</a>
+      <a href="{% url 'website:ielts_landing' %}">IELTS</a>
+      <a href="{% url 'website:uk_interview_landing' %}">UK Interview</a>
+      <a href="{% url 'website:contact' %}">Contact</a>
+    </nav>
+  </div>
+  <div class="up-shell up-footer-bottom">
+    <span>© 2026 Arya Academy</span>
+    <span>Independent preparation portal. Practice estimates are not official exam results.</span>
+    <span><a href="{% url 'website:terms' %}">Terms</a> · <a href="{% url 'website:privacy' %}">Privacy</a></span>
+  </div>
+</footer>

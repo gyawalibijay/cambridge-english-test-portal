@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ attempt.mock_test.title }} Results | B1 Ready{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/full-mock-v35-part3.css' %}?v=20260908-352">
+<main class="fm35p3-page">
+  <div class="fm35p3-toplinks">
+    <a href="{% url 'student_mock_tests' %}">← Mock Tests</a>
+    <a href="{% url 'results:index' %}">All Results</a>
+  </div>
+
+  <section class="fm35p3-hero {% if processing %}processing{% elif incomplete %}warning{% endif %}">
+    <div>
+      <span class="fm35p3-kicker">CAMBRIDGE UPSKILL · FULL MOCK RESULT</span>
+      <h1>{{ attempt.mock_test.title }}</h1>
+      <p>Reading → Listening → Speaking → Writing</p>
+      <div class="fm35p3-statusline">
+        {% if result_ready %}<strong>✓ Result ready</strong><span>All four skills have a scorable result.</span>
+        {% elif incomplete %}<strong>! Attempt needs attention</strong><span>One or more submitted questions are missing a stored response.</span>
+        {% else %}<strong>Processing Speaking / Writing</strong><span>Your submitted work is saved. This page updates when grading or review finishes.</span>{% endif %}
+      </div>
+    </div>
+    <div class="fm35p3-score">
+      {% if summary.overall_percent != None %}<b>{{ summary.overall_percent }}</b><span>%</span><small>portal practice score</small>
+      {% else %}<b>—</b><small>{% if incomplete %}not finalised{% else %}pending{% endif %}</small>{% endif %}
+    </div>
+  </section>
+
+  <section class="fm35p3-meta">
+    <div><small>STATUS</small><strong>{{ attempt.get_status_display }}</strong></div>
+    <div><small>QUESTIONS</small><strong>{{ summary.response_count }}/{{ summary.question_count }}</strong></div>
+    <div><small>TIMED OUT</small><strong>{{ summary.timed_out }}</strong></div>
+    <div><small>REVIEW PENDING</small><strong>{{ summary.pending_review }}</strong></div>
+    <div><small>STARTED</small><strong>{{ attempt.started_at|date:"M j, H:i" }}</strong></div>
+  </section>
+
+  <section class="fm35p3-heading"><span class="fm35p3-kicker">SKILL BREAKDOWN</span><h2>Your four-skill performance</h2></section>
+  <div class="fm35p3-skills">
+    {% for row in summary.skills %}
+    <article class="{% if row.pending %}pending{% endif %}">
+      <div class="fm35p3-skillhead"><span>0{{ forloop.counter }}</span><b>{{ row.label }}</b></div>
+      {% if row.percent != None %}<strong class="fm35p3-skillscore">{{ row.percent }}%</strong>{% else %}<strong class="fm35p3-skillscore muted">Pending</strong>{% endif %}
+      <div class="fm35p3-bar"><i style="width:{% if row.percent != None %}{{ row.percent }}{% else %}0{% endif %}%"></i></div>
+      <div class="fm35p3-skillmeta">
+        <span>{{ row.answered }}/{{ row.total }} answered</span>
+        {% if row.key == 'reading' or row.key == 'listening' %}<span>{{ row.correct }} correct</span>{% endif %}
+        {% if row.pending %}<span>{{ row.pending }} review</span>{% endif %}
+        {% if row.timed_out %}<span>{{ row.timed_out }} timed out</span>{% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if summary.qa_issues %}
+  <section class="fm35p3-alert">
+    <strong>This attempt needs a technical review before it can be treated as final.</strong>
+    <ul>{% for issue in summary.qa_issues %}<li>{{ issue }}</li>{% endfor %}</ul>
+    {% if is_staff %}<a href="{% url 'grading:full_mock_attempt' attempt.pk %}">Open staff Full Mock review →</a>{% endif %}
+  </section>
+  {% endif %}
+
+  <section class="fm35p3-heading"><span class="fm35p3-kicker">QUESTION STATUS</span><h2>What has been graded</h2></section>
+  <div class="fm35p3-groups">
+    {% for group in groups %}
+    <details {% if group.summary.pending %}open{% endif %}>
+      <summary><span>{{ group.summary.label }}</span><b>{% if group.summary.percent != None %}{{ group.summary.percent }}%{% elif group.summary.pending %}Processing / review{% else %}Pending{% endif %}</b></summary>
+      <div class="fm35p3-response-list">
+        {% for row in group.rows %}
+        <article>
+          <div class="fm35p3-response-title">
+            <span>Q{{ row.item.order|stringformat:"02d" }} · {{ row.item.part.title }}</span>
+            <b class="{% if row.needs_review %}pending{% elif row.timed_out %}timeout{% endif %}">{{ row.status }}</b>
+          </div>
+          <h3>{{ row.item.question.prompt_text|default:row.item.question.title|truncatechars:180 }}</h3>
+          <div class="fm35p3-response-meta">
+            {% if row.point_score != None %}<span>Points: {{ row.point_score|floatformat:"-2" }} / {{ row.max_points|floatformat:"-2" }}</span>{% endif %}
+            {% if row.is_correct != None %}<span>{% if row.is_correct %}Correct ✓{% else %}Incorrect{% endif %}</span>{% endif %}
+            {% if row.cefr %}<span>Practice CEFR: {{ row.cefr }}</span>{% endif %}
+          </div>
+          {% if row.transcript and row.skill == 'speaking' %}<div class="fm35p3-evidence"><small>Transcript</small><p>{{ row.transcript }}</p></div>{% endif %}
+          {% if row.response.text_response and row.skill == 'writing' %}<div class="fm35p3-evidence"><small>Your writing</small><p>{{ row.response.text_response|truncatechars:500 }}</p></div>{% endif %}
+          {% if row.strengths or row.improvements %}
+          <div class="fm35p3-feedback">
+            {% if row.strengths %}<div><small>Strengths</small>{% for text in row.strengths %}<p>✓ {{ text }}</p>{% endfor %}</div>{% endif %}
+            {% if row.improvements %}<div><small>Improve next</small>{% for text in row.improvements %}<p>→ {{ text }}</p>{% endfor %}</div>{% endif %}
+          </div>
+          {% endif %}
+          {% if is_staff and row.response and row.skill == 'speaking' or is_staff and row.response and row.skill == 'writing' %}
+          <a class="fm35p3-reviewlink" href="{% url 'grading:review_response' row.response.pk %}">Evaluator review →</a>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </details>
+    {% endfor %}
+  </div>
+
+  <section class="fm35p3-disclaimer">
+    <strong>Practice result only.</strong>
+    <span>This is an internal portal score calculated from the configured question points and stored Speaking/Writing practice grading. It is not an official Cambridge score, certificate or proprietary Cambridge scoring algorithm.</span>
+  </section>
+
+  <div class="fm35p3-actions">
+    {# B1_FULL_MOCK_PRACTICE_REPORT_BUTTONS_V40_5 #}
+    {% if result_ready %}
+      <a href="{% url 'results:full_mock_practice_report_download' attempt.pk %}" class="primary">Download Practice Mock Report</a>
+      <a href="{% url 'results:full_mock_practice_report' attempt.pk %}" target="_blank" rel="noopener">Preview Report</a>
+    {% endif %}
+    <a href="{% url 'student_mock_tests' %}" class="primary">Back to Mock Tests</a>
+    <a href="{% url 'results:index' %}">All Results</a>
+    {% if is_staff %}<a href="{% url 'grading:full_mock_attempt' attempt.pk %}">Staff Review</a>{% endif %}
+  </div>
+</main>
+{% if processing %}
+<script>setTimeout(function(){ window.location.reload(); }, 8000);</script>
+{% endif %}
+{% endblock %}

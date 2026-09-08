@@ -1,0 +1,26 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>{{ section.title }} | {{ attempt.mock_test.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/full-mock-v35-part2.css' %}?v=20260908-351">
+</head>
+<body class="fm35-transition-body">
+<main class="fm35-transition">
+  <header><a href="{% url 'student_mock_tests' %}">Save & exit</a><strong>{{ attempt.mock_test.title }}</strong><button type="button" onclick="document.documentElement.requestFullscreen?.()">⛶ Full Screen</button></header>
+  <div class="fm35-stepper">{% for row in rows %}<span class="{% if row.complete %}done{% elif row.current %}current{% endif %}"><b>0{{ forloop.counter }}</b>{{ row.section.title }}</span>{% endfor %}</div>
+  <section class="fm35-transition-card">
+    {% if previous %}<div class="fm35-complete-badge">✓ {{ previous.section.title }} complete</div>{% endif %}
+    <span class="fm35-kicker">SECTION {{ section_number }} OF {{ section_total }}</span>
+    <h1>{{ section.title }}</h1>
+    <p>{{ duration_minutes }} minutes · {{ section.parts.count }} parts</p>
+    <div class="fm35-rule"><strong>Your {{ section.title }} timer has not started yet.</strong><span>It starts on the server when you press Continue and will keep running if you refresh or leave the page.</span></div>
+    {% if section.skill == 'listening' %}<div class="fm35-tip">🎧 Put on your headphones and check your volume before continuing.</div>{% elif section.skill == 'speaking' %}<div class="fm35-tip">🎙 Allow microphone access and use a quiet room before continuing.</div>{% elif section.skill == 'writing' %}<div class="fm35-tip">✍ You have one 30-minute Writing section covering both Writing parts.</div>{% else %}<div class="fm35-tip">📖 Read carefully and answer every question you can before the section deadline.</div>{% endif %}
+    <form method="post">{% csrf_token %}<button class="fm35-button big" type="submit">Start {{ section.title }} · {{ duration_minutes }}:00 →</button></form>
+  </section>
+</main>
+</body>
+</html>

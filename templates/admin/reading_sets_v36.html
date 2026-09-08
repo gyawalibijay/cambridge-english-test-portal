@@ -1,0 +1,48 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/b1-reading-set-builder-v36.css' %}?v=20260908-360">{% endblock %}
+{% block content %}
+<div class="b1r36-page">
+  <header class="b1r36-hero">
+    <div>
+      <span class="b1r36-kicker">CAMBRIDGE · READING · 50 SETS</span>
+      <h1>Reading Sets</h1>
+      <p>Manage Reading in the same simple structure as Listening: <b>Set → Part → Questions → Answers</b>. Each Set contains 5 Parts and 20 answers.</p>
+    </div>
+    <div class="b1r36-actions">
+      <a class="b1r36-btn ghost" href="/practice/reading/" target="_blank" rel="noopener">Student Reading ↗</a>
+      <a class="b1r36-btn primary" href="/admin/mock-builder/">Open Mock Builder →</a>
+    </div>
+  </header>
+
+  <section class="b1r36-summary">
+    <div><small>SETS</small><strong>{{ total_sets }}</strong></div>
+    <div><small>PARTS / SET</small><strong>5</strong></div>
+    <div><small>ANSWERS / SET</small><strong>20</strong></div>
+    <div><small>FULL SET TIME</small><strong>25 min</strong></div>
+  </section>
+
+  <aside class="b1r36-note"><b>Mock Test connection:</b> questions use titles such as <code>Reading S1 P1 Q1</code>. In <b>Mock Builder → Reading</b>, choose the same Set number for each Part. The Question records are reused; they are not duplicated.</aside>
+
+  <div class="b1r36-set-grid">
+    {% for row in rows %}
+    <article class="b1r36-set-card {% if row.ready %}is-ready{% endif %}">
+      <header>
+        <div><span>READING SET</span><h2>{{ row.set_no|stringformat:"02d" }}</h2></div>
+        {% if row.ready %}<b class="b1r36-status ready">20/20 READY</b>{% else %}<b class="b1r36-status draft">{{ row.ready_count }}/20</b>{% endif %}
+      </header>
+      <div class="b1r36-parts">
+        {% for part in row.parts %}
+        <a href="{{ part.url }}" class="b1r36-part {% if part.ready %}ready{% endif %}">
+          <span class="num">{{ part.number }}</span>
+          <span class="copy"><b>Part {{ part.number }}</b><small>{{ part.guide.title }}</small></span>
+          <span class="count">{{ part.ready_count }}/4</span>
+          <span class="arrow">→</span>
+        </a>
+        {% endfor %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

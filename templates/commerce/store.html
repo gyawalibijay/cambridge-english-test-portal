@@ -1,0 +1,114 @@
+{% extends "student_final/base.html" %}
+{% load static %}
+{% block title %}Cambridge Access & Payment | Arya Academy{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/payment-access.css' %}?v=20260903-148">
+<link rel="stylesheet" href="{% static 'css/cambridge-access-v14-9.css' %}?v=20260908-408">
+{% endblock %}
+{% block content %}
+<div class="pay-page cambridge-access-only">
+  <section class="pay-hero">
+    <div>
+      <span class="pay-kicker">CAMBRIDGE ACCESS</span>
+      <h1>Cambridge Test Preparation Access.</h1>
+      <p>Generate your invoice, use the invoice number in your payment remarks, and submit your payment proof. Practice, Mock Tests and Learning Materials unlock after verification.</p>
+    </div>
+    <div class="pay-hero-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5-9 4.5-9-4.5Z"/><path d="M6 10v5c3 2 9 2 12 0v-5"/></svg>
+    </div>
+  </section>
+
+  {% if locked_program %}
+  <div class="pay-alert pay-alert-warning">
+    <strong>Cambridge access required.</strong>
+    This area unlocks after your Cambridge payment has been verified.
+  </div>
+  {% endif %}
+
+  <section class="pay-section-head">
+    <div><span class="pay-kicker">CURRENT PROGRAM</span><h2>Choose your Cambridge access</h2></div>
+  </section>
+
+  <div class="pay-package-grid">
+    {% for card in cards %}
+    <article class="pay-package-card" id="{{ card.package.slug }}">
+      <div class="pay-package-top">
+        <span class="pay-package-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5-9 4.5-9-4.5Z"/><path d="M6 10v5c3 2 9 2 12 0v-5"/></svg>
+        </span>
+        {% if card.has_access %}
+          <span class="pay-status is-approved">Access active</span>
+        {% elif not card.package.is_active %}
+          <span class="pay-status is-soon">Not available</span>
+        {% elif card.pending_purchase %}
+          <span class="pay-status is-pending">Under verification</span>
+        {% elif card.initiated_purchase %}
+          <span class="pay-status is-invoice">Invoice ready</span>
+        {% elif card.latest_purchase and card.latest_purchase.status == 'rejected' %}
+          <span class="pay-status is-rejected">Payment rejected</span>
+        {% else %}
+          <span class="pay-status">Available</span>
+        {% endif %}
+      </div>
+
+      <h3>{{ card.package.title }}</h3>
+      <p>{{ card.package.short_description|default:card.package.description }}</p>
+      <div class="pay-program-tags">
+        {% for program in card.package.programs.all %}<span>{{ program.short_name|default:program.name }}</span>{% endfor %}
+      </div>
+      <div class="pay-price-row">
+        <div><small>COURSE ACCESS</small><!-- CAMBRIDGE_OFFER_PRICE_V40_8 -->
+          <div class="cambridge-offer-price" aria-label="Current price NPR 1999, original price NPR 3500">
+            <span class="cambridge-original-price">{{ card.package.currency }} 3500</span>
+            <span class="cambridge-offer-label">LIMITED OFFER</span>
+            <strong class="cambridge-current-price">{{ card.package.currency }} {{ card.package.price|floatformat:0 }}</strong>
+            <span class="cambridge-save-price">SAVE NPR 1,501</span>
+          </div></div>
+        {% if card.package.access_days %}<span>{{ card.package.access_days }} days</span>{% else %}<span>Full access</span>{% endif %}
+      </div>
+
+      {% if card.has_access %}
+        <div class="pay-card-actions two">
+          <a class="pay-btn primary" href="{% url 'student_practice_hub' %}">Practice</a>
+          <a class="pay-btn outline" href="{% url 'student_mock_tests' %}">Mock Test</a>
+        </div>
+      {% elif not card.package.is_active %}
+        <button class="pay-btn disabled full" disabled>Not available</button>
+      {% elif card.pending_purchase %}
+        <a class="pay-btn outline full" href="{% url 'commerce:purchase_status' card.pending_purchase.invoice_number %}">View Verification Status</a>
+      {% elif card.initiated_purchase %}
+        <a class="pay-btn primary full" href="{% url 'commerce:purchase_package' card.package.slug %}">Continue Payment</a>
+      {% else %}
+        <a class="pay-btn primary full" href="{% url 'commerce:purchase_package' card.package.slug %}">Generate Invoice & Pay</a>
+      {% endif %}
+    </article>
+    {% empty %}
+      <div class="pay-empty">The Cambridge access package has not been configured yet.</div>
+    {% endfor %}
+  </div>
+
+  <section class="pay-how-card">
+    <div class="pay-section-head compact"><div><span class="pay-kicker">HOW IT WORKS</span><h2>Payment verification flow</h2></div></div>
+    <div class="pay-steps">
+      <div><span>1</span><strong>Choose Cambridge</strong><p>Select your Cambridge preparation access package.</p></div>
+      <div><span>2</span><strong>Generate invoice</strong><p>The portal creates your payment invoice number.</p></div>
+      <div><span>3</span><strong>Pay with invoice remark</strong><p>Put the exact invoice number in your bank or wallet payment remarks.</p></div>
+      <div><span>4</span><strong>Admin verifies</strong><p>Practice, Mock Tests and Learning Materials unlock after approval.</p></div>
+    </div>
+  </section>
+
+  {% if recent_purchases %}
+  <section class="pay-history-card">
+    <div class="pay-section-head compact"><div><span class="pay-kicker">YOUR PAYMENTS</span><h2>Recent Cambridge invoices</h2></div></div>
+    <div class="pay-history-list">
+      {% for purchase in recent_purchases %}
+      <a href="{% url 'commerce:purchase_status' purchase.invoice_number %}" class="pay-history-row">
+        <div><strong>{{ purchase.invoice_number }}</strong><span>{{ purchase.package.title }} · {{ purchase.created_at|date:"M j, Y" }}</span></div>
+        <div><span class="pay-status is-{{ purchase.status }}">{{ purchase.get_status_display }}</span><b>{{ purchase.currency }} {{ purchase.amount|floatformat:0 }}</b></div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Progress | Arya Academy{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">PROGRESS</div>
+  <h1>Your progress</h1>
+  <p>A calm, honest view of where you are and what to do next.</p>
+</section>
+
+<section class="sf-overall-card">
+  <div class="sf-ring" style="--p:{{ overall_progress }}"><div><strong>{{ overall_progress|floatformat:0 }}%</strong><span>OVERALL PROGRESS</span></div></div>
+  <div class="sf-overall-copy">
+    <h2>You are on track for {{ target_level }} readiness</h2>
+    <p>Your progress is based on completed practice and stored scores. Focus on the skill with the lowest progress to move your overall readiness forward.</p>
+  </div>
+</section>
+
+<section class="sf-two-grid sf-progress-cards">
+  {% for key, stat in skill_stats.items %}
+    <article class="sf-progress-card">
+      <div class="sf-progress-card-head">
+        <strong>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            {% if key == 'reading' %}<path d="M4 5.5c3.4-.9 6-.2 8 1.5v12c-2-1.7-4.6-2.4-8-1.5Z"></path><path d="M20 5.5c-3.4-.9-6-.2-8 1.5v12c2-1.7 4.6-2.4 8-1.5Z"></path>
+            {% elif key == 'writing' %}<path d="m14.5 5.5 4 4M5 19l2.2-5.2L16.8 4.2a1.7 1.7 0 0 1 2.4 0l.6.6a1.7 1.7 0 0 1 0 2.4l-9.6 9.6L5 19Z"></path><path d="M13 19H5"></path>
+            {% elif key == 'listening' %}<path d="M4.5 13v-2a7.5 7.5 0 0 1 15 0v2"></path><path d="M4.5 12.5h2.8v6H6a1.5 1.5 0 0 1-1.5-1.5ZM19.5 12.5h-2.8v6H18a1.5 1.5 0 0 0 1.5-1.5Z"></path>
+            {% else %}<rect x="9" y="3" width="6" height="12" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6"></path>{% endif %}
+          </svg>
+          {{ stat.label }}
+        </strong>
+        <b>{{ stat.progress|floatformat:0 }}%</b>
+      </div>
+      <div class="sf-progress"><span style="width:{{ stat.progress }}%"></span></div>
+      <div class="sf-progress-metrics">
+        <div><small>ACCURACY</small><strong>{{ stat.accuracy|floatformat:0 }}%</strong></div>
+        <div><small>COMPLETED</small><strong>{{ stat.completed }}</strong></div>
+        <div><small>LEVEL</small><strong>{{ stat.cefr|default:"Pending" }}</strong></div>
+      </div>
+    </article>
+  {% endfor %}
+</section>
+
+<section class="sf-journey">
+  <h2>Your learning journey</h2>
+  <div class="sf-journey-step"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z"></path><path d="M6.5 11.5v4c3 2 8 2 11 0v-4"></path></svg></span><div><strong>Learn</strong><p>Use your lessons, PDFs, and course resources.</p></div></div>
+  <div class="sf-journey-step"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><circle cx="12" cy="12" r="1.25" fill="currentColor" stroke="none"></circle></svg></span><div><strong>Practice</strong><p>{{ response_count }} questions answered.</p></div></div>
+  <div class="sf-journey-step"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="7.5"></circle><path d="M9 3h6M12 5.5V8"></path></svg></span><div><strong>Mock Test</strong><p>{{ completed_attempts }} completed tests recorded.</p></div></div>
+  <div class="sf-journey-step"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 17 5-5 4 3 7-8M15 7h5v5"></path></svg></span><div><strong>Improve</strong><p>Use your real results and feedback to focus your next session.</p></div></div>
+  <div class="sf-journey-step"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8a8 8 0 0 0-13-2L4 8M5 16a8 8 0 0 0 13 2l2-2M4 4v4h4M20 20v-4h-4"></path></svg></span><div><strong>Mock Test Again</strong><p>Repeat after focused practice and compare your reports.</p></div></div>
+</section>
+{% endblock %}

@@ -1,0 +1,17 @@
+/* Safe motion layer: layout dimensions are untouched. */
+.ref-hero-rings{animation:dashRingDrift 16s linear infinite}
+.ref-hero-art>svg{animation:dashCalendarFloat 4.8s ease-in-out infinite}
+.ref-live-pill{animation:dashLivePulse 3.4s ease-in-out infinite}
+.ref-flame-art img{transform-origin:50% 82%;animation:dashFlameAlive 2.9s ease-in-out infinite;filter:drop-shadow(0 14px 20px rgba(255,72,38,.24))}
+.ref-day-item span.is-active{animation:dashCheckPulse 2.8s ease-in-out infinite}
+.ref-progress-bar span{position:relative;overflow:hidden}
+.ref-progress-bar span:after{position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.48),transparent);content:"";animation:dashProgressShine 4.6s ease-in-out infinite}
+.ref-tool-card,.ref-promo-card,.ref-rank-card{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+@media(hover:hover) and (pointer:fine){.ref-tool-card:hover,.ref-promo-card:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(24,51,116,.1)}.ref-rank-card:hover{transform:translateY(-3px)}}
+@keyframes dashRingDrift{to{transform:rotate(360deg)}}
+@keyframes dashCalendarFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes dashLivePulse{0%,100%{box-shadow:0 0 0 0 rgba(255,64,84,0)}50%{box-shadow:0 0 0 6px rgba(255,64,84,.09)}}
+@keyframes dashFlameAlive{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-3px) scale(1.025)}}
+@keyframes dashCheckPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes dashProgressShine{0%,55%{transform:translateX(-120%)}75%,100%{transform:translateX(120%)}}
+@media(prefers-reduced-motion:reduce){.ref-hero-rings,.ref-hero-art>svg,.ref-live-pill,.ref-flame-art img,.ref-day-item span.is-active,.ref-progress-bar span:after{animation:none!important}.ref-tool-card,.ref-promo-card,.ref-rank-card{transition:none!important}}

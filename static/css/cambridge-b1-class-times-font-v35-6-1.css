@@ -1,0 +1,60 @@
+/* Class Time V35.6.1 — typography only.
+   Reuses the landing page's existing Inter-based type system. */
+.b1x-page .b1x-class-times-v356,
+.b1x-page .b1x-class-times-v356 :where(h2,p,strong,span){
+  font-family:var(--b1x-font-sans,"Inter","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif)!important;
+}
+
+/* Match the same major-section heading scale/hierarchy already used elsewhere. */
+.b1x-page .b1x-class-times-v356__head h2{
+  font-family:var(--b1x-font-sans,"Inter","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif)!important;
+  font-size:var(--b1x-type-section,clamp(2.25rem,3.75vw,3rem))!important;
+  font-weight:800!important;
+  line-height:var(--b1x-leading-heading,1.12)!important;
+  letter-spacing:var(--b1x-tracking-heading,-.04em)!important;
+}
+.b1x-page .b1x-class-times-v356__head h2 span{
+  font:inherit!important;
+}
+
+/* Keep the remaining schedule typography on the same landing hierarchy. */
+.b1x-page .b1x-class-times-v356__eyebrow{
+  font-size:.75rem!important;
+  font-weight:700!important;
+  line-height:1.35!important;
+  letter-spacing:.12em!important;
+}
+.b1x-page .b1x-class-times-v356__head>p:last-child{
+  font-size:var(--b1x-type-body,clamp(1rem,1.06vw,1.125rem))!important;
+  font-weight:400!important;
+  line-height:var(--b1x-leading-body,1.58)!important;
+}
+.b1x-page .b1x-class-times-v356__badge strong{
+  font-size:1.25rem!important;
+  font-weight:800!important;
+  letter-spacing:-.025em!important;
+}
+.b1x-page .b1x-class-times-v356__label{
+  font-size:.875rem!important;
+  font-weight:700!important;
+  letter-spacing:-.015em!important;
+}
+.b1x-page .b1x-class-times-v356__time{
+  font-size:1rem!important;
+  font-weight:700!important;
+  letter-spacing:-.02em!important;
+}
+.b1x-page .b1x-class-times-v356__note{
+  font-size:.8125rem!important;
+  font-weight:600!important;
+}
+
+@media(max-width:540px){
+  .b1x-page .b1x-class-times-v356__head h2{
+    font-size:clamp(2rem,10vw,2.5rem)!important;
+    line-height:1.08!important;
+  }
+  .b1x-page .b1x-class-times-v356__head>p:last-child{font-size:.9375rem!important}
+  .b1x-page .b1x-class-times-v356__badge strong{font-size:1.125rem!important}
+  .b1x-page .b1x-class-times-v356__time{font-size:.9375rem!important}
+}

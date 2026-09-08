@@ -1,0 +1,34 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Practice | Upskill Practice{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">PRACTICE</div>
+  <h1>Practice</h1>
+  <p>Build confidence one skill at a time.</p>
+</section>
+
+<section class="sf-two-grid sf-skill-grid">
+  {% for key, stat in skill_stats.items %}
+  <article class="sf-skill-card">
+    <div class="sf-skill-title-row">
+      <div class="sf-action-icon">{% if key == 'reading' %}▭{% elif key == 'writing' %}⌁{% elif key == 'listening' %}⌾{% else %}♩{% endif %}</div>
+      <div>
+        <h2>{{ stat.label }}</h2>
+        <p>{% if key == 'reading' %}Read smarter. Improve comprehension.{% elif key == 'writing' %}Build accurate, confident writing.{% elif key == 'listening' %}Train your understanding of spoken English.{% else %}Improve fluency, pronunciation and confidence.{% endif %}</p>
+      </div>
+    </div>
+    <div class="sf-card-progress-head"><span>PROGRESS</span><strong>{{ stat.progress|floatformat:0 }}%</strong></div>
+    <div class="sf-progress"><span style="width:{{ stat.progress }}%"></span></div>
+    <div class="sf-skill-metrics">
+      <div><small>COMPLETED</small><strong>{{ stat.completed }}/{{ stat.target }}</strong></div>
+      <div><small>ACCURACY</small><strong>{{ stat.accuracy|floatformat:0 }}%</strong></div>
+    </div>
+    <div class="sf-recommend"><small>RECOMMENDED</small><strong>{{ stat.recommended }}</strong></div>
+    {% if key == 'reading' %}<a class="sf-primary" href="{{ start_urls.reading }}">Start Reading <span>→</span></a>{% endif %}
+    {% if key == 'writing' %}<a class="sf-primary" href="{{ start_urls.writing }}">Start Writing <span>→</span></a>{% endif %}
+    {% if key == 'listening' %}<a class="sf-primary" href="{{ start_urls.listening }}">Start Listening <span>→</span></a>{% endif %}
+    {% if key == 'speaking' %}<a class="sf-primary" href="{{ start_urls.speaking }}">Start Speaking <span>→</span></a>{% endif %}
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

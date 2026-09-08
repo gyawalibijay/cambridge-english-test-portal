@@ -1,0 +1,136 @@
+{% load static website_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>{{ landing.seo_title }}</title>
+  <meta name="description" content="{{ landing.seo_description }}">
+  <meta name="keywords" content="{{ landing.seo_keywords }}">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#154be7">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ landing.seo_title }}">
+  <meta property="og:description" content="{{ landing.seo_description }}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  {% if landing.hero_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ landing.hero_image.url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/public-choice-v8.css' %}?v=20260903">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "{{ landing.name|escapejs }}",
+    "description": "{{ landing.seo_description|escapejs }}",
+    "provider": {"@type": "EducationalOrganization", "name": "{{ site_settings.site_name|escapejs }}"},
+    "url": "{{ request.build_absolute_uri|escapejs }}"
+  }
+  </script>
+</head>
+<body class="pub8-body landing8 landing8-{{ landing.program_key }}">
+{% include "partials/public_header_v8.html" %}
+
+<main class="landing8-page">
+  <section class="landing8-hero">
+    <div class="landing8-orbit orbit-one" aria-hidden="true"></div>
+    <div class="landing8-orbit orbit-two" aria-hidden="true"></div>
+    <div class="landing8-shell landing8-grid">
+      <div class="landing8-copy pub8-reveal">
+        <a class="landing8-back" href="{% url 'website:home' %}#programs">← Choose another test</a>
+        <span class="landing8-kicker">{{ landing.hero_eyebrow }}</span>
+        <h1>{{ landing.hero_title }}</h1>
+        <p>{{ landing.hero_description }}</p>
+        <div class="landing8-actions">
+          <a class="landing8-primary" href="{{ landing.primary_cta_url }}">{{ landing.primary_cta_label }} <span>→</span></a>
+          <a class="landing8-secondary" href="{{ landing.secondary_cta_url }}">{{ landing.secondary_cta_label }}</a>
+        </div>
+        <span class="landing8-status is-{{ landing.status_tone }}"><i></i>{{ landing.status_label }}</span>
+      </div>
+
+      <div class="landing8-art pub8-reveal" data-delay="120">
+        {% if site_settings.show_mascot %}
+          <div class="landing8-mascot">
+            {% if site_settings.mascot_image %}
+              <img src="{{ site_settings.mascot_image.url }}" alt="{{ site_settings.mascot_alt_text }}">
+            {% else %}
+              <img src="{% static 'images/public/upskill-mascot.webp' %}" alt="{{ site_settings.mascot_alt_text }}">
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if landing.program_key == 'cambridge-english' %}
+          <div class="landing8-ui ui-cambridge">
+            <span class="ui-label">FOUR-SKILL PREPARATION</span>
+            <strong>Speaking · Listening · Reading · Writing</strong>
+            <div class="ui-progress"><i></i></div>
+            <div class="ui-skill-grid"><span>Speaking</span><span>Listening</span><span>Reading</span><span>Writing</span></div>
+          </div>
+          <div class="landing8-float float-a">B1<small>target</small></div>
+          <div class="landing8-float float-b">✓<small>practice</small></div>
+        {% elif landing.program_key == 'ielts' %}
+          <div class="landing8-ui ui-ielts">
+            <span class="ui-label">IELTS PREPARATION</span>
+            <strong>Academic or General Training</strong>
+            <div class="ui-band"><b>7.0</b><span>goal band</span></div>
+            <div class="ui-pill-row"><span>Listening</span><span>Reading</span><span>Writing</span><span>Speaking</span></div>
+          </div>
+          <div class="landing8-float float-a">A/G<small>path</small></div>
+          <div class="landing8-float float-b">4<small>skills</small></div>
+        {% else %}
+          <div class="landing8-ui ui-interview">
+            <span class="ui-label">UK STUDENT INTERVIEW</span>
+            <strong>Clear answers. Calm delivery.</strong>
+            <div class="ui-chat"><span>Why this course?</span><span>Why the UK?</span><span>Your future plan?</span></div>
+          </div>
+          <div class="landing8-float float-a">UK<small>interview</small></div>
+          <div class="landing8-float float-b">✓<small>confidence</small></div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section class="landing8-info">
+    <div class="landing8-shell landing8-info-grid">
+      <article class="landing8-info-card pub8-reveal">
+        <span>01</span><div><h2>{{ landing.audience_title }}</h2><p>{{ landing.audience_text }}</p></div>
+      </article>
+      <article class="landing8-info-card pub8-reveal" data-delay="80">
+        <span>02</span><div><h2>{{ landing.format_title }}</h2><p>{{ landing.format_text }}</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="landing8-benefits">
+    <div class="landing8-shell">
+      <div class="landing8-benefit-grid">
+        <article class="pub8-reveal"><i>01</i><strong>{{ landing.benefit_one_title }}</strong><p>{{ landing.benefit_one_text }}</p></article>
+        <article class="pub8-reveal" data-delay="80"><i>02</i><strong>{{ landing.benefit_two_title }}</strong><p>{{ landing.benefit_two_text }}</p></article>
+        <article class="pub8-reveal" data-delay="160"><i>03</i><strong>{{ landing.benefit_three_title }}</strong><p>{{ landing.benefit_three_text }}</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="landing8-cta">
+    <div class="landing8-shell landing8-cta-box pub8-reveal">
+      <div><small>{{ landing.short_label|upper }}</small><strong>Ready when you are.</strong><span>Start with the preparation path that matches your goal.</span></div>
+      <a href="{{ landing.primary_cta_url }}">{{ landing.primary_cta_label }} <b>→</b></a>
+    </div>
+  </section>
+</main>
+
+{% with support_url=site_settings|whatsapp_url %}
+  {% if support_url %}
+  <a class="pub8-whatsapp" href="{{ support_url }}" target="_blank" rel="noopener" aria-label="{{ site_settings.whatsapp_label }}">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3a12.5 12.5 0 0 0-10.8 18.8L3.5 28.5l6.9-1.8A12.5 12.5 0 1 0 16 3Z"/><path d="M11.1 9.4c-.3-.7-.7-.7-1-.7h-.8c-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.8s1.6 4.4 1.9 4.7c.2.3 3.2 5 7.8 6.8 3.9 1.5 4.7 1.2 5.5 1.1.9-.1 2.7-1.1 3.1-2.2.4-1.1.4-2 .3-2.2-.1-.2-.5-.4-1.3-.8-.7-.4-2.7-1.3-3.1-1.5-.4-.1-.7-.2-1.1.4-.3.5-1.2 1.5-1.5 1.8-.3.3-.6.4-1.3.1-.7-.4-2.9-1.1-5.5-3.5-2-1.8-2.1-2.7-1.8-3.2.2-.3.5-.6.7-.9.3-.3.4-.5.6-.8.2-.4.1-.7 0-1-.1-.3-.7-2.1-1-2.8Z"/></svg>
+    <span><strong>{{ site_settings.whatsapp_label }}</strong><small>24/7 support</small></span>
+  </a>
+  {% endif %}
+{% endwith %}
+
+<script defer src="{% static 'js/public-choice-v8.js' %}?v=20260903"></script>
+</body>
+</html>

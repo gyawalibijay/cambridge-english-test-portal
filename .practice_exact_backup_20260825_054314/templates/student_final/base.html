@@ -1,0 +1,108 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Upskill Practice{% endblock %}</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem('student-final-theme');
+      const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/student-final.css' %}">
+</head>
+<body>
+<div class="sf-app">
+  <aside class="sf-sidebar">
+    <a href="/dashboard/" class="sf-brand" aria-label="Upskill Practice home">
+      <span class="sf-brand-mark">U</span>
+      <span class="sf-brand-copy">
+        <strong>Upskill.</strong>
+        <small>CAMBRIDGE-ALIGNED PRACTICE</small>
+      </span>
+    </a>
+
+    <div class="sf-nav-group">
+      <div class="sf-nav-label">STUDY</div>
+      <a class="sf-nav-item {% if active == 'home' %}is-active{% endif %}" href="/dashboard/">
+        <span class="sf-icon">⌘</span><span>Home</span>{% if active == 'home' %}<i></i>{% endif %}
+      </a>
+      <a class="sf-nav-item {% if active == 'practice' %}is-active{% endif %}" href="/practice/">
+        <span class="sf-icon">◎</span><span>Practice</span>{% if active == 'practice' %}<i></i>{% endif %}
+      </a>
+      <a class="sf-nav-item {% if active == 'mock' %}is-active{% endif %}" href="/mock-tests/">
+        <span class="sf-icon">◴</span><span>Mock Tests</span>{% if active == 'mock' %}<i></i>{% endif %}
+      </a>
+      <a class="sf-nav-item {% if active == 'learn' %}is-active{% endif %}" href="/learn/">
+        <span class="sf-icon">◇</span><span>Learn</span>{% if active == 'learn' %}<i></i>{% endif %}
+      </a>
+    </div>
+
+    <div class="sf-nav-group">
+      <div class="sf-nav-label">YOUR ACCOUNT</div>
+      <a class="sf-nav-item {% if active == 'progress' %}is-active{% endif %}" href="/progress/">
+        <span class="sf-icon">▥</span><span>Progress</span>{% if active == 'progress' %}<i></i>{% endif %}
+      </a>
+      <a class="sf-nav-item {% if active == 'certificates' %}is-active{% endif %}" href="/certificates/">
+        <span class="sf-icon">♙</span><span>Certificates</span>{% if active == 'certificates' %}<i></i>{% endif %}
+      </a>
+      <a class="sf-nav-item {% if active == 'profile' %}is-active{% endif %}" href="/student-profile/">
+        <span class="sf-icon">♙</span><span>Profile</span>{% if active == 'profile' %}<i></i>{% endif %}
+      </a>
+    </div>
+
+    <div class="sf-sidebar-spacer"></div>
+
+    <div class="sf-target-card">
+      <small>TARGET LEVEL</small>
+      <strong>{{ target_level }}</strong>
+      <span>Estimated readiness {{ readiness|floatformat:0 }}% - keep practising consistently.</span>
+    </div>
+
+    <div class="sf-sidebar-actions">
+      <button type="button" class="sf-theme" data-theme-toggle>Theme</button>
+      <form method="post" action="/logout/">{% csrf_token %}<button class="sf-logout" type="submit">Sign out</button></form>
+    </div>
+  </aside>
+
+  <header class="sf-mobile-header">
+    <a href="/dashboard/" class="sf-mobile-brand"><span>U</span><strong>Upskill Practice</strong></a>
+    <div class="sf-mobile-actions">
+      <button type="button" class="sf-theme" data-theme-toggle>◐</button>
+      <a href="/student-profile/" class="sf-mobile-user">{{ display_name|slice:":1"|upper }}</a>
+    </div>
+  </header>
+
+  <nav class="sf-mobile-nav">
+    <a class="{% if active == 'home' %}is-active{% endif %}" href="/dashboard/">Home</a>
+    <a class="{% if active == 'practice' %}is-active{% endif %}" href="/practice/">Practice</a>
+    <a class="{% if active == 'mock' %}is-active{% endif %}" href="/mock-tests/">Mocks</a>
+    <a class="{% if active == 'learn' %}is-active{% endif %}" href="/learn/">Learn</a>
+    <a class="{% if active == 'progress' %}is-active{% endif %}" href="/progress/">Progress</a>
+    <a class="{% if active == 'certificates' %}is-active{% endif %}" href="/certificates/">Reports</a>
+  </nav>
+
+  <main class="sf-main">
+    {% if messages %}
+      <div class="sf-messages">
+        {% for message in messages %}<div class="sf-message">{{ message }}</div>{% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script>
+(() => {
+  const buttons = document.querySelectorAll('[data-theme-toggle]');
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('student-final-theme', next);
+  }));
+})();
+</script>
+</body>
+</html>

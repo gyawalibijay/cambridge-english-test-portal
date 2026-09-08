@@ -1,0 +1,53 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}Courses{% endblock %}
+{% block header %}Courses{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Learning</div>
+    <h1>Courses</h1>
+    <p>Create and publish learning courses only for test systems this admin account can manage.</p>
+  </div>
+
+  <a class="pv2-btn pv2-btn-primary" href="{% url 'academy_management:course_create' %}">
+    + New Course
+  </a>
+</div>
+
+<div class="pv2-card pv2-panel pv2-table-scroll">
+  <table class="pv2-admin-table">
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th>Test System</th>
+        <th>Materials</th>
+        <th>Published</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for course in courses %}
+      <tr>
+        <td><strong>{{ course.title }}</strong><br><span style="color:var(--pv2-muted)">{{ course.short_description|truncatechars:70 }}</span></td>
+        <td>{{ course.program.short_name|default:course.program.name }}</td>
+        <td>{{ course.material_total }}</td>
+        <td>{% if course.is_published %}<span class="pv2-status good">Published</span>{% else %}<span class="pv2-status">Draft</span>{% endif %}</td>
+        <td>{{ course.updated_at|date:"M j, Y" }}</td>
+        <td>
+          <div class="pv2-admin-actions">
+            <a class="pv2-admin-mini-btn" href="{% url 'academy_management:course_edit' course.id %}">Edit</a>
+            <a class="pv2-admin-mini-btn good" href="{% url 'academy_management:material_create' %}?course={{ course.id }}">+ Material</a>
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6">No courses yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

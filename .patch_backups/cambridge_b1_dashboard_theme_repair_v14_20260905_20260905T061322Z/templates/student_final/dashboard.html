@@ -1,0 +1,254 @@
+{% extends "student_final/base.html" %}
+{% load static %}
+{% block title %}Home | Upskill Practice{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard-reference.css' %}?v=20260903-streak-v14-8">
+<link rel="stylesheet" href="{% static 'css/dashboard-motion-v8.css' %}?v=20260903">
+<script defer src="{% static 'js/dashboard-streak-v14-8.js' %}?v=20260903-148"></script>
+{% endblock %}
+{% block content %}
+<div class="ref-dashboard">
+  <header class="ref-mobile-head" aria-label="Mobile home header">
+    <a href="{% url 'dashboard' %}" class="ref-mobile-brand" aria-label="Upskill home">
+      <span class="ref-mobile-mark">U</span>
+      <span class="ref-mobile-copy">
+        <strong>Upskill.</strong>
+        <small>FROM CAMBRIDGE</small>
+      </span>
+    </a>
+    {% include "partials/student_top_actions.html" with top_actions_variant="compact" %}
+  </header>
+
+  <section class="ref-shell-card">
+    <div class="ref-page-head">
+      <div>
+        <h1>{{ greeting }}, {{ display_name }}</h1>
+        <p>Continue your preparation and keep moving toward your target.</p>
+      </div>
+      <div class="ref-head-actions">{% include "partials/student_top_actions.html" %}</div>
+    </div>
+
+    <div class="ref-main-grid">
+      <article class="ref-card ref-hero-card">
+        <div class="ref-pill-row">
+          <span class="ref-hero-kicker">REGULAR LIVE CLASS</span>
+          <span class="ref-live-pill">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><path d="M12 8v4l3 2"/></svg>
+            Starts in 2h 18min
+          </span>
+        </div>
+        <div class="ref-hero-body">
+          <div class="ref-hero-copy">
+            <h2>Your weekly feedback class is coming up.</h2>
+            <p>Join the official WhatsApp Community for class updates and reminders.</p>
+            <a href="#" class="ref-white-button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.4c0 4.5-3.8 8.1-8.4 8.1-1.5 0-2.8-.3-4-.9L4 20l1.5-3.4C4.7 15.2 4.4 13.9 4.4 12.6c0-4.5 3.8-8.1 8.4-8.1s8.4 3.6 8.4 8.1Z"/><path d="M9.1 8.7c-.2-.4-.5-.4-.8-.4h-.7c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6 0 1.6 1.1 3 1.3 3.2.1.2 2.1 3.4 5.2 4.6 2.6 1 3.1.8 3.7.7.6-.1 1.8-.8 2-1.6.3-.8.3-1.4.2-1.6-.1-.2-.4-.3-.9-.6-.5-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.8 0-.5-.2-2-.8-3-2.4-.8-1.2-.8-1.8-.6-2.1.1-.2.3-.4.4-.6.1-.2.2-.3.4-.6.1-.2.1-.4 0-.6-.1-.2-.7-1.8-.9-2.1Z"/></svg>
+              Join WhatsApp Community
+            </a>
+          </div>
+          <div class="ref-hero-art" aria-hidden="true">
+            <div class="ref-hero-rings"></div>
+            <svg viewBox="0 0 120 120"><rect x="28" y="34" width="64" height="54" rx="10"/><path d="M40 24v18M80 24v18M28 48h64"/><rect x="40" y="58" width="10" height="10" rx="2"/><rect x="55" y="58" width="10" height="10" rx="2"/><rect x="70" y="58" width="10" height="10" rx="2"/><rect x="40" y="72" width="10" height="10" rx="2"/></svg>
+          </div>
+        </div>
+      </article>
+
+      <article class="ref-card ref-streak-card streak-v148" data-streak="{{ reference.streak }}">
+        <div class="ref-streak-topline">
+          <div><span class="ref-streak-eyebrow">DAILY STREAK</span><h2>Keep the flame alive</h2></div>
+          <span class="ref-streak-mini-count"><strong>{{ reference.streak }}</strong> days</span>
+        </div>
+        <div class="ref-streak-main">
+          <div class="ref-flame-scene" aria-hidden="true">
+            <span class="ref-ember e1"></span><span class="ref-ember e2"></span><span class="ref-ember e3"></span><span class="ref-ember e4"></span><span class="ref-ember e5"></span>
+            <div class="ref-flame-halo"></div>
+            <div class="ref-flame-art"><img src="{% static 'images/dashboard-streak-flame.webp' %}" alt=""></div>
+          </div>
+          <div class="ref-streak-big">
+            <strong>{{ reference.streak }}</strong><span>DAY STREAK</span>
+            <small>{% if reference.streak %}Practice today to keep your momentum burning.{% else %}Practice today to light your first streak.{% endif %}</small>
+          </div>
+        </div>
+        <div class="ref-streak-week">
+          <div class="ref-streak-week-head"><strong>THIS WEEK</strong><span>Consistency builds progress</span></div>
+          <div class="ref-streak-days">
+            {% for day in reference.calendar %}
+            <div class="ref-day-item{% if day.active %} is-active{% endif %}{% if day.today %} is-today{% endif %}">
+              <small>{{ day.label }}</small>
+              <span class="ref-day-flame">
+                {% if day.active %}
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.2 2.4c.8 3.2-1.9 4.7-2.5 6.5-.5 1.5.1 2.8 1.3 3.6-.1-2.4 1.3-4.2 2.8-5.5 1.5 2.1 3.8 4.8 3.8 8.1A5.6 5.6 0 0 1 12 20.7a5.6 5.6 0 0 1-5.6-5.6c0-3.3 2.2-5.9 5.8-12.7Z"/><path class="inner" d="M12.2 11c1.8 1.9 2.6 3.1 2.6 4.6a2.8 2.8 0 1 1-5.6 0c0-1.3.8-2.5 3-4.6Z"/></svg>
+                {% else %}<i></i>{% endif %}
+              </span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="ref-streak-milestone">
+          <div class="ref-streak-milestone-copy"><strong>Next milestone</strong><span data-streak-next>Keep going</span></div>
+          <div class="ref-streak-milestone-track"><span data-streak-progress></span></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="ref-second-grid">
+      <article class="ref-card ref-lesson-card">
+        <h2>Continue watching</h2>
+        <div class="ref-lesson-media" aria-hidden="true">
+          <div class="ref-lesson-aa">Aa</div>
+          <div class="ref-lesson-person">
+            <svg viewBox="0 0 180 180"><circle cx="90" cy="58" r="26"/><path d="M44 156c8-31 30-47 46-47s38 16 46 47"/><path d="M64 108c12 16 40 16 52 0"/><path d="M63 72c4 10 16 20 27 20s23-10 27-20"/></svg>
+          </div>
+          <div class="ref-play-button"><span></span></div>
+          <div class="ref-lesson-copy-block">
+            <strong>Essential Grammar</strong>
+            <ul>
+              <li>Tenses</li>
+              <li>Articles</li>
+              <li>Prepositions</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ref-lesson-footer">
+          <div>
+            <strong>Essential Grammar</strong>
+            <span>18:42 / 32:15</span>
+          </div>
+          <a href="{% url 'student_learn' %}" class="ref-blue-button">Continue Watching</a>
+        </div>
+      </article>
+
+      <article class="ref-card ref-prep-card">
+        <h2>Today's Preparation</h2>
+        <div class="ref-prep-corner" aria-hidden="true"></div>
+        <div class="ref-prep-stats">
+          <div>
+            <small>Questions</small>
+            <strong>{{ reference.questions }}<span>/40</span></strong>
+          </div>
+          <div>
+            <small>Practice Time</small>
+            <strong>{{ reference.minutes_today }}<span>/30 min</span></strong>
+          </div>
+          <div>
+            <small>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1.2 4 6 6.2 6 11a6 6 0 0 1-12 0c0-2.7 1.7-4.9 3-6.8.1 3.1 1.3 4.5 2.3 4.8.9-2.1.7-5.1.7-8Z"/></svg>
+              Streak
+            </small>
+            <strong>{{ reference.streak }}<span>days</span></strong>
+          </div>
+        </div>
+        <div class="ref-progress-bar"><span style="width: {{ reference.goal_pct }}%"></span></div>
+        <p class="ref-prep-note">You are <b>{{ reference.goal_pct }}%</b> through today’s question goal.</p>
+        <a href="{% url 'student_practice_hub' %}" class="ref-primary-button">Continue Practice <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+
+    <section class="ref-tools-section">
+      <h2>Your preparation tools</h2>
+      <div class="ref-tools-grid">
+        <a href="{% url 'student_learn' %}" class="ref-tool-card">
+          <span class="ref-tool-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5A2.5 2.5 0 0 1 7.5 3H19v16H7.5A2.5 2.5 0 0 0 5 21V5.5Z"/><path d="M19 3v16"/></svg>
+          </span>
+          <div><strong>Course</strong><span>Recorded lessons</span></div>
+          <span class="ref-tool-arrow">›</span>
+        </a>
+        <a href="{% url 'student_practice_hub' %}" class="ref-tool-card">
+          <span class="ref-tool-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.5-1 9.6-9.6a2.1 2.1 0 0 0 0-3l-.5-.5a2.1 2.1 0 0 0-3 0L5 15.5 4 20Z"/><path d="m13 6 5 5"/></svg>
+          </span>
+          <div><strong>Practice</strong><span>Build your skills</span></div>
+          <span class="ref-tool-arrow">›</span>
+        </a>
+        <a href="{% url 'student_mock_tests' %}" class="ref-tool-card">
+          <span class="ref-tool-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 2v4M15 2v4M8 11h8M8 15h5"/></svg>
+          </span>
+          <div><strong>Mock Test</strong><span>Exam-style practice</span></div>
+          <span class="ref-tool-arrow">›</span>
+        </a>
+        <a href="{% url 'student_progress' %}" class="ref-tool-card">
+          <span class="ref-tool-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.9 4.7L19 9.6l-4 3.3 1.3 5.1L12 15.2 7.7 18l1.3-5.1-4-3.3 5.1-1.9L12 3Z"/></svg>
+          </span>
+          <div><strong>AI Feedback</strong><span>Learn from feedback</span></div>
+          <span class="ref-tool-arrow">›</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="ref-leaderboard">
+      <div class="ref-section-head ref-leaderboard-head">
+        <h2>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v3a4 4 0 0 1-8 0V3Z"/><path d="M8 5H4v1a4 4 0 0 0 4 4M16 5h4v1a4 4 0 0 1-4 4M12 10v4M9 21h6M8 18h8"/></svg>
+          Top performers
+        </h2>
+        <a href="{% url 'student_progress' %}" class="ref-outline-button">View Leaderboard <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="ref-performer-list">
+        {% for performer in top_performers %}
+        <div class="ref-performer-row{% if performer.rank == 1 %} is-first{% elif performer.rank == 2 %} is-second{% elif performer.rank == 3 %} is-third{% endif %}">
+          <div class="ref-performer-rank">
+            {% if performer.rank == 1 %}
+              <span class="ref-small-medal gold" aria-label="1st place">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h8v5a4 4 0 0 1-8 0V3Z"/><path d="M8 5H5v1a4 4 0 0 0 4 4M16 5h3v1a4 4 0 0 1-4 4M12 12v4M9 21h6M8 18h8"/></svg>
+              </span>
+            {% elif performer.rank == 2 %}
+              <span class="ref-small-medal silver" aria-label="2nd place">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1 7 4.5-3 4.5 3-1-7"/></svg>
+              </span>
+            {% elif performer.rank == 3 %}
+              <span class="ref-small-medal bronze" aria-label="3rd place">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1 7 4.5-3 4.5 3-1-7"/></svg>
+              </span>
+            {% else %}
+              <span class="ref-normal-rank">{{ performer.rank }}</span>
+            {% endif %}
+          </div>
+          <div class="ref-performer-avatar">{{ performer.initials }}</div>
+          <div class="ref-performer-info">
+            <strong>{{ performer.name }}</strong>
+            <span>{% if performer.rank == 1 %}1st place{% elif performer.rank == 2 %}2nd place{% elif performer.rank == 3 %}3rd place{% else %}Rank {{ performer.rank }}{% endif %}</span>
+          </div>
+          <strong class="ref-performer-score">{{ performer.score|floatformat:0 }}%</strong>
+        </div>
+        {% empty %}
+        <div class="ref-performer-empty">Complete scored practice to appear on the leaderboard.</div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="ref-promo-grid">
+      <article class="ref-promo-card">
+        <div class="ref-promo-icon youtube">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12c0 2.1-.2 3.7-.4 4.8-.2.9-.9 1.7-1.8 1.9-1.8.5-7.8.5-7.8.5s-6 0-7.8-.5c-.9-.2-1.6-1-1.8-1.9C2.2 15.7 2 14.1 2 12s.2-3.7.4-4.8c.2-.9.9-1.7 1.8-1.9C6 4.8 12 4.8 12 4.8s6 0 7.8.5c.9.2 1.6 1 1.8 1.9.2 1.1.4 2.7.4 4.8Z"/><path d="m10 8.8 5 3.2-5 3.2V8.8Z" class="ref-youtube-play"/></svg>
+        </div>
+        <div class="ref-promo-copy">
+          <strong>Learn More on YouTube</strong>
+          <span>Watch free Cambridge Upskill lessons, tips and updates.</span>
+          <a href="#" class="ref-ghost-red">Visit Channel ↗</a>
+        </div>
+      </article>
+
+      <article class="ref-promo-card">
+        <div class="ref-promo-icon review">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.6 5.2 5.7.8-4.1 4 1 5.7L12 16l-5.2 2.7 1-5.7-4.1-4 5.7-.8L12 3Z"/></svg>
+        </div>
+        <div class="ref-promo-copy">
+          <strong>Enjoying your preparation?</strong>
+          <span>Your feedback helps us improve the learning experience.</span>
+          <a href="#" class="ref-small-blue">Leave a Review</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="ref-quote-bar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 6.3L21 12l-6.3 2.7L12 21l-2.7-6.3L3 12l6.3-2.7Z"/></svg>
+      <span>Consistency beats intensity. Show up today.</span>
+    </div>
+</section>
+</div>
+{% endblock %}
+

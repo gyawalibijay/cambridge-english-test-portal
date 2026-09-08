@@ -1,0 +1,88 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/b1-writing-set-builder-v39.css' %}?v=20260908-390">{% endblock %}
+{% block content %}
+<div class="w39-page">
+  <header class="w39-hero">
+    <div>
+      <span class="w39-kicker">CAMBRIDGE · WRITING · V{{ version }}</span>
+      <h1>Writing Sets</h1>
+      <p>Manage the imported Writing bank as <b>Set → Part → Task</b>. The 50 complete Sets are the canonical Practice/Mock source. Each Set has Part 1 + Part 2 and keeps the same standardized title pattern used by the Mock Builder.</p>
+    </div>
+    <div class="w39-actions">
+      <a class="w39-btn ghost" href="/practice/" target="_blank">Student Practice ↗</a>
+      <a class="w39-btn primary" href="/admin/mock-builder/">Mock Builder →</a>
+    </div>
+  </header>
+
+  <section class="w39-summary">
+    <div><small>COMPLETE SETS</small><strong>50</strong><span>{{ ready_sets }} ready</span></div>
+    <div><small>CANONICAL TASKS</small><strong>100</strong><span>50 Part 1 + 50 Part 2</span></div>
+    <div><small>SUPPLEMENTARY P2</small><strong>10</strong><span>{{ ready_extras }} ready</span></div>
+    <div><small>WRITING TIME</small><strong>30 min</strong><span>2 × 15-minute Practice parts</span></div>
+  </section>
+
+  <aside class="w39-note">
+    <b>Source handling:</b> Sets 1–50 below come from the three complete two-task Writing files and are automatically placed into Writing Practice. The separate <b>PART 2 WRITING.docx</b> bank is preserved in “Supplementary Part 2” below instead of silently replacing the Part 2 tasks already supplied for Sets 1–10.
+  </aside>
+
+  <div class="w39-toolbar">
+    <label>
+      <span>Find a Writing Set</span>
+      <input id="w39-search" type="search" placeholder="Search Set number or task type…" autocomplete="off">
+    </label>
+    <span class="w39-toolbar-note">Open a Part to edit its source/scenario, student task and minimum word count.</span>
+  </div>
+
+  <div class="w39-grid" id="w39-grid">
+    {% for row in rows %}
+    <article class="w39-set-card" data-search="{{ row.search }}">
+      <header>
+        <div><span>WRITING SET</span><h2>{{ row.set_no|stringformat:"02d" }}</h2></div>
+        <b class="w39-status {% if row.ready %}ready{% endif %}">{% if row.ready %}2/2 READY{% else %}CHECK CONTENT{% endif %}</b>
+      </header>
+      <div class="w39-parts">
+        {% for part in row.parts %}
+        <a href="{{ part.url }}" class="w39-part">
+          <span class="w39-num">P{{ part.part_no }}</span>
+          <span class="w39-copy"><b>Part {{ part.part_no }} · {{ part.type }}</b><small>{{ part.min_words }}+ words · AI/evaluator Writing response</small></span>
+          <span class="w39-part-state {% if part.ready %}ok{% endif %}">{% if part.ready %}READY{% else %}CHECK{% endif %}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        {% endfor %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <section class="w39-extra">
+    <div class="w39-extra-head">
+      <div><span class="w39-kicker">SUPPLEMENTARY PART 2 BANK</span><h2>10 additional community response / review tasks</h2></div>
+      <p>Stored safely in the Question Bank and editable here. They are <b>not automatically placed</b> into Practice or Mock, so they cannot conflict with the complete Sets 1–10.</p>
+    </div>
+    <div class="w39-extra-grid">
+      {% for row in extra_rows %}
+      <a href="{{ row.url }}" class="w39-extra-card">
+        <span>{{ row.number|stringformat:"02d" }}</span>
+        <b>{{ row.title }}</b>
+        <small>{% if row.ready %}Ready supplementary task{% else %}Needs content review{% endif %}</small>
+        <em>Manage →</em>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+<script>
+(() => {
+  const search = document.getElementById('w39-search');
+  const cards = Array.from(document.querySelectorAll('.w39-set-card'));
+  if (!search) return;
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    cards.forEach(card => {
+      card.hidden = !!q && !String(card.dataset.search || '').includes(q);
+    });
+  });
+})();
+</script>
+{% endblock %}

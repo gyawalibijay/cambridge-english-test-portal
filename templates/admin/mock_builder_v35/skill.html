@@ -1,0 +1,179 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/mock-builder-v35-part1.css' %}?v=20260908-350">
+{% endblock %}
+
+{% block content %}
+<div class="mb35-page">
+  <div class="mb35-backrow">
+    <a href="{% url 'admin:b1_mock_builder_detail' mock.pk %}">← {{ mock.title }}</a>
+    <a href="{{ special_builder_url }}">Open {{ spec.label }} content workspace ↗</a>
+  </div>
+
+  <header class="mb35-skill-hero">
+    <div class="mb35-skill-hero-icon">{{ spec.icon }}</div>
+    <div>
+      <span class="mb35-kicker">{{ spec.label|upper }} · {{ spec.parts }} PARTS · {{ spec.minutes }} MINUTES</span>
+      <h1>{{ spec.label }} Mock Builder</h1>
+      <p>
+        Assign the exact questions the student should receive.
+        Copy an existing Practice Set when available, or choose existing
+        {{ spec.label }} questions manually.
+      </p>
+    </div>
+    <div class="mb35-detail-actions">
+      <a class="mb35-btn light" href="{{ question_bank_url }}">Question Bank</a>
+      <a class="mb35-btn primary" href="{{ question_add_url }}">+ Add {{ spec.label }} Question</a>
+    </div>
+  </header>
+
+  <section class="mb35-flow compact">
+    <div><span>01</span><b>Choose Part</b><small>Part 1, 2, 3…</small></div>
+    <i>→</i>
+    <div><span>02</span><b>Choose content</b><small>Copy Set or pick existing questions</small></div>
+    <i>→</i>
+    <div><span>03</span><b>Confirm order</b><small>Question order is stored in PartQuestion.order</small></div>
+  </section>
+
+  {% if sets %}
+  <section class="mb35-source-box">
+    <div class="mb35-section-head no-margin">
+      <div>
+        <span class="mb35-kicker">DETECTED PRACTICE SETS</span>
+        <h2>Reusable {{ spec.label }} Sets</h2>
+      </div>
+      <small>Detected from the existing S&lt;set&gt; P&lt;part&gt; Q&lt;question&gt; naming.</small>
+    </div>
+    <div class="mb35-set-strip">
+      {% for set in sets %}
+      <div class="mb35-set-chip">
+        <b>Set {{ set.set_no }}</b>
+        <span>{{ set.total }} total questions</span>
+        <small>
+          {% for part_no, count in set.parts.items %}
+            P{{ part_no }}: {{ count }}{% if not forloop.last %} · {% endif %}
+          {% endfor %}
+        </small>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% else %}
+  <section class="mb35-source-box">
+    <span class="mb35-kicker">NO STANDARDIZED SET TITLES DETECTED YET</span>
+    <h2>Use the manual existing-question picker below.</h2>
+    <p>
+      This is normal for a skill whose Practice builder has not yet adopted
+      S&lt;set&gt; P&lt;part&gt; Q&lt;question&gt; titles.
+    </p>
+  </section>
+  {% endif %}
+
+  <div class="mb35-part-list">
+    {% for item in parts %}
+    <article class="mb35-part-card">
+      <header>
+        <div>
+          <span class="mb35-part-no">PART {{ item.part_no }}</span>
+          <h2>{{ spec.label }} Part {{ item.part_no }}</h2>
+          <p>
+            {% if item.question_count %}
+              {{ item.question_count }} questions currently assigned
+              {% if item.current_set %}· Set {{ item.current_set }}{% endif %}
+            {% else %}
+              No questions assigned yet.
+            {% endif %}
+          </p>
+        </div>
+        <span class="mb35-status {% if item.question_count %}ready{% else %}draft{% endif %}">
+          {% if item.question_count %}Configured{% else %}Empty{% endif %}
+        </span>
+      </header>
+
+      {% if item.questions %}
+      <div class="mb35-current-questions">
+        {% for question in item.questions %}
+        <span><b>{{ forloop.counter|stringformat:"02d" }}</b>{{ question.title }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if sets %}
+      <div class="mb35-part-action-box">
+        <div>
+          <small>FASTEST OPTION</small>
+          <b>Copy a complete Practice Set Part</b>
+          <p>The same Question records are reused. No duplicate question is created.</p>
+        </div>
+        <div class="mb35-set-buttons">
+          {% for set in sets %}
+            {% for part_no, count in set.parts.items %}
+              {% if part_no == item.part_no %}
+              <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="use_set">
+                <input type="hidden" name="part_no" value="{{ item.part_no }}">
+                <input type="hidden" name="set_no" value="{{ set.set_no }}">
+                <button class="mb35-mini-btn" type="submit">
+                  Use Set {{ set.set_no }} <span>{{ count }} Q</span>
+                </button>
+              </form>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <details class="mb35-manual">
+        <summary>Choose existing {{ spec.label }} questions manually</summary>
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="manual_assign">
+          <input type="hidden" name="part_no" value="{{ item.part_no }}">
+
+          <label>
+            <span>Select one or more questions</span>
+            <small>
+              Hold Ctrl on Windows or Cmd on Mac to select several.
+              The builder stores them in deterministic question-number/title order.
+            </small>
+            <select name="question_ids" multiple size="9">
+              {% for question in all_questions %}
+              <option value="{{ question.pk }}">{{ question.title }}</option>
+              {% empty %}
+              <option disabled>No active {{ spec.label }} questions found.</option>
+              {% endfor %}
+            </select>
+          </label>
+
+          <div class="mb35-manual-actions">
+            <button class="mb35-btn primary" type="submit">Use Selected Questions</button>
+            <a class="mb35-btn light" href="{{ question_add_url }}">+ Create Question</a>
+          </div>
+        </form>
+      </details>
+
+      {% if item.question_count %}
+      <form class="mb35-clear-form" method="post"
+            onsubmit="return confirm('Clear only this Full Mock Part placement? The Question Bank records will NOT be deleted.');">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="clear">
+        <input type="hidden" name="part_no" value="{{ item.part_no }}">
+        <button type="submit">Clear this Part placement</button>
+      </form>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+
+  <aside class="mb35-note">
+    <b>Important:</b>
+    This page does not delete Practice content. Replacing a Part deletes only
+    the Full Mock's placement rows, then rebuilds them in the selected order.
+  </aside>
+</div>
+{% endblock %}

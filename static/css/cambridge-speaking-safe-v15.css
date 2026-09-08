@@ -1,0 +1,239 @@
+/* ==========================================================
+   CAMBRIDGE SPEAKING SAFE V15
+   CSS-only visual layer + very small safe JS helper.
+   It NEVER hides parent containers and NEVER relocates runner DOM.
+   ========================================================== */
+
+body.cambridge-speaking-safe-v15{
+  margin:0!important;
+  background:#eef4f7!important;
+  color:#26384c!important;
+  font-family:Inter,"Segoe UI",Arial,sans-serif!important;
+}
+
+/* Keep every possible runner/root container visible. */
+body.cambridge-speaking-safe-v15 #runner,
+body.cambridge-speaking-safe-v15 main,
+body.cambridge-speaking-safe-v15 .attempt-shell,
+body.cambridge-speaking-safe-v15 .runner-shell,
+body.cambridge-speaking-safe-v15 .speaking-runner{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+/* Any V14 runtime class must never be allowed to hide a structural container. */
+body.cambridge-speaking-safe-v15 .csp-v14-stage.csp-v14-debug-hidden,
+body.cambridge-speaking-safe-v15 #runner.csp-v14-debug-hidden,
+body.cambridge-speaking-safe-v15 main.csp-v14-debug-hidden,
+body.cambridge-speaking-safe-v15 .attempt-shell.csp-v14-debug-hidden{
+  display:block!important;
+}
+
+/* Narrow distraction-free canvas like the reference video. */
+body.cambridge-speaking-safe-v15 #runner,
+body.cambridge-speaking-safe-v15 .speaking-runner,
+body.cambridge-speaking-safe-v15 [data-attempt-id][data-part-order]{
+  width:min(100%,480px)!important;
+  min-height:100vh!important;
+  margin:0 auto!important;
+  padding:24px 24px 48px!important;
+  box-sizing:border-box!important;
+  background:#fff!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+/* Larger readable text throughout the practice runner. */
+body.cambridge-speaking-safe-v15 #runner,
+body.cambridge-speaking-safe-v15 .speaking-runner{
+  font-size:16px!important;
+  line-height:1.5!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-task-title{
+  margin:28px 0 18px!important;
+  text-align:center!important;
+  color:#26384c!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  font-weight:600!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-answer-title{
+  margin:26px 0 18px!important;
+  color:#26384c!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-state-title{
+  margin:0 0 12px!important;
+  text-align:center!important;
+  color:#394b61!important;
+  font-size:16px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-listen{
+  width:100%!important;
+  min-height:50px!important;
+  padding:0 18px!important;
+  margin:0 0 28px!important;
+  border:0!important;
+  border-radius:3px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  background:#35536f!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-listen:disabled,
+body.cambridge-speaking-safe-v15 .v15-listen.v15-playing{
+  background:#9aa2ae!important;
+}
+
+/* Top progress / clock */
+body.cambridge-speaking-safe-v15 .v15-progress{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:50px!important;
+  height:24px!important;
+  padding:0 12px!important;
+  border-radius:999px!important;
+  background:#4cc9c3!important;
+  color:#fff!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-clock{
+  font-size:13px!important;
+  font-weight:700!important;
+  color:#3d4d5f!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+/* Preparation / recording circles: do not alter timer logic, only visuals. */
+body.cambridge-speaking-safe-v15 .v15-big-number{
+  font-size:46px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  color:#40546b!important;
+  letter-spacing:-.04em!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-ring{
+  width:122px!important;
+  height:122px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-ring svg{
+  width:122px!important;
+  height:122px!important;
+}
+
+/* Speak / Done */
+body.cambridge-speaking-safe-v15 .v15-action{
+  min-width:126px!important;
+  min-height:40px!important;
+  padding:0 22px!important;
+  border:0!important;
+  border-radius:3px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#35536f!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+
+/* Recording label */
+body.cambridge-speaking-safe-v15 .v15-recording{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  margin:12px 0 18px!important;
+  font-size:15px!important;
+  color:#3b4a5f!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-recording::before{
+  content:""!important;
+  width:10px!important;
+  height:10px!important;
+  border-radius:50%!important;
+  background:#eb5964!important;
+}
+
+/* Hide ONLY exact debug leaf nodes tagged by V15 JS. */
+body.cambridge-speaking-safe-v15 .v15-debug-leaf{
+  display:none!important;
+}
+
+/* We do not hide arbitrary progress bars. Only known mic/debug bars tagged by V15. */
+body.cambridge-speaking-safe-v15 .v15-mic-debug{
+  display:none!important;
+}
+
+/* Answer replay state */
+body.cambridge-speaking-safe-v15 audio{
+  width:100%!important;
+  margin:8px 0 18px!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-post-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-retry,
+body.cambridge-speaking-safe-v15 .v15-submit{
+  min-height:42px!important;
+  border-radius:2px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:14px!important;
+  font-weight:800!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-retry{
+  background:#fff!important;
+  color:#4b5767!important;
+  border:1px solid #aeb6bf!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-submit{
+  background:#35536f!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  border:1px solid #35536f!important;
+}
+
+@media(max-width:560px){
+  body.cambridge-speaking-safe-v15 #runner,
+  body.cambridge-speaking-safe-v15 .speaking-runner,
+  body.cambridge-speaking-safe-v15 [data-attempt-id][data-part-order]{
+    width:100%!important;
+    padding:20px 18px 40px!important;
+  }
+}

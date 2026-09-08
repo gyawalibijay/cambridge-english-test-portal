@@ -1,0 +1,212 @@
+<div class="b1-sidebar-backdrop" data-b1-sidebar-close></div>
+
+<aside class="b1-sidebar" id="b1-admin-sidebar" aria-label="Administration navigation">
+  <div class="b1-sidebar-inner">
+
+    <div class="b1-sidebar-search">
+      <span>⌕</span>
+      <input type="search" id="b1-sidebar-search" placeholder="Search admin menu…" autocomplete="off">
+      <kbd>/</kbd>
+    </div>
+
+    <nav class="b1-sidebar-nav">
+
+      <div class="b1-nav-section">
+        <span class="b1-nav-label">OVERVIEW</span>
+        <a class="b1-nav-link" href="{% url 'admin:index' %}">
+          <span class="b1-nav-icon">⌂</span>
+          <span class="b1-nav-copy"><b>Dashboard</b><small>Control center</small></span>
+        </a>
+      </div>
+
+      <div class="b1-nav-section">
+        <span class="b1-nav-label">CONTENT</span>
+
+        <a class="b1-nav-link" href="/admin/question_bank/question/">
+          <span class="b1-nav-icon">Q</span>
+          <span class="b1-nav-copy"><b>Questions</b><small>All four test skills</small></span>
+        </a>
+
+        <!-- B1_READING_SETS_LINK_V36 -->
+        <a class="b1-nav-link" href="/admin/reading-sets/">
+          <span class="b1-nav-icon">R</span>
+          <span class="b1-nav-copy"><b>Reading Sets</b><small>50 sets · Parts · questions · answers</small></span>
+        </a>
+        <!-- /B1_READING_SETS_LINK_V36 -->
+
+        <a class="b1-nav-link" href="/admin/listening-sets/">
+          <span class="b1-nav-icon">L</span>
+          <span class="b1-nav-copy"><b>Listening Sets</b><small>Part + Set + audio + answers</small></span>
+        </a>
+
+
+        <!-- B1_SPEAKING_SETS_V38_5_LINK -->
+<a class="b1-nav-link" href="/admin/speaking-sets/">
+  <span class="b1-nav-icon">S</span>
+  <span><b>Speaking Sets</b><small>Sets 02–31 · audio + read aloud</small></span>
+</a>
+<!-- B1_WRITING_SETS_V39_LINK -->
+<a class="b1-nav-link" href="/admin/writing-sets/">
+  <span class="b1-nav-icon">W</span>
+  <span><b>Writing Sets</b><small>50 sets · 2 tasks · +10 supplementary</small></span>
+</a>
+<a class="b1-nav-link" href="/admin/question_bank/stimulus/">
+          <span class="b1-nav-icon">♫</span>
+          <span class="b1-nav-copy"><b>Audio & Stimulus</b><small>Shared source material</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/academy/coursematerial/">
+          <span class="b1-nav-icon">▶</span>
+          <span class="b1-nav-copy"><b>Course Materials</b><small>Lessons and resources</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/academy/testmaterial/">
+          <span class="b1-nav-icon">▤</span>
+          <span class="b1-nav-copy"><b>Test Materials</b><small>Test support resources</small></span>
+        </a>
+      </div>
+
+      <div class="b1-nav-section">
+        <span class="b1-nav-label">ASSESSMENTS</span>
+
+        <a class="b1-nav-link" href="/admin/mock-builder/">
+          <span class="b1-nav-icon">✓</span>
+          <span class="b1-nav-copy"><b>Mock Tests</b><small>Build complete Cambridge mocks</small></span>
+        </a>
+
+        <!-- B1_FULL_MOCK_REVIEW_LINK_V35_PART3 -->
+        <a class="b1-nav-link" href="/evaluation/full-mocks/">
+          <span class="b1-nav-icon">R</span>
+          <span class="b1-nav-copy"><b>Full Mock Reviews</b><small>Results, Speaking & Writing review</small></span>
+        </a>
+        <!-- /B1_FULL_MOCK_REVIEW_LINK_V35_PART3 -->
+
+        <a class="b1-nav-link" href="/admin/assessments/program/">
+          <span class="b1-nav-icon">P</span>
+          <span class="b1-nav-copy"><b>Programs</b><small>Program structure</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/assessments/testpart/">
+          <span class="b1-nav-icon">#</span>
+          <span class="b1-nav-copy"><b>Test Parts</b><small>Parts and timing</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/assessments/testsection/">
+          <span class="b1-nav-icon">§</span>
+          <span class="b1-nav-copy"><b>Test Sections</b><small>Section configuration</small></span>
+        </a>
+      </div>
+
+      <div class="b1-nav-section">
+        <span class="b1-nav-label">STUDENTS</span>
+
+        <a class="b1-nav-link" href="/admin/accounts/studentprofile/">
+          <span class="b1-nav-icon">◎</span>
+          <span class="b1-nav-copy"><b>Student Profiles</b><small>Student account details</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/auth/user/">
+          <span class="b1-nav-icon">U</span>
+          <span class="b1-nav-copy"><b>Users</b><small>Login and staff accounts</small></span>
+        </a>
+      </div>
+
+      <div class="b1-nav-section">
+        <span class="b1-nav-label">PAYMENTS & ACCESS</span>
+
+        <a class="b1-nav-link" href="/admin/commerce/purchase/">
+          <span class="b1-nav-icon">₨</span>
+          <span class="b1-nav-copy"><b>Purchases</b><small>Manual payment review</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/commerce/accesspackage/">
+          <span class="b1-nav-icon">A</span>
+          <span class="b1-nav-copy"><b>Access Packages</b><small>Pricing and access plans</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/commerce/paymentdestination/">
+          <span class="b1-nav-icon">₿</span>
+          <span class="b1-nav-copy"><b>Payment Destinations</b><small>Bank/payment details</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/commerce/programentitlement/">
+          <span class="b1-nav-icon">E</span>
+          <span class="b1-nav-copy"><b>Entitlements</b><small>Program access rights</small></span>
+        </a>
+      </div>
+
+      <div class="b1-nav-section">
+        <span class="b1-nav-label">WEBSITE</span>
+
+        <a class="b1-nav-link" href="/admin/website/publicprogramlandingpage/">
+          <span class="b1-nav-icon">◫</span>
+          <span class="b1-nav-copy"><b>Landing Pages</b><small>Public program content</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/pricing-offer-control/">
+          <span class="b1-nav-icon">%</span>
+          <span class="b1-nav-copy"><b>Pricing Offer</b><small>Countdown & campaign deadline</small></span>
+        </a>
+
+
+
+        <a class="b1-nav-link" href="/admin/website/publicsitesetting/">
+          <span class="b1-nav-icon">⚙</span>
+          <span class="b1-nav-copy"><b>Site Settings</b><small>Public website settings</small></span>
+        </a>
+
+        <a class="b1-nav-link" href="/admin/website/publicinquiry/">
+          <span class="b1-nav-icon">✉</span>
+          <span class="b1-nav-copy"><b>Inquiries</b><small>Public messages/leads</small></span>
+        </a>
+      </div>
+
+      <div class="b1-nav-section">
+        <span class="b1-nav-label">TOOLS</span>
+
+        <!-- B1_OPERATIONS_LINK_V33_7 -->
+        <a class="b1-nav-link" href="/admin/operations-center/">
+          <span class="b1-nav-icon">◫</span>
+          <span class="b1-nav-copy"><b>Operations Center</b><small>Payments, access & students</small></span>
+        </a>
+        <!-- /B1_OPERATIONS_LINK_V33_7 -->
+
+        <a class="b1-nav-link" href="/admin/media-center/">
+          <span class="b1-nav-icon">▣</span>
+          <span class="b1-nav-copy"><b>Media Center</b><small>Audio, video and documents</small></span>
+        </a>
+      </div>
+
+      <details class="b1-all-modules">
+        <summary>
+          <span>ALL SYSTEM MODULES</span>
+          <b>⌄</b>
+        </summary>
+
+        <div class="b1-all-module-list">
+          {% for app in available_apps %}
+          <div class="b1-dynamic-app">
+            <span class="b1-dynamic-app-title">{{ app.name }}</span>
+            {% for model in app.models %}
+              {% if model.admin_url %}
+              <a class="b1-dynamic-model" href="{{ model.admin_url }}">{{ model.name }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+      </details>
+
+    </nav>
+
+    <div class="b1-sidebar-footer">
+      <div class="b1-user-avatar">{{ user.username|slice:":1"|upper }}</div>
+      <div class="b1-sidebar-user">
+        <b>{{ user.get_short_name|default:user.username }}</b>
+        <span>Administrator</span>
+      </div>
+      <a href="{% url 'admin:password_change' %}" title="Change password">⚙</a>
+    </div>
+
+  </div>
+</aside>

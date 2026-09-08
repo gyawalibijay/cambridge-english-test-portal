@@ -1,0 +1,50 @@
+.sf-sidebar .portal-nav-icon-v13{
+  width:20px!important;
+  height:20px!important;
+  min-width:20px!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  flex:0 0 20px!important;
+  color:#687791!important;
+}
+.sf-sidebar .portal-nav-icon-v13 svg{
+  width:18px!important;
+  height:18px!important;
+  display:block!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.75!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}
+.sf-sidebar .portal-nav-label-v13{
+  font-size:14px!important;
+  line-height:1.2!important;
+  font-weight:600!important;
+  color:inherit!important;
+}
+.sf-sidebar a.active .portal-nav-icon-v13,
+.sf-sidebar a[aria-current="page"] .portal-nav-icon-v13{
+  color:#1729b8!important;
+}
+
+/* Stop every historical second-icon layer. */
+.sf-sidebar a::before{
+  content:none!important;
+  display:none!important;
+}
+.sf-sidebar a > svg,
+.sf-sidebar a > i,
+.sf-sidebar a > .icon,
+.sf-sidebar a > .nav-icon,
+.sf-sidebar a > .sf-nav-icon,
+.sf-sidebar a > .sf-side-icon,
+.sf-sidebar a > .sf-ref-nav-icon,
+.sf-sidebar a > .sf-ref-nav-icon-v7,
+.sf-sidebar a > .portal-nav-icon-v11,
+.sf-sidebar a > .portal-nav-icon-v12{
+  display:none!important;
+}
+.sf-sidebar a > .portal-nav-icon-v13{
+  display:inline-grid!important;
+}

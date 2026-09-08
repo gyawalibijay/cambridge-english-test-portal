@@ -1,0 +1,69 @@
+{% extends "admin/base_site.html" %}
+{% load static i18n %}
+{% block bodyclass %}{{ block.super }} b1-operations-page{% endblock %}
+{% block content_title %}{% endblock %}
+{% block content %}
+<div class="b1-ops-wrap">
+  <section class="b1-ops-hero">
+    <div class="b1-ops-hero-copy">
+      <span class="b1-ops-kicker">OPERATIONS CENTER</span>
+      <h1>Run the portal without hunting through admin screens.</h1>
+      <p>Payments, student access, packages, entitlements and uploaded media are grouped here. Use this page for day-to-day operations; use the sidebar for detailed editing.</p>
+      <div class="b1-ops-hero-actions">
+        <a href="{{ urls.purchases }}" class="b1-ops-primary">Review payments <span>→</span></a>
+        <a href="{{ urls.students }}" class="b1-ops-secondary">Find a student <span>→</span></a>
+      </div>
+    </div>
+    <div class="b1-ops-hero-guide">
+      <span class="b1-ops-mini-label">DAILY CHECK</span>
+      <div><b>1</b><p><strong>Payments</strong><small>Check records waiting for review.</small></p></div>
+      <div><b>2</b><p><strong>Access</strong><small>Confirm entitlements after approval.</small></p></div>
+      <div><b>3</b><p><strong>Content</strong><small>Audit media before student delivery.</small></p></div>
+    </div>
+  </section>
+  <section class="b1-ops-metrics">
+    {% for card in cards %}
+    <a href="{{ card.url }}" class="b1-ops-metric is-{{ card.tone }}">
+      <span class="b1-ops-metric-icon">{{ card.icon }}</span>
+      <span class="b1-ops-metric-copy"><small>{{ card.label }}</small><strong>{{ card.value }}</strong><em>{{ card.note }}</em></span>
+      <span class="b1-ops-metric-arrow">↗</span>
+    </a>
+    {% endfor %}
+  </section>
+  <section class="b1-ops-grid">
+    <div class="b1-ops-panel">
+      <div class="b1-ops-section-head"><div><span class="b1-ops-kicker">OPERATIONS WORKFLOW</span><h2>Common actions</h2></div><p>Use these shortcuts for the jobs an administrator performs most often.</p></div>
+      <div class="b1-ops-workflow">
+        {% for item in workflow %}
+        <a href="{{ item.url }}" class="b1-ops-workflow-item"><span class="b1-ops-workflow-number">0{{ forloop.counter }}</span><div><strong>{{ item.title }}</strong><p>{{ item.detail }}</p><em>{{ item.action }} →</em></div></a>
+        {% endfor %}
+      </div>
+    </div>
+    <aside class="b1-ops-side">
+      <section class="b1-ops-panel b1-pending-panel">
+        <div class="b1-ops-section-head compact"><div><span class="b1-ops-kicker">PAYMENTS</span><h2>Needs review</h2></div><span class="b1-ops-count">{{ purchase_status.pending }}</span></div>
+        {% if pending_purchases %}<div class="b1-pending-list">{% for item in pending_purchases %}<a href="{{ item.url }}" class="b1-pending-row"><span class="b1-pending-dot"></span><span><strong>{{ item.label }}</strong><small>{{ item.status|default:"Review record" }}</small></span><b>→</b></a>{% endfor %}</div>{% else %}<div class="b1-ops-empty"><strong>No obvious pending payment records.</strong><span>Open Purchases to review all records.</span></div>{% endif %}
+        <a class="b1-ops-panel-action" href="{{ urls.purchases }}">View all purchases →</a>
+      </section>
+      <section class="b1-ops-panel">
+        <div class="b1-ops-section-head compact"><div><span class="b1-ops-kicker">MEDIA HEALTH</span><h2>Stored files</h2></div></div>
+        <div class="b1-media-breakdown"><div><span>Audio</span><strong>{{ media.kinds.audio }}</strong></div><div><span>Video</span><strong>{{ media.kinds.video }}</strong></div><div><span>Images</span><strong>{{ media.kinds.image }}</strong></div><div><span>Documents</span><strong>{{ media.kinds.document }}</strong></div></div>
+        <div class="b1-media-total"><span>Total storage scanned</span><strong>{{ media.size }}</strong></div>
+        <a class="b1-ops-panel-action" href="/admin/media-center/">Open Media Center →</a>
+      </section>
+    </aside>
+  </section>
+  <section class="b1-ops-shortcuts">
+    <div class="b1-ops-section-head"><div><span class="b1-ops-kicker">DIRECT MANAGEMENT</span><h2>Operations shortcuts</h2></div></div>
+    <div class="b1-ops-shortcut-grid">
+      <a href="{{ urls.packages }}"><span>A</span><b>Access Packages</b><small>Plans, pricing records and availability.</small></a>
+      <a href="{{ urls.entitlements }}"><span>E</span><b>Program Entitlements</b><small>Which student/account can access which program.</small></a>
+      <a href="{{ urls.destinations }}"><span>₨</span><b>Payment Destinations</b><small>Bank/payment information shown to learners.</small></a>
+      <a href="{{ urls.users }}"><span>U</span><b>User Accounts</b><small>Authentication and staff access.</small></a>
+      <a href="{{ urls.attempts }}"><span>✓</span><b>Test Attempts</b><small>Review attempt records when troubleshooting.</small></a>
+      <a href="/admin/media-center/"><span>▣</span><b>Media Center</b><small>Audit audio, video, images and documents.</small></a>
+    </div>
+  </section>
+  <section class="b1-ops-note"><span>!</span><div><strong>Safe operations rule</strong><p>Do not grant access based only on a screenshot or message. Verify the payment record, then confirm the student's entitlement. For content files, preview the file and test the student-facing page before considering the upload complete.</p></div></section>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Full Mock Reviews | B1 Ready{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/full-mock-v35-part3.css' %}?v=20260908-352">
+<main class="fm35p3-page adminview">
+  <div class="fm35p3-toplinks"><a href="/admin/mock-builder/">← Mock Builder</a><a href="{% url 'grading:review_queue' %}">All response reviews</a></div>
+  <section class="fm35p3-heading"><span class="fm35p3-kicker">EVALUATOR · FULL MOCK</span><h1>Full Mock Review Queue</h1><p>Grouped by student attempt so Speaking/Writing review and result readiness are easy to follow.</p></section>
+  <div class="fm35p3-admin-list">
+    {% for row in rows %}
+    <article class="{% if row.needs_attention %}attention{% endif %}">
+      <div><small>{{ row.attempt.started_at|date:"M j, Y · H:i" }}</small><h2>{{ row.attempt.user }} · {{ row.attempt.mock_test.title }}</h2><p>{{ row.summary.response_count }}/{{ row.summary.question_count }} responses · {{ row.summary.pending_review }} pending review</p></div>
+      <div class="fm35p3-admin-score">{% if row.summary.overall_percent != None %}<b>{{ row.summary.overall_percent }}%</b>{% else %}<b>—</b>{% endif %}<span>{{ row.attempt.get_status_display }}</span></div>
+      <a href="{% url 'grading:full_mock_attempt' row.attempt.pk %}">Open attempt →</a>
+    </article>
+    {% empty %}<div class="fm35p3-empty">No continuous Full Mock attempts yet.</div>{% endfor %}
+  </div>
+</main>
+{% endblock %}

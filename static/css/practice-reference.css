@@ -1,0 +1,31 @@
+/* CLIENT_PRACTICE_REFERENCE_20260830 — measured from the supplied 1366px screenshot. */
+:root{--pr-bg:#f4fafc;--pr-panel:#fff;--pr-text:#071123;--pr-muted:#57666b;--pr-line:#ecf0f1;--pr-teal:#00afaf}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--pr-bg);color-scheme:light}
+body{margin:0;min-width:320px;min-height:100vh;background:var(--pr-bg);color:var(--pr-text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a,button{font:inherit}
+.practice-ref-page{width:100%;min-height:100vh;margin:0}
+.practice-ref-panel{width:min(100%,448px);min-height:100vh;margin:0 auto;background:#fff}
+.practice-ref-header{position:relative;display:flex;height:56px;align-items:center;justify-content:center;border-bottom:1px solid var(--pr-line);font-size:15px;font-weight:500;color:var(--pr-text);background:#fff}
+.practice-ref-back{position:absolute;top:10px;left:12px;display:grid;width:32px;height:36px;place-items:center;color:var(--pr-text);text-decoration:none}
+.practice-ref-back svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.practice-ref-list{margin:0;padding:8px 16px 0}
+.practice-ref-row{display:flex;width:100%;min-height:81px;align-items:center;gap:16px;border-bottom:1px solid var(--pr-line);color:var(--pr-text);text-decoration:none;background:#fff}
+.practice-ref-row:hover{background:#f8fcfc}
+.practice-ref-icon{display:grid;width:48px;height:48px;flex:0 0 48px;place-items:center;border:2px solid #4dc7c8;border-radius:50%;color:var(--pr-teal)}
+.practice-ref-icon svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.practice-ref-copy{min-width:0;flex:1}
+.practice-ref-title{display:block;font-size:14px;font-weight:500;line-height:1.4}
+.practice-ref-sub{display:block;margin-top:2px;color:var(--pr-muted);font-size:11px;line-height:1.4;font-weight:400}
+.practice-ref-action{flex:none;color:var(--pr-teal);font-size:11px;font-weight:400;white-space:nowrap}
+.practice-ref-part-row{min-height:69px}
+.practice-ref-number{display:grid;width:36px;height:36px;flex:0 0 36px;place-items:center;border-radius:50%;color:#fff;background:var(--pr-teal);font-size:15px;font-weight:500}
+.practice-ref-mock{display:flex;flex-direction:column;gap:10px;margin:32px 16px 28px;padding:16px;border:1px solid #aee4e5;border-radius:18px;color:var(--pr-text);background:#f8fcfc;text-decoration:none}
+.practice-ref-mock-copy{display:flex;flex-direction:column;gap:5px}
+.practice-ref-mock-copy strong{font-size:13px;font-weight:500}
+.practice-ref-mock-copy small{font-size:11px;line-height:1.5;color:var(--pr-muted)}
+.practice-ref-mock-action{color:var(--pr-teal);font-size:11px;font-weight:500}
+.practice-ref-mock-action b{font-weight:400}
+.practice-ref-back:focus-visible,.practice-ref-row:focus-visible,.practice-ref-mock:focus-visible{outline:2px solid var(--pr-teal);outline-offset:2px}
+@media(max-width:860px){body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}.practice-ref-page,.practice-ref-panel{min-height:calc(100vh - 76px - env(safe-area-inset-bottom))}}
+@media(max-width:448px){html,body{background:#fff}}

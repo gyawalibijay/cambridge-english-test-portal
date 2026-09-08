@@ -1,0 +1,209 @@
+/*
+ * CAMBRIDGE_B1_MOBILE_V30_20260905
+ * WebVeda-inspired mobile opening screen only.
+ * Desktop composition, landing content, routes and behaviour are unchanged.
+ */
+
+@media (max-width:700px){
+  /* Keep the compact white navigation, but give it the same calm proportions
+     as the WebVeda mobile header. The Cambridge/Arya identity remains visible. */
+  .b1x-page .b1x-header-inner{
+    min-height:72px;
+    gap:10px;
+  }
+  .b1x-page .b1x-brand{
+    min-width:0;
+    gap:7px;
+  }
+  .b1x-page .b1x-brand-logo{
+    width:43px!important;
+    height:37px!important;
+    max-width:43px!important;
+    flex-basis:43px;
+    border-radius:4px;
+  }
+  .b1x-page .b1x-brand-name{
+    max-width:176px;
+    font-size:12px;
+    line-height:1.1;
+  }
+  .b1x-page .b1x-brand-name small{
+    margin-top:3px;
+    font-size:6px;
+    letter-spacing:.08em;
+  }
+  .b1x-page .b1x-header-actions{gap:8px}
+  .b1x-page .b1x-login{
+    min-height:42px;
+    padding-inline:15px;
+    font-size:13px;
+  }
+  .b1x-page .b1x-menu-toggle{
+    width:43px;
+    height:43px;
+    border:0;
+    border-radius:12px;
+    background:#f4f5f7;
+  }
+
+  /* One uninterrupted, full-bleed image like WebVeda: centered copy sits on
+     the photograph, while the three supporting benefits form a small bottom
+     strip instead of a separate card or a second portrait. */
+  .b1x-page .b1x-hero-v24{
+    min-height:clamp(500px,calc(100svh - 72px),560px);
+    max-height:none;
+    overflow:hidden;
+    background:#241812;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo{
+    display:block!important;
+    inset:0!important;
+    background-image:url("../images/public/cambridge-b1/hero-webveda.png")!important;
+    background-position:82% center!important;
+    background-size:auto 100%!important;
+    filter:saturate(.78) contrast(1.03);
+    opacity:1!important;
+    transform:none!important;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-shade{
+    display:block!important;
+    background:
+      linear-gradient(180deg,rgba(25,14,11,.67) 0%,rgba(25,14,11,.3) 48%,rgba(21,11,9,.84) 100%),
+      linear-gradient(90deg,rgba(21,12,9,.48),rgba(21,12,9,.12) 68%,rgba(21,12,9,.28));
+  }
+  .b1x-page .b1x-hero-v24::after{
+    display:block!important;
+    z-index:1;
+    height:150px;
+    background:linear-gradient(0deg,rgba(22,12,9,.86),rgba(22,12,9,0));
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{
+    position:relative;
+    z-index:3;
+    display:flex;
+    min-height:clamp(500px,calc(100svh - 72px),560px);
+    align-items:flex-start;
+    padding:32px 0 24px!important;
+    text-align:center;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-copy{
+    position:relative;
+    z-index:4;
+    display:flex;
+    width:100%;
+    max-width:100%;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-proof{
+    width:auto;
+    max-width:100%;
+    justify-content:center;
+    margin:0 auto 18px!important;
+    font-size:10px;
+    letter-spacing:-.01em;
+    line-height:1.3;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-proof .b1x-proof-avatars{
+    width:50px!important;
+    height:23px!important;
+    flex-basis:50px;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-proof-avatars img{
+    width:23px;
+    height:23px;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-proof-avatars img:nth-child(2){left:14px}
+  .b1x-page .b1x-hero-v24 .b1x-proof-avatars img:nth-child(3){left:28px}
+  .b1x-page .b1x-hero-v24 h1{
+    max-width:340px;
+    font-size:clamp(2.65rem,13vw,3.3rem);
+    line-height:1.02;
+    letter-spacing:-.06em;
+    white-space:normal;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-lead{
+    max-width:290px;
+    margin:16px auto 0;
+    font-size:17px;
+    line-height:1.45;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions{
+    display:block;
+    margin-top:23px;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions .b1x-button-blue{
+    width:min(100%,270px);
+    min-width:0;
+    min-height:51px;
+    padding-inline:18px;
+    font-size:13px;
+    box-shadow:0 14px 32px rgba(18,31,153,.3);
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-person-mobile{display:none!important}
+
+  /* WebVeda-style benefit rail: same small icon-over-label treatment and
+     balanced three-column placement inside the hero. */
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{
+    position:absolute!important;
+    right:14px!important;
+    bottom:20px!important;
+    left:14px!important;
+    display:grid!important;
+    width:auto!important;
+    max-width:none!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-items:start;
+    gap:8px!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline>div{
+    display:flex!important;
+    width:auto!important;
+    min-width:0;
+    min-height:0!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    flex-direction:column!important;
+    gap:6px!important;
+    padding:0 2px!important;
+    text-align:center!important;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline svg{
+    width:21px!important;
+    height:21px!important;
+    flex:0 0 21px!important;
+    filter:drop-shadow(0 1px 3px rgba(0,0,0,.38));
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline span{
+    max-width:112px;
+    color:#fff;
+    font-size:9.5px!important;
+    font-weight:600;
+    line-height:1.16!important;
+    text-align:center;
+    text-shadow:0 1px 5px rgba(0,0,0,.72);
+  }
+}
+
+@media (max-width:390px){
+  .b1x-page .b1x-brand-logo{
+    width:40px!important;
+    height:35px!important;
+    max-width:40px!important;
+    flex-basis:40px;
+  }
+  .b1x-page .b1x-brand-name{max-width:148px;font-size:11px}
+  .b1x-page .b1x-brand-name small{font-size:5.7px}
+  .b1x-page .b1x-login{min-height:40px;padding-inline:13px;font-size:12.5px}
+  .b1x-page .b1x-menu-toggle{width:41px;height:41px}
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{padding-top:28px!important}
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{right:10px!important;left:10px!important;gap:4px!important}
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline span{font-size:9px!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo{filter:saturate(.78) contrast(1.03)}
+}

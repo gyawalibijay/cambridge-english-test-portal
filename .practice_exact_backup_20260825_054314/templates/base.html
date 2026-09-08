@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Unified English Mock-Test Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <script defer src="{% static 'js/vendor/htmx.min.js' %}"></script>
+    <script defer src="{% static 'js/vendor/alpine.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/cambridge-shell.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cambridge-exam.css' %}">
+    <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+    <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-900">
+<div x-data="{ mobileMenu: false }" class="min-h-screen">
+<header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-20 items-center justify-between">
+            <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-950 text-lg font-bold text-brand-gold">ST</div>
+                <div>
+                    <div class="font-bold text-slate-950">English Mock Portal</div>
+                    <div class="text-xs text-slate-500">Surakshya Technologies</div>
+                </div>
+            </a>
+            {% if user.is_authenticated %}
+            <nav class="hidden items-center gap-2 md:flex">
+                <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+                {% if user.is_staff %}<a href="/results/" class="nav-link">Results</a>{% endif %}
+                <form method="post" action="{% url 'logout' %}">{% csrf_token %}
+                    <button type="submit" class="nav-link text-red-600">Sign out</button>
+                </form>
+            </nav>
+            <button type="button" @click="mobileMenu = !mobileMenu" class="rounded-lg border border-slate-200 p-2 md:hidden">☰</button>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <div x-cloak x-show="mobileMenu" class="border-t border-slate-100 py-4 md:hidden">
+            <a href="{% url 'dashboard' %}" class="mobile-nav-link">Dashboard</a>
+            {% if user.is_staff %}<a href="/results/" class="mobile-nav-link">Results</a>{% endif %}
+            <form method="post" action="{% url 'logout' %}">{% csrf_token %}
+                <button type="submit" class="mobile-nav-link w-full text-left text-red-600">Sign out</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer class="mt-16 border-t border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-8 text-sm text-slate-500 sm:px-6 md:flex-row md:justify-between lg:px-8">
+        <div>© {% now "Y" %} Surakshya Technologies</div>
+        <div>Unified English Mock-Test Portal</div>
+    </div>
+</footer>
+</div>
+</body>
+</html>

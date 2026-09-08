@@ -1,0 +1,195 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Django / secrets
+.env
+.env.*
+local_settings.py
+secrets.json
+
+# Database
+db.sqlite3
+db.sqlite3-*
+*.sqlite3
+*.sqlite
+
+# User-uploaded/media files
+media/
+
+# Static build output
+staticfiles/
+
+# Logs
+*.log
+logs/
+
+# Backups
+backups/
+backup/
+*.bak
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Certificates / keys
+*.pem
+*.key
+*.crt
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# ===== Production private files =====
+.env
+.env.*
+!.env.example
+
+# Database
+db.sqlite3
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+
+# User uploads / production content
+media/
+
+# Server backups
+backups/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Logs
+*.log
+logs/
+
+# Collected static output
+staticfiles/
+
+# Credentials / keys
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Production secrets
+.env
+.env.*
+!.env.example
+
+# Database
+db.sqlite3
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Runtime / deployment
+backups/
+logs/
+*.log
+*.pid
+*.sock
+
+# Uploaded production files
+media/
+
+# Generated static output
+staticfiles/
+
+# Archives / transfer files
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.rar
+*.7z
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Production secrets
+.env
+.env.*
+!.env.example
+
+# Database
+db.sqlite3
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Runtime / deployment
+backups/
+logs/
+*.log
+*.pid
+*.sock
+
+# Uploaded production files
+media/
+
+# Generated static output
+staticfiles/
+
+# Archives / transfer files
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.rar
+*.7z
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

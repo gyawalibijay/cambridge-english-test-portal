@@ -1,0 +1,35 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Learn | Upskill Practice{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">LEARN</div>
+  <h1>Learn</h1>
+  <p>Build the skills you need to succeed.</p>
+</section>
+
+<section class="sf-two-grid sf-library-head">
+  <article class="sf-action-card"><div class="sf-action-icon">▶</div><h3>Video Lessons</h3><p>Watch expert-led lessons uploaded by your course administrator.</p><a href="#all-lessons">Browse videos <span>→</span></a></article>
+  <article class="sf-action-card"><div class="sf-action-icon">▤</div><h3>PDF Resources</h3><p>Study downloadable learning materials from your purchased courses.</p><a href="/courses/">Open library <span>→</span></a></article>
+</section>
+
+<div class="sf-filter-row"><span>Reading</span><span>Writing</span><span>Listening</span><span>Speaking</span><span>Grammar</span><span>Vocabulary</span></div>
+
+<section id="all-lessons" class="sf-lessons-section">
+  <h2>All lessons</h2>
+  <div class="sf-three-grid sf-lessons-grid">
+    {% for item in materials %}
+      <article class="sf-lesson-card">
+        <div class="sf-lesson-cover"><span>▶</span></div>
+        <div class="sf-lesson-body">
+          <div class="sf-kicker">{{ item.type|upper }} · {{ target_level }}</div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description|truncatechars:130 }}</p>
+          <a href="{{ item.url }}">Open resource <span>→</span></a>
+        </div>
+      </article>
+    {% empty %}
+      <div class="sf-empty sf-span-all"><h2>No learning materials published yet</h2><p>Use the administration area to upload video lessons, PDFs and course materials. Published resources will appear here automatically.</p></div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

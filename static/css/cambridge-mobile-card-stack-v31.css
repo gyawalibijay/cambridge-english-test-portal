@@ -1,0 +1,46 @@
+/* Mobile overlap behavior only. Existing card content and visual styles win. */
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+  .b1x-page [data-b1-mobile-stack-region],
+  .b1x-page [data-b1-mobile-stack-wrapper] {
+    /* overflow:hidden creates a separate scroll container and breaks sticky. */
+    overflow: visible !important;
+  }
+
+  .b1x-page [data-b1-mobile-stack-group] {
+    display: block !important;
+    position: relative;
+    overflow: visible !important;
+    isolation: isolate;
+    padding-bottom: var(--b1x-mobile-stack-tail, 120px) !important;
+  }
+
+  .b1x-page [data-b1-mobile-stack-group] > [data-b1-mobile-stack-card] {
+    position: sticky !important;
+    top: var(--b1x-mobile-stack-top, 84px) !important;
+    z-index: var(--b1x-mobile-stack-order, 1) !important;
+    margin-bottom: 16px !important;
+    align-self: start;
+    /* Reveal transforms must not hide a card already underneath another. */
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .b1x-page .b1x-method-steps > [data-b1-mobile-stack-card] {
+    transform: translateY(var(--b1x-method-y, 0px)) scale(var(--b1x-method-scale, 1)) !important;
+  }
+
+  .b1x-page .b1x-promise-grid > [data-b1-mobile-stack-card] {
+    transform: translateY(var(--b1x-promise-y, 0px)) scale(var(--b1x-promise-scale, 1)) !important;
+  }
+
+  .b1x-page .b1x-problem-stack > [data-b1-mobile-stack-card] {
+    transform: translateY(var(--b1x-stack-y, 0px)) scale(var(--b1x-stack-scale, 1)) !important;
+  }
+
+  /* Very short viewports/large text: retain readable cards in normal flow. */
+  .b1x-page [data-b1-mobile-stack-group="flow"] > [data-b1-mobile-stack-card] {
+    position: relative !important;
+    top: auto !important;
+    transform: none !important;
+  }
+}

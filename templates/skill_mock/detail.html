@@ -1,0 +1,33 @@
+{% extends 'skill_mock/base.html' %}
+{% block title %}{{ mock_test.title }}{% endblock %}
+{% block heading %}{{ mock_test.title }}{% endblock %}
+{% block content %}
+<div class="mock-detail">
+  <span class="practice-ref-icon mock-detail-icon">{% include 'skill_mock/icon.html' %}</span>
+  <h1>{{ mock_test.title }}</h1>
+  <p class="mock-summary">{{ parts|length }} parts · {{ total }} questions · One test</p>
+  {% if error %}<p class="mock-notice" role="alert">{{ error }}</p>{% endif %}
+  {% if active_mock %}
+  <div class="mock-notice">
+    <strong>{{ active_mock.mock_test.title }} is already in progress.</strong>
+    <p>Resume it from your next unanswered question. Starting again will not erase your answers.</p>
+  </div>
+  <a class="mock-button" href="{% url 'attempts:dispatch' active_mock.pk %}">Resume test →</a>
+  {% elif parts %}
+  <h2>Before you start</h2>
+  <ul class="mock-rules">
+    <li>Complete every part of {{ skill }} in this single attempt.</li>
+    <li>Your progress is saved after each submitted answer. You can return to resume.</li>
+    {% if skill == 'listening' %}<li>Use headphones. Each question includes a recording to listen to before you answer.</li>{% endif %}
+    {% if skill == 'speaking' %}<li>Allow microphone access and record in a quiet place.</li>{% endif %}
+    {% if skill == 'writing' %}<li>Follow the word limits shown for each task.</li>{% endif %}
+    <li>After the final question, see your result. Another test will not start automatically.</li>
+  </ul>
+  <form method="post" action="{% url 'assessments:start_test' mock_test.slug %}">
+    {% csrf_token %}
+    <button class="mock-button" type="submit">Start {{ skill }} mock →</button>
+  </form>
+  {% else %}<p>This test is not ready yet. Please contact your instructor.</p>{% endif %}
+  <p class="mock-footnote">Unofficial B1-level preparation material. Speaking and writing feedback uses the same review process as Practice.</p>
+</div>
+{% endblock %}

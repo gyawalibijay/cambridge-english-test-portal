@@ -1,0 +1,924 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Cambridge Speaking | Arya Academy{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl px-3 py-5 sm:px-6 sm:py-8 lg:px-8">
+
+  <div
+    id="runner"
+    class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-xl"
+    data-submit-url="{% url 'attempts:submit_speaking_response' attempt.id item.id %}"
+    data-prep="{{ preparation_seconds|default:0 }}"
+    data-response="{% if response_seconds != None %}{{ response_seconds }}{% endif %}"
+    data-minimum="{% if minimum_response_seconds != None %}{{ minimum_response_seconds }}{% else %}0{% endif %}"
+    data-part-order="{{ item.part.order }}"
+    data-audio-url="{{ prompt_audio_url }}"
+    data-attempt-id="{{ attempt.id }}"
+    data-section-seconds="{{ item.part.section.duration_seconds|default:720 }}"
+    data-started-at="{{ attempt.started_at|date:'c' }}"
+    data-question-visible="{% if item.part.question_visible %}1{% else %}0{% endif %}"
+   data-v20-part-order="{{ item.part.order }}" data-v20-part-total="{{ part_total }}">
+
+    <!-- Compact top bar inspired by the supplied reference video -->
+    <div class="reference-topbar">
+      <div class="reference-progress">{{ part_position }}/{{ part_total }}</div>
+      <div class="reference-session-time">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="1.7"></circle><path d="M12 7v5l3 2" stroke-width="1.7" stroke-linecap="round"></path></svg>
+        <span id="sessionTimer"
+              data-full-mock-timer="{% if attempt.metadata.practice_mode == 'full_mock' %}1{% else %}0{% endif %}"
+              data-full-mock-timer-url="{% if attempt.metadata.practice_mode == 'full_mock' %}{% url 'attempts:full_mock_timer' attempt.id %}{% endif %}">--:--</span>
+        <!-- B1_FULL_MOCK_TIMER_SPEAKING_V35_1 -->
+      </div>
+    </div>
+
+    <div class="speaking-module-body">
+
+      {% if item.part.question_visible %}
+      <section class="speaking-module-card speaking-question-card">
+        <h2>{% if item.part.order == 3 or item.part.order == 4 %}Read and speak{% else %}Read and answer{% endif %}</h2>
+        <div class="speaking-module-surface">
+      <div id="speakingVisibleTask">
+        {% if item.part.order == 3 or item.part.order == 4 %}
+        <div class="speaking-task-instruction">
+          Read the sentence out loud
+        </div>
+        {% endif %}
+        <div class="speaking-task-text {% if item.part.order == 5 %}is-left{% endif %}">
+          {{ item.question.prompt_text }}
+        </div>
+      </div>
+        <button id="listenButton" type="button" class="hidden">Continue</button>
+        </div>
+      </section>
+      {% else %}
+      <section class="speaking-module-card speaking-listen-card">
+        <h2>Listen and answer</h2>
+        <div class="speaking-module-surface">
+          <button
+            id="listenButton"
+            type="button"
+            class="speaking-listen-button"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z"></path></svg>
+            <span id="listenButtonText">Listen</span>
+          </button>
+        </div>
+      </section>
+      {% endif %}
+
+      <section class="speaking-module-card speaking-response-card">
+        <h2>Record and submit your answer</h2>
+        <div class="speaking-module-surface speaking-response-surface">
+
+      <div id="promptPanel">
+        <div class="speaking-recording-lock">
+          <strong>{% if item.part.question_visible %}Your recording will begin automatically{% else %}Play the audio/video above first to unlock your recording{% endif %}</strong>
+          <small>{% if item.part.question_visible %}Get ready to record your answer.{% else %}The recording button will appear once you finish listening.{% endif %}</small>
+        </div>
+
+          <div id="micStatus" class="mt-2 flex items-center gap-2 text-xs text-slate-400">
+            <span id="micDot" class="h-2 w-2 rounded-full bg-slate-300"></span>
+            <span id="micStatusText">Microphone will be checked before recording.</span>
+          </div>
+
+          <div class="speaking-diagnostics mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
+            <div
+              id="micLevel"
+              class="h-full w-0 rounded-full bg-teal-500 transition-[width] duration-100"
+            ></div>
+          </div>
+
+      </div>
+
+
+      <!-- Preparation phase -->
+      <div id="preparePanel" class="hidden text-center">
+        <div class="v18-state-title">{% if item.part.order == 5 %}Prepare your answer...{% else %}Get ready to speak...{% endif %}</div>
+        <div class="speaking-countdown-wrap mt-7 flex justify-center">
+          <div id="prepRing" class="relative flex h-36 w-36 items-center justify-center rounded-full" style="background: conic-gradient(#b9bec6 0deg, #dfe3e7 0deg);">
+            <div class="absolute inset-[10px] rounded-full bg-white"></div>
+            <div id="prepNumber" class="relative text-5xl font-black text-slate-900">5</div>
+          </div>
+        </div>
+        <p class="speaking-prep-help">Recording starts automatically — or tap below to start now</p>
+        <button id="earlySpeakButton" type="button" class="v18-speak-button">Speak Now</button>
+      </div>
+
+      <!-- Recording phase -->
+      <div id="recordPanel" class="hidden text-center">
+        <div class="v18-recording-label">
+          Recording in progress...
+        </div>
+        <div id="recordingInstruction" class="speaking-recording-instruction {% if item.part.order != 5 %}hidden{% endif %}">
+          Speak for at least 1 minute
+        </div>
+
+        <div class="speaking-countdown-wrap mt-7 flex justify-center">
+          <div
+            id="recordRing"
+            class="relative flex h-40 w-40 items-center justify-center rounded-full"
+            style="background: conic-gradient(#ef4444 0deg, #e2e8f0 0deg);"
+          >
+            <div class="absolute inset-[10px] rounded-full bg-white"></div>
+            <div class="relative">
+              <div id="recordNumber" class="text-5xl font-black text-slate-900">
+                {{ response_seconds|default:10 }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="speaking-diagnostics mx-auto mt-4 max-w-sm">
+          <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+            <div
+              id="recordLevel"
+              class="h-full w-0 rounded-full bg-red-500 transition-[width] duration-100"
+            ></div>
+          </div>
+          <div class="mt-2 text-xs text-slate-400">
+            Live microphone level
+          </div>
+        </div>
+
+        <button
+          id="doneButton"
+          type="button"
+          class="mt-7 rounded-xl bg-slate-800 px-8 py-3 text-sm font-bold text-white transition hover:bg-slate-900"
+        >
+          Done
+        </button>
+
+      </div>
+
+
+      <!-- Review phase -->
+      <div id="reviewPanel" class="hidden">
+        <div class="speaking-review-title">Recording saved — review before submitting</div>
+        <div class="speaking-playback">
+          <button id="playbackButton" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z"></path></svg>
+            <span id="playbackButtonText">Listen to your recording</span>
+          </button>
+          <span id="recordedDuration" class="speaking-recorded-duration">00:00</span>
+
+          <audio
+            id="answerPlayback"
+            preload="metadata"
+          ></audio>
+
+          <div id="audioQualityHint" class="mt-3 text-xs leading-5 text-slate-500">
+            Listen once to confirm your voice is clear enough before submitting.
+          </div>
+
+        </div>
+
+        <div class="v18-review-actions">
+
+          <button
+            id="retryButton"
+            type="button"
+            class="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-50"
+          >
+            Retry
+          </button>
+
+          <button
+            id="submitButton"
+            type="button"
+            class="rounded-xl bg-slate-800 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Submit
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- Saving phase -->
+      <div id="savingPanel" class="hidden speaking-saving-panel">
+        Saving your recording...
+      </div>
+
+
+      <!-- Final completion phase -->
+      <div id="finishPanel" class="hidden py-6 text-center">
+
+        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal-50 text-teal-600">
+          <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="m5 12 4 4L19 6" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+
+        <div class="mt-5 text-2xl font-bold text-slate-950">
+          {% if attempt.metadata.practice_mode == 'skill_mock' %}Speaking mock completed{% else %}Speaking practice completed{% endif %}
+        </div>
+
+        <div class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+          Your answers have been submitted. Local AI grading may still be processing in the background.
+        </div>
+
+        <a
+          id="viewResultButton"
+          href="#"
+          class="mt-7 inline-flex min-w-[220px] items-center justify-center gap-2 rounded-xl bg-slate-900 px-7 py-3.5 text-sm font-bold text-white transition hover:bg-slate-800"
+        >
+          View Result
+          <span aria-hidden="true">→</span>
+        </a>
+
+        <a
+          href="/dashboard/"
+          class="mt-3 block text-sm font-semibold text-slate-500 hover:text-slate-900"
+        >
+          Return to Dashboard
+        </a>
+
+      </div>
+
+
+      <div
+        id="errorBox"
+        class="mt-6 hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700"
+      ></div>
+
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  
+
+</section>
+
+{{ item.question.prompt_text|json_script:"hidden-question-prompt" }}
+
+{% if attempt.metadata.practice_mode == 'full_mock' %}
+<script src="{% static 'js/full-mock-section-timer-v35-part2.js' %}?v=20260908-351"></script>
+{% else %}
+<script src="{% static 'js/speaking-session-clock.js' %}?v=prep-excluded-20260830"></script>
+{% endif %}
+<script>
+(() => {
+  const runner = document.getElementById('runner');
+
+  const listenButton = document.getElementById('listenButton');
+  const listenButtonText = document.getElementById('listenButtonText');
+
+  const visibleTaskPanel = document.getElementById('speakingVisibleTask');
+  const promptPanel = document.getElementById('promptPanel');
+  const preparePanel = document.getElementById('preparePanel');
+  const recordPanel = document.getElementById('recordPanel');
+  const reviewPanel = document.getElementById('reviewPanel');
+  const savingPanel = document.getElementById('savingPanel');
+  const finishPanel = document.getElementById('finishPanel');
+  const viewResultButton = document.getElementById('viewResultButton');
+
+  const prepRing = document.getElementById('prepRing');
+  const prepNumber = document.getElementById('prepNumber');
+
+  const recordRing = document.getElementById('recordRing');
+  const recordNumber = document.getElementById('recordNumber');
+
+  const micDot = document.getElementById('micDot');
+  const micStatusText = document.getElementById('micStatusText');
+  const micLevel = document.getElementById('micLevel');
+  const recordLevel = document.getElementById('recordLevel');
+
+  const doneButton = document.getElementById('doneButton');
+  const retryButton = document.getElementById('retryButton');
+  const submitButton = document.getElementById('submitButton');
+
+  const answerPlayback = document.getElementById('answerPlayback');
+  const playbackButton = document.getElementById('playbackButton');
+  const playbackButtonText = document.getElementById('playbackButtonText');
+  const recordedDuration = document.getElementById('recordedDuration');
+  const audioQualityHint = document.getElementById('audioQualityHint');
+
+  const errorBox = document.getElementById('errorBox');
+  const sessionTimer = document.getElementById('sessionTimer');
+
+  const partOrder = Number(runner.dataset.partOrder || 1);
+  // SPEAKING_FIVE_SECOND_PREPARATION_FIX: Parts 1-4 use 5 seconds.
+  const prepSeconds = partOrder === 5 ? 40 : 5;
+  const fixedResponseSeconds = partOrder === 5 ? 0 : (partOrder === 2 ? 20 : 10);
+  const minimumSeconds = partOrder === 5 ? 60 : 0;
+  // B1_SPEAKING_PART5_60S_V38_5
+  const responseSeconds = partOrder === 5 ? 60 : fixedResponseSeconds;
+  const audioUrl = runner.dataset.audioUrl || '';
+  const submitUrl = runner.dataset.submitUrl;
+  const attemptId = runner.dataset.attemptId;
+  const sectionSeconds = partOrder === 5 ? 110 : 300;
+  const startedAtRaw = runner.dataset.startedAt;
+  const questionVisible = runner.dataset.questionVisible === '1';
+
+  document.body.classList.toggle('video-part5', partOrder === 5);
+  const progressChip = document.querySelector('.reference-progress');
+  if (progressChip && partOrder === 5) progressChip.classList.add('video-single');
+
+  const promptText = JSON.parse(
+    document.getElementById('hidden-question-prompt').textContent
+  );
+
+  let stream = null;
+  let recorder = null;
+  let chunks = [];
+  let recordedBlob = null;
+  let recordedUrl = null;
+  let recordingStartedAt = 0;
+  let actualDuration = 0;
+  let currentPhase = 'ready';
+  let stopRequested = false;
+  let retryUsed = false;
+
+  let audioContext = null;
+  let analyser = null;
+  let levelFrame = null;
+
+  function csrfToken() {
+    const cookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('csrftoken='));
+
+    return cookie
+      ? decodeURIComponent(cookie.split('=')[1])
+      : '';
+  }
+
+  function showError(message) {
+    errorBox.textContent = message;
+    errorBox.classList.remove('hidden');
+  }
+
+  function clearError() {
+    errorBox.classList.add('hidden');
+    errorBox.textContent = '';
+  }
+
+  function showOnly(panel) {
+    [
+      promptPanel,
+      preparePanel,
+      recordPanel,
+      reviewPanel,
+      savingPanel,
+      finishPanel
+    ].forEach(el => el.classList.add('hidden'));
+
+    panel.classList.remove('hidden');
+    document.dispatchEvent(new CustomEvent('speaking:panelchange', {detail: {panelId: panel.id}}));
+
+    if (visibleTaskPanel) {
+      visibleTaskPanel.classList.toggle(
+        'hidden',
+        panel === finishPanel
+      );
+    }
+  }
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function formatTime(seconds) {
+    const safe = Math.max(0, Math.round(seconds));
+    const min = Math.floor(safe / 60);
+    const sec = safe % 60;
+    return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+  }
+
+  // The external speaking-session-clock owns the session timer.
+
+
+  async function ensureMicrophone() {
+    if (stream && stream.active) {
+      return stream;
+    }
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error(
+        'Microphone recording is not supported in this browser. Use a current Chrome or Edge browser over HTTPS.'
+      );
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true,
+        channelCount: 1
+      }
+    });
+
+    micDot.className = 'h-2 w-2 rounded-full bg-teal-500';
+    micStatusText.textContent = 'Microphone ready';
+
+    setupLevelMeter(stream);
+
+    return stream;
+  }
+
+
+  function setupLevelMeter(mediaStream) {
+    try {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      const source = audioContext.createMediaStreamSource(mediaStream);
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 512;
+      analyser.smoothingTimeConstant = 0.75;
+
+      source.connect(analyser);
+
+      const data = new Uint8Array(analyser.frequencyBinCount);
+
+      function tick() {
+        if (!analyser) return;
+
+        analyser.getByteFrequencyData(data);
+
+        const average = data.reduce((sum, value) => sum + value, 0) / data.length;
+        const percent = Math.min(100, Math.max(2, average * 1.7));
+
+        micLevel.style.width = `${percent}%`;
+
+        if (currentPhase === 'recording') {
+          recordLevel.style.width = `${percent}%`;
+        }
+
+        levelFrame = requestAnimationFrame(tick);
+      }
+
+      if (levelFrame) cancelAnimationFrame(levelFrame);
+      tick();
+
+    } catch (error) {
+      console.warn('Microphone level meter unavailable:', error);
+    }
+  }
+
+
+  function speakPrompt() {
+    return new Promise((resolve, reject) => {
+
+      if (audioUrl) {
+        const audio = new Audio(audioUrl);
+
+        audio.onended = resolve;
+        audio.onerror = () => reject(
+          new Error('The question audio could not be played.')
+        );
+
+        audio.play().catch(reject);
+        return;
+      }
+
+      // B1_SPEAKING_NO_BROWSER_TTS_V38_6
+      // Physical-audio only: never synthesize a hidden Speaking question in the browser.
+      reject(new Error('This Speaking Set is not available yet because its question audio has not been uploaded.'));
+      return;
+    });
+  }
+
+
+  async function runRingCountdown(seconds, ring, number, color) {
+    if (seconds <= 0) return;
+
+    await new Promise(resolve => {
+      const totalMs = seconds * 1000;
+      const began = performance.now();
+      const active = '#b5bac2';
+      const track = '#e0e3e7';
+      const earlyButton = document.getElementById('earlySpeakButton');
+      let finished = false;
+
+      function finish() {
+        if (finished) return;
+        finished = true;
+        if (earlyButton) earlyButton.removeEventListener('click', finish);
+        resolve();
+      }
+
+      if (earlyButton) {
+        earlyButton.disabled = false;
+        earlyButton.addEventListener('click', finish, { once: true });
+      }
+
+      function frame(now) {
+        if (finished) return;
+        const elapsed = Math.min(totalMs, now - began);
+        const ratio = elapsed / totalMs;
+        const degrees = ratio * 360;
+        const remaining = Math.max(0, Math.ceil((totalMs - elapsed) / 1000));
+
+        number.textContent = remaining;
+        ring.style.background = `conic-gradient(${active} 0deg ${degrees}deg, ${track} ${degrees}deg 360deg)`;
+
+        if (elapsed < totalMs) {
+          requestAnimationFrame(frame);
+        } else {
+          number.textContent = '0';
+          ring.style.background = `conic-gradient(${active} 0deg 360deg, ${track} 360deg 360deg)`;
+          finish();
+        }
+      }
+
+      requestAnimationFrame(frame);
+    });
+  }
+
+
+  function releaseOldRecordingUrl() {
+    if (recordedUrl) {
+      URL.revokeObjectURL(recordedUrl);
+      recordedUrl = null;
+    }
+  }
+
+
+  async function startRecording() {
+    clearError();
+
+    const mediaStream = await ensureMicrophone();
+
+    chunks = [];
+    recordedBlob = null;
+    stopRequested = false;
+
+    let options = {
+      audioBitsPerSecond: 64000
+    };
+
+    if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+      options.mimeType = 'audio/webm;codecs=opus';
+    } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+      options.mimeType = 'audio/webm';
+    }
+
+    recorder = new MediaRecorder(mediaStream, options);
+
+    recorder.ondataavailable = event => {
+      if (event.data && event.data.size > 0) {
+        chunks.push(event.data);
+      }
+    };
+
+    const stopped = new Promise(resolve => {
+      recorder.onstop = resolve;
+    });
+
+    showOnly(recordPanel);
+    currentPhase = 'recording';
+
+    recordNumber.textContent = responseSeconds;
+    recordRing.style.background =
+      'conic-gradient(#ef4444 0deg, #e2e8f0 0deg)';
+
+    recordingStartedAt = performance.now();
+    recorder.start(250);
+
+    if (partOrder === 5) {
+      recordNumber.textContent = '0';
+      doneButton.disabled = true;
+      const instructionEl = document.getElementById('recordingInstruction');
+
+      await new Promise(resolve => {
+        const minimumMs = 60000;
+        const maximumMs = 60000;
+        const began = performance.now();
+
+        function frame(now) {
+          const elapsed = Math.min(maximumMs, now - began);
+          const elapsedSec = Math.floor(elapsed / 1000);
+          const degrees = Math.min(360, (elapsed / minimumMs) * 360);
+
+          recordNumber.textContent = elapsedSec;
+          recordRing.style.background = `conic-gradient(#afb5bd ${degrees}deg, #dfe2e6 ${degrees}deg)`;
+
+          if (elapsed >= minimumMs) {
+            doneButton.disabled = false;
+            const remain = Math.max(0, Math.ceil((maximumMs - elapsed) / 1000));
+            if (instructionEl) instructionEl.textContent = `Your answer will be submitted in ${remain} seconds`;
+          } else if (instructionEl) {
+            instructionEl.textContent = 'Speak for at least 1 minute';
+          }
+
+          if ((stopRequested && elapsed >= minimumMs) || elapsed >= maximumMs) resolve();
+          else requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      });
+    } else {
+      recordNumber.textContent = fixedResponseSeconds;
+      doneButton.disabled = false;
+
+      await new Promise(resolve => {
+        const totalMs = fixedResponseSeconds * 1000;
+        const began = performance.now();
+        const active = '#b5bac2';
+        const track = '#e0e3e7';
+
+        function frame(now) {
+          const elapsed = Math.min(totalMs, now - began);
+          const ratio = elapsed / totalMs;
+          const degrees = ratio * 360;
+          const remaining = Math.max(0, Math.ceil((totalMs - elapsed) / 1000));
+
+          recordNumber.textContent = remaining;
+          recordRing.style.background = `conic-gradient(${active} 0deg ${degrees}deg, ${track} ${degrees}deg 360deg)`;
+
+          if (elapsed < totalMs && !stopRequested) {
+            requestAnimationFrame(frame);
+          } else {
+            resolve();
+          }
+        }
+
+        requestAnimationFrame(frame);
+      });
+    }
+
+    if (recorder && recorder.state === 'recording') recorder.stop();
+    await stopped;
+
+    actualDuration = Math.min(
+      responseSeconds,
+      Math.max(
+        0.2,
+        (performance.now() - recordingStartedAt) / 1000
+      )
+    );
+
+    const mimeType = recorder.mimeType || 'audio/webm';
+
+    recordedBlob = new Blob(
+      chunks,
+      { type: mimeType }
+    );
+
+    if (!recordedBlob || recordedBlob.size < 900) {
+      throw new Error(
+        'The recording appears to be empty. Please check your microphone and try again.'
+      );
+    }
+
+    releaseOldRecordingUrl();
+
+    recordedUrl = URL.createObjectURL(recordedBlob);
+    answerPlayback.src = recordedUrl;
+
+    recordedDuration.textContent = formatTime(actualDuration);
+
+    audioQualityHint.textContent =
+      'Replay your answer. If your voice is missing, too quiet or unclear, choose Retry before submitting.';
+
+    currentPhase = 'saving-recording';
+    showOnly(savingPanel);
+    await sleep(350);
+    currentPhase = 'review';
+    retryButton.disabled = retryUsed;
+    showOnly(reviewPanel);
+  }
+
+
+  async function beginQuestion() {
+    if (currentPhase !== 'ready') return;
+
+    clearError();
+
+    try {
+      listenButton.disabled = true;
+
+      await ensureMicrophone();
+
+      if (!questionVisible) {
+        listenButtonText.textContent = 'Listening…';
+        if (partOrder === 1 || partOrder === 2) {
+        await speakPrompt();
+      }
+        listenButtonText.textContent = 'Listen';
+        listenButton.disabled = false;
+      }
+
+      currentPhase = 'preparing';
+
+      if (prepSeconds > 0) {
+        showOnly(preparePanel);
+
+        prepNumber.textContent = prepSeconds;
+        prepRing.style.background =
+          'conic-gradient(#14b8a6 0deg, #e2e8f0 0deg)';
+
+        await runRingCountdown(
+          prepSeconds,
+          prepRing,
+          prepNumber,
+          '#14b8a6'
+        );
+      }
+
+      await startRecording();
+
+    } catch (error) {
+      console.error(error);
+
+      currentPhase = 'ready';
+      showOnly(promptPanel);
+
+      listenButton.disabled = false;
+
+      if (listenButtonText) {
+        listenButtonText.textContent = questionVisible
+          ? 'Continue'
+          : 'Listen';
+      }
+
+      showError(
+        error.message || 'Something went wrong. Please try again.'
+      );
+    }
+  }
+
+
+  async function retryRecording() {
+    if (retryUsed || currentPhase !== 'review') return;
+    const confirmed = window.confirm(
+      'You only have ONE chance to retry this question.\n\n' +
+      'Are you sure you want to re-record your answer?'
+    );
+    if (!confirmed) return;
+
+    clearError();
+    retryUsed = true;
+    retryButton.disabled = true;
+
+    answerPlayback.pause();
+    answerPlayback.currentTime = 0;
+    playbackButtonText.textContent = 'Listen to your recording';
+
+    releaseOldRecordingUrl();
+
+    answerPlayback.removeAttribute('src');
+    answerPlayback.load();
+
+    recordedBlob = null;
+    chunks = [];
+    actualDuration = 0;
+
+    currentPhase = 'retrying';
+    try {
+      await startRecording();
+    } catch (error) {
+      console.error(error);
+      retryUsed = false;
+      retryButton.disabled = false;
+      currentPhase = 'review';
+      showOnly(reviewPanel);
+      showError(error.message || 'The recording could not be restarted. Please try again.');
+    }
+  }
+
+
+  async function submitRecording() {
+    if (!recordedBlob) {
+      showError('Please record an answer before submitting.');
+      return;
+    }
+
+    clearError();
+
+    submitButton.disabled = true;
+    retryButton.disabled = true;
+
+    currentPhase = 'saving';
+    showOnly(savingPanel);
+
+    try {
+      const form = new FormData();
+
+      const extension = recordedBlob.type.includes('ogg')
+        ? 'ogg'
+        : 'webm';
+
+      form.append(
+        'audio',
+        recordedBlob,
+        `speaking-response.${extension}`
+      );
+
+      form.append(
+        'duration_seconds',
+        actualDuration.toFixed(2)
+      );
+
+      const response = await fetch(
+        submitUrl,
+        {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrfToken()
+          },
+          body: form,
+          credentials: 'same-origin'
+        }
+      );
+
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch (error) {}
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.error || 'Your recording could not be saved.'
+        );
+      }
+
+      releaseOldRecordingUrl();
+
+      const nextUrl = data.next_url || '';
+
+      if (nextUrl.includes('/complete/')) {
+        currentPhase = 'finished';
+        viewResultButton.href = nextUrl;
+        showOnly(finishPanel);
+        return;
+      }
+
+      window.location.href = nextUrl;
+
+    } catch (error) {
+      console.error(error);
+
+      currentPhase = 'review';
+      showOnly(reviewPanel);
+
+      submitButton.disabled = false;
+      retryButton.disabled = retryUsed;
+
+      showError(
+        error.message || 'The recording could not be submitted. Please try again.'
+      );
+    }
+  }
+
+
+  doneButton.addEventListener('click', () => {
+    if (
+      currentPhase === 'recording'
+      && recorder
+      && recorder.state === 'recording'
+    ) {
+      stopRequested = true;
+      recorder.stop();
+    }
+  });
+
+  listenButton.addEventListener('click', beginQuestion);
+  retryButton.addEventListener('click', retryRecording);
+  submitButton.addEventListener('click', submitRecording);
+  playbackButton.addEventListener('click', async () => {
+    if (!answerPlayback.src) return;
+    if (answerPlayback.paused) {
+      try {
+        await answerPlayback.play();
+        playbackButtonText.textContent = 'Listening...';
+      } catch (error) {
+        showError('Your recording could not be played. Please try again.');
+      }
+    } else {
+      answerPlayback.pause();
+      playbackButtonText.textContent = 'Listen to your recording';
+    }
+  });
+  answerPlayback.addEventListener('ended', () => {
+    playbackButtonText.textContent = 'Listen to your recording';
+  });
+
+  if (questionVisible) {
+    listenButton.classList.add('hidden');
+    setTimeout(() => {
+      if (currentPhase === 'ready') beginQuestion();
+    }, 250);
+  }
+
+  window.addEventListener('speaking-beforeunload-disabled', event => {
+    if (
+      currentPhase === 'recording'
+      || currentPhase === 'review'
+      || currentPhase === 'saving'
+    ) {
+      event.preventDefault();
+      event.returnValue = '';
+    }
+  });
+
+})();
+</script>
+
+{% endblock %}

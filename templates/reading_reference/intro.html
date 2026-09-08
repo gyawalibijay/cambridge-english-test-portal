@@ -1,0 +1,37 @@
+{% extends "reading_reference/base.html" %}
+{% block content %}
+<header class="reading-header">
+  <a href="{% url 'assessments:reading_parts' %}" class="reading-back" aria-label="Back to Reading parts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+  <span>Reading</span>
+</header>
+{% if resume %}
+<section class="reading-resume">
+  <h1>Practice Test</h1>
+  <p class="reading-set-label">Reading Part {{ part.order }} · Set {{ set_number }}</p>
+  <p>Pick up where you left off and continue testing your skills.</p>
+  <a class="reading-primary" href="{% url 'assessments:reading_runner' resume.pk %}">Resume test</a>
+  <form method="post" action="{% url 'assessments:reading_start' part.order %}">
+    {% csrf_token %}<input type="hidden" name="restart" value="1"><input type="hidden" name="resume_attempt" value="{{ resume.pk }}">
+    <button class="reading-secondary" type="submit">Practise again</button>
+  </form>
+</section>
+{% else %}
+<section class="reading-intro">
+  <div class="reading-intro-icon">{% include "reading_reference/_book.html" %}</div>
+  <h1>Reading Part {{ part.order }}</h1>
+  <p class="reading-set-label">Set {{ set_number }}</p>
+  <ul class="reading-task-instructions">{% for bullet in bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>
+  <div class="reading-before">
+    <h2>Before you start</h2>
+    <ul>
+      <li>For the next few minutes, you will be taking a secure test.</li>
+      <li>You will be working under test conditions.</li>
+      <li>You cannot leave this part of the test once started.</li>
+    </ul>
+  </div>
+  <form method="post" action="{% url 'assessments:reading_start' part.order %}">
+    {% csrf_token %}<button class="reading-primary" type="submit">START TEST</button>
+  </form>
+</section>
+{% endif %}
+{% endblock %}

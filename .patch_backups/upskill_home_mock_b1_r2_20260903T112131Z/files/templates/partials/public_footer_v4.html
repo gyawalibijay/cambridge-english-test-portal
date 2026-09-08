@@ -1,0 +1,55 @@
+<footer class="pub4-footer">
+  <div class="pub4-footer-grid">
+    <div>
+      <a class="pub4-logo" href="{% url 'website:home' %}">
+        <span class="pub4-logo-mark">ST</span>
+        <span>
+          <strong>Upskill Practice</strong>
+          <small>Surakshya Technologies</small>
+        </span>
+      </a>
+
+      <p class="pub4-footer-copy">
+        A professional English practice portal where students can prepare, purchase access,
+        study course materials, complete section practice and review results in one place.
+      </p>
+    </div>
+
+    <div>
+      <h4>Programs</h4>
+      <a href="{% url 'website:program_detail' 'cambridge-general' %}">Cambridge / General English</a>
+      <a href="{% url 'website:program_detail' 'ielts-academic' %}">IELTS Academic</a>
+      <a href="{% url 'website:program_detail' 'ielts-general' %}">IELTS General Training</a>
+      <a href="{% url 'website:program_detail' 'ukvi-interview' %}">UKVI Interview</a>
+    </div>
+
+    <div>
+      <h4>Explore</h4>
+      <a href="{% url 'website:features' %}">Features</a>
+      <a href="{% url 'website:pricing' %}">Pricing</a>
+      <a href="{% url 'website:how_it_works' %}">How it works</a>
+      <a href="{% url 'website:about' %}">About</a>
+      <a href="{% url 'website:faq' %}">FAQ</a>
+      <a href="{% url 'website:contact' %}">Contact</a>
+    </div>
+
+    <div>
+      <h4>Account</h4>
+      <a href="{% url 'login' %}">Sign in</a>
+      <a href="{% url 'signup' %}">Create student account</a>
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'dashboard' %}">Student dashboard</a>
+      {% endif %}
+      <a href="/store/">Test access store</a>
+    </div>
+  </div>
+
+  <div class="pub4-footer-bottom">
+    <span>© 2026 Surakshya Technologies</span>
+    <span>Independent practice portal. Practice scores and feedback are for guidance and are not official Cambridge or IELTS examination results.</span>
+    <span>
+      <a style="display:inline;color:inherit;margin:0 10px 0 0" href="{% url 'website:terms' %}">Terms</a>
+      <a style="display:inline;color:inherit;margin:0" href="{% url 'website:privacy' %}">Privacy Policy</a>
+    </span>
+  </div>
+</footer>

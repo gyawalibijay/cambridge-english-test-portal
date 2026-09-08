@@ -1,0 +1,202 @@
+{# Inline deployment-safe fallback: keeps the dashboard brand correct even before collectstatic runs. #}
+<style id="dashboard-brand-theme-v16">
+  :root {
+    --sf-primary: #03bbb7;
+    --sf-primary-dark: #03bbb7;
+    --sf-navy: #03bbb7;
+    --sf-red: #ff6702;
+    --sf-green: #03bbb7;
+  }
+
+  .sf-brand-mark,
+  .ref-mobile-mark { background: #03bbb7 !important; }
+
+  .sf-nav-item:hover {
+    color: #03bbb7 !important;
+    background: rgba(3, 187, 183, .07) !important;
+  }
+
+  .sf-nav-item.is-active {
+    color: #03bbb7 !important;
+    background: rgba(3, 187, 183, .11) !important;
+  }
+
+  .sf-nav-item.is-active::after,
+  .portal-notification-dot { background: #ff6702 !important; }
+
+  .sf-target-card {
+    border-color: rgba(3, 187, 183, .20) !important;
+    background: rgba(3, 187, 183, .055) !important;
+  }
+
+  .sf-target-card strong,
+  .portal-bottom-nav a.is-active,
+  .portal-bell-button,
+  .portal-profile-button { color: #03bbb7 !important; }
+
+  .portal-bottom-nav a.is-active svg { stroke: #03bbb7 !important; }
+  .sf-main.sf-reference-main { background: #f5fafa !important; }
+
+  .ref-dashboard {
+    --r-blue: #03bbb7;
+    --r-blue2: #03bbb7;
+    --r-navy: #03bbb7;
+    --r-navy2: #03bbb7;
+    --r-red: #ff6702;
+  }
+
+  .ref-main-grid {
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+
+  .ref-main-grid > .ref-hero-card,
+  .ref-main-grid > .ref-streak-card.streak-v148 {
+    height: 280px !important;
+    min-height: 280px !important;
+  }
+
+  .ref-hero-card,
+  .ref-streak-card,
+  .ref-streak-card.streak-v148,
+  .ref-leaderboard {
+    border-color: rgba(255, 255, 255, .22) !important;
+    background: #03bbb7 !important;
+  }
+
+  .ref-hero-card { padding: 27px 25px !important; }
+
+  .ref-hero-card::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 42%;
+    height: 6px;
+    border-radius: 6px 0 0;
+    background: #ff6702;
+    content: "";
+  }
+
+  .ref-live-pill,
+  .ref-hero-art { display: none !important; }
+
+  .ref-hero-body {
+    display: block !important;
+    margin-top: 25px !important;
+  }
+
+  .ref-hero-copy { max-width: 540px !important; }
+  .ref-hero-copy h2 { max-width: 480px !important; }
+  .ref-hero-copy p {
+    max-width: 480px !important;
+    color: rgba(255, 255, 255, .90) !important;
+  }
+
+  .ref-dashboard a.ref-white-button {
+    width: auto !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    margin-top: 18px !important;
+    color: #03bbb7 !important;
+    background: #fff !important;
+  }
+
+  .ref-dashboard a.ref-white-button svg {
+    width: 18px !important;
+    height: 18px !important;
+    color: #03bbb7 !important;
+  }
+
+  .ref-streak-card.streak-v148 { padding: 15px 18px 13px !important; }
+  .ref-streak-card.streak-v148::before {
+    background: radial-gradient(circle, rgba(255, 103, 2, .30), rgba(255, 103, 2, 0) 68%) !important;
+  }
+
+  .streak-v148 .ref-ember,
+  .streak-v148 .ref-streak-milestone-track span { background: #ff6702 !important; }
+
+  .streak-v148 .ref-day-item.is-active .ref-day-flame,
+  .streak-v148 .ref-day-item.is-today .ref-day-flame { border-color: #ff6702 !important; }
+  .streak-v148 .ref-day-item.is-active .ref-day-flame svg { fill: #ff6702 !important; }
+
+  .streak-v148 .ref-streak-main {
+    min-height: 104px !important;
+    grid-template-columns: 106px minmax(0, 1fr) !important;
+    margin-top: 0 !important;
+  }
+
+  .streak-v148 .ref-flame-scene {
+    width: 106px !important;
+    height: 106px !important;
+  }
+
+  .streak-v148 .ref-flame-art {
+    width: 96px !important;
+    height: 102px !important;
+  }
+
+  .streak-v148 .ref-flame-art img { width: 90px !important; }
+  .streak-v148 .ref-streak-big strong { font-size: 55px !important; }
+
+  .streak-v148 .ref-streak-week {
+    margin-top: 0 !important;
+    padding: 8px 9px 7px !important;
+    background: rgba(0, 91, 89, .18) !important;
+  }
+
+  .streak-v148 .ref-streak-milestone { margin-top: 7px !important; }
+
+  .ref-payment-access-card {
+    border-color: rgba(3, 187, 183, .28) !important;
+    color: #fff !important;
+    background: #03bbb7 !important;
+  }
+
+  .ref-payment-access-icon { background: #ff6702 !important; }
+  .ref-payment-access-action { color: #03bbb7 !important; }
+  .ref-payment-access-action b { color: #ff6702 !important; }
+
+  .ref-dashboard a.ref-blue-button,
+  .ref-dashboard a.ref-primary-button,
+  .ref-dashboard a.ref-small-blue,
+  .ref-progress-bar span { background: #03bbb7 !important; }
+
+  .ref-prep-corner { background: #ff6702 !important; }
+  .ref-tool-icon,
+  .ref-promo-icon.review { color: #03bbb7 !important; }
+  .ref-promo-icon.youtube,
+  .ref-dashboard a.ref-ghost-red { color: #ff6702 !important; }
+
+  @media (max-width: 860px) {
+    .ref-main-grid > .ref-hero-card {
+      height: auto !important;
+      min-height: 218px !important;
+      margin-bottom: 15px !important;
+      padding: 21px 19px 20px !important;
+    }
+
+    .ref-hero-body { margin-top: 17px !important; }
+
+    .ref-dashboard a.ref-white-button {
+      width: 100% !important;
+      margin-top: 16px !important;
+    }
+
+    .ref-main-grid > .ref-streak-card.streak-v148 {
+      height: auto !important;
+      min-height: 268px !important;
+      margin-bottom: 15px !important;
+    }
+
+    .ref-payment-access-card {
+      order: 5 !important;
+      margin: 0 6px 15px !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .ref-main-grid > .ref-hero-card { min-height: 224px !important; }
+    .streak-v148 .ref-streak-main { grid-template-columns: 96px minmax(0, 1fr) !important; }
+    .streak-v148 .ref-flame-scene { width: 96px !important; }
+  }
+</style>

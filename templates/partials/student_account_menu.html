@@ -1,0 +1,48 @@
+{% if request.user.is_authenticated %}
+<div class="student-account-menu student-account-menu--{{ account_menu_variant|default:'inline' }}" data-student-account-menu>
+  <button type="button" class="student-account-trigger" data-student-account-trigger aria-haspopup="true" aria-expanded="false">
+    <span class="student-account-avatar">
+      {% if request.user.student_profile.profile_photo %}
+        <img src="{{ request.user.student_profile.profile_photo.url }}" alt="{{ request.user.get_full_name|default:request.user.username }}">
+      {% else %}
+        <span>{{ request.user.first_name|default:request.user.username|slice:":1"|upper }}</span>
+      {% endif %}
+    </span>
+    {% if account_menu_variant != 'mobile' and account_menu_variant != 'exam' %}
+    <span class="student-account-copy">
+      <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+      <small>{{ request.user.email|default:'Student account' }}</small>
+    </span>
+    {% endif %}
+    <svg class="student-account-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+  </button>
+
+  <div class="student-account-popover" data-student-account-popover hidden>
+    <div class="student-account-popover-head">
+      <span class="student-account-avatar is-large">
+        {% if request.user.student_profile.profile_photo %}
+          <img src="{{ request.user.student_profile.profile_photo.url }}" alt="{{ request.user.get_full_name|default:request.user.username }}">
+        {% else %}
+          <span>{{ request.user.first_name|default:request.user.username|slice:":1"|upper }}</span>
+        {% endif %}
+      </span>
+      <span>
+        <strong>{{ request.user.get_full_name|default:request.user.username }}</strong>
+        <small>{{ request.user.email|default:'Student account' }}</small>
+      </span>
+    </div>
+    <div class="student-account-divider"></div>
+    <a class="student-account-action" href="{% url 'student_profile_summary' %}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6"/></svg>
+      <span>Profile</span>
+    </a>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button class="student-account-action is-logout" type="submit">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5H5v14h5M14 8l4 4-4 4M18 12H9"/></svg>
+        <span>Sign out</span>
+      </button>
+    </form>
+  </div>
+</div>
+{% endif %}

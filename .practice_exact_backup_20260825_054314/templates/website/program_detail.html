@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ presentation.short_title }} | Upskill Practice</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<section class="pub4-page-hero">
+  <div class="pub4-shell">
+    <div class="pub4-eyebrow">{{ presentation.eyebrow }}</div>
+    <h1>{{ presentation.title }}</h1>
+    <p>{{ presentation.summary }}</p>
+  </div>
+</section>
+
+<section class="pub4-section" style="padding-top:10px">
+  <div class="pub4-shell pub4-program-detail">
+    <div class="pub4-detail-panel">
+      <div class="pub4-eyebrow">What is included</div>
+      <h2 style="font-size:1.75rem;letter-spacing:-.04em;margin:8px 0">
+        Built around the way this program is practised.
+      </h2>
+
+      <ul class="pub4-detail-list">
+        {% for feature in presentation.features %}
+        <li>{{ feature }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="pub4-detail-panel">
+      <div class="pub4-eyebrow">Access</div>
+
+      {% for package in packages %}
+      <h3 style="font-size:1.2rem;margin:8px 0">{{ package.title }}</h3>
+
+      <div class="pub4-price">
+        <strong>{{ package.price|floatformat:0 }}</strong>
+        <span>{{ package.currency }}</span>
+      </div>
+
+      <p style="color:var(--pv2-muted);font-size:.74rem;line-height:1.7">
+        {{ package.short_description }}
+      </p>
+
+      {% if request.user.is_authenticated %}
+      <a class="pub4-btn primary" style="width:100%" href="/store/">
+        View access →
+      </a>
+      {% else %}
+      <a class="pub4-btn primary" style="width:100%" href="{% url 'signup' %}">
+        Create account →
+      </a>
+      {% endif %}
+      {% empty %}
+      <p style="color:var(--pv2-muted)">No active public package is configured for this program yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if tests or courses %}
+<section class="pub4-section alt">
+  <div class="pub4-shell">
+    <div class="pub4-section-head">
+      <div class="pub4-eyebrow">Inside the program</div>
+      <h2>Practice and learning resources</h2>
+    </div>
+
+    <div class="pub4-feature-grid">
+      {% for test in tests %}
+      <article class="pub4-feature-card">
+        <div class="pub4-feature-icon">T</div>
+        <h3>{{ test.title }}</h3>
+        <p>{{ test.description|default:"Published practice test."|truncatechars:150 }}</p>
+      </article>
+      {% endfor %}
+
+      {% for course in courses %}
+      <article class="pub4-feature-card">
+        <div class="pub4-feature-icon">C</div>
+        <h3>{{ course.title }}</h3>
+        <p>{{ course.short_description|default:course.description|truncatechars:150 }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

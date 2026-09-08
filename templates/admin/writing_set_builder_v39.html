@@ -1,0 +1,77 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/b1-writing-set-builder-v39.css' %}?v=20260908-390">{% endblock %}
+{% block content %}
+<div class="w39-page">
+  <div class="w39-back">
+    <a href="{% url 'admin:b1_writing_sets' %}">← All Writing Sets</a>
+    <a href="/admin/mock-builder/">Mock Builder ↗</a>
+  </div>
+
+  <header class="w39-editor-head">
+    <div class="w39-editor-badge">{% if extra_mode %}P2+{% else %}P{{ part_no }}{% endif %}</div>
+    <div class="grow">
+      <span class="w39-kicker">{% if extra_mode %}SUPPLEMENTARY WRITING PART 2 · {{ number|stringformat:"02d" }}{% else %}WRITING SET {{ set_no|stringformat:"02d" }} · PART {{ part_no }}{% endif %}</span>
+      <h1>{% if extra_mode %}{{ extra_title }}{% else %}{{ task_type }}{% endif %}</h1>
+      <p>{% if extra_mode %}This task is preserved as optional Part 2 material and is not auto-placed into student Practice/Mock.{% else %}Edit exactly what the student reads. Existing Question ID and Practice/Mock title stay stable.{% endif %}</p>
+    </div>
+    <div class="w39-editor-nav">
+      {% if extra_mode %}
+        {% if previous_extra %}<a href="{% url 'admin:b1_writing_extra_part2' previous_extra %}">← Extra {{ previous_extra }}</a>{% endif %}
+        {% if next_extra %}<a href="{% url 'admin:b1_writing_extra_part2' next_extra %}">Extra {{ next_extra }} →</a>{% endif %}
+      {% else %}
+        {% if previous_part %}<a href="{% url 'admin:b1_writing_set_part' set_no previous_part %}">← Part {{ previous_part }}</a>{% endif %}
+        {% if next_part %}<a href="{% url 'admin:b1_writing_set_part' set_no next_part %}">Part {{ next_part }} →</a>{% elif next_set %}<a href="{% url 'admin:b1_writing_set_part' next_set 1 %}">Set {{ next_set }} →</a>{% endif %}
+      {% endif %}
+    </div>
+  </header>
+
+  <section class="w39-source-strip">
+    <div><small>DATABASE TITLE</small><code>{{ question.title }}</code></div>
+    <div><small>TASK TYPE</small><strong>{{ task_type }}</strong></div>
+    <div><small>MINIMUM</small><strong>{{ min_words }} words</strong></div>
+    <div><small>SOURCE FILE</small><strong>{{ source_file }}</strong></div>
+  </section>
+
+  <form method="post" class="w39-form">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="save">
+
+    <article class="w39-field-card">
+      <header><span>01</span><div><b>Source / scenario shown above the task</b><small>Email/message/notice context, sender text or situation the student must read.</small></div></header>
+      <textarea name="context_text" rows="9" required>{{ context_text }}</textarea>
+    </article>
+
+    <article class="w39-field-card">
+      <header><span>02</span><div><b>Student task</b><small>Keep the instruction plus the required bullet points. This appears once in the current Writing runner.</small></div></header>
+      <textarea name="prompt_text" rows="10" required>{{ prompt_text }}</textarea>
+    </article>
+
+    <article class="w39-field-card compact">
+      <header><span>03</span><div><b>Writing limit</b><small>The frontend word counter and Writing grading workflow continue using this question.</small></div></header>
+      <label class="w39-number-field"><span>Minimum words</span><input name="min_words" type="number" min="1" max="1000" value="{{ min_words }}" required></label>
+    </article>
+
+    <div class="w39-preview">
+      <span class="w39-kicker">STUDENT CONTENT PREVIEW</span>
+      <div class="w39-preview-box">
+        <p>{{ context_text|linebreaksbr }}</p>
+        <hr>
+        <p>{{ prompt_text|linebreaksbr }}</p>
+      </div>
+    </div>
+
+    <div class="w39-savebar">
+      <div><b>Ready to save?</b><span>Question ID {{ question.pk }} stays unchanged, so existing placement/history references are preserved.</span></div>
+      <button class="w39-btn primary" type="submit">Save Writing Task</button>
+    </div>
+  </form>
+
+  <form method="post" class="w39-restore" onsubmit="return confirm('Restore this Writing task from the supplied DOCX source? Your edits to this task will be replaced.');">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="restore">
+    <span><b>Restore supplied source</b><small>Returns the scenario, student task and 50-word minimum to the imported source version.</small></span>
+    <button type="submit">Restore source version</button>
+  </form>
+</div>
+{% endblock %}

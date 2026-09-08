@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Test Access | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+  {% if messages %}
+    {% for message in messages %}
+    <div class="pv2-card" style="padding:14px 16px;margin-bottom:16px">
+      {{ message }}
+    </div>
+    {% endfor %}
+  {% endif %}
+
+  {% if locked_program %}
+  <div class="pv2-alert" style="margin-bottom:18px">
+    This test package requires an active purchase before practice can begin.
+  </div>
+  {% endif %}
+
+  <section class="pv2-store-hero">
+    <div class="pv2-eyebrow" style="color:#61e2de">Test packages</div>
+    <h1>Choose the test system you want to access.</h1>
+    <p>
+      Each package costs NPR 1,000. Purchase from the portal, submit your payment reference
+      or receipt, and your access becomes active after verification.
+    </p>
+  </section>
+
+  <section class="pv2-package-grid">
+    {% for card in cards %}
+    <article class="pv2-card pv2-package">
+      <div class="pv2-eyebrow">Practice package</div>
+      <h2 style="font-size:1.2rem;margin:9px 0 7px">{{ card.package.title }}</h2>
+      <p style="color:var(--pv2-muted);font-size:.78rem;line-height:1.7">
+        {{ card.package.short_description }}
+      </p>
+
+      <div class="pv2-program-tags">
+        {% for program in card.package.programs.all %}
+        <span class="pv2-program-tag">{{ program.short_name|default:program.name }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="pv2-package-price">
+        <strong>{{ card.package.price|floatformat:0 }}</strong>
+        <span>{{ card.package.currency }}</span>
+      </div>
+
+      {% if card.has_access %}
+        <div class="pv2-status good" style="display:inline-flex;margin-bottom:13px">
+          Access active
+        </div>
+        <a class="pv2-btn pv2-btn-teal" style="width:100%" href="{% url 'dashboard' %}">
+          Open Dashboard →
+        </a>
+      {% elif card.latest_purchase and card.latest_purchase.status == "pending" %}
+        <div class="pv2-status" style="display:inline-flex;margin-bottom:13px;color:var(--pv2-warning)">
+          Payment pending verification
+        </div>
+        <button class="pv2-btn pv2-btn-outline" style="width:100%" disabled>
+          Awaiting Approval
+        </button>
+      {% else %}
+        <a class="pv2-btn pv2-btn-primary" style="width:100%" href="{% url 'commerce:purchase_package' card.package.slug %}">
+          Buy Access · NPR {{ card.package.price|floatformat:0 }}
+        </a>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </section>
+
+  <section class="pv2-card pv2-panel" style="margin-top:22px">
+    <div class="pv2-eyebrow">How access works</div>
+    <div class="pv2-flow-grid" style="margin-top:17px">
+      <div class="pv2-flow-card pv2-card" style="box-shadow:none">
+        <h3>Choose a package</h3>
+        <p>Select Cambridge, IELTS or UKVI access.</p>
+      </div>
+      <div class="pv2-flow-card pv2-card" style="box-shadow:none">
+        <h3>Submit payment</h3>
+        <p>Enter the transaction reference and upload a receipt if available.</p>
+      </div>
+      <div class="pv2-flow-card pv2-card" style="box-shadow:none">
+        <h3>Admin verifies</h3>
+        <p>Payment is approved from the management dashboard.</p>
+      </div>
+      <div class="pv2-flow-card pv2-card" style="box-shadow:none">
+        <h3>Access activates</h3>
+        <p>The related tests and courses become available immediately.</p>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

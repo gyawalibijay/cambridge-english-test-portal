@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Practice Test | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+  <section class="pv2-page-title">
+    <div>
+      <div class="pv2-eyebrow">Cambridge / General English</div>
+      <h1>Practice Test</h1>
+      <p>Choose one skill, complete its parts and return here when you are ready for the next section.</p>
+    </div>
+
+    <div class="pv2-card" style="padding:13px 17px;text-align:right">
+      <span style="display:block;color:var(--pv2-muted);font-size:.68rem">Approx. full test</span>
+      <strong style="font-size:1.25rem">{{ total_minutes }} min</strong>
+    </div>
+  </section>
+
+  <section class="pv2-card" style="overflow:hidden;box-shadow:none">
+    {% for card in cards %}
+    <div style="display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:18px;padding:22px 24px;border-bottom:1px solid var(--pv2-line)">
+      <div style="width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:900;
+        {% if card.completed %}
+          background:color-mix(in srgb,var(--pv2-success) 14%,var(--pv2-surface));color:var(--pv2-success);
+        {% elif card.test %}
+          background:color-mix(in srgb,var(--pv2-teal) 13%,var(--pv2-surface));color:var(--pv2-teal-2);
+        {% else %}
+          background:var(--pv2-surface-2);color:var(--pv2-muted);
+        {% endif %}
+      ">
+        {% if card.completed %}✓{% else %}{{ forloop.counter }}{% endif %}
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+          <strong style="font-size:1.05rem">{{ card.title }}</strong>
+
+          {% if card.completed %}
+          <span class="pv2-status good">Completed</span>
+          {% elif card.in_progress %}
+          <span class="pv2-status" style="color:var(--pv2-blue)">In progress</span>
+          {% elif not card.test %}
+          <span class="pv2-status">Unavailable</span>
+          {% endif %}
+        </div>
+
+        <div style="color:var(--pv2-muted);font-size:.76rem;margin-top:5px">
+          {{ card.parts }} part{{ card.parts|pluralize }} · {{ card.minutes }} minutes
+        </div>
+      </div>
+
+      <div>
+        {% if card.in_progress and card.latest_attempt %}
+        <a class="pv2-btn pv2-btn-teal" style="min-height:43px" href="{% url 'attempts:dispatch' card.latest_attempt.id %}">
+          Continue →
+        </a>
+        {% elif card.test %}
+        <a class="pv2-btn {% if card.completed %}pv2-btn-outline{% else %}pv2-btn-primary{% endif %}" style="min-height:43px" href="{% url 'assessments:test_detail' card.test.slug %}">
+          {% if card.completed %}Practice Again{% else %}Start{% endif %}
+        </a>
+        {% else %}
+        <button class="pv2-btn pv2-btn-outline" style="min-height:43px" disabled>Coming Soon</button>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section class="pv2-two-col" style="margin-top:20px">
+    <div class="pv2-card pv2-panel">
+      <div class="pv2-eyebrow">Before you begin</div>
+      <h2 style="font-size:1.2rem;margin:8px 0 12px">Test-day habits to practise now</h2>
+
+      <div class="pv2-list">
+        <div class="pv2-row"><strong>Use headphones for Listening</strong><span>♫</span></div>
+        <div class="pv2-row"><strong>Check your microphone for Speaking</strong><span>◉</span></div>
+        <div class="pv2-row"><strong>Watch the section timer</strong><span>◷</span></div>
+        <div class="pv2-row"><strong>Review your report after each attempt</strong><span>↗</span></div>
+      </div>
+    </div>
+
+    <div class="pv2-card pv2-panel">
+      <div class="pv2-eyebrow">Quick access</div>
+      <h2 style="font-size:1.2rem;margin:8px 0 12px">Student tools</h2>
+
+      <div class="pv2-list">
+        <a class="pv2-row" style="text-decoration:none" href="/results/">
+          <div><strong>My Results</strong><small>Scores, transcripts & feedback</small></div><span>→</span>
+        </a>
+        <a class="pv2-row" style="text-decoration:none" href="{% url 'profile' %}">
+          <div><strong>My Profile</strong><small>Student and contact details</small></div><span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

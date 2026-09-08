@@ -1,0 +1,93 @@
+{% extends "student_final/base.html" %}
+{% load static %}
+{% block title %}Pay {{ package.title }} | Arya Academy{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/payment-access.css' %}?v=20260901-1">{% endblock %}
+{% block content %}
+<div class="pay-page">
+  <div class="pay-breadcrumb"><a href="{% url 'commerce:store' %}">Course Access</a><span>›</span><b>{{ package.title }}</b></div>
+
+  <section class="pay-invoice-hero">
+    <div>
+      <span class="pay-kicker">PAYMENT INVOICE</span>
+      <h1>{{ package.title }}</h1>
+      <p>Your invoice has been generated. Use this exact invoice number in the remarks/reference field when making your payment.</p>
+    </div>
+    <div class="pay-invoice-number">
+      <small>INVOICE NUMBER</small>
+      <strong id="invoiceNumber">{{ invoice_number }}</strong>
+      <button type="button" data-copy-invoice>Copy invoice number</button>
+    </div>
+  </section>
+
+  <div class="pay-important">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></svg>
+    <div><strong>Important payment remark</strong><p>In your bank, eSewa, Khalti, QR or other payment app, put <b>{{ invoice_number }}</b> in the <b>Remarks / Note / Message / Reference</b> field. This is how the verification team matches your payment to your account.</p></div>
+  </div>
+
+  <div class="pay-checkout-grid">
+    <section class="pay-summary-card">
+      <div class="pay-section-head compact"><div><span class="pay-kicker">INVOICE SUMMARY</span><h2>Payment details</h2></div></div>
+      <div class="pay-summary-row"><span>Course</span><strong>{{ package.title }}</strong></div>
+      <div class="pay-summary-row"><span>Invoice</span><strong>{{ invoice_number }}</strong></div>
+      <div class="pay-summary-row total"><span>Total</span><strong>{{ package.currency }} {{ package.price|floatformat:0 }}</strong></div>
+
+      <div class="pay-instructions">{{ package.payment_instructions|linebreaksbr }}</div>
+
+      <h3 class="pay-method-title">Available payment destinations</h3>
+      <div class="pay-method-list">
+        {% for destination in payment_destinations %}
+        <article class="pay-method-card">
+          <div class="pay-method-copy">
+            <span class="pay-method-badge">{{ destination.get_method_display }}</span>
+            <strong>{{ destination.title }}</strong>
+            {% if destination.bank_name %}<p>{{ destination.bank_name }}</p>{% endif %}
+            {% if destination.account_name %}<p><b>Account:</b> {{ destination.account_name }}</p>{% endif %}
+            {% if destination.account_number %}<p><b>ID / Number:</b> {{ destination.account_number }}</p>{% endif %}
+            {% if destination.instructions %}<p>{{ destination.instructions }}</p>{% endif %}
+          </div>
+          {% if destination.qr_image %}<img src="{{ destination.qr_image.url }}" alt="{{ destination.title }} QR code">{% endif %}
+        </article>
+        {% empty %}
+        <div class="pay-method-empty">Payment account details have not been published yet. Please contact administration before making the payment.</div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="pay-submit-card">
+      <span class="pay-kicker">AFTER PAYMENT</span>
+      <h2>Submit for verification</h2>
+      <p class="pay-form-intro">After paying, enter your payment details below. Your access stays locked until an administrator verifies the payment.</p>
+
+      {% if form.non_field_errors %}<div class="pay-form-error">{{ form.non_field_errors|striptags }}</div>{% endif %}
+      <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="pay-field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+          {% if field.errors %}<div class="pay-field-error">{{ field.errors|striptags }}</div>{% endif %}
+        </div>
+        {% endfor %}
+        <button class="pay-btn primary full large" type="submit">Submit Payment for Verification →</button>
+      </form>
+      <p class="pay-security-note">Submitting this form does not approve access automatically. A portal administrator verifies the payment first.</p>
+    </section>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector('[data-copy-invoice]');
+  const value = document.getElementById('invoiceNumber');
+  if (!button || !value) return;
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(value.textContent.trim());
+      const old = button.textContent;
+      button.textContent = 'Copied';
+      setTimeout(() => button.textContent = old, 1400);
+    } catch (_) {}
+  });
+})();
+</script>
+{% endblock %}

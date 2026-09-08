@@ -1,0 +1,60 @@
+{% load static %}
+{% load portal_nav %}
+
+{% portal_nav_active request "dashboard" as nav_dashboard %}
+{% portal_nav_active request "practice" as nav_practice %}
+{% portal_nav_active request "courses" as nav_courses %}
+{% portal_nav_active request "store" as nav_store %}
+{% portal_nav_active request "results" as nav_results %}
+{% portal_nav_active request "profile" as nav_profile %}
+{% portal_nav_active request "management" as nav_management %}
+{% portal_user_initial request.user as user_initial %}
+{% portal_profile_photo request.user as profile_photo_url %}
+
+<link rel="stylesheet" href="{% static 'css/student-top-actions-v13.css' %}?v=20260903-148">
+<link rel="stylesheet" href="{% static 'css/arya-academy-official-v35-4.css' %}?v=20260908-354">
+<script defer src="{% static 'js/student-top-actions-v13.js' %}?v=20260903-148"></script>
+<header class="pv2-topbar portal-shared-header">
+  <div class="pv2-topbar-inner">
+
+    <a class="pv2-app-brand" href="{% url 'dashboard' %}" aria-label="Arya Academy home">
+      <img class="aa-official-logo" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+    </a>
+
+    <nav class="pv2-topnav portal-main-nav" aria-label="Main navigation">
+      <a class="{{ nav_dashboard }}" href="{% url 'dashboard' %}">
+        Dashboard
+      </a>
+
+      <a class="{{ nav_practice }}" href="/practice/cambridge/">
+        Practice
+      </a>
+
+      <a class="{{ nav_courses }}" href="/courses/">
+        Courses
+      </a>
+
+      <a class="{{ nav_store }}" href="/store/">
+        Test Access
+      </a>
+
+      <a class="{{ nav_results }}" href="/results/">
+        Results
+      </a>
+
+      <a class="{{ nav_profile }}" href="{% url 'profile' %}">
+        Profile
+      </a>
+
+      {% if request.user.is_superuser or request.user.is_staff or request.user.role == "admin" %}
+      <a class="{{ nav_management }}" href="/management/">
+        Management
+      </a>
+      {% endif %}
+    </nav>
+    {% if 'attempt' not in request.path and '/practice/' not in request.path and '/mock-tests/' not in request.path %}
+      {% include "partials/student_top_actions.html" %}
+    {% endif %}
+
+  </div>
+</header>

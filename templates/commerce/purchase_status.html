@@ -1,0 +1,54 @@
+{% extends "student_final/base.html" %}
+{% load static %}
+{% block title %}Invoice {{ purchase.invoice_number }} | Arya Academy{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/payment-access.css' %}?v=20260901-1">{% endblock %}
+{% block content %}
+<div class="pay-page pay-status-page">
+
+  <section class="pay-status-hero status-{{ purchase.status }}">
+    <div class="pay-status-icon">
+      {% if purchase.status == 'approved' %}
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m7.5 12 3 3 6-7"/></svg>
+      {% elif purchase.status == 'rejected' %}
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg>
+      {% else %}
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      {% endif %}
+    </div>
+    <div>
+      <span class="pay-kicker">PAYMENT STATUS</span>
+      <h1>{{ purchase.get_status_display }}</h1>
+      {% if purchase.status == 'approved' %}<p>Your payment is verified and course access is active.</p>
+      {% elif purchase.status == 'pending' %}<p>Your payment has been submitted and is waiting for administrator verification.</p>
+      {% elif purchase.status == 'rejected' %}<p>The payment could not be verified. Review the note below and submit a new payment when ready.</p>
+      {% else %}<p>Your invoice has been generated. Complete the payment and submit proof for verification.</p>{% endif %}
+    </div>
+  </section>
+
+  <section class="pay-status-card">
+    <div class="pay-status-grid">
+      <div><small>Invoice number</small><strong>{{ purchase.invoice_number }}</strong></div>
+      <div><small>Course</small><strong>{{ purchase.package.title }}</strong></div>
+      <div><small>Amount</small><strong>{{ purchase.currency }} {{ purchase.amount|floatformat:0 }}</strong></div>
+      <div><small>Payment method</small><strong>{{ purchase.get_payment_method_display|default:"—" }}</strong></div>
+      <div><small>Transaction reference</small><strong>{{ purchase.transaction_reference|default:"—" }}</strong></div>
+      <div><small>Submitted</small><strong>{% if purchase.submitted_at %}{{ purchase.submitted_at|date:"M j, Y · g:i A" }}{% else %}Not submitted{% endif %}</strong></div>
+    </div>
+
+    {% if purchase.admin_note %}<div class="pay-review-note"><strong>Verification note</strong><p>{{ purchase.admin_note }}</p></div>{% endif %}
+
+    <div class="pay-status-actions">
+      {% if purchase.status == 'approved' %}
+        <a class="pay-btn primary" href="{% url 'student_practice_hub' %}">Start Practice</a>
+        <a class="pay-btn outline" href="{% url 'student_mock_tests' %}">Mock Tests</a>
+        <a class="pay-btn outline" href="{% url 'student_learn' %}">Learning Materials</a>
+      {% elif purchase.status == 'initiated' %}
+        <a class="pay-btn primary" href="{% url 'commerce:purchase_package' purchase.package.slug %}">Continue Payment</a>
+      {% elif purchase.status == 'rejected' %}
+        <a class="pay-btn primary" href="{% url 'commerce:purchase_package' purchase.package.slug %}">Generate New Invoice</a>
+      {% endif %}
+      <a class="pay-btn outline" href="{% url 'commerce:store' %}">Back to Course Access</a>
+    </div>
+  </section>
+</div>
+{% endblock %}

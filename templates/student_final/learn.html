@@ -1,0 +1,43 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Learn | Arya Academy{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">LEARN</div>
+  <h1>Learn</h1>
+  <p>Build the skills you need to succeed.</p>
+</section>
+
+<section class="sf-two-grid sf-library-head">
+  <article class="sf-action-card">
+    <div class="sf-action-icon sf-plain-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="m10 8 6 4-6 4Z"></path></svg></div>
+    <h3>Video Lessons</h3><p>Watch expert-led lessons.</p><a href="#all-lessons">Browse videos <span>→</span></a>
+  </article>
+  <article class="sf-action-card">
+    <div class="sf-action-icon sf-plain-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6Z"></path><path d="M14 3v5h5M9 12h6M9 16h6"></path></svg></div>
+    <h3>PDF Resources</h3><p>Study downloadable learning materials.</p><a href="/courses/">Open library <span>→</span></a>
+  </article>
+</section>
+
+<div class="sf-filter-row" aria-label="Lesson topics"><span>Reading</span><span>Writing</span><span>Listening</span><span>Speaking</span><span>Grammar</span><span>Vocabulary</span></div>
+
+<section id="all-lessons" class="sf-lessons-section">
+  <h2>All lessons</h2>
+  <div class="sf-three-grid sf-lessons-grid">
+    {% for item in materials %}
+      <article class="sf-lesson-card">
+        <div class="sf-lesson-cover">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="m10 8 6 4-6 4Z"></path></svg>
+        </div>
+        <div class="sf-lesson-body">
+          <div class="sf-kicker">{{ item.type|upper }} · {{ target_level }}</div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description|truncatechars:130 }}</p>
+          <a href="{{ item.url }}">Open resource <span>→</span></a>
+        </div>
+      </article>
+    {% empty %}
+      <div class="sf-empty sf-span-all"><h2>No learning materials published yet</h2><p>Published videos, PDFs, and course resources will appear here automatically.</p><a class="sf-primary" href="/courses/">Open course library <span>→</span></a></div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

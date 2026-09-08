@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Practice Report | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+  <div class="pv2-card" style="padding:13px 16px;margin-bottom:18px;box-shadow:none">
+    <strong style="font-size:.78rem">Speaking practice scoring V2</strong>
+    <span style="display:block;color:var(--pv2-muted);font-size:.72rem;margin-top:4px">
+      Blank/noisy audio is rejected, Read Aloud is compared with the source sentence, and open responses use conservative speech-duration, vocabulary, pace and repetition checks. Scores remain practice estimates rather than official Cambridge results.
+    </span>
+  </div>
+
+
+  <section class="pv2-report-head">
+    <div>
+      <div class="pv2-eyebrow">
+        {{ attempt.mock_test.program.short_name|default:attempt.mock_test.program.name }}
+      </div>
+      <h1>{{ attempt.mock_test.title }}</h1>
+      <p>
+        Attempted {{ attempt.started_at|date:"M j, Y · g:i A" }}
+        · {{ rows|length }} response{{ rows|length|pluralize }}
+      </p>
+    </div>
+
+    <div class="pv2-report-total">
+      <span>Practice score</span>
+      <strong>
+        {% if score_percent != None %}
+          {{ score_percent }}%
+        {% else %}
+          —
+        {% endif %}
+      </strong>
+    </div>
+  </section>
+
+  {% if blank_count %}
+  <div class="pv2-alert">
+    <strong>{{ blank_count }} Speaking response{{ blank_count|pluralize }} contained no usable speech.</strong>
+    Blank/silent recordings are now treated as <strong>0 and not scorable</strong>; they no longer receive vocabulary, fluency or CEFR credit.
+  </div>
+  {% endif %}
+
+  {% for row in rows %}
+  <article class="pv2-card pv2-response-card">
+    <div class="pv2-response-top">
+      <div>
+        <div class="pv2-eyebrow">
+          {{ row.skill|upper }}
+          {% if row.part %}
+            · {{ row.part.title }}
+          {% endif %}
+        </div>
+
+        <h2>{{ row.question.prompt_text }}</h2>
+      </div>
+
+      {% if row.score_percent != None %}
+      <div class="pv2-score-chip {% if row.score_percent == 0 %}zero{% endif %}">
+        {{ row.score_percent }}%
+      </div>
+      {% endif %}
+    </div>
+
+    {% if row.response.audio_response %}
+    <div class="pv2-response-section">
+      <label>Recording</label>
+      <audio controls preload="metadata" style="width:100%">
+        <source src="{{ row.response.audio_response.url }}">
+      </audio>
+    </div>
+    {% endif %}
+
+    {% if row.skill == "speaking" %}
+    <div class="pv2-response-section">
+      <label>Transcript</label>
+      <div class="pv2-transcript {% if row.is_blank_audio %}blank{% endif %}">
+        {{ row.transcript|default:"Transcript unavailable." }}
+      </div>
+    </div>
+
+    {% if row.is_blank_audio %}
+    <div class="pv2-alert" style="margin-top:16px">
+      <strong>No usable speech detected.</strong><br>
+      This response receives 0%. No CEFR estimate or language-quality credit is shown because there is no speech to evaluate.
+    </div>
+    {% else %}
+    <div class="pv2-rubric-grid">
+      <div class="pv2-rubric-item">
+        <span>Task</span>
+        <strong>{% if row.task != None %}{{ row.task }}{% else %}—{% endif %}</strong>
+      </div>
+      <div class="pv2-rubric-item">
+        <span>Language</span>
+        <strong>{% if row.language != None %}{{ row.language }}{% else %}—{% endif %}</strong>
+      </div>
+      <div class="pv2-rubric-item">
+        <span>Vocabulary</span>
+        <strong>{% if row.vocabulary != None %}{{ row.vocabulary }}{% else %}—{% endif %}</strong>
+      </div>
+      <div class="pv2-rubric-item">
+        <span>Fluency</span>
+        <strong>{% if row.fluency != None %}{{ row.fluency }}{% else %}—{% endif %}</strong>
+      </div>
+      <div class="pv2-rubric-item">
+        <span>Intelligibility</span>
+        <strong>{% if row.intelligibility != None %}{{ row.intelligibility }}{% else %}—{% endif %}</strong>
+      </div>
+    </div>
+
+    {% if row.cefr %}
+    <div style="margin-top:16px">
+      <span class="pv2-status good">Practice CEFR estimate: {{ row.cefr }}</span>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+
+    {% if row.skill == "writing" and row.response.text_response %}
+    <div class="pv2-response-section">
+      <label>Written response</label>
+      <div class="pv2-transcript">{{ row.response.text_response|linebreaksbr }}</div>
+    </div>
+    {% endif %}
+
+    {% if row.strengths or row.improvements %}
+    <div class="pv2-feedback-grid">
+      <div class="pv2-feedback-box">
+        <h4>Strengths</h4>
+        {% if row.strengths %}
+        <ul>
+          {% for item in row.strengths %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div style="font-size:.75rem;color:var(--pv2-muted)">No strengths generated for this response.</div>
+        {% endif %}
+      </div>
+
+      <div class="pv2-feedback-box">
+        <h4>What to improve</h4>
+        {% if row.improvements %}
+        <ul>
+          {% for item in row.improvements %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <div style="font-size:.75rem;color:var(--pv2-muted)">No improvement notes available.</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </article>
+  {% empty %}
+  <div class="pv2-card pv2-empty">
+    No responses were saved for this attempt.
+  </div>
+  {% endfor %}
+
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:24px">
+    <a class="pv2-btn pv2-btn-outline" href="/results/">← All Results</a>
+    <a class="pv2-btn pv2-btn-primary" href="/practice/cambridge/">Practice Again →</a>
+  </div>
+
+</main>
+</body>
+</html>

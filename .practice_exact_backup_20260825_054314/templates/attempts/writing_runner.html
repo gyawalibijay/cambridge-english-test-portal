@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Writing | Upskill Practice</title>
+  <link rel="stylesheet" href="{% static 'css/cambridge-shell.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cambridge-exam.css' %}">
+</head>
+<body class="exam-page exam-shell">
+
+<header class="exam-top">
+  <div class="exam-brand"><b>Upskill</b> Practice</div>
+  <div id="sectionTimer" class="exam-clock" data-seconds="{{ item.part.section.duration_seconds|default:1800 }}" data-started="{{ attempt.started_at|date:'c' }}">◷ 30:00</div>
+  <div class="exam-tools">Writing · {{ answered|add:"1" }} / {{ total }}</div>
+</header>
+
+<main class="exam-work">
+  <div class="exam-work-head">
+    <div><small>Writing · {{ item.part.title }}</small><h1>Complete the task</h1></div>
+    <span class="exam-progress-pill">{{ answered|add:"1" }} / {{ total }}</span>
+  </div>
+  <div class="exam-progress-track"><span style="width:{% widthratio answered total 100 %}%"></span></div>
+
+  {% if writing_error %}<div style="margin-bottom:14px;border:1px solid #f2c9c9;background:#fff4f4;border-radius:10px;padding:12px;font-size:11px;color:#a33">{{ writing_error }}</div>{% endif %}
+
+  <div class="write-layout">
+    <section class="write-panel">
+      <div class="cam-demo-label">Task prompt</div>
+      {% if item.question.stimulus and item.question.stimulus.content %}<div class="exam-stimulus" style="margin-top:14px">{{ item.question.stimulus.content }}</div>{% endif %}
+      <div class="write-prompt" style="margin-top:14px">{{ item.question.prompt_text }}</div>
+      <div class="write-note">Address every required point. Write at least <strong>{{ min_word_count|default:50 }} words</strong>. Use clear sentences and review spelling and grammar before submitting.</div>
+    </section>
+
+    <section class="write-panel write-editor">
+      <form method="post" action="{% url 'attempts:submit_writing_response' attempt.id item.id %}" id="writingForm">
+        {% csrf_token %}
+        <textarea id="writingText" name="text_response" required placeholder="Write your response here...">{{ submitted_text|default:"" }}</textarea>
+        <div class="write-meta"><span><strong id="wordCount">0</strong> words</span><span id="wordStatus">Minimum {{ min_word_count|default:50 }}</span><span id="saveStatus">Autosave ready</span></div>
+        <div class="write-actions"><button type="button" id="clearDraft" class="exam-btn light">Clear Draft</button><button type="submit" class="exam-btn">Submit & Continue →</button></div>
+      </form>
+    </section>
+  </div>
+</main>
+
+<script>
+const text=document.getElementById('writingText'), count=document.getElementById('wordCount'), status=document.getElementById('wordStatus'), save=document.getElementById('saveStatus');
+const min=Number('{{ min_word_count|default:50 }}'), max=Number('{{ max_word_count|default:0 }}'), key='writing-draft-{{ attempt.id }}-{{ item.id }}';
+const wc=v=>v.trim()?v.trim().split(/\s+/).filter(Boolean).length:0;
+function update(){const n=wc(text.value);count.textContent=n;if(n>=min){status.textContent='Minimum reached';status.style.color='#168460'}else{status.textContent=(min-n)+' more words needed';status.style.color='#b17421'}if(max&&n>max){status.textContent='Maximum exceeded';status.style.color='#b33'}}
+if(!text.value.trim()&&localStorage.getItem(key))text.value=localStorage.getItem(key);
+let t; text.addEventListener('input',()=>{update();save.textContent='Saving…';clearTimeout(t);t=setTimeout(()=>{localStorage.setItem(key,text.value);save.textContent='Draft saved'},400)}); update();
+document.getElementById('clearDraft').addEventListener('click',()=>{if(confirm('Clear this draft?')){text.value='';localStorage.removeItem(key);update();}});
+document.getElementById('writingForm').addEventListener('submit',e=>{const n=wc(text.value);if(n<min){e.preventDefault();alert(`Please write at least ${min} words.`);return}if(max&&n>max){e.preventDefault();alert(`Please keep the answer within ${max} words.`);return}localStorage.removeItem(key)});
+const timer=document.getElementById('sectionTimer');if(timer){const conf=Number(timer.dataset.seconds||1800),started=Date.parse(timer.dataset.started||'');const fmt=s=>`${String(Math.floor(Math.max(0,s)/60)).padStart(2,'0')}:${String(Math.floor(Math.max(0,s)%60)).padStart(2,'0')}`;function tick(){const elapsed=Number.isFinite(started)?(Date.now()-started)/1000:0;timer.textContent='◷ '+fmt(conf-elapsed)}tick();setInterval(tick,1000)}
+</script>
+</body>
+</html>

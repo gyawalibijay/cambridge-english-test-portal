@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ mock_test.title }} | Upskill Practice</title>
+  <link rel="stylesheet" href="{% static 'css/cambridge-shell.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cambridge-exam.css' %}">
+</head>
+<body class="exam-page">
+
+<header class="exam-top">
+  <a href="/practice/cambridge/" class="exam-brand"><b>Upskill</b> Practice</a>
+  <div class="exam-clock">◷ {{ mock_test.duration_minutes|default:"—" }} min</div>
+  <div class="exam-tools"><button id="fullScreenBtn" style="border:0;background:none;cursor:pointer;color:inherit">⛶ Full Screen</button><span>⋮</span></div>
+</header>
+
+<main class="exam-container">
+  <div class="exam-card">
+    <div class="exam-tabs">
+      <span class="exam-tab">General Instructions</span>
+      <span class="exam-tab active">{{ section.title|default:"Practice" }} Part</span>
+    </div>
+
+    <div class="exam-content">
+      <div class="exam-rule"><span class="exam-rule-icon">▦</span><div><strong>This section is divided into {{ section.parts.count }} part{{ section.parts.count|pluralize }}</strong><br><span style="font-size:10px;color:#7a8e99">Complete the active questions in the order presented.</span></div></div>
+      <div class="exam-rule"><span class="exam-rule-icon">◷</span><div><strong>A timer is active during the section</strong><br><span style="font-size:10px;color:#7a8e99">Once you start this section, finish it in the same sitting.</span></div></div>
+
+      {% if skill == "speaking" %}
+      <div class="exam-rule"><span class="exam-rule-icon">◉</span><div><strong>Allow microphone access before you start</strong><br><span style="font-size:10px;color:#7a8e99">Your answers are recorded. You can replay the selected recording before submitting it.</span></div></div>
+      {% elif skill == "listening" %}
+      <div class="exam-rule"><span class="exam-rule-icon">♫</span><div><strong>Use working headphones or speakers</strong><br><span style="font-size:10px;color:#7a8e99">Listen carefully for names, times, places, reasons and sequence.</span></div></div>
+      {% elif skill == "reading" %}
+      <div class="exam-rule"><span class="exam-rule-icon">▤</span><div><strong>Read efficiently and keep moving</strong><br><span style="font-size:10px;color:#7a8e99">You have about 25 minutes across five parts in the supplied format.</span></div></div>
+      {% elif skill == "writing" %}
+      <div class="exam-rule"><span class="exam-rule-icon">✎</span><div><strong>Complete both Writing tasks</strong><br><span style="font-size:10px;color:#7a8e99">Address every required point and write at least 50 words for each task.</span></div></div>
+      {% endif %}
+
+      <div class="exam-rule"><span class="exam-rule-icon">✓</span><div><strong>Submit each answer when it is ready</strong><br><span style="font-size:10px;color:#7a8e99">Your progress and available results are saved to your account.</span></div></div>
+
+      {% if skill == "listening" %}
+      <div class="exam-device">
+        <h3>Test Your Audio</h3>
+        <p>Play the sample below and confirm that the sound is clear before you start the section.</p>
+        {% if sample_audio_url %}
+        <div class="exam-audio"><span class="exam-rule-icon">▶</span><audio controls preload="metadata" src="{{ sample_audio_url }}"></audio><span style="font-size:9px;color:#6f838e">Sample</span></div>
+        {% else %}
+        <p style="color:#b17630">No sample audio was found for this test.</p>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if skill == "speaking" %}
+      <div class="exam-device">
+        <h3>Check Microphone</h3>
+        <p>Allow microphone permission and speak normally. The indicator will react when your microphone is receiving sound.</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:14px">
+          <button type="button" id="micCheck" class="exam-btn light">Check Microphone</button>
+          <div style="flex:1;height:7px;background:#e7eef1;border-radius:99px;overflow:hidden"><span id="micMeter" style="display:block;height:100%;width:0;background:#10b6b4"></span></div>
+          <span id="micText" style="font-size:9px;color:#738793">Not checked</span>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="exam-device">
+        <h3>Parts in this practice</h3>
+        <div class="exam-parts">
+          {% for part in section.parts.all %}
+          {% if part.is_active %}
+          <div class="exam-part">
+            <span class="exam-part-num">{{ part.order }}</span>
+            <div><h4>{{ part.title }}</h4><p>{{ part.instructions|default:"Complete this part using the instructions shown in the test." }}</p></div>
+            <span>{% if skill == "speaking" and part.response_seconds %}{{ part.response_seconds }} sec/item{% elif skill == "speaking" and part.minimum_response_seconds %}≥ {{ part.minimum_response_seconds }} sec{% else %}Part {{ part.order }}{% endif %}</span>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-footer">
+      <a href="/practice/cambridge/" class="exam-btn light">Back</a>
+      {% if in_progress %}
+      <a href="{% url 'attempts:dispatch' in_progress.id %}" class="exam-btn">Resume Section →</a>
+      {% else %}
+      <form method="post" action="{% url 'assessments:start_test' mock_test.slug %}">{% csrf_token %}<button class="exam-btn" type="submit">{% if completed_attempt %}Practice Again{% else %}Start Section{% endif %} →</button></form>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+<script>
+document.getElementById('fullScreenBtn')?.addEventListener('click', async () => {
+  try {
+    if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+    else await document.exitFullscreen();
+  } catch (e) {}
+});
+
+const micButton = document.getElementById('micCheck');
+if (micButton) {
+  micButton.addEventListener('click', async () => {
+    const meter = document.getElementById('micMeter');
+    const text = document.getElementById('micText');
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const source = ctx.createMediaStreamSource(stream);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 256;
+      source.connect(analyser);
+      const data = new Uint8Array(analyser.frequencyBinCount);
+      text.textContent = 'Microphone ready';
+      const started = Date.now();
+      function tick(){
+        analyser.getByteFrequencyData(data);
+        const avg = data.reduce((a,b)=>a+b,0)/data.length;
+        meter.style.width = Math.min(100, Math.max(3, avg*1.8)) + '%';
+        if (Date.now()-started < 5000) requestAnimationFrame(tick);
+        else {
+          stream.getTracks().forEach(t=>t.stop());
+          ctx.close();
+          meter.style.width='100%';
+          text.textContent='Check complete';
+        }
+      }
+      tick();
+    } catch (e) {
+      text.textContent='Microphone blocked';
+      meter.style.width='0';
+    }
+  });
+}
+</script>
+</body>
+</html>

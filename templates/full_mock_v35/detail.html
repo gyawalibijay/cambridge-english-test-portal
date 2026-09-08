@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>{{ mock_test.title }} | Cambridge English Test</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/practice-reference.css' %}?v=20260908-mock-v355">
+  <link rel="stylesheet" href="{% static 'css/mobile-bottom-nav.css' %}?v=20260908-mock-v355">
+  <link rel="stylesheet" href="{% static 'css/practice-mock-blue-v29.css' %}?v=20260908-mock-v355">
+</head>
+<body class="skill-mock-page">
+<main class="practice-ref-page">
+  <section class="practice-ref-panel" aria-labelledby="mock-detail-title">
+    <header class="practice-ref-header">
+      <a class="practice-ref-back" href="{% url 'student_mock_tests' %}" aria-label="Back to Mock Test">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>
+      </a>
+      <span id="mock-detail-title">Mock Test</span>
+    </header>
+
+    <div class="mock-detail">
+      <span class="practice-ref-icon mock-detail-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="5" width="14" height="16" rx="2"></rect><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="m9 13 2 2 4-4"></path></svg>
+      </span>
+      <h1>{{ mock_test.title }}</h1>
+      <p class="mock-summary">{{ total_minutes }} minutes · 17 parts · 4 skills</p>
+
+      {% if error %}
+      <div class="mock-notice" role="alert"><strong>Mock Test needs attention</strong><p>{{ error }}</p></div>
+      {% endif %}
+
+    </div>
+
+    <div class="mock-detail">
+      {% if own_active %}
+        <div class="mock-notice">
+          <strong>This Full Mock is already in progress.</strong>
+          <p>Resume continues the same server-owned section deadline. Refreshing does not reset the clock.</p>
+        </div>
+        <a class="mock-button" href="{% url 'attempts:dispatch' active.pk %}">Resume Mock Test →</a>
+        <form method="post" action="{% url 'student_full_mock_start' mock_test.slug %}">
+          {% csrf_token %}
+          <input type="hidden" name="restart" value="1">
+          <button class="mock-button mock-button-secondary" type="submit">Cancel this attempt and start again</button>
+        </form>
+      {% elif active %}
+        <div class="mock-notice">
+          <strong>{{ active.mock_test.title }} is already in progress.</strong>
+          <p>Only one Full Mock can be active at a time.</p>
+          <a href="{% url 'attempts:dispatch' active.pk %}">Resume current mock →</a>
+        </div>
+      {% elif state.ready %}
+        <h2>Before you start</h2>
+        <ul class="mock-rules">
+          <li>The mock runs Reading → Listening → Speaking → Writing.</li>
+          <li>Reading is 25 minutes, Listening 25 minutes, Speaking 12 minutes and Writing 30 minutes.</li>
+          <li>Use headphones for Listening and allow microphone access before Speaking.</li>
+          <li>Each section timer starts only when you begin that section, then continues on the server even if you refresh or leave the page.</li>
+          <li>Between sections, the next timer does not start until you press Continue.</li>
+        </ul>
+        <form method="post" action="{% url 'student_full_mock_start' mock_test.slug %}">
+          {% csrf_token %}
+          <button class="mock-button" type="submit">Start Full Mock →</button>
+        </form>
+      {% else %}
+        <div class="mock-notice">
+          <strong>This mock is not ready for students yet.</strong>
+          <p>The published content failed the Full Mock readiness check.</p>
+          {% if request.user.is_staff %}<a href="/admin/mock-builder/{{ mock_test.pk }}/">Review in Mock Test Builder →</a>{% endif %}
+        </div>
+      {% endif %}
+
+      <p class="mock-footnote">Your answers use the same Reading, Listening, Speaking and Writing runners already used by the portal. Full Mock timing and progression remain controlled by the Part 2 engine.</p>
+    </div>
+  </section>
+</main>
+
+{% include "student_final/_mobile_nav.html" with active="mock" %}
+</body>
+</html>

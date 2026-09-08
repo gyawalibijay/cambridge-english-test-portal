@@ -1,0 +1,19 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="camCardBg" x1="12" y1="12" x2="84" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#EEF4FF"/>
+    </linearGradient>
+    <linearGradient id="camAccent" x1="25" y1="20" x2="69" y2="76" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2866FF"/>
+      <stop offset="1" stop-color="#1745D8"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="80" height="80" rx="24" fill="url(#camCardBg)"/>
+  <rect x="8.75" y="8.75" width="78.5" height="78.5" rx="23.25" stroke="#D6E2FF" stroke-width="1.5"/>
+  <path d="M48 18L67 25V40.5C67 53.3 59.05 64.17 48 70.5C36.95 64.17 29 53.3 29 40.5V25L48 18Z" fill="url(#camAccent)" fill-opacity="0.12" stroke="url(#camAccent)" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M39 34H57" stroke="url(#camAccent)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M39 43.5H57" stroke="url(#camAccent)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M48 28V57" stroke="url(#camAccent)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="69" cy="28" r="4" fill="#FF576C"/>
+</svg>

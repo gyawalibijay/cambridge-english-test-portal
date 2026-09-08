@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Verify your email | Arya Academy</title>
+
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+
+<body>
+<div class="pv2-auth otp-premium-auth">
+
+  <section class="pv2-auth-brand otp-premium-brand-panel">
+    <div class="pv2-brand">
+      <span class="pv2-brand-mark">ST</span>
+      <span>
+        Arya Academy
+        <small>by Arya Academy</small>
+      </span>
+    </div>
+
+    <div class="pv2-auth-copy otp-premium-brand-copy">
+      <span class="tag">Secure student registration</span>
+
+      <h1>
+        Verify once.
+        <span>Practice with confidence.</span>
+      </h1>
+
+      <p>
+        Confirm your email to activate your student account and keep your
+        courses, purchased test access, results and future certificates
+        connected to the correct profile.
+      </p>
+
+      <div class="otp-premium-benefits">
+        <div>
+          <strong>Secure verification</strong>
+          <span>A one-time 6-digit code protects every new student account.</span>
+        </div>
+
+        <div>
+          <strong>One verified profile</strong>
+          <span>Your test access, learning history and results remain connected.</span>
+        </div>
+
+        <div>
+          <strong>Future-ready identity</strong>
+          <span>The verified account can later support consultancy certificates.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv2-auth-foot">
+      Arya Academy · Arya Academy
+    </div>
+  </section>
+
+  <main class="pv2-auth-main otp-premium-main">
+
+    <div class="pv2-auth-top">
+      <a
+        class="pv2-btn pv2-btn-outline"
+        href="{% url 'login' %}"
+      >
+        ← Sign in
+      </a>
+
+      <button
+        type="button"
+        class="pv2-theme-toggle"
+        data-theme-toggle
+        title="Switch theme"
+        aria-label="Switch theme"
+      >
+        <span data-theme-icon></span>
+      </button>
+    </div>
+
+    <div class="pv2-auth-card otp-premium-card">
+      <div class="otp-premium-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M4 6.5h16v11H4zM4 7l8 6 8-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+
+      <div class="pv2-eyebrow">
+        Check your inbox
+      </div>
+
+      <h2>Enter your verification code</h2>
+
+      <p class="sub otp-premium-sub">
+        We sent a 6-digit code to
+        <strong>{{ masked_email }}</strong>.
+      </p>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="otp-message">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form
+        method="post"
+        class="otp-premium-form"
+        data-otp-form
+        novalidate
+      >
+        {% csrf_token %}
+
+        <div class="otp-hidden-field">
+          {{ form.code }}
+        </div>
+
+        <label class="otp-box-label">
+          Verification code
+        </label>
+
+        <div class="otp-six-boxes" data-otp-boxes>
+          <input class="otp-digit" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" data-otp-digit autofocus aria-label="Digit 1">
+          <input class="otp-digit" type="text" inputmode="numeric" maxlength="1" data-otp-digit aria-label="Digit 2">
+          <input class="otp-digit" type="text" inputmode="numeric" maxlength="1" data-otp-digit aria-label="Digit 3">
+          <input class="otp-digit" type="text" inputmode="numeric" maxlength="1" data-otp-digit aria-label="Digit 4">
+          <input class="otp-digit" type="text" inputmode="numeric" maxlength="1" data-otp-digit aria-label="Digit 5">
+          <input class="otp-digit" type="text" inputmode="numeric" maxlength="1" data-otp-digit aria-label="Digit 6">
+        </div>
+
+        {% if form.code.errors %}
+          <div class="pv2-field-error otp-premium-error">
+            {{ form.code.errors|striptags }}
+          </div>
+        {% endif %}
+
+        <div class="otp-premium-meta">
+          <span>Code expires in 10 minutes</span>
+          <span>5 verification attempts maximum</span>
+        </div>
+
+        <button
+          type="submit"
+          class="pv2-btn pv2-btn-primary pv2-submit otp-premium-submit"
+        >
+          Verify email →
+        </button>
+      </form>
+
+      <div class="otp-premium-resend">
+        <span>Didn't receive the email?</span>
+
+        <a href="{% url 'resend_verification' %}">
+          Resend verification code →
+        </a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+(() => {
+  const form = document.querySelector("[data-otp-form]");
+  if (!form) return;
+
+  const hidden = form.querySelector("#id_code");
+  const boxes = Array.from(
+    form.querySelectorAll("[data-otp-digit]")
+  );
+
+  function sync() {
+    const code = boxes
+      .map((box) => (
+        box.value
+          .replace(/\D/g, "")
+          .slice(0, 1)
+      ))
+      .join("");
+
+    if (hidden) {
+      hidden.value = code;
+    }
+  }
+
+  function fillFromString(value) {
+    const digits = (value || "")
+      .replace(/\D/g, "")
+      .slice(0, 6);
+
+    boxes.forEach((box, index) => {
+      box.value = digits[index] || "";
+    });
+
+    sync();
+
+    const nextIndex = Math.min(
+      digits.length,
+      boxes.length - 1
+    );
+
+    if (boxes[nextIndex]) {
+      boxes[nextIndex].focus();
+    }
+  }
+
+  boxes.forEach((box, index) => {
+    box.addEventListener("input", () => {
+      box.value = box.value
+        .replace(/\D/g, "")
+        .slice(0, 1);
+
+      sync();
+
+      if (
+        box.value &&
+        index < boxes.length - 1
+      ) {
+        boxes[index + 1].focus();
+        boxes[index + 1].select();
+      }
+    });
+
+    box.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Backspace" &&
+        !box.value &&
+        index > 0
+      ) {
+        boxes[index - 1].focus();
+        boxes[index - 1].select();
+      }
+
+      if (
+        event.key === "ArrowLeft" &&
+        index > 0
+      ) {
+        event.preventDefault();
+        boxes[index - 1].focus();
+      }
+
+      if (
+        event.key === "ArrowRight" &&
+        index < boxes.length - 1
+      ) {
+        event.preventDefault();
+        boxes[index + 1].focus();
+      }
+    });
+
+    box.addEventListener("paste", (event) => {
+      event.preventDefault();
+
+      const data = (
+        event.clipboardData ||
+        window.clipboardData
+      ).getData("text");
+
+      fillFromString(data);
+    });
+  });
+
+  if (hidden && hidden.value) {
+    fillFromString(
+      hidden.value
+    );
+  }
+
+  form.addEventListener(
+    "submit",
+    sync
+  );
+})();
+</script>
+</body>
+</html>

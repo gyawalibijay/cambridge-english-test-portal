@@ -1,0 +1,32 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Certificates & Reports | Upskill Practice{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">YOUR ACCOUNT</div>
+  <h1>Certificates & reports</h1>
+  <p>Download practice Test Reports from completed attempts.</p>
+</section>
+
+<section class="sf-report-note">
+  <div class="sf-action-icon">♙</div>
+  <div><h2>Practice Test Report</h2><p>The PDF follows the structure of the Test Report reference supplied for this project: candidate details, skill-level CEFR fields, Can-do statements and a descriptor page. It is clearly labelled as an internal practice report, not an official Cambridge result.</p></div>
+</section>
+
+<section class="sf-report-list">
+  {% for row in reports %}
+    <article class="sf-report-card">
+      <div>
+        <div class="sf-kicker">PRACTICE TEST REPORT</div>
+        <h2>{{ row.title }}</h2>
+        <p>{{ row.date|date:"d M Y" }} · Candidate {{ request.user.get_full_name|default:request.user.username }}</p>
+      </div>
+      <div class="sf-report-actions">
+        {% if row.score != None %}<strong>{{ row.score|floatformat:0 }}%</strong>{% endif %}
+        <a class="sf-primary" href="/certificates/report/{{ row.attempt.id }}/">Download PDF <span>↓</span></a>
+      </div>
+    </article>
+  {% empty %}
+    <div class="sf-empty"><h2>No reports available yet</h2><p>Complete or submit a practice/mock attempt and its report will become available here.</p></div>
+  {% endfor %}
+</section>
+{% endblock %}

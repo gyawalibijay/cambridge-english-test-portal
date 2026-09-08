@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard | Arya Academy</title>
+  <link rel="stylesheet" href="{% static 'css/cambridge-shell.css' %}">
+  <link rel="stylesheet" href="{% static 'css/arya-academy-official-v35-4.css' %}?v=20260908-354">
+</head>
+<body class="cam-app">
+<div class="cam-app-shell">
+
+  <aside class="cam-sidebar">
+    <a href="{% url 'dashboard' %}" class="cam-side-brand" aria-label="Arya Academy home"><img class="aa-official-logo" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy"></a>
+    <nav class="cam-side-nav">
+      <a class="cam-side-link active" href="{% url 'dashboard' %}"><span class="ico">▦</span>Dashboard</a>
+      <a class="cam-side-link" href="/practice/cambridge/"><span class="ico">◫</span>Section Practice</a>
+      <a class="cam-side-link" href="/results/"><span class="ico">◎</span>Results</a>
+      {% if user.is_staff %}<a class="cam-side-link" href="/content-studio/"><span class="ico">⚙</span>Content Studio</a>{% endif %}
+    </nav>
+    <div class="cam-side-spacer"></div>
+    <div class="cam-side-note"><strong>Cambridge/Upskill format</strong><br>Speaking → Listening → Reading → Writing. Once you begin a section, finish that section.</div>
+  </aside>
+
+  <main class="cam-main">
+    <header class="cam-topbar">
+      <div class="cam-top-title">Cambridge / General English</div>
+      <div class="cam-user">
+        <span>{{ user.first_name|default:user.username }}</span>
+        <div class="cam-avatar">{{ user.first_name|default:user.username|first|upper }}</div>
+        <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button style="border:0;background:none;color:#748894;font-size:10px;font-weight:800;cursor:pointer">Sign out</button></form>
+      </div>
+    </header>
+
+    <div class="cam-content">
+      <section class="cam-welcome">
+        <div>
+          <small>Welcome back, {{ user.first_name|default:user.username }} 👋</small>
+          <h1>Keep building your English confidence</h1>
+          <p>Practise regularly, complete each section and use your reports to see where to focus next.</p>
+          <div class="cam-progress">
+            <div class="cam-progress-label"><span>Four-skill progress</span><strong>{{ completed_sections }} / 4 sections completed</strong></div>
+            <div class="cam-progress-track"><span style="width:{{ progress_percent }}%"></span></div>
+          </div>
+        </div>
+        <div class="cam-welcome-actions">
+          <a href="/practice/cambridge/" class="cam-ghost-btn">Open Practice Test →</a>
+          <a href="/results/" class="cam-ghost-btn">View Results</a>
+        </div>
+      </section>
+
+      <div class="cam-stat-grid">
+        <div class="cam-stat-card"><div class="cam-stat-label">Completed sections</div><div class="cam-stat-value">{{ completed_sections }}<small style="font-size:12px;color:#8da0aa"> / 4</small></div><div class="cam-stat-sub">Current four-skill cycle</div></div>
+        <div class="cam-stat-card"><div class="cam-stat-label">Practice attempts</div><div class="cam-stat-value">{{ total_attempts }}</div><div class="cam-stat-sub">Across all sections</div></div>
+        <div class="cam-stat-card"><div class="cam-stat-label">Saved responses</div><div class="cam-stat-value">{{ total_responses }}</div><div class="cam-stat-sub">Objective, Writing and Speaking</div></div>
+      </div>
+
+      <div class="cam-section-title"><h2>Section Practice</h2><a href="/practice/cambridge/">View full practice flow →</a></div>
+      <div class="cam-skill-grid">
+        {% for card in skill_cards %}
+        {% if card.test %}
+        <a href="{% if card.in_progress and card.latest %}{% url 'attempts:dispatch' card.latest.id %}{% else %}{% url 'assessments:test_detail' card.test.slug %}{% endif %}" class="cam-skill-card">
+          <div class="cam-skill-head">
+            <div class="cam-skill-icon">{% if card.key == 'speaking' %}◉{% elif card.key == 'listening' %}♫{% elif card.key == 'reading' %}▤{% else %}✎{% endif %}</div>
+            {% if card.completed %}<span class="cam-status done">Completed</span>{% elif card.in_progress %}<span class="cam-status live">In progress</span>{% else %}<span class="cam-status">Ready</span>{% endif %}
+          </div>
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.parts }} parts · approximately {{ card.minutes }} minutes.</p>
+          <div class="cam-skill-meta"><span>{{ card.attempt_count }} attempt{{ card.attempt_count|pluralize }}</span><span>{% if card.completed %}✓ progress saved{% else %}practice section{% endif %}</span></div>
+          <span class="cam-skill-action">{% if card.in_progress %}Continue section →{% elif card.completed %}Practice again →{% else %}Start section →{% endif %}</span>
+        </a>
+        {% else %}
+        <div class="cam-skill-card" style="opacity:.6">
+          <div class="cam-skill-head"><div class="cam-skill-icon">•</div><span class="cam-status">Preparing</span></div>
+          <h3>{{ card.title }}</h3><p>This section is not published yet.</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="cam-dashboard-grid">
+        <section class="cam-panel">
+          <h3>Recent practice</h3>
+          <div class="cam-activity">
+            {% for attempt in recent_attempts %}
+            <div class="cam-activity-row"><div><strong>{{ attempt.mock_test.title }}</strong><br><span>{{ attempt.started_at|date:"M j, Y · g:i A" }}</span></div><span>{{ attempt.get_status_display }}</span></div>
+            {% empty %}<div style="font-size:11px;color:#8295a0;padding:20px 0">No practice attempts yet.</div>{% endfor %}
+          </div>
+        </section>
+
+        <section class="cam-panel">
+          <h3>Four-skill roadmap</h3>
+          <div class="cam-bars">
+            {% for card in skill_cards %}
+            <div class="bar" style="height:{% if card.completed %}100{% elif card.in_progress %}66{% elif card.attempt_count %}48{% else %}18{% endif %}%"><small>{{ card.title|slice:":4" }}</small></div>
+            {% endfor %}
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<nav class="cam-mobile-nav">
+  <a href="{% url 'dashboard' %}"><strong>⌂</strong>Home</a>
+  <a href="/practice/cambridge/"><strong>▦</strong>Practice</a>
+  <a href="/results/"><strong>◎</strong>Results</a>
+  <a href="#"><strong>○</strong>Profile</a>
+</nav>
+</body>
+</html>

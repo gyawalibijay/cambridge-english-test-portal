@@ -1,0 +1,92 @@
+/* =========================================================
+   SPEAKING RINGS V19
+   Presentation-only override for the existing V18 runner.
+   ========================================================= */
+
+body.cambridge-speaking-reference-v18 #prepRing,
+body.cambridge-speaking-reference-v18 #recordRing{
+  --v19-angle:0deg;
+  --v19-active:#aeb6bd;
+  --v19-track:#dfe3e7;
+
+  position:relative!important;
+  width:112px!important;
+  height:112px!important;
+  margin:0 auto 11px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:50%!important;
+
+  display:grid!important;
+  place-items:center!important;
+
+  /*
+    CSS conic-gradient begins at 12 o'clock and advances clockwise.
+    JS updates only --v19-angle, so the runner's own countdown logic
+    remains untouched.
+  */
+  background:
+    conic-gradient(
+      from 0deg,
+      var(--v19-active) 0deg,
+      var(--v19-active) var(--v19-angle),
+      var(--v19-track) var(--v19-angle),
+      var(--v19-track) 360deg
+    )!important;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(44,57,70,.02)!important;
+
+  overflow:visible!important;
+  transform:none!important;
+}
+
+/* Clean white centre, leaving an 8px progress ring. */
+body.cambridge-speaking-reference-v18 #prepRing::after,
+body.cambridge-speaking-reference-v18 #recordRing::after{
+  content:""!important;
+  position:absolute!important;
+  inset:8px!important;
+  z-index:1!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  pointer-events:none!important;
+}
+
+/* Ensure any old/native decorative ring layer cannot cover V19. */
+body.cambridge-speaking-reference-v18 #prepRing > svg,
+body.cambridge-speaking-reference-v18 #recordRing > svg{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+body.cambridge-speaking-reference-v18 #prepNumber,
+body.cambridge-speaking-reference-v18 #recordNumber{
+  position:relative!important;
+  z-index:3!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:#425269!important;
+  font-size:40px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  letter-spacing:-.03em!important;
+  font-variant-numeric:tabular-nums!important;
+  transform:none!important;
+}
+
+/* Do not show any mic level/status elements inside the page. */
+body.cambridge-speaking-reference-v18 #micStatus,
+body.cambridge-speaking-reference-v18 #micLevel,
+body.cambridge-speaking-reference-v18 #recordLevel,
+body.cambridge-speaking-reference-v18 #micStatusText,
+body.cambridge-speaking-reference-v18 #micDot,
+body.cambridge-speaking-reference-v18 [data-mic-level],
+body.cambridge-speaking-reference-v18 [data-microphone-status]{
+  display:none!important;
+}

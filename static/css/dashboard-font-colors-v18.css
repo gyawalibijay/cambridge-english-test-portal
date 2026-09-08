@@ -1,0 +1,287 @@
+/* DASHBOARD_FONT_COLORS_V18_20260905
+   Shared student-dashboard colour and readability pass.
+   Brand accents are limited to #03bbb7 and #ff6702. Practice and Mock Test
+   intentionally do not load this stylesheet. White and dark neutrals are
+   retained only where they are required for legible text and surfaces. */
+
+:root {
+  --dashboard-primary: #03bbb7;
+  --dashboard-secondary: #ff6702;
+  --dashboard-ink: #102f30;
+  --dashboard-muted: #4d6869;
+  --dashboard-white: #fff;
+  --sf-primary: var(--dashboard-primary);
+  --sf-primary-dark: var(--dashboard-primary);
+  --sf-navy: var(--dashboard-primary);
+  --sf-ink: var(--dashboard-ink);
+  --sf-muted: var(--dashboard-muted);
+  --sf-active: rgba(3, 187, 183, .11);
+  --sf-soft: rgba(3, 187, 183, .07);
+  --sf-border: rgba(3, 187, 183, .19);
+  --sf-red: var(--dashboard-secondary);
+  --sf-green: var(--dashboard-primary);
+}
+
+body,
+.sf-main,
+.sf-shell,
+.sf-page-head,
+.sf-action-card,
+.sf-progress-card,
+.sf-overall-card,
+.sf-journey,
+.sf-profile-card,
+.sf-certificate-intro,
+.sf-report-card,
+.sf-empty {
+  color: var(--dashboard-ink);
+}
+
+.sf-brand-copy strong,
+.sf-page-head h1,
+.sf-action-card h3,
+.sf-lesson-body h3,
+.sf-overall-copy h2,
+.sf-progress-card-head > strong,
+.sf-journey h2,
+.sf-journey-step strong,
+.sf-profile-main h2,
+.sf-profile-grid strong,
+.sf-certificate-intro h2,
+.sf-report-copy h2,
+.sf-empty h2 {
+  color: var(--dashboard-ink) !important;
+}
+
+.sf-brand-copy small,
+.sf-nav-label,
+.sf-page-head p,
+.sf-action-card p,
+.sf-lesson-body p,
+.sf-overall-copy p,
+.sf-journey-step p,
+.sf-profile-main > p,
+.sf-certificate-intro p,
+.sf-report-copy > p,
+.sf-report-action small,
+.sf-empty p {
+  color: var(--dashboard-muted) !important;
+}
+
+.sf-kicker,
+.sf-page-head .sf-kicker,
+.sf-action-card a,
+.sf-lesson-body a,
+.sf-progress-card-head b,
+.sf-progress-metrics strong,
+.sf-profile-grid strong,
+.sf-report-levels strong {
+  color: var(--dashboard-primary) !important;
+}
+
+.sf-action-card,
+.sf-lesson-card,
+.sf-progress-card,
+.sf-overall-card,
+.sf-journey,
+.sf-profile-card,
+.sf-certificate-intro,
+.sf-report-card,
+.sf-empty {
+  border-color: rgba(3, 187, 183, .22);
+}
+
+.sf-action-icon,
+.sf-journey-step > span {
+  color: var(--dashboard-primary);
+  background: rgba(3, 187, 183, .11);
+}
+
+.sf-progress-metrics small,
+.sf-profile-grid small,
+.sf-ring span {
+  color: var(--dashboard-muted) !important;
+  font-weight: 700;
+}
+
+.sf-profile-grid > div,
+.sf-report-levels span,
+.sf-filter-row span {
+  color: var(--dashboard-muted);
+  background: rgba(3, 187, 183, .07);
+}
+
+.sf-primary,
+.sf-primary:hover {
+  color: var(--dashboard-white) !important;
+  background: var(--dashboard-primary) !important;
+}
+
+.sf-secondary-button {
+  border-color: var(--dashboard-secondary) !important;
+  color: var(--dashboard-secondary) !important;
+  background: var(--dashboard-white) !important;
+}
+
+.sf-secondary-button:hover {
+  color: var(--dashboard-white) !important;
+  background: var(--dashboard-secondary) !important;
+}
+
+.sf-ring {
+  background: conic-gradient(var(--dashboard-primary) calc(var(--p) * 1%), rgba(3, 187, 183, .12) 0);
+}
+
+.sf-progress > span,
+.sf-progress-bar > span {
+  background: var(--dashboard-primary) !important;
+}
+
+.sf-profile-avatar,
+.sf-brand-mark,
+.ref-mobile-mark {
+  color: var(--dashboard-white);
+  background: var(--dashboard-primary);
+}
+
+.sf-nav-item,
+.portal-bottom-nav a {
+  color: var(--dashboard-muted);
+}
+
+.sf-nav-item:hover,
+.sf-nav-item.is-active,
+.portal-bottom-nav a.is-active,
+.portal-bottom-nav a.is-active svg {
+  color: var(--dashboard-primary);
+}
+
+.sf-nav-item.is-active::after,
+.portal-notification-dot {
+  background: var(--dashboard-secondary);
+}
+
+/* Dashboard home: strong white copy on teal surfaces. */
+.ref-page-head h1,
+.ref-lesson-card > h2,
+.ref-prep-card > h2,
+.ref-tools-section > h2,
+.ref-tool-card strong,
+.ref-lesson-footer strong,
+.ref-promo-copy strong {
+  color: var(--dashboard-ink) !important;
+}
+
+.ref-page-head p,
+.ref-prep-stats small,
+.ref-prep-note,
+.ref-tool-card div span,
+.ref-promo-copy span,
+.ref-footer-links,
+.ref-footer-links a {
+  color: var(--dashboard-muted) !important;
+}
+
+.ref-hero-kicker,
+.ref-hero-copy h2,
+.ref-hero-copy p,
+.ref-streak-eyebrow,
+.ref-streak-topline h2,
+.ref-streak-mini-count,
+.ref-streak-mini-count strong,
+.ref-streak-big strong,
+.ref-streak-big span,
+.ref-streak-big small,
+.ref-streak-week-head strong,
+.ref-streak-week-head span,
+.ref-day-item small,
+.ref-streak-milestone-copy strong,
+.ref-streak-milestone-copy span,
+.ref-payment-access-copy small,
+.ref-payment-access-copy strong,
+.ref-payment-access-copy > span,
+.ref-leaderboard h2,
+.ref-performer-info strong,
+.ref-performer-info span,
+.ref-performer-score,
+.ref-normal-rank,
+.ref-performer-empty {
+  color: var(--dashboard-white) !important;
+  opacity: 1;
+}
+
+.ref-hero-copy h2 {
+  font-weight: 800;
+}
+
+.ref-hero-copy p,
+.ref-payment-access-copy > span,
+.ref-streak-big small {
+  font-weight: 500;
+}
+
+.ref-dashboard a.ref-white-button,
+.ref-dashboard a.ref-white-button:hover,
+.ref-payment-access-action,
+.ref-lesson-footer span,
+.ref-prep-stats strong,
+.ref-prep-note b,
+.ref-tool-arrow,
+.ref-performer-avatar {
+  color: var(--dashboard-primary) !important;
+}
+
+.ref-dashboard a.ref-blue-button,
+.ref-dashboard a.ref-primary-button,
+.ref-dashboard a.ref-small-blue {
+  color: var(--dashboard-white) !important;
+  background: var(--dashboard-primary) !important;
+}
+
+.ref-prep-corner,
+.ref-payment-access-icon,
+.ref-streak-milestone-track span {
+  color: var(--dashboard-white);
+  background: var(--dashboard-secondary) !important;
+}
+
+.ref-payment-access-action b,
+.ref-promo-icon.youtube,
+.ref-dashboard a.ref-ghost-red {
+  color: var(--dashboard-secondary) !important;
+}
+
+.ref-dashboard a.ref-ghost-red {
+  border-color: var(--dashboard-secondary) !important;
+}
+
+.ref-performer-row.is-first {
+  border-color: var(--dashboard-secondary) !important;
+}
+
+.ref-small-medal.gold,
+.ref-small-medal.bronze {
+  color: var(--dashboard-white) !important;
+  background: var(--dashboard-secondary) !important;
+}
+
+.ref-small-medal.silver {
+  color: var(--dashboard-white) !important;
+  background: var(--dashboard-primary) !important;
+}
+
+.ref-quote-bar {
+  color: var(--dashboard-ink);
+  background: rgba(3, 187, 183, .09);
+}
+
+.ref-quote-bar svg {
+  color: var(--dashboard-primary);
+}
+
+@media (max-width: 860px) {
+  .ref-page-head h1 { font-size: 24px; }
+  .ref-hero-copy h2 { font-size: 22px; }
+  .ref-hero-copy p { font-size: 14px; line-height: 1.55; }
+  .ref-payment-access-copy > span { font-size: 12px; }
+}

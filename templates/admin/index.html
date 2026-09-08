@@ -1,0 +1,164 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static log %}
+
+{% block bodyclass %}{{ block.super }} dashboard b1-admin-dashboard{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div class="b1-dashboard-wrap">
+
+  <section class="b1-welcome">
+    <div class="b1-welcome-copy">
+      <span class="b1-dashboard-kicker">B1 READY ADMINISTRATION</span>
+      <h1>Welcome back, {{ user.get_short_name|default:user.username }}.</h1>
+      <p>
+        Use this dashboard to manage the portal safely. The sidebar groups the system
+        by the job you are trying to do, so you do not need to remember Django model names.
+      </p>
+    </div>
+
+    <div class="b1-welcome-actions">
+      <a href="/admin/question_bank/question/" class="b1-primary-action">Add / manage questions <span>→</span></a>
+      <a href="/admin/commerce/purchase/" class="b1-secondary-action">Review payments <span>→</span></a>
+    </div>
+  </section>
+
+  <section class="b1-start-here">
+    <div class="b1-section-title">
+      <div>
+        <span class="b1-dashboard-kicker">START HERE</span>
+        <h2>What do you want to manage?</h2>
+      </div>
+      <p>Choose the task. The system takes you directly to the correct admin area.</p>
+    </div>
+
+    <div class="b1-task-grid">
+      <a href="/admin/question_bank/question/" class="b1-task-card">
+        <span class="b1-task-number">01</span>
+        <span class="b1-task-icon">Q</span>
+        <strong>Test Questions</strong>
+        <p>Manage Reading, Listening, Speaking and Writing questions, answers and question-level audio.</p>
+        <em>Open Question Bank →</em>
+      </a>
+
+      <a href="/admin/question_bank/stimulus/" class="b1-task-card">
+        <span class="b1-task-number">02</span>
+        <span class="b1-task-icon">♫</span>
+        <strong>Listening / Shared Audio</strong>
+        <p>Upload shared recordings, source text, passages and media used by multiple questions.</p>
+        <em>Open Stimulus →</em>
+      </a>
+
+      <a href="/admin/academy/coursematerial/" class="b1-task-card">
+        <span class="b1-task-number">03</span>
+        <span class="b1-task-icon">▶</span>
+        <strong>Lessons & Resources</strong>
+        <p>Manage course learning materials such as videos, documents and supporting resources.</p>
+        <em>Open Course Materials →</em>
+      </a>
+
+      <a href="/admin/mock-builder/" class="b1-task-card">
+        <span class="b1-task-number">04</span>
+        <span class="b1-task-icon">✓</span>
+        <strong>Mock Tests</strong>
+        <p>Create and organize mock-test structures, parts and sections for the student portal.</p>
+        <em>Open Mock Tests →</em>
+      </a>
+
+      <a href="/admin/commerce/purchase/" class="b1-task-card">
+        <span class="b1-task-number">05</span>
+        <span class="b1-task-icon">₨</span>
+        <strong>Payments & Access</strong>
+        <p>Review manual payments, access packages and the student's program-access status.</p>
+        <em>Open Purchases →</em>
+      </a>
+
+      <a href="/admin/accounts/studentprofile/" class="b1-task-card">
+        <span class="b1-task-number">06</span>
+        <span class="b1-task-icon">◎</span>
+        <strong>Students</strong>
+        <p>Review student profiles and account information without searching through unrelated modules.</p>
+        <em>Open Students →</em>
+      </a>
+    </div>
+  </section>
+
+  <section class="b1-dashboard-two-col">
+
+    <div class="b1-instruction-card">
+      <div class="b1-section-title compact">
+        <div>
+          <span class="b1-dashboard-kicker">SAFE CONTENT WORKFLOW</span>
+          <h2>Use this order when publishing content.</h2>
+        </div>
+      </div>
+
+      <div class="b1-workflow-list">
+        <div class="b1-workflow-step">
+          <span>1</span>
+          <div><strong>Create the content</strong><p>Add the question, lesson, mock test or resource first.</p></div>
+        </div>
+        <div class="b1-workflow-step">
+          <span>2</span>
+          <div><strong>Add the correct media</strong><p>Question voice belongs with the question. Shared recordings belong in Stimulus. Lessons/documents belong in Course Materials.</p></div>
+        </div>
+        <div class="b1-workflow-step">
+          <span>3</span>
+          <div><strong>Preview before saving</strong><p>Check the title, audio/video file, visibility, answer settings and timing before publishing.</p></div>
+        </div>
+        <div class="b1-workflow-step">
+          <span>4</span>
+          <div><strong>Verify student delivery</strong><p>Use the Media Center and then test the student page so the frontend behavior is confirmed.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="b1-recent-panel">
+      <div class="b1-section-title compact">
+        <div>
+          <span class="b1-dashboard-kicker">RECENT ACTIVITY</span>
+          <h2>Latest admin changes</h2>
+        </div>
+      </div>
+
+      {% get_admin_log 7 as admin_log for_user user %}
+      {% if admin_log %}
+      <div class="b1-recent-list">
+        {% for entry in admin_log %}
+        <div class="b1-recent-row">
+          <span class="b1-recent-dot {% if entry.is_addition %}is-add{% elif entry.is_deletion %}is-delete{% endif %}">
+            {% if entry.is_addition %}+{% elif entry.is_deletion %}−{% else %}↻{% endif %}
+          </span>
+          <div>
+            {% if entry.is_deletion or not entry.get_admin_url %}
+              <strong>{{ entry.object_repr }}</strong>
+            {% else %}
+              <a href="{{ entry.get_admin_url }}"><strong>{{ entry.object_repr }}</strong></a>
+            {% endif %}
+            <small>{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</small>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="b1-no-activity">No recent admin activity yet.</p>
+      {% endif %}
+    </div>
+
+  </section>
+
+  <section class="b1-admin-tip">
+    <div class="b1-tip-icon">i</div>
+    <div>
+      <strong>Admin tip</strong>
+      <p>
+        You do not need to use “All system modules” for normal work. Start with the grouped
+        sidebar items above. The full Django model list is kept at the bottom only for advanced administration.
+      </p>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}

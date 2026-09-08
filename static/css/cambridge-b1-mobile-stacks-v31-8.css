@@ -1,0 +1,216 @@
+/* CAMBRIDGE_B1_MOBILE_STACKS_V31_8_20260906
+   Fixes only:
+   - mobile sticky/overlap animation parity for Method, Promise, Real Problem
+   - client belief section background color
+   Hero and unrelated landing components are not targeted.
+*/
+
+/* ---------------------------------------------------------------------
+   Client-requested belief section: replace the bright turquoise field with
+   the site's established navy/brand-blue language.
+   --------------------------------------------------------------------- */
+.b1x-page .b1x-client-belief{
+  background:
+    radial-gradient(circle at 88% 18%,rgba(86,108,241,.22),transparent 28%),
+    radial-gradient(circle at 9% 92%,rgba(232,61,85,.09),transparent 30%),
+    linear-gradient(135deg,#101d50 0%,#1d2d78 52%,#2c3e9b 100%)!important;
+}
+.b1x-page .b1x-client-belief::before{
+  border-color:rgba(255,255,255,.10)!important;
+}
+.b1x-page .b1x-client-belief-kicker{
+  color:#c7d0ff!important;
+}
+.b1x-page .b1x-client-belief-copy h2{
+  color:#fff!important;
+  text-shadow:0 3px 18px rgba(3,9,36,.15)!important;
+}
+.b1x-page .b1x-client-belief-card{
+  border-color:rgba(255,255,255,.13)!important;
+  background:linear-gradient(145deg,#071a34 0%,#0a2145 100%)!important;
+  box-shadow:0 28px 65px rgba(4,11,44,.26)!important;
+}
+.b1x-page .b1x-client-belief-accent{color:#aebcff!important}
+.b1x-page .b1x-client-belief-tags span{
+  border-color:rgba(173,188,255,.26)!important;
+  background:rgba(91,111,231,.13)!important;
+}
+
+/* =====================================================================
+   MOBILE ONLY: restore the desktop-style overlapping / sticky cards.
+   V31.6's generic reveal rule used !important transform on every .b1x-reveal,
+   which unintentionally defeated the scroll-stack transforms on phones.
+   ===================================================================== */
+@media (max-width:700px) and (prefers-reduced-motion:no-preference){
+
+  /* Sticky descendants must not be trapped by overflow:hidden. */
+  .b1x-page .b1x-method,
+  .b1x-page .b1x-promise,
+  .b1x-page .b1x-real-problem{
+    overflow:visible!important;
+  }
+
+  /* ---------------------------------------------------------------
+     1. ONE CONNECTED METHOD
+     --------------------------------------------------------------- */
+  .b1x-page .b1x-method-steps{
+    position:relative!important;
+    padding-bottom:150px!important;
+  }
+
+  /* Decorative outline can remain, but it must not intercept anything. */
+  .b1x-page .b1x-method-steps::before{pointer-events:none!important}
+
+  .b1x-page .b1x-method-steps [data-system-step].b1x-reveal,
+  .b1x-page .b1x-method-steps [data-system-step].b1x-reveal.is-visible,
+  .b1x-page .b1x-method-steps [data-system-step]{
+    position:sticky!important;
+    top:82px!important;
+    z-index:1!important;
+    min-height:150px!important;
+    grid-template-columns:44px 1fr!important;
+    gap:7px 15px!important;
+    margin:0 0 16px!important;
+    padding:23px 21px 25px!important;
+    opacity:1!important;
+    filter:none!important;
+    transform:translate3d(0,var(--b1x-v318-method-y,22px),0) scale(var(--b1x-v318-method-scale,.982))!important;
+    transform-origin:50% 10%!important;
+    transition:
+      color .42s ease,
+      background .42s ease,
+      border-color .42s ease,
+      box-shadow .42s ease,
+      transform .18s linear!important;
+    will-change:transform!important;
+  }
+
+  .b1x-page .b1x-method-steps [data-system-step]:nth-child(2){top:96px!important;z-index:2!important}
+  .b1x-page .b1x-method-steps [data-system-step]:nth-child(3){top:110px!important;z-index:3!important}
+  .b1x-page .b1x-method-steps [data-system-step]:nth-child(4){top:124px!important;z-index:4!important}
+  .b1x-page .b1x-method-steps [data-system-step]:nth-child(5){top:138px!important;z-index:5!important}
+  .b1x-page .b1x-method-steps [data-system-step]:nth-child(6){top:152px!important;z-index:6!important}
+
+  /* Only the card closest to the sticky focus point should read as active. */
+  .b1x-page .b1x-method-steps [data-system-step].is-active:not(.is-current){
+    border-color:var(--b1x-v22-line)!important;
+    color:var(--b1x-v22-ink)!important;
+    background:rgba(255,255,255,.97)!important;
+    box-shadow:0 18px 46px rgba(17,29,85,.09)!important;
+  }
+  .b1x-page .b1x-method-steps [data-system-step].is-active:not(.is-current)>span,
+  .b1x-page .b1x-method-steps [data-system-step].is-active:not(.is-current) p{
+    color:#5a687a!important;
+  }
+  .b1x-page .b1x-method-steps [data-system-step].is-current{
+    border-color:#4054e8!important;
+    color:#fff!important;
+    background:linear-gradient(130deg,#3447d8,#4054e8 72%,#596cf1)!important;
+    box-shadow:0 28px 68px rgba(42,58,176,.24)!important;
+  }
+  .b1x-page .b1x-method-steps [data-system-step].is-current>span,
+  .b1x-page .b1x-method-steps [data-system-step].is-current p{
+    color:rgba(255,255,255,.82)!important;
+  }
+
+  /* ---------------------------------------------------------------
+     2. THE B1 READY PROMISE
+     --------------------------------------------------------------- */
+  .b1x-page .b1x-promise-grid{
+    position:relative!important;
+    padding-bottom:130px!important;
+  }
+
+  .b1x-page .b1x-promise-grid [data-b1-promise-card].b1x-reveal,
+  .b1x-page .b1x-promise-grid [data-b1-promise-card].b1x-reveal.is-visible,
+  .b1x-page .b1x-promise-grid [data-b1-promise-card]{
+    position:sticky!important;
+    top:82px!important;
+    z-index:1!important;
+    min-height:154px!important;
+    margin:0 0 16px!important;
+    opacity:1!important;
+    filter:none!important;
+    transform:translate3d(0,var(--b1x-v318-promise-y,20px),0) scale(var(--b1x-v318-promise-scale,.982))!important;
+    transform-origin:50% 10%!important;
+    transition:
+      border-color .35s ease,
+      background .35s ease,
+      box-shadow .35s ease,
+      transform .18s linear!important;
+    will-change:transform!important;
+  }
+
+  .b1x-page .b1x-promise-grid [data-b1-promise-card]:nth-child(2){top:98px!important;z-index:2!important}
+  .b1x-page .b1x-promise-grid [data-b1-promise-card]:nth-child(3){top:114px!important;z-index:3!important}
+
+  .b1x-page .b1x-promise-grid [data-b1-promise-card].is-current{
+    border-color:rgba(126,151,255,.48)!important;
+    background:rgba(255,255,255,.11)!important;
+    box-shadow:0 28px 62px rgba(5,11,47,.30),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  }
+
+  /* ---------------------------------------------------------------
+     3. THE REAL PROBLEM / SPEAKING B1
+     --------------------------------------------------------------- */
+  .b1x-page .b1x-problem-stack{
+    position:relative!important;
+    padding-bottom:170px!important;
+  }
+
+  .b1x-page .b1x-problem-stack [data-b1-stack-card]{
+    position:sticky!important;
+    top:82px!important;
+    z-index:2!important;
+    margin-bottom:16px!important;
+    opacity:1!important;
+    filter:none!important;
+    transform:translate3d(0,var(--b1x-v318-problem-y,26px),0) scale(var(--b1x-v318-problem-scale,.975))!important;
+    transform-origin:50% 10%!important;
+    transition:border-color .28s ease,box-shadow .28s ease,transform .18s linear!important;
+    will-change:transform!important;
+  }
+
+  .b1x-page .b1x-problem-stack [data-b1-stack-card]:nth-child(2){top:96px!important;z-index:3!important}
+  .b1x-page .b1x-problem-stack [data-b1-stack-card]:nth-child(3){top:110px!important;z-index:4!important}
+  .b1x-page .b1x-problem-stack [data-b1-stack-card]:nth-child(4){top:124px!important;z-index:5!important}
+  .b1x-page .b1x-problem-stack [data-b1-stack-card]:nth-child(5){top:138px!important;z-index:6!important}
+
+  .b1x-page .b1x-problem-stack [data-b1-stack-card].is-current{
+    border-color:#9eabff!important;
+    box-shadow:0 30px 68px rgba(46,62,169,.20)!important;
+  }
+
+  .b1x-page .b1x-problem-stack>.b1x-problem-answer{
+    position:sticky!important;
+    top:152px!important;
+    z-index:7!important;
+    transform:translate3d(0,var(--b1x-v318-answer-y,26px),0) scale(var(--b1x-v318-answer-scale,.975))!important;
+    transform-origin:50% 10%!important;
+    transition:box-shadow .3s ease,transform .18s linear!important;
+    will-change:transform!important;
+  }
+}
+
+/* Tight-phone dimensions only; the overlap mechanism remains the same. */
+@media (max-width:390px) and (prefers-reduced-motion:no-preference){
+  .b1x-page .b1x-method-steps [data-system-step].b1x-reveal,
+  .b1x-page .b1x-method-steps [data-system-step].b1x-reveal.is-visible,
+  .b1x-page .b1x-method-steps [data-system-step]{
+    min-height:142px!important;
+    padding:21px 16px 23px!important;
+  }
+  .b1x-page .b1x-promise-grid [data-b1-promise-card]{min-height:146px!important}
+  .b1x-page .b1x-problem-stack [data-b1-stack-card]{min-height:122px!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  /* Keep a clean static fallback exactly for users who request less motion. */
+  .b1x-page .b1x-method-steps [data-system-step],
+  .b1x-page .b1x-promise-grid [data-b1-promise-card],
+  .b1x-page .b1x-problem-stack [data-b1-stack-card],
+  .b1x-page .b1x-problem-stack>.b1x-problem-answer{
+    transform:none!important;
+    transition:none!important;
+  }
+}

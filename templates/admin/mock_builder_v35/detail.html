@@ -1,0 +1,132 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/mock-builder-v35-part1.css' %}?v=20260908-350">
+{% endblock %}
+
+{% block content %}
+<div class="mb35-page">
+  <div class="mb35-backrow">
+    <a href="{% url 'admin:b1_mock_builder' %}">← All Mock Tests</a>
+    <a href="/mock-tests/" target="_blank" rel="noopener">Student Mock page ↗</a>
+  </div>
+
+  <header class="mb35-detail-hero">
+    <div>
+      <span class="mb35-kicker">FULL MOCK · 92 MINUTES</span>
+      <h1>{{ mock.title }}</h1>
+      <p>
+        The student order is locked to
+        <b>Reading → Listening → Speaking → Writing</b>.
+        Open each skill and assign its Parts.
+      </p>
+    </div>
+    <div class="mb35-detail-actions">
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="repair">
+        <button class="mb35-btn light" type="submit">Check / Repair Structure</button>
+      </form>
+
+      {% if published %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="unpublish">
+        <button class="mb35-btn danger-light" type="submit">Unpublish</button>
+      </form>
+      {% else %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="publish">
+        <button class="mb35-btn primary" type="submit" {% if not state.ready %}disabled{% endif %}>
+          Publish Mock
+        </button>
+      </form>
+      {% endif %}
+    </div>
+  </header>
+
+  <section class="mb35-overview">
+    <div>
+      <small>STATUS</small>
+      <strong>{% if published %}Published{% elif state.ready %}Ready to publish{% else %}Draft{% endif %}</strong>
+    </div>
+    <div>
+      <small>SKILLS</small>
+      <strong>4</strong>
+    </div>
+    <div>
+      <small>PARTS</small>
+      <strong>17</strong>
+    </div>
+    <div>
+      <small>QUESTIONS</small>
+      <strong>{{ state.total_questions }}</strong>
+    </div>
+    <div>
+      <small>TARGET TIME</small>
+      <strong>92 min</strong>
+    </div>
+  </section>
+
+  <section class="mb35-section-head">
+    <div>
+      <span class="mb35-kicker">EXAM ORDER</span>
+      <h2>Build each skill in sequence</h2>
+    </div>
+  </section>
+
+  <div class="mb35-skill-grid">
+    {% for row in state.skills %}
+    <a class="mb35-skill-card {% if row.ready %}is-ready{% endif %}"
+       href="{% url 'admin:b1_mock_builder_skill' mock.pk row.key %}">
+      <div class="mb35-skill-head">
+        <span class="mb35-skill-icon">{{ row.icon }}</span>
+        <span class="mb35-order">0{{ forloop.counter }}</span>
+      </div>
+      <h3>{{ row.label }}</h3>
+      <p>{{ row.description }}</p>
+      <div class="mb35-skill-meta">
+        <span><b>{{ row.ready_parts }}/{{ row.parts }}</b> Parts ready</span>
+        <span><b>{{ row.questions }}</b> questions</span>
+        <span><b>{{ row.minutes }}</b> min</span>
+      </div>
+      <div class="mb35-card-action">
+        {% if row.ready %}Ready ✓{% else %}Build {{ row.label }} →{% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <section class="mb35-readiness {% if state.ready %}is-ready{% endif %}">
+    <div class="mb35-readiness-title">
+      <span>{% if state.ready %}✓{% else %}!{% endif %}</span>
+      <div>
+        <small>READINESS CHECK</small>
+        <h2>
+          {% if state.ready %}
+            This mock passes the Part 1 content checks.
+          {% else %}
+            Finish these items before publishing.
+          {% endif %}
+        </h2>
+      </div>
+    </div>
+
+    {% if state.issues %}
+    <ul>
+      {% for issue in state.issues %}
+      <li>{{ issue }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>
+      All 17 Parts have content, Reading/Listening have detectable answer keys,
+      Listening has audio, and Speaking/Writing have student-facing prompt/media.
+    </p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,895 @@
+/* WRITING_MATCH_SPEAKING_V14_7
+   Visual alignment with the active Speaking runner.
+   Keeps Writing behavior, timer, autosave and input restrictions unchanged. */
+
+:root {
+  --writing-page: #eef5f8;
+  --writing-white: #ffffff;
+  --writing-teal: #4fc8c3;
+  --writing-teal-track: #d9e7e8;
+  --writing-navy: #35536f;
+  --writing-text: #303b48;
+  --writing-muted: #6f7b88;
+  --writing-line: #e6eaed;
+  --writing-soft: #f8fafb;
+  --writing-danger: #b42318;
+  --writing-ready: #168a68;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--writing-page);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body.cw14-body {
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 !important;
+  background: var(--writing-page) !important;
+  color: var(--writing-text) !important;
+  color-scheme: light !important;
+  font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+/* ---------------------------------------------------------------
+   SAME OUTER STAGE AS SPEAKING
+---------------------------------------------------------------- */
+
+.cw14-page {
+  width: min(100%, 448px) !important;
+  max-width: 448px !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  background: var(--writing-white) !important;
+}
+
+.cw14-shell {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 18px 44px !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+/* Keep the useful Writing back/title row, but visually reduce it so it
+   feels like the other runners rather than a separate app. */
+.cw14-header {
+  position: relative !important;
+  top: auto !important;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  width: calc(100% + 36px);
+  min-height: 54px;
+  margin: 0 -18px 0;
+  padding: 0 9px;
+  align-items: center;
+  border-bottom: 1px solid var(--writing-line);
+  background: #fff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.cw14-header strong {
+  color: #303b48;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.cw14-back {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 2px;
+  color: #4d5967;
+  text-decoration: none;
+}
+
+.cw14-back:hover {
+  background: #f5f7f8;
+}
+
+.cw14-back svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------------------------------------------------------------
+   INTRO / START SCREEN
+---------------------------------------------------------------- */
+
+.cw14-intro {
+  display: flex;
+  min-height: calc(100dvh - 54px);
+  flex-direction: column;
+  padding: 48px 0 0 !important;
+}
+
+.cw14-intro-main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  text-align: center;
+}
+
+.cw14-writing-mark {
+  display: none !important;
+}
+
+.cw14-intro h1 {
+  margin: 0;
+  color: #303b48;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.cw14-intro-summary {
+  margin: 10px 0 0;
+  color: var(--writing-muted);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.65;
+}
+
+.cw14-intro-summary strong {
+  color: #4a5563;
+  font-weight: 700;
+}
+
+.cw14-intro-divider {
+  width: 100%;
+  height: 1px;
+  margin: 31px 0 25px;
+  background: var(--writing-line);
+}
+
+.cw14-before {
+  text-align: left;
+}
+
+.cw14-before h2 {
+  margin: 0 0 13px;
+  color: #303b48;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.cw14-before ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0 0 0 19px;
+  color: var(--writing-muted);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.cw14-start {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: auto 0 0;
+  padding: 0 18px;
+  border: 1px solid var(--writing-navy);
+  border-radius: 2px !important;
+  color: #fff;
+  background: var(--writing-navy) !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.cw14-start:hover {
+  background: #2c4861 !important;
+}
+
+.cw14-start:active {
+  transform: none;
+}
+
+/* ---------------------------------------------------------------
+   ACTIVE TASK — COPY SPEAKING'S TOP BAR PROPORTIONS
+---------------------------------------------------------------- */
+
+.cw14-task {
+  min-height: calc(100dvh - 54px);
+  padding: 0 !important;
+}
+
+.cw14-task-status {
+  position: relative !important;
+  top: auto !important;
+  z-index: 10;
+  display: flex;
+  width: 100%;
+  margin: 0 0 42px !important;
+  padding: 24px 0 0 !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border: 0 !important;
+  background: #fff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.cw14-progress {
+  position: relative;
+  width: 112px;
+  height: 19px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--writing-teal-track);
+  color: #26465b;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 19px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.cw14-progress span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  min-width: 0;
+  border-radius: inherit;
+  background: var(--writing-teal);
+}
+
+.cw14-progress b {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: auto;
+  color: #26465b;
+  font: inherit;
+  line-height: 19px;
+}
+
+.cw14-timer {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  color: #3d4a59;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cw14-timer svg {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cw14-timer.is-warning {
+  color: #c06d1c;
+}
+
+.cw14-timer.is-expired {
+  color: var(--writing-danger);
+}
+
+/* ---------------------------------------------------------------
+   PROMPT / INSTRUCTIONS
+---------------------------------------------------------------- */
+
+.cw14-task-content {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cw14-context {
+  margin: 0 0 18px;
+  color: #344252;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.cw14-prompt {
+  margin: 0;
+  color: #344252;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.cw14-part-instructions {
+  margin: 18px 0 0;
+  padding: 16px;
+  border: 1px solid var(--writing-line);
+  border-left: 1px solid var(--writing-line);
+  border-radius: 8px;
+  color: #344252;
+  background: #f8fafb;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.cw14-word-rule {
+  display: block !important;
+  margin: 20px 0 0;
+  padding-top: 17px;
+  border-top: 1px solid var(--writing-line);
+  color: #6f7b88;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.cw14-word-rule strong {
+  color: #4a5563;
+  font-weight: 700;
+}
+
+.cw14-word-rule span {
+  margin-left: 6px;
+}
+
+/* ---------------------------------------------------------------
+   ANSWER FIELD
+---------------------------------------------------------------- */
+
+.cw14-form {
+  margin-top: 17px;
+}
+
+.cw14-answer-label {
+  display: block;
+  margin: 0 0 8px;
+  color: #4a5563;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+#writingText {
+  display: block;
+  width: 100%;
+  min-height: 226px;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid #cfd6db;
+  border-radius: 8px;
+  outline: 0;
+  color: #303b48;
+  background: #fff;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 16px; /* prevents iOS focus zoom */
+  font-weight: 500;
+  line-height: 1.65;
+  resize: vertical;
+  caret-color: var(--writing-teal);
+  box-shadow: none;
+  -webkit-touch-callout: none;
+}
+
+#writingText::placeholder {
+  color: #98a2ad;
+  opacity: 1;
+}
+
+#writingText:focus {
+  border-color: var(--writing-teal);
+  box-shadow: 0 0 0 2px rgba(79, 200, 195, .10);
+}
+
+#writingText::-webkit-contacts-auto-fill-button,
+#writingText::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+}
+
+.cw14-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 8px;
+  color: #6f7b88;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.cw14-meta > span:first-child {
+  margin-right: auto;
+  color: #4d5967;
+}
+
+.cw14-meta strong {
+  color: #303b48;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+#wordStatus.is-ready {
+  color: var(--writing-ready);
+}
+
+#wordStatus.is-error {
+  color: var(--writing-danger);
+}
+
+.cw14-typing-only {
+  display: none !important;
+}
+
+.cw14-save-line {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------
+   SUBMIT = SAME NAVY BUTTON LANGUAGE AS SPEAKING
+---------------------------------------------------------------- */
+
+.cw14-submit {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0 18px;
+  border: 1px solid var(--writing-navy);
+  border-radius: 2px !important;
+  color: #fff;
+  background: var(--writing-navy) !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.cw14-submit:hover {
+  background: #2c4861 !important;
+}
+
+.cw14-submit:active {
+  transform: none;
+}
+
+.cw14-error {
+  margin: 18px 0 0;
+  padding: 11px 13px;
+  border: 1px solid #fecaca;
+  border-radius: 7px;
+  color: #b42318;
+  background: #fef2f2;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------
+   MOBILE — SAME SPEAKING BEHAVIOR: FULL WHITE SCREEN
+---------------------------------------------------------------- */
+
+@media (max-width: 520px) {
+  html,
+  body.cw14-body {
+    background: #fff !important;
+  }
+
+  .cw14-page {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .cw14-shell {
+    padding: 0 15px 40px !important;
+  }
+
+  .cw14-header {
+    width: calc(100% + 30px);
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+
+  .cw14-intro {
+    padding-top: 42px !important;
+  }
+
+  .cw14-task-status {
+    margin-bottom: 38px !important;
+    padding-top: 20px !important;
+  }
+
+  .cw14-context,
+  .cw14-prompt {
+    font-size: 13px;
+  }
+
+  .cw14-part-instructions {
+    padding: 14px;
+    font-size: 12px;
+  }
+
+  #writingText {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 370px) {
+  .cw14-shell {
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+  }
+
+  .cw14-header {
+    width: calc(100% + 26px);
+    margin-left: -13px;
+    margin-right: -13px;
+  }
+
+  .cw14-progress {
+    width: 104px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* BEGIN WRITING_COMPACT_NOSCROLL_V14_8 */
+html,
+body.cw14-body {
+  height: var(--cw-writing-height, 100dvh) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+.cw14-page,
+.cw14-shell {
+  height: var(--cw-writing-height, 100dvh) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.cw14-shell {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 12px !important;
+}
+
+.cw14-intro {
+  height: calc(var(--cw-writing-height, 100dvh) - 54px);
+  min-height: 0 !important;
+  flex: 1 1 auto;
+  padding: 34px 0 0 !important;
+  overflow: hidden;
+}
+
+.cw14-intro-main {
+  flex: 0 1 auto;
+}
+
+.cw14-intro-summary {
+  display: none !important;
+}
+
+.cw14-intro-divider {
+  margin: 24px 0 21px !important;
+}
+
+.cw14-before h2 {
+  margin-bottom: 12px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.cw14-before ul {
+  gap: 9px !important;
+  font-size: 12px !important;
+  line-height: 1.52 !important;
+}
+
+.cw14-before strong {
+  color: #4a5563;
+  font-weight: 700;
+}
+
+.cw14-start {
+  flex: 0 0 44px;
+  min-height: 44px !important;
+  margin: auto 0 0 !important;
+}
+
+.cw14-skip-intro .cw14-intro {
+  display: none !important;
+}
+
+.cw14-skip-intro .cw14-task[hidden] {
+  display: grid !important;
+}
+
+.cw14-task {
+  height: calc(var(--cw-writing-height, 100dvh) - 54px);
+  min-height: 0 !important;
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.cw14-task-status {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  width: 100% !important;
+  gap: 13px !important;
+  margin: 0 0 16px !important;
+  padding: 16px 0 0 !important;
+}
+
+.cw14-progress {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  font-size: 11px !important;
+}
+
+.cw14-progress span {
+  min-width: 42px !important;
+}
+
+.cw14-progress b {
+  line-height: 24px !important;
+}
+
+.cw14-timer {
+  min-width: 67px !important;
+  gap: 5px !important;
+  font-size: 12px !important;
+}
+
+.cw14-timer svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.cw14-task-content {
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 1px 8px 0 !important;
+}
+
+.cw14-task-content::-webkit-scrollbar {
+  display: none;
+}
+
+.cw14-context {
+  margin-bottom: 12px !important;
+  font-size: 13px !important;
+  line-height: 1.52 !important;
+}
+
+.cw14-prompt {
+  font-size: 13px !important;
+  line-height: 1.52 !important;
+}
+
+.cw14-part-instructions[hidden] {
+  display: none !important;
+}
+
+.cw14-part-instructions {
+  margin-top: 12px !important;
+  padding: 12px !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+.cw14-word-rule {
+  margin-top: 12px !important;
+  padding-top: 10px !important;
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+}
+
+.cw14-form {
+  margin-top: 10px !important;
+}
+
+.cw14-answer-label {
+  margin-bottom: 6px !important;
+  font-size: 11px !important;
+}
+
+#writingText {
+  height: clamp(118px, 18dvh, 148px) !important;
+  min-height: 118px !important;
+  max-height: 148px !important;
+  padding: 11px 12px !important;
+  border-radius: 7px !important;
+  font-size: 16px !important;
+  line-height: 1.52 !important;
+  resize: none !important;
+}
+
+.cw14-meta {
+  margin-top: 6px !important;
+  font-size: 9.5px !important;
+}
+
+.cw14-submit {
+  min-height: 40px !important;
+  margin-top: 11px !important;
+}
+
+@media (max-width: 520px) {
+  .cw14-shell {
+    padding: 0 15px 9px !important;
+  }
+
+  .cw14-intro {
+    padding-top: 30px !important;
+  }
+
+  .cw14-intro h1 {
+    font-size: 18px !important;
+  }
+
+  .cw14-intro-divider {
+    margin: 21px 0 19px !important;
+  }
+
+  .cw14-before ul {
+    gap: 8px !important;
+    font-size: 11.5px !important;
+  }
+
+  .cw14-task-status {
+    margin-bottom: 13px !important;
+    padding-top: 13px !important;
+    gap: 11px !important;
+  }
+
+  .cw14-progress {
+    height: 25px !important;
+    line-height: 25px !important;
+  }
+
+  .cw14-progress b {
+    line-height: 25px !important;
+  }
+
+  .cw14-context,
+  .cw14-prompt {
+    font-size: 12.5px !important;
+    line-height: 1.47 !important;
+  }
+
+  .cw14-word-rule {
+    margin-top: 10px !important;
+    padding-top: 8px !important;
+  }
+
+  #writingText {
+    height: clamp(108px, 17dvh, 132px) !important;
+    min-height: 108px !important;
+    max-height: 132px !important;
+  }
+
+  .cw14-submit {
+    min-height: 40px !important;
+    margin-top: 9px !important;
+  }
+}
+
+@media (max-height: 650px) {
+  .cw14-intro {
+    padding-top: 22px !important;
+  }
+
+  .cw14-intro-divider {
+    margin: 16px 0 15px !important;
+  }
+
+  .cw14-before ul {
+    gap: 6px !important;
+  }
+
+  .cw14-start {
+    min-height: 40px !important;
+    flex-basis: 40px;
+  }
+
+  .cw14-task-status {
+    margin-bottom: 10px !important;
+    padding-top: 10px !important;
+  }
+
+  #writingText {
+    height: 102px !important;
+    min-height: 102px !important;
+    max-height: 102px !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .cw14-progress {
+    width: 100% !important;
+  }
+
+  .cw14-timer {
+    min-width: 61px !important;
+    font-size: 11px !important;
+  }
+}
+/* END WRITING_COMPACT_NOSCROLL_V14_8 */
+

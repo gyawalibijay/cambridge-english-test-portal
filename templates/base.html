@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Unified English Mock-Test Portal{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/arya-academy-official-v35-4.css' %}?v=20260908-354">
+    <script defer src="{% static 'js/vendor/htmx.min.js' %}"></script>
+    <script defer src="{% static 'js/vendor/alpine.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/cambridge-shell.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cambridge-exam.css' %}?v=compact-speaking-20260831">
+    <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+    <script defer src="{% static 'js/portal-theme.js' %}"></script>
+    
+  <link rel="stylesheet" href="/static/css/cambridge-speaking-reference-v18.css?v=compact-speaking-20260831">
+  <link rel="stylesheet" href="/static/css/speaking-rings-v19.css?v=upskill-video-20260831">
+  <link rel="stylesheet" href="{% static 'css/student-top-actions-v13.css' %}?v=20260903-148">
+  {% if attempt or '/practice/' in request.path or '/mock-tests/' in request.path %}
+  <link rel="stylesheet" href="{% static 'css/practice-mock-blue-v29.css' %}?v=20260905-teal-v30-1">
+  {% endif %}
+</head>
+<body class="min-h-full bg-slate-50 text-slate-900">
+<div x-data="{ mobileMenu: false }" class="min-h-screen">
+<header class="border-b border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-20 items-center justify-between">
+            <a href="{% url 'dashboard' %}" class="aa-base-brand" aria-label="Arya Academy home">
+                <img class="aa-official-logo" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+            </a>
+            {% if user.is_authenticated %}
+            <nav class="hidden items-center gap-2 md:flex">
+                <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+                {% if user.is_staff %}<a href="/results/" class="nav-link">Results</a>{% endif %}
+                {% if 'attempt' in request.path or '/practice/' in request.path or '/mock-tests/' in request.path %}
+                  <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="nav-link text-red-600">Sign out</button></form>
+                {% else %}
+                  {% include "partials/student_top_actions.html" %}
+                {% endif %}
+            </nav>
+            <button type="button" @click="mobileMenu = !mobileMenu" class="rounded-lg border border-slate-200 p-2 md:hidden">☰</button>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <div x-cloak x-show="mobileMenu" class="border-t border-slate-100 py-4 md:hidden">
+            <a href="{% url 'dashboard' %}" class="mobile-nav-link">Dashboard</a>
+            {% if user.is_staff %}<a href="/results/" class="mobile-nav-link">Results</a>{% endif %}
+            <a href="{% url 'student_profile_summary' %}" class="mobile-nav-link">Profile</a>
+            <form method="post" action="{% url 'logout' %}">{% csrf_token %}
+                <button type="submit" class="mobile-nav-link w-full text-left text-red-600">Sign out</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</header>
+<main>{% block content %}{% endblock %}</main>
+<footer class="mt-16 border-t border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-8 text-sm text-slate-500 sm:px-6 md:flex-row md:justify-between lg:px-8">
+        <div>© {% now "Y" %} Arya Academy</div>
+        <div>Unified English Mock-Test Portal</div>
+    </div>
+</footer>
+</div>
+    
+  <script defer src="/static/js/cambridge-speaking-reference-v18.js?v=upskill-video-20260831"></script>
+  <script defer src="/static/js/speaking-runtime-stable-v22.js?v=prep-excluded-20260830"></script>
+  <script defer src="{% static 'js/student-top-actions-v13.js' %}?v=20260903-148"></script>
+</body>
+</html>

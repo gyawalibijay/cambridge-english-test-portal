@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Purchase {{ package.title }} | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+  <div class="pv2-page-title">
+    <div>
+      <div class="pv2-eyebrow">Purchase access</div>
+      <h1>{{ package.title }}</h1>
+      <p>Submit your payment details for verification.</p>
+    </div>
+  </div>
+
+  <div class="pv2-purchase-layout">
+    <aside class="pv2-card pv2-price-summary">
+      <div class="pv2-eyebrow">Package summary</div>
+      <h2 style="font-size:1.25rem">{{ package.title }}</h2>
+      <p style="color:var(--pv2-muted);font-size:.78rem;line-height:1.7">
+        {{ package.description|default:package.short_description }}
+      </p>
+
+      <div class="pv2-program-tags">
+        {% for program in package.programs.all %}
+        <span class="pv2-program-tag">{{ program.name }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="pv2-divider"></div>
+
+      <div style="display:flex;justify-content:space-between;align-items:end">
+        <span style="color:var(--pv2-muted);font-size:.78rem">Total</span>
+        <strong style="font-size:2rem">{{ package.currency }} {{ package.price|floatformat:0 }}</strong>
+      </div>
+
+      <div class="pv2-divider"></div>
+
+      <div style="font-size:.76rem;color:var(--pv2-muted);line-height:1.7">
+        {{ package.payment_instructions|linebreaksbr }}
+      </div>
+    </aside>
+
+    <section class="pv2-card pv2-panel">
+      <div class="pv2-eyebrow">Payment details</div>
+      <h2 style="font-size:1.25rem;margin:8px 0 20px">Submit your purchase</h2>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="pv2-form-grid">
+          {% for field in form %}
+          <div class="pv2-field {% if field.name == 'student_note' %}full{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="pv2-field-error">{{ field.errors|striptags }}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <button class="pv2-btn pv2-btn-primary" style="margin-top:22px;width:100%" type="submit">
+          Submit Purchase for Verification →
+        </button>
+      </form>
+    </section>
+  </div>
+</main>
+</body>
+</html>

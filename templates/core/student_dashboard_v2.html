@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Student Dashboard | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+
+  {% if messages %}
+    {% for message in messages %}
+    <div class="pv2-card" style="padding:14px 16px;margin-bottom:18px;border-color:color-mix(in srgb,var(--pv2-success) 35%,var(--pv2-line));color:var(--pv2-success)">
+      {{ message }}
+    </div>
+    {% endfor %}
+  {% endif %}
+
+  <section class="pv2-page-title">
+    <div>
+      <div class="pv2-eyebrow">Student dashboard</div>
+      <h1>Good to see you, {{ first_name }}.</h1>
+      <p>Continue your four-skill practice and keep your progress moving.</p>
+    </div>
+
+    <a class="pv2-btn pv2-btn-teal" href="/practice/cambridge/">
+      Start Practice →
+    </a>
+  </section>
+
+  <section class="pv2-hero-panel">
+    <div>
+      <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:#6ee4e0;font-weight:900">
+        Cambridge / General English
+      </div>
+
+      <h2>Your practice journey is {{ completion_pct }}% complete.</h2>
+
+      <p>
+        {{ completed_skills }} of 4 core skills currently have a completed attempt.
+        Keep practising individual sections and review your feedback after every session.
+      </p>
+
+      <div class="pv2-progress-wrap">
+        <div class="pv2-progress-head">
+          <span>Four-skill completion</span>
+          <strong>{{ completion_pct }}%</strong>
+        </div>
+        <div class="pv2-progress">
+          <span style="width:{{ completion_pct }}%"></span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+        <a class="pv2-btn pv2-btn-teal" href="/practice/cambridge/">Continue Practice</a>
+        <a class="pv2-btn pv2-btn-outline" href="/results/">View Results</a>
+      </div>
+    </div>
+
+    <div class="pv2-hero-visual">
+      <div class="pv2-ring" style="--pv2-ring:{{ completion_pct }}%">
+        <div>
+          <strong>{{ completion_pct }}%</strong>
+          <span>Core skills</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pv2-stats">
+    <article class="pv2-card pv2-stat">
+      <div class="icon">▤</div>
+      <strong>{{ attempt_count }}</strong>
+      <span>Total attempts</span>
+    </article>
+
+    <article class="pv2-card pv2-stat">
+      <div class="icon">✓</div>
+      <strong>{{ completed_count }}</strong>
+      <span>Completed attempts</span>
+    </article>
+
+    <article class="pv2-card pv2-stat">
+      <div class="icon">◎</div>
+      <strong>{{ response_count }}</strong>
+      <span>Saved responses</span>
+    </article>
+
+    <article class="pv2-card pv2-stat">
+      <div class="icon">↗</div>
+      <strong>{% if average_score != None %}{{ average_score }}%{% else %}—{% endif %}</strong>
+      <span>Average scored performance</span>
+    </article>
+  </section>
+
+  <div class="pv2-section-head">
+    <h2>Practice by skill</h2>
+    <a href="/practice/cambridge/">View section dashboard →</a>
+  </div>
+
+  <section class="pv2-skill-grid">
+    {% for card in skill_cards %}
+    <article class="pv2-card pv2-skill">
+      <div class="badge">{{ card.key }}</div>
+      <h3>{{ card.title }}</h3>
+      <p>{{ card.description }}</p>
+
+      <div class="meta">
+        <span>{{ card.parts }} part{{ card.parts|pluralize }}</span>
+        <span>{{ card.minutes }} min</span>
+      </div>
+
+      {% if card.latest_percent != None %}
+      <div style="margin-top:12px;color:var(--pv2-muted);font-size:.72rem">
+        Latest scored result: <strong style="color:var(--pv2-text)">{{ card.latest_percent }}%</strong>
+      </div>
+      {% endif %}
+
+      {% if card.in_progress and card.latest_attempt %}
+      <a class="pv2-btn pv2-btn-teal action" href="{% url 'attempts:dispatch' card.latest_attempt.id %}">
+        Continue
+      </a>
+      {% elif card.test %}
+      <a class="pv2-btn {% if card.completed %}pv2-btn-outline{% else %}pv2-btn-primary{% endif %} action" href="{% url 'assessments:test_detail' card.test.slug %}">
+        {% if card.completed %}Practice Again{% else %}Start Section{% endif %}
+      </a>
+      {% else %}
+      <button class="pv2-btn pv2-btn-outline action" disabled>Coming Soon</button>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </section>
+
+  <section class="pv2-two-col">
+    <div>
+      <div class="pv2-section-head">
+        <h2>Recent practice</h2>
+        <a href="/results/">All results →</a>
+      </div>
+
+      <div class="pv2-card pv2-panel">
+        {% if recent_attempts %}
+        <div class="pv2-list">
+          {% for row in recent_attempts %}
+          <div class="pv2-row">
+            <div>
+              <strong>{{ row.attempt.mock_test.title }}</strong>
+              <small>{{ row.attempt.started_at|date:"M j, Y · g:i A" }}</small>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:9px">
+              {% if row.percent != None %}
+              <span class="pv2-status good">{{ row.percent }}%</span>
+              {% else %}
+              <span class="pv2-status">{{ row.attempt.get_status_display }}</span>
+              {% endif %}
+
+              <a style="color:var(--pv2-teal-2);font-weight:900;text-decoration:none" href="/results/{{ row.attempt.id }}/">
+                →
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="pv2-empty">
+          No practice attempts yet. Start with any skill above.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div>
+      <div class="pv2-section-head">
+        <h2>Quick actions</h2>
+      </div>
+
+      <div class="pv2-card pv2-panel">
+        <div class="pv2-list">
+          <a class="pv2-row" style="text-decoration:none" href="/practice/cambridge/">
+            <div>
+              <strong>Practice Test</strong>
+              <small>Speaking · Listening · Reading · Writing</small>
+            </div>
+            <span>→</span>
+          </a>
+
+          <a class="pv2-row" style="text-decoration:none" href="/results/">
+            <div>
+              <strong>My Results</strong>
+              <small>Reports, transcripts and feedback</small>
+            </div>
+            <span>→</span>
+          </a>
+
+          <a class="pv2-row" style="text-decoration:none" href="{% url 'profile' %}">
+            <div>
+              <strong>Student Profile</strong>
+              <small>Personal and contact details</small>
+            </div>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pv2-footer">
+  <div style="width:min(1180px,calc(100% - 32px));margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <span>© 2026 Arya Academy</span>
+    <span>Independent English practice portal</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pricing | Upskill Practice</title>
+  <script>(() => {const saved = localStorage.getItem("portal-theme-v2"); const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.dataset.theme = saved || system;})();</script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<section class="pub4-page-hero">
+  <div class="pub4-shell">
+    <div class="pub4-eyebrow">Pricing</div>
+    <h1>Simple, transparent package pricing for each preparation pathway.</h1>
+    <p>
+      Keep pricing simple, student-friendly and easy to explain. Current packages are set at NPR 1,000.
+    </p>
+  </div>
+</section>
+
+<section class="pub4-section" style="padding-top:12px">
+  <div class="pub4-shell">
+    <div class="pub4-price-grid">
+      {% for package in packages %}
+      <article class="pub4-price-card {% if forloop.counter == 2 %}featured{% endif %}">
+        <div class="pub4-eyebrow">Test package</div>
+        <h3 style="font-size:1.12rem;margin:8px 0">{{ package.title }}</h3>
+
+        <div class="pub4-price">
+          <strong>{{ package.price|floatformat:0 }}</strong>
+          <span>{{ package.currency }}</span>
+        </div>
+
+        <p style="color:var(--pv2-muted)">{{ package.short_description }}</p>
+
+        <ul class="pub4-price-list">
+          {% for program in package.programs.all %}
+          <li>{{ program.short_name|default:program.name }}</li>
+          {% endfor %}
+          <li>Student dashboard access</li>
+          <li>Result history</li>
+          <li>Related learning resources</li>
+        </ul>
+
+        {% if request.user.is_authenticated %}
+        <a class="pub4-btn primary" style="width:100%" href="/store/">
+          Purchase / manage access →
+        </a>
+        {% else %}
+        <a class="pub4-btn primary" style="width:100%" href="{% url 'signup' %}">
+          Create account →
+        </a>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

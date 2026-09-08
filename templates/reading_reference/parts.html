@@ -1,0 +1,22 @@
+{% extends "reading_reference/base.html" %}
+{% load static %}
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/mobile-bottom-nav.css' %}?v=client-20260830">{% endblock %}
+{% block content %}
+<header class="reading-header">
+  <a href="{% url 'student_practice_hub' %}" class="reading-back" aria-label="Back to Practice Test"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+  <h1>Reading</h1>
+</header>
+<div class="reading-parts">
+  {% for part in parts %}
+  {% if part.ready %}<a class="reading-part" href="{% url 'assessments:reading_intro' part.number %}">{% else %}<div class="reading-part is-unavailable" aria-disabled="true">{% endif %}
+    <span class="reading-part-number">{{ part.number }}</span>
+    <span class="reading-part-title">Reading Part {{ part.number }}</span>
+    {% if part.completed %}
+    <span class="reading-completed" aria-label="Completed"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m7 12 3 3 7-7"/></svg></span>
+    {% elif part.ready %}<span class="reading-part-time">05:00 MINS</span>
+    {% else %}<span class="reading-part-unavailable">Not available</span>{% endif %}
+  {% if part.ready %}</a>{% else %}</div>{% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
+{% block after_content %}{% include "student_final/_mobile_nav.html" with active="practice" %}{% endblock %}

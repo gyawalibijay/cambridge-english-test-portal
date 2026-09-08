@@ -1,0 +1,393 @@
+/* ============================================================
+   B1 READY ADMIN V33.9.1
+   Cambridge-only Question Workspace
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. REMOVE THE FILTER EXPERIENCE FOR NOW
+   ------------------------------------------------------------ */
+.change-list #changelist-filter,
+.b1-filter-backdrop,
+.b1-list-controlbar{
+  display:none!important;
+}
+
+.change-list #changelist,
+.change-list.b1-filter-collapsed #changelist,
+body.b1-filter-collapsed.change-list #changelist{
+  display:block!important;
+  grid-template-columns:minmax(0,1fr)!important;
+}
+
+.change-list .results{
+  width:100%!important;
+}
+
+/* ------------------------------------------------------------
+   2. QUESTION WORKSPACE
+   ------------------------------------------------------------ */
+.b1-question-workspace{
+  margin:0 0 16px;
+  padding:20px;
+  border:1px solid #dce5f2;
+  border-radius:15px;
+  background:
+    radial-gradient(circle at 96% 0,rgba(40,92,245,.095),transparent 32%),
+    linear-gradient(135deg,#ffffff 0%,#f7f9ff 100%);
+  box-shadow:0 7px 24px rgba(18,44,96,.035);
+}
+
+.b1-question-workspace-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:15px;
+}
+
+.b1-question-workspace-kicker{
+  display:block;
+  margin-bottom:5px;
+  color:#2b5af1;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.b1-question-workspace h2{
+  margin:0!important;
+  color:#0d2b5b!important;
+  font-size:22px!important;
+  line-height:1.15!important;
+  font-weight:820!important;
+  letter-spacing:-.025em!important;
+}
+
+.b1-question-workspace p{
+  max-width:640px;
+  margin:5px 0 0;
+  color:#6f7f97;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.b1-cambridge-mode{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  min-height:31px;
+  padding:6px 9px;
+  border:1px solid #cce6dc;
+  border-radius:999px;
+  background:#effaf6;
+  color:#087552;
+  font-size:9px;
+  font-weight:850;
+  white-space:nowrap;
+}
+
+.b1-cambridge-mode::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#0a976c;
+}
+
+.b1-skill-workspace-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+
+.b1-skill-workspace-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-height:124px;
+  padding:13px;
+  border:1px solid #dfe6ef;
+  border-radius:11px;
+  background:#fff;
+  color:#18345f!important;
+  transition:.18s ease;
+}
+
+.b1-skill-workspace-card:hover{
+  transform:translateY(-2px);
+  border-color:#bfcdf2;
+  box-shadow:0 10px 23px rgba(25,55,120,.065);
+}
+
+.b1-skill-workspace-card.is-active{
+  border-color:#7d9af7;
+  background:#f1f5ff;
+  box-shadow:0 0 0 2px rgba(40,92,245,.07);
+}
+
+.b1-skill-workspace-card>span{
+  display:grid;
+  place-items:center;
+  width:32px;
+  height:32px;
+  margin-bottom:9px;
+  border-radius:8px;
+  background:#edf2ff;
+  color:#285cf5;
+  font-size:12px;
+  font-weight:900;
+}
+
+.b1-skill-workspace-card strong{
+  display:block;
+  color:#173666;
+  font-size:13px;
+  font-weight:820;
+}
+
+.b1-skill-workspace-card small{
+  display:block;
+  margin-top:3px;
+  color:#7c899c;
+  font-size:9.5px;
+  line-height:1.35;
+}
+
+.b1-skill-workspace-actions{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:auto;
+  padding-top:10px;
+}
+
+.b1-skill-workspace-actions a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:29px;
+  padding:5px 8px;
+  border-radius:7px;
+  font-size:9px!important;
+  font-weight:800!important;
+}
+
+.b1-skill-view{
+  border:1px solid #d2dcea;
+  background:#fff;
+  color:#4c6281!important;
+}
+
+.b1-skill-add{
+  border:1px solid #bfd0ff;
+  background:#edf2ff;
+  color:#2452ca!important;
+}
+
+.b1-question-workspace-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:12px;
+  padding-top:11px;
+  border-top:1px solid #e7ecf3;
+}
+
+.b1-question-workspace-footer p{
+  margin:0;
+}
+
+.b1-show-all-questions{
+  display:inline-flex;
+  align-items:center;
+  min-height:31px;
+  padding:6px 9px;
+  border-radius:7px;
+  background:#0e2f67;
+  color:#fff!important;
+  font-size:9px!important;
+  font-weight:800!important;
+}
+
+/* ------------------------------------------------------------
+   3. QUESTION TABLE: concise + placement oriented
+   ------------------------------------------------------------ */
+
+body.b1-question-list #result_list{
+  min-width:850px!important;
+}
+
+body.b1-question-list #result_list th,
+body.b1-question-list #result_list td{
+  white-space:normal!important;
+}
+
+body.b1-question-list #result_list tbody th{
+  max-width:270px;
+}
+
+body.b1-question-list #result_list .field-b1_part,
+body.b1-question-list #result_list .field-b1_set{
+  min-width:90px;
+  color:#314d73!important;
+  font-weight:700;
+}
+
+/* ------------------------------------------------------------
+   4. QUESTION FORM — EASY PREPARATION GUIDE
+   ------------------------------------------------------------ */
+
+.b1-question-builder{
+  margin:0 0 16px;
+  padding:17px;
+  border:1px solid #dce5f2;
+  border-radius:13px;
+  background:#fff;
+}
+
+.b1-question-builder-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.b1-question-builder-kicker{
+  display:block;
+  color:#2b5af1;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.b1-question-builder h3{
+  margin:5px 0 3px!important;
+  color:#153564!important;
+  font-size:17px!important;
+  font-weight:820!important;
+}
+
+.b1-question-builder p{
+  margin:0;
+  color:#73829a;
+  font-size:11px;
+  line-height:1.5;
+}
+
+.b1-builder-skill-tabs{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:12px;
+}
+
+.b1-builder-skill-tabs a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:32px;
+  padding:6px 10px;
+  border:1px solid #d2dcea;
+  border-radius:8px;
+  background:#f8faff;
+  color:#49617e!important;
+  font-size:10px!important;
+  font-weight:800!important;
+}
+
+.b1-builder-skill-tabs a.is-active{
+  border-color:#8ca5f5;
+  background:#edf2ff;
+  color:#2452cc!important;
+}
+
+.b1-builder-help{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+
+.b1-builder-help>div{
+  padding:10px;
+  border:1px solid #e5eaf2;
+  border-radius:8px;
+  background:#fafbfd;
+}
+
+.b1-builder-help span{
+  display:block;
+  color:#285cf5;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.06em;
+}
+
+.b1-builder-help strong{
+  display:block;
+  margin-top:3px;
+  color:#294568;
+  font-size:10px;
+}
+
+.b1-builder-help small{
+  display:block;
+  margin-top:2px;
+  color:#8390a3;
+  font-size:8.5px;
+  line-height:1.38;
+}
+
+/* Make placement inline visually obvious instead of looking like a raw table. */
+.inline-group h2,
+.inline-group .module h2{
+  font-size:14px!important;
+}
+
+.inline-group .add-row a{
+  display:inline-flex!important;
+  align-items:center;
+  min-height:35px;
+  padding:7px 10px!important;
+  border-radius:8px!important;
+  background:#edf2ff!important;
+  color:#2452ca!important;
+  font-size:10px!important;
+  font-weight:800!important;
+}
+
+@media(max-width:1050px){
+  .b1-skill-workspace-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:780px){
+  .b1-question-workspace{
+    padding:14px;
+  }
+
+  .b1-question-workspace-head,
+  .b1-question-builder-top,
+  .b1-question-workspace-footer{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .b1-question-workspace h2{
+    font-size:19px!important;
+  }
+
+  .b1-skill-workspace-grid,
+  .b1-builder-help{
+    grid-template-columns:1fr;
+  }
+
+  .b1-skill-workspace-card{
+    min-height:110px;
+  }
+}

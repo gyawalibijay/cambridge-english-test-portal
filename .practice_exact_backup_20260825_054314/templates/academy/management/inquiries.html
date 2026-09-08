@@ -1,0 +1,75 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}Public Enquiries{% endblock %}
+{% block header %}Public Enquiries{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Newcomer support</div>
+    <h1>Public enquiries</h1>
+    <p>Messages submitted through the public Contact page.</p>
+  </div>
+</div>
+
+<div class="pv2-filterbar">
+  <a class="pv2-admin-mini-btn" href="{% url 'academy_management:inquiries' %}">All</a>
+  <a class="pv2-admin-mini-btn" href="?status=new">New</a>
+  <a class="pv2-admin-mini-btn" href="?status=in_progress">In progress</a>
+  <a class="pv2-admin-mini-btn" href="?status=closed">Closed</a>
+</div>
+
+<div class="pv2-card pv2-panel pv2-table-scroll">
+  <table class="pv2-admin-table">
+    <thead>
+      <tr>
+        <th>Contact</th>
+        <th>Interest</th>
+        <th>Subject / Message</th>
+        <th>Status</th>
+        <th>Received</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for inquiry in inquiries %}
+      <tr>
+        <td>
+          <strong>{{ inquiry.name }}</strong><br>
+          <span style="color:var(--pv2-muted)">{{ inquiry.email }}</span>
+          {% if inquiry.phone %}<br><span style="color:var(--pv2-muted)">{{ inquiry.phone }}</span>{% endif %}
+        </td>
+        <td>{{ inquiry.get_program_interest_display }}</td>
+        <td style="max-width:390px">
+          <strong>{{ inquiry.subject }}</strong><br>
+          <span style="color:var(--pv2-muted)">{{ inquiry.message|truncatechars:180 }}</span>
+        </td>
+        <td><span class="pv2-status {% if inquiry.status == 'closed' %}good{% endif %}">{{ inquiry.get_status_display }}</span></td>
+        <td>{{ inquiry.created_at|date:"M j, Y · g:i A" }}</td>
+        <td>
+          <div class="pv2-admin-actions">
+            {% if inquiry.status != "in_progress" %}
+            <form method="post" action="{% url 'academy_management:inquiry_status' inquiry.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="status" value="in_progress">
+              <button class="pv2-admin-mini-btn" type="submit">In progress</button>
+            </form>
+            {% endif %}
+
+            {% if inquiry.status != "closed" %}
+            <form method="post" action="{% url 'academy_management:inquiry_status' inquiry.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="status" value="closed">
+              <button class="pv2-admin-mini-btn good" type="submit">Close</button>
+            </form>
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6">No enquiries found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

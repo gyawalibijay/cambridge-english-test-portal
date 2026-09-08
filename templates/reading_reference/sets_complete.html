@@ -1,0 +1,19 @@
+{% extends "reading_reference/base.html" %}
+{% block content %}
+<header class="reading-header">
+  <a href="{% url 'assessments:reading_parts' %}" class="reading-back" aria-label="Back to Reading parts"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
+  <span>Reading</span>
+</header>
+<section class="reading-resume">
+  <h1>Reading Part {{ part.order }}</h1>
+  {% if last %}<p class="reading-set-label">Set {{ set_number }} completed</p>{% endif %}
+  <p>No further sets are available for this part yet.</p>
+  <a class="reading-primary" href="{% url 'assessments:reading_parts' %}">Back to Reading</a>
+  {% if last %}
+  <form method="post" action="{% url 'assessments:reading_start' part.order %}">
+    {% csrf_token %}<input type="hidden" name="restart" value="1"><input type="hidden" name="repeat_from" value="{{ last.pk }}">
+    <button class="reading-secondary" type="submit">Practise again</button>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,172 @@
+/* =========================================================
+   SPEAKING TIMER REFERENCE V7
+   Makes the speaking countdown visually match the cleaner
+   reference: centered smooth ring, proper spacing, and button.
+   ========================================================= */
+
+:root{
+  --spk-v7-page-bg:#eef3f7;
+  --spk-v7-panel-bg:#ffffff;
+  --spk-v7-text:#44546a;
+  --spk-v7-strong:#41566f;
+  --spk-v7-muted:#7b8796;
+  --spk-v7-track:#d7dce2;
+  --spk-v7-progress:#b6bec8;
+  --spk-v7-btn:#344f73;
+  --spk-v7-btn-text:#ffffff;
+  --spk-v7-record:#e56a76;
+  --spk-v7-teal:#4fd1c5;
+}
+
+body.speaking-ref-v7{
+  background:var(--spk-v7-page-bg)!important;
+}
+
+.speaking-ref-v7 .spk-v7-panel{
+  width:min(420px, calc(100vw - 42px));
+  margin:0 auto;
+}
+
+.speaking-ref-v7 .spk-v7-source-hidden{
+  position:absolute!important;
+  left:-9999px!important;
+  top:auto!important;
+  width:1px!important;
+  height:1px!important;
+  overflow:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+.speaking-ref-v7 .spk-v7-timer-shell{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:10px 0 0;
+}
+
+.speaking-ref-v7 .spk-v7-state-label{
+  font-size:15px;
+  line-height:1.35;
+  font-weight:600;
+  color:var(--spk-v7-strong);
+  text-align:center;
+}
+
+.speaking-ref-v7 .spk-v7-ring-wrap{
+  position:relative;
+  width:126px;
+  height:126px;
+  display:grid;
+  place-items:center;
+}
+
+.speaking-ref-v7 .spk-v7-ring{
+  position:absolute;
+  inset:0;
+  width:126px;
+  height:126px;
+  transform:rotate(-90deg);
+}
+
+.speaking-ref-v7 .spk-v7-ring-track,
+.speaking-ref-v7 .spk-v7-ring-progress{
+  fill:none;
+  stroke-width:8;
+}
+
+.speaking-ref-v7 .spk-v7-ring-track{
+  stroke:var(--spk-v7-track);
+}
+
+.speaking-ref-v7 .spk-v7-ring-progress{
+  stroke:var(--spk-v7-progress);
+  stroke-linecap:round;
+  transition:stroke-dashoffset .08s linear;
+}
+
+.speaking-ref-v7 .spk-v7-ring-value{
+  position:relative;
+  z-index:2;
+  font-size:42px;
+  line-height:1;
+  font-weight:700;
+  color:var(--spk-v7-strong);
+  letter-spacing:-0.03em;
+}
+
+.speaking-ref-v7 .spk-v7-speak-btn,
+.speaking-ref-v7 button.spk-v7-speak-btn,
+.speaking-ref-v7 .spk-v7-done-btn{
+  min-width:116px;
+  height:36px;
+  padding:0 18px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:none;
+  border-radius:4px;
+  background:var(--spk-v7-btn)!important;
+  color:var(--spk-v7-btn-text)!important;
+  font-size:13px;
+  font-weight:700;
+  text-align:center;
+  box-shadow:none!important;
+  text-decoration:none!important;
+}
+
+.speaking-ref-v7 .spk-v7-speak-btn[disabled],
+.speaking-ref-v7 .spk-v7-done-btn[disabled]{
+  opacity:.95;
+  color:#e8eef7!important;
+}
+
+.speaking-ref-v7 .spk-v7-recording{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--spk-v7-strong);
+}
+
+.speaking-ref-v7 .spk-v7-recording-dot{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:var(--spk-v7-record);
+}
+
+.speaking-ref-v7 .spk-v7-top-timer,
+.speaking-ref-v7 .spk-v7-top-timer *{
+  font-size:12px!important;
+  line-height:1!important;
+  color:#334860!important;
+  font-weight:700!important;
+}
+
+.speaking-ref-v7 .spk-v7-top-timer{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.speaking-ref-v7 .spk-v7-top-timer svg{
+  width:12px;
+  height:12px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:2;
+}
+
+@media (max-width:540px){
+  .speaking-ref-v7 .spk-v7-panel{
+    width:min(100%, calc(100vw - 28px));
+  }
+  .speaking-ref-v7 .spk-v7-state-label{
+    font-size:14px;
+  }
+}

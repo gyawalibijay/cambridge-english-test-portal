@@ -1,0 +1,27 @@
+31 objects imported automatically (use -v 2 for details).
+
+B1 READY ADMIN -> FRONTEND CONNECTION REPORT
+========================================================================
+Generated from the deployed project source.
+
+[CONNECTED] Question.prompt_audio used by runner
+[CONNECTED] Stimulus.audio_file used by runner
+
+REGISTERED FILE/MEDIA MODELS
+------------------------------------------------------------------------
+website.PublicSiteSettings: logo, mascot_image (admin registered)
+website.PublicProgramLanding: card_image, hero_image (admin registered)
+academy.Course: thumbnail (admin registered)
+academy.CourseMaterial: file, audio_file (admin registered)
+academy.TestMaterial: audio_file, attachment (admin registered)
+commerce.PaymentDestination: qr_image (admin registered)
+commerce.Purchase: receipt (admin registered)
+accounts.StudentProfile: profile_photo (admin registered)
+question_bank.Stimulus: audio_file, image_file (admin registered)
+question_bank.Question: prompt_audio, prompt_image (admin registered)
+attempts.StudentResponse: audio_response (admin registered)
+
+IMPORTANT
+A file appearing in Django Admin does NOT automatically mean it appears on the
+student/public frontend. The view/template/test runner must query/reference that
+model/field. Use /admin/media-center/ for live source-reference evidence.

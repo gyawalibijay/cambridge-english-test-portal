@@ -1,0 +1,29 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Profile | Arya Academy{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">YOUR ACCOUNT</div>
+  <h1>Profile</h1>
+  <p>Keep your student details ready for reports and certificates.</p>
+</section>
+
+<section class="sf-profile-card">
+  <div class="sf-profile-avatar" aria-hidden="true">{{ display_name|slice:":1"|upper }}</div>
+  <div class="sf-profile-main">
+    <h2>{{ request.user.get_full_name|default:request.user.username }}</h2>
+    <p>{{ request.user.email }}</p>
+    <div class="sf-profile-grid">
+      <div><small>TARGET LEVEL</small><strong>{{ target_level }}</strong></div>
+      <div><small>EMAIL STATUS</small><strong>{% if profile.email_verified_at %}Verified{% else %}Check profile{% endif %}</strong></div>
+      <div><small>READINESS</small><strong>{{ readiness|floatformat:0 }}%</strong></div>
+    </div>
+    <div class="sf-profile-actions">
+      <a class="sf-primary" href="/profile/">Edit full profile <span>→</span></a>
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="sf-secondary-button" type="submit">Sign out</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

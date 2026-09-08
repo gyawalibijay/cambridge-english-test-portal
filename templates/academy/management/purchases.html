@@ -1,0 +1,55 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}Payment Verification{% endblock %}
+{% block header %}Payment Verification{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Commerce</div>
+    <h1>Payment verification</h1>
+    <p>Match the student's payment using the invoice number in their payment remarks, then approve to activate course access.</p>
+  </div>
+</div>
+
+<form class="pv2-filterbar" method="get">
+  <input class="pv2-input" style="max-width:340px" type="search" name="q" value="{{ search }}" placeholder="Invoice, student, email, transaction...">
+  <select class="pv2-input" style="max-width:220px" name="status">
+    <option value="">All statuses</option>
+    <option value="initiated" {% if current_status == "initiated" %}selected{% endif %}>Invoice generated</option>
+    <option value="pending" {% if current_status == "pending" %}selected{% endif %}>Pending verification</option>
+    <option value="approved" {% if current_status == "approved" %}selected{% endif %}>Approved</option>
+    <option value="rejected" {% if current_status == "rejected" %}selected{% endif %}>Rejected</option>
+  </select>
+  <button class="pv2-btn pv2-btn-outline" style="min-height:42px" type="submit">Filter</button>
+</form>
+
+<div class="pv2-card pv2-panel pv2-table-scroll">
+  <table class="pv2-admin-table">
+    <thead><tr><th>Invoice</th><th>Student</th><th>Package</th><th>Amount</th><th>Payment</th><th>Transaction</th><th>Receipt</th><th>Status</th><th>Submitted</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for purchase in purchases %}
+      <tr>
+        <td><strong>{{ purchase.invoice_number }}</strong></td>
+        <td><strong>{{ purchase.user.get_full_name|default:purchase.user.username }}</strong><br><span style="color:var(--pv2-muted)">{{ purchase.user.email }}</span></td>
+        <td>{{ purchase.package.title }}</td>
+        <td>{{ purchase.currency }} {{ purchase.amount|floatformat:0 }}</td>
+        <td>{{ purchase.get_payment_method_display|default:"—" }}</td>
+        <td>{{ purchase.transaction_reference|default:"—" }}</td>
+        <td>{% if purchase.receipt %}<a href="{{ purchase.receipt.url }}" target="_blank" rel="noopener">View receipt</a>{% else %}—{% endif %}</td>
+        <td><span class="pv2-status {% if purchase.status == 'approved' %}good{% endif %}">{{ purchase.get_status_display }}</span></td>
+        <td>{% if purchase.submitted_at %}{{ purchase.submitted_at|date:"M j, Y · g:i A" }}{% else %}Not submitted{% endif %}</td>
+        <td>
+          {% if purchase.status == "pending" %}
+          <div class="pv2-admin-actions">
+            <form method="post" action="{% url 'academy_management:approve_purchase' purchase.id %}">{% csrf_token %}<button class="pv2-admin-mini-btn good" type="submit">Approve</button></form>
+            <form method="post" action="{% url 'academy_management:reject_purchase' purchase.id %}">{% csrf_token %}<button class="pv2-admin-mini-btn bad" type="submit">Reject</button></form>
+          </div>
+          {% else %}—{% endif %}
+        </td>
+      </tr>
+      {% empty %}<tr><td colspan="10">No purchases found.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

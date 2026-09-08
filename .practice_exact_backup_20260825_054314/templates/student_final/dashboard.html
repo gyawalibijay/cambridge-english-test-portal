@@ -1,0 +1,73 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Student Dashboard | Upskill Practice{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div>
+    <h1>{{ greeting }}, {{ display_name }}</h1>
+    <p>Continue your English preparation.</p>
+  </div>
+</section>
+
+<section class="sf-continue-card">
+  <div>
+    <div class="sf-kicker">CONTINUE LEARNING</div>
+    {% if current_attempt %}
+      <h2>{{ current_attempt_title }}</h2>
+      <p>Resume your latest practice attempt and continue where you left off.</p>
+      <div class="sf-progress-row">
+        <div class="sf-progress"><span style="width:{{ current_attempt_pct|default:0 }}%"></span></div>
+        <strong>{{ current_attempt_pct|default:0|floatformat:0 }}%</strong>
+      </div>
+    {% else %}
+      <h2>Start your first Cambridge-aligned practice</h2>
+      <p>Your practice history will appear here once you begin.</p>
+    {% endif %}
+  </div>
+  <div>
+    {% if current_attempt_slug %}
+      <a class="sf-primary" href="/practice/test/{{ current_attempt_slug }}/">Continue <span>→</span></a>
+    {% else %}
+      <a class="sf-primary" href="/practice/">Start Practice <span>→</span></a>
+    {% endif %}
+  </div>
+</section>
+
+<section class="sf-three-grid">
+  <article class="sf-action-card">
+    <div class="sf-action-icon">◎</div>
+    <h3>Practice</h3>
+    <strong>Practice individual skills.</strong>
+    <p>Reading · Writing · Listening · Speaking</p>
+    <a href="/practice/">Start Practice <span>→</span></a>
+  </article>
+  <article class="sf-action-card">
+    <div class="sf-action-icon">◴</div>
+    <h3>Mock Test</h3>
+    <strong>Experience the complete exam.</strong>
+    <p>Full test · Timed · Score · Practice report</p>
+    <a href="/mock-tests/">Take a Mock Test <span>→</span></a>
+  </article>
+  <article class="sf-action-card">
+    <div class="sf-action-icon">◇</div>
+    <h3>Learn</h3>
+    <strong>Build your English skills.</strong>
+    <p>Video lessons · PDFs · Grammar · Vocabulary</p>
+    <a href="/learn/">Explore Lessons <span>→</span></a>
+  </article>
+</section>
+
+<section class="sf-readiness-head">
+  <h2>Am I ready for the test?</h2>
+  <a href="/progress/">View full progress</a>
+</section>
+
+<section class="sf-four-grid sf-readiness-grid">
+  {% for key, stat in skill_stats.items %}
+  <article class="sf-readiness-card">
+    <div class="sf-kicker">{{ stat.label|upper }}</div>
+    <strong>{{ stat.accuracy|floatformat:0 }}%</strong>
+    <span>{{ stat.completed }} questions completed</span>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

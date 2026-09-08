@@ -1,0 +1,114 @@
+/* =========================================================
+   FINAL PREPARATION TIMER V10
+   Matches the supplied speaking reference:
+   Now record your answer
+   Start speaking in
+       circular countdown
+         Speak
+   ========================================================= */
+
+body[data-speaking-prep-v10="1"]{
+  background:#eef3f7!important;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-prep{
+  width:100%;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  margin:19px 0 0;
+  padding:0;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-prep.is-visible{
+  display:flex!important;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-prep-label{
+  margin:0 0 12px;
+  font-size:14px;
+  line-height:1.25;
+  font-weight:500;
+  color:#43556b;
+  text-align:center;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-ring-wrap{
+  position:relative;
+  width:106px;
+  height:106px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 12px;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-ring{
+  position:absolute;
+  inset:0;
+  width:106px;
+  height:106px;
+  transform:rotate(-90deg);
+}
+
+body[data-speaking-prep-v10="1"] .sp10-track,
+body[data-speaking-prep-v10="1"] .sp10-progress{
+  fill:none;
+  stroke-width:8;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-track{
+  stroke:#dfe3e7;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-progress{
+  stroke:#b7bdc5;
+  stroke-linecap:round;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-value{
+  position:relative;
+  z-index:2;
+  font-size:44px;
+  line-height:1;
+  font-weight:700;
+  color:#45566c;
+  letter-spacing:-.04em;
+}
+
+body[data-speaking-prep-v10="1"] .sp10-speak{
+  min-width:116px;
+  height:36px;
+  padding:0 18px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:3px;
+  background:#344f73!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:12px;
+  line-height:1;
+  font-weight:700;
+  box-shadow:none!important;
+  cursor:pointer;
+}
+
+/* Keep the actual runner's native preparation controls hidden only when
+   our final visual mirror is active, to avoid duplicate circles. */
+body[data-speaking-prep-v10="1"] #prepRing.sp10-native-hidden,
+body[data-speaking-prep-v10="1"] #prepNumber.sp10-native-hidden{
+  position:absolute!important;
+  left:-9999px!important;
+  width:1px!important;
+  height:1px!important;
+  overflow:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+/* No fake grey horizontal countdown bar. */
+body[data-speaking-prep-v10="1"] .sp10-hide-bar{
+  display:none!important;
+}

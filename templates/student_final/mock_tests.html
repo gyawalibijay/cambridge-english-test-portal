@@ -1,0 +1,84 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>Cambridge Mock Test | Arya Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/practice-reference.css' %}?v=20260903-145">
+  <link rel="stylesheet" href="{% static 'css/mobile-bottom-nav.css' %}?v=20260903-145">
+  <link rel="stylesheet" href="{% static 'css/practice-mock-blue-v29.css' %}?v=20260905-teal-v30-1">
+</head>
+<body>
+<main class="practice-ref-page">
+  <section class="practice-ref-panel" aria-labelledby="mock-title">
+    <header class="practice-ref-header">
+      <a class="practice-ref-back" href="{% url 'dashboard' %}" aria-label="Back to dashboard">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>
+      </a>
+      <span id="mock-title">Mock Test</span>
+    </header>
+
+    {% if featured %}
+      <div class="practice-ref-list">
+        {% for item in mock_skill_rows %}
+        <div class="practice-ref-row">
+          <span class="practice-ref-icon" aria-hidden="true">
+            {% if item.key == 'reading' %}
+              <svg viewBox="0 0 24 24"><path d="M12 5C9 3 5 3 2 4v16c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v16"/></svg>
+            {% elif item.key == 'listening' %}
+              <svg viewBox="0 0 24 24"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a1 1 0 0 1-1-1v-5Zm16 0h-3v6h2a1 1 0 0 0 1-1v-5Z"/></svg>
+            {% elif item.key == 'speaking' %}
+              <svg viewBox="0 0 24 24"><path d="M20 11.5c0 4.1-3.6 7.5-8 7.5-1.2 0-2.4-.2-3.4-.7L4 20l1.5-4C4.5 14.8 4 13.2 4 11.5 4 7.4 7.6 4 12 4s8 3.4 8 7.5Z"/></svg>
+            {% else %}
+              <svg viewBox="0 0 24 24"><path d="m4 20 4.2-1 10.7-10.7a2 2 0 0 0-2.8-2.8L5.4 16.2 4 20Zm10.7-12.9 2.8 2.8"/></svg>
+            {% endif %}
+          </span>
+
+          <span class="practice-ref-copy">
+            <span class="practice-ref-title">{{ item.label }}</span>
+            <span class="practice-ref-sub">{{ item.parts }} part{{ item.parts|pluralize }}</span>
+          </span>
+
+          <span class="practice-ref-action">READY</span>
+        </div>
+        {% endfor %}
+      </div>
+
+    {% else %}
+      <div class="practice-ref-list">
+        {% for item in mock_skill_rows %}
+        <div class="practice-ref-row">
+          <span class="practice-ref-icon" aria-hidden="true">
+            {% if item.key == 'reading' %}
+              <svg viewBox="0 0 24 24"><path d="M12 5C9 3 5 3 2 4v16c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v16"/></svg>
+            {% elif item.key == 'listening' %}
+              <svg viewBox="0 0 24 24"><path d="M4 13v-2a8 8 0 0 1 16 0v2M4 13h3v6H5a1 1 0 0 1-1-1v-5Zm16 0h-3v6h2a1 1 0 0 0 1-1v-5Z"/></svg>
+            {% elif item.key == 'speaking' %}
+              <svg viewBox="0 0 24 24"><path d="M20 11.5c0 4.1-3.6 7.5-8 7.5-1.2 0-2.4-.2-3.4-.7L4 20l1.5-4C4.5 14.8 4 13.2 4 11.5 4 7.4 7.6 4 12 4s8 3.4 8 7.5Z"/></svg>
+            {% else %}
+              <svg viewBox="0 0 24 24"><path d="m4 20 4.2-1 10.7-10.7a2 2 0 0 0-2.8-2.8L5.4 16.2 4 20Zm10.7-12.9 2.8 2.8"/></svg>
+            {% endif %}
+          </span>
+
+          <span class="practice-ref-copy">
+            <span class="practice-ref-title">{{ item.label }}</span>
+            <span class="practice-ref-sub">{{ item.parts }} part{{ item.parts|pluralize }}</span>
+          </span>
+
+          <span class="practice-ref-action">SOON</span>
+        </div>
+        {% endfor %}
+      </div>
+
+    {% endif %}
+  </section>
+</main>
+
+{% include "student_final/_mobile_nav.html" with active="mock" %}
+</body>
+</html>

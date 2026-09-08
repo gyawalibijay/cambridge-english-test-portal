@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Full Mock Review | B1 Ready{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/full-mock-v35-part3.css' %}?v=20260908-352">
+<main class="fm35p3-page adminview">
+  <div class="fm35p3-toplinks"><a href="{% url 'grading:full_mock_queue' %}">← Full Mock Reviews</a><a href="{% url 'results:attempt_report' attempt.pk %}">Student-style result</a></div>
+  <section class="fm35p3-hero compact">
+    <div><span class="fm35p3-kicker">STAFF REVIEW</span><h1>{{ attempt.user }} · {{ attempt.mock_test.title }}</h1><p>{{ attempt.get_status_display }} · {{ summary.response_count }}/{{ summary.question_count }} responses</p></div>
+    <div class="fm35p3-score">{% if summary.overall_percent != None %}<b>{{ summary.overall_percent }}</b><span>%</span>{% else %}<b>—</b><small>{{ summary.pending_review }} review pending</small>{% endif %}</div>
+  </section>
+
+  {% if summary.qa_issues %}<section class="fm35p3-alert"><strong>QA items</strong><ul>{% for issue in summary.qa_issues %}<li>{{ issue }}</li>{% endfor %}</ul></section>{% endif %}
+
+  <section class="fm35p3-heading"><span class="fm35p3-kicker">SPEAKING & WRITING</span><h2>Responses requiring evaluator visibility</h2></section>
+  <div class="fm35p3-reviewcards">
+    {% for row in subjective %}
+    <article class="{% if row.needs_review %}attention{% endif %}">
+      <div class="fm35p3-response-title"><span>{{ row.skill_label }} · {{ row.item.part.title }} · Q{{ row.item.order }}</span><b>{{ row.status }}</b></div>
+      <h3>{{ row.item.question.prompt_text|default:row.item.question.title|truncatechars:220 }}</h3>
+      <div class="fm35p3-response-meta">{% if row.point_score != None %}<span>{{ row.point_score|floatformat:"-2" }} / {{ row.max_points|floatformat:"-2" }} points</span>{% endif %}{% if row.cefr %}<span>CEFR {{ row.cefr }}</span>{% endif %}</div>
+      {% if row.transcript %}<div class="fm35p3-evidence"><small>Transcript / response</small><p>{{ row.transcript|truncatechars:700 }}</p></div>{% endif %}
+      {% if row.response %}<a class="fm35p3-reviewlink" href="{% url 'grading:review_response' row.response.pk %}">{% if row.needs_review %}Review / score response →{% else %}Open response review →{% endif %}</a>{% else %}<span class="fm35p3-muted">No response stored</span>{% endif %}
+    </article>
+    {% empty %}<div class="fm35p3-empty">No Speaking/Writing responses in this attempt.</div>{% endfor %}
+  </div>
+</main>
+{% endblock %}

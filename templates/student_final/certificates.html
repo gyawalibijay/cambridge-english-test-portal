@@ -1,0 +1,39 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Certificates & Reports | Arya Academy{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">YOUR ACCOUNT</div>
+  <h1>Certificates & reports</h1>
+  <p>Your completed four-skill mock tests and downloadable practice reports.</p>
+</section>
+
+<section class="sf-certificate-intro">
+  <div class="sf-action-icon sf-plain-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"></circle><path d="M9.6 12 8.7 19.5 12 17.5l3.3 2-.9-7.5"></path></svg></div>
+  <div><h2>Your achievement records</h2><p>A practice Test Report is available after a completed full mock containing Reading, Writing, Speaking, and Listening. It is not an official Cambridge certificate.</p></div>
+</section>
+
+<section class="sf-report-grid">
+  {% for row in rows %}
+  <article class="sf-report-card">
+    <div class="sf-report-copy">
+      <div class="sf-kicker">FULL MOCK TEST</div>
+      <h2>{{ row.attempt.mock_test.title|default:"Cambridge Upskill Full Mock Test" }}</h2>
+      <p>{% if row.attempt.completed_at %}Completed {{ row.attempt.completed_at|date:"d M Y · H:i" }}{% else %}Started {{ row.attempt.started_at|date:"d M Y · H:i" }}{% endif %} · Candidate report ID #{{ row.attempt.id }}</p>
+      <div class="sf-report-levels">
+        <span>Reading <strong>{{ row.levels.reading|default:"—" }}</strong></span>
+        <span>Writing <strong>{{ row.levels.writing|default:"—" }}</strong></span>
+        <span>Speaking <strong>{{ row.levels.speaking|default:"—" }}</strong></span>
+        <span>Listening <strong>{{ row.levels.listening|default:"—" }}</strong></span>
+        {% if row.overall_cefr %}<span>Overall <strong>{{ row.overall_cefr }}</strong></span>{% endif %}
+      </div>
+    </div>
+    <div class="sf-report-action">
+      <a class="sf-primary" href="{% url 'student_practice_report_pdf' row.attempt.id %}">Download report <span>↓</span></a>
+      {% if not row.all_levels_ready %}<small>Missing CEFR estimates appear as “—”; no unofficial conversion is invented.</small>{% endif %}
+    </div>
+  </article>
+  {% empty %}
+  <div class="sf-empty sf-span-all"><h2>No completed full mock yet</h2><p>Section-practice attempts do not generate the four-skill Test Report.</p><a class="sf-primary" href="{% url 'student_mock_tests' %}">View Mock Tests <span>→</span></a></div>
+  {% endfor %}
+</section>
+{% endblock %}

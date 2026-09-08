@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Courses | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+  <div class="pv2-page-title">
+    <div>
+      <div class="pv2-eyebrow">Learning library</div>
+      <h1>Your purchased-program courses</h1>
+      <p>
+        Courses appear here automatically when they belong to a test package you can access.
+      </p>
+    </div>
+
+    <a class="pv2-btn pv2-btn-outline" href="/store/">
+      Browse Test Access →
+    </a>
+  </div>
+
+  {% if courses %}
+  <section class="pv2-course-grid">
+    {% for course in courses %}
+    <article class="pv2-card pv2-course-card">
+      <div class="pv2-course-thumb">
+        {% if course.thumbnail %}
+          <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}">
+        {% else %}
+          <div>
+            <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:#85ebe7;font-weight:900">
+              {{ course.program.short_name|default:course.program.name }}
+            </div>
+            <strong style="font-size:1.1rem">{{ course.title }}</strong>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="pv2-course-body">
+        <div class="pv2-eyebrow">
+          {{ course.program.short_name|default:course.program.name }}
+        </div>
+
+        <h2 style="font-size:1.1rem;margin:7px 0">
+          {{ course.title }}
+        </h2>
+
+        <p style="color:var(--pv2-muted);font-size:.76rem;line-height:1.65">
+          {{ course.short_description|default:course.description|truncatechars:150 }}
+        </p>
+
+        <div style="font-size:.7rem;color:var(--pv2-muted);margin:14px 0">
+          {{ course.materials.count }} material{{ course.materials.count|pluralize }}
+        </div>
+
+        <a class="pv2-btn pv2-btn-primary" style="width:100%" href="{% url 'academy_student:course_detail' course.slug %}">
+          Open Course →
+        </a>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  {% else %}
+  <div class="pv2-card pv2-empty">
+    <h3 style="color:var(--pv2-text)">No courses available yet</h3>
+    <p>
+      Your administrator can publish courses for the test packages you have purchased.
+    </p>
+    <a class="pv2-btn pv2-btn-primary" href="/store/">Browse Test Access →</a>
+  </div>
+  {% endif %}
+</main>
+</body>
+</html>

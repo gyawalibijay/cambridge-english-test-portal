@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Features | Arya Academy</title>
+  <script>(() => {const saved = localStorage.getItem("portal-theme-v2"); const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.dataset.theme = saved || system;})();</script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<section class="pub4-page-hero">
+  <div class="pub4-shell">
+    <div class="pub4-eyebrow">What students and administrators can do</div>
+    <h1>Everything around the test is now part of the product.</h1>
+    <p>
+      This is not just a mock-test page. It is a connected student system with access control,
+      content publishing, structured practice and reporting.
+    </p>
+  </div>
+</section>
+
+<section class="pub4-section" style="padding-top:12px">
+  <div class="pub4-shell">
+    <div class="pub4-feature-grid">
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">◉</div><h3>Speaking recorder</h3><p>Timed recording, microphone checks, replay and clearer result handling for practice speaking.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">0</div><h3>Blank-audio protection</h3><p>Silent or unusable audio should not produce misleading score percentages.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">♫</div><h3>Listening engine</h3><p>Uploaded audio, answer keys and student-friendly section flow.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">▤</div><h3>Reading engine</h3><p>Support for multiple reading activities in structured layouts.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">✎</div><h3>Writing workspace</h3><p>Autosave, live word count and cleaner writing environments.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">↗</div><h3>Result history</h3><p>Students can return to their attempts and track progress over time.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">₨</div><h3>Paid access control</h3><p>Students purchase the required test system from inside the portal.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">C</div><h3>Courses & materials</h3><p>Admins can publish course modules and material uploads tied to each program.</p></article>
+      <article class="pub4-feature-card"><div class="pub4-feature-icon">⚙</div><h3>Advanced management</h3><p>Purchases, students, materials and test content can be managed from the admin side.</p></article>
+    </div>
+  </div>
+</section>
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

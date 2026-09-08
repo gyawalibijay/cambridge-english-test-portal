@@ -1,0 +1,166 @@
+/*
+ * CAMBRIDGE_B1_TYPE_REFINEMENT_V21_20260905
+ * Final landing-page typography layer. Kept in a uniquely named file so
+ * production browsers and proxies cannot reuse the previous bold V19 CSS.
+ */
+.b1x-page{
+  --b1x-font-sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --b1x-font-nepali:"Noto Sans Devanagari","Inter",system-ui,sans-serif;
+  --b1x-display:var(--b1x-font-sans);
+  --b1x-nepali:var(--b1x-font-nepali);
+  --b1x-hero-font:var(--b1x-font-sans);
+  --b1x-type-display:clamp(2.75rem,4.35vw,3.5rem);
+  --b1x-type-section:clamp(2rem,3.25vw,2.75rem);
+  --b1x-type-subsection:clamp(1.375rem,2vw,1.875rem);
+  --b1x-type-card:clamp(1.125rem,1.45vw,1.4rem);
+  --b1x-type-body:clamp(.975rem,1vw,1.075rem);
+  --b1x-leading-display:1.08;
+  --b1x-leading-heading:1.14;
+  --b1x-leading-body:1.62;
+  --b1x-tracking-display:-.042em;
+  --b1x-tracking-heading:-.034em;
+  --b1x-section-space:clamp(4rem,6vw,5rem);
+  --b1x-section-space-tight:clamp(2.75rem,4.5vw,4rem);
+}
+
+/* Devanagari needs its own metrics and a calmer weight than Latin display type. */
+.b1x-page [lang="ne"]{
+  font-family:var(--b1x-font-nepali)!important;
+  font-weight:400;
+  letter-spacing:-.012em;
+  line-height:1.68;
+}
+.b1x-page :where([lang="ne"] strong,[lang="ne"] b){font-weight:600}
+.b1x-page :where(p,li) strong{font-weight:600}
+
+/* WebVeda-like hierarchy: restrained size, medium-bold headings, generous air. */
+.b1x-instructor-message h2,
+.b1x-system-header h2,
+.b1x-manifesto-inner h2,
+.b1x-method-intro h2,
+.b1x-editorial-head h2,
+.b1x-course-focus-head h2,
+.b1x-problem-intro h2,
+.b1x-package-head h2,
+.b1x-promise-head h2,
+.b1x-refund-copy h2,
+.b1x-continuation-card h2,
+.b1x-cycle-intro h2,
+.b1x-free-lesson-copy h2,
+.b1x-pricing-v10-head h2,
+.b1x-mock-showcase-head h2,
+.b1x-comparison h2,
+.b1x-journey-head h2,
+.b1x-program-copy h2,
+.b1x-faq-v12 .b1x-faq-title h2,
+.b1x-final-copy h2{
+  font-size:var(--b1x-type-section);
+  font-weight:600;
+  letter-spacing:var(--b1x-tracking-heading);
+  line-height:var(--b1x-leading-heading);
+}
+
+.b1x-fit-card h2,
+.b1x-guidance-card h2,
+.b1x-pre-faq-cta-copy h2,
+.b1x-mid-cta-copy h2{
+  font-size:clamp(1.875rem,2.8vw,2.5rem);
+  font-weight:600;
+  letter-spacing:var(--b1x-tracking-heading);
+  line-height:1.14;
+}
+
+.b1x-hero-v5 h1{
+  font-size:var(--b1x-type-display);
+  font-weight:700;
+  letter-spacing:var(--b1x-tracking-display);
+  line-height:var(--b1x-leading-display);
+}
+.b1x-page .b1x-hero-v5 h1 span,
+.b1x-page .b1x-hero-v5 h1 em{
+  font-size:1em;
+  font-weight:700;
+  letter-spacing:inherit;
+  line-height:inherit;
+}
+.b1x-page .b1x-hero-v5 h1 em[lang="ne"]{
+  font-family:var(--b1x-font-nepali)!important;
+  font-weight:500;
+  letter-spacing:-.025em;
+  line-height:1.18;
+}
+
+.b1x-system-card h3,
+.b1x-method-steps article h3,
+.b1x-included-grid article h3,
+.b1x-portal-feature-grid h3,
+.b1x-promise-grid h3,
+.b1x-package-card h3,
+.b1x-cycle-card h3,
+.b1x-mock-showcase-card h3,
+.b1x-compare-grid h3,
+.b1x-plan-v10 h3,
+.b1x-portal-plan-v10 h3,
+.b1x-course-coach-copy h3{
+  font-size:var(--b1x-type-card);
+  font-weight:600;
+  letter-spacing:-.025em;
+  line-height:1.24;
+}
+
+/* Mixed Nepali display copy was previously inheriting the 800 display rule. */
+.b1x-manifesto-inner h2,
+.b1x-stage-copy h3,
+.b1x-included-feedback h3,
+.b1x-problem-intro h2 span,
+.b1x-problem-answer h3,
+.b1x-comparison h2,
+.b1x-compare-grid h3,
+.b1x-journey-head h2,
+.b1x-journey-steps strong{
+  font-family:var(--b1x-font-nepali);
+  font-weight:500;
+  letter-spacing:-.018em;
+  line-height:1.28;
+}
+
+.b1x-included-live h3{
+  font-size:clamp(1.875rem,2.55vw,2.35rem)!important;
+  font-weight:600!important;
+  line-height:1.16!important;
+}
+.b1x-problem-card>span{font-weight:700}
+.b1x-problem-answer h3{font-size:clamp(1.875rem,2.8vw,2.5rem);font-weight:500}
+.b1x-plan-v10-price strong,
+.b1x-included-number>strong,
+.b1x-promise-badge strong{font-weight:700}
+
+@media (max-width:960px){
+  .b1x-page{
+    --b1x-type-display:clamp(2.25rem,5vw,2.65rem);
+    --b1x-type-section:clamp(2rem,4.8vw,2.55rem);
+    --b1x-section-space:clamp(3.75rem,7vw,4.5rem);
+  }
+}
+
+@media (max-width:700px){
+  .b1x-page{
+    --b1x-type-display:clamp(1.875rem,8.7vw,2.125rem);
+    --b1x-type-section:clamp(1.75rem,8vw,2.125rem);
+    --b1x-type-subsection:clamp(1.3rem,6.5vw,1.625rem);
+    --b1x-type-card:clamp(1.075rem,5vw,1.3rem);
+    --b1x-section-space:clamp(3.4rem,13vw,4.1rem);
+    --b1x-section-space-tight:clamp(2.5rem,10vw,3.25rem);
+  }
+  .b1x-page .b1x-hero-v5 h1 em[lang="ne"]{line-height:1.22}
+  .b1x-pre-faq-cta-copy h2,
+  .b1x-fit-card h2,
+  .b1x-guidance-card h2{font-size:1.75rem;line-height:1.16}
+  .b1x-included-live h3{font-size:1.625rem!important}
+  .b1x-problem-answer h3{font-size:1.75rem}
+}
+
+@media (max-width:390px){
+  .b1x-hero-v5 h1{font-size:1.875rem}
+  .b1x-pre-faq-cta-copy h2{font-size:1.7rem}
+}

@@ -1,0 +1,397 @@
+body.cambridge-speaking-final-v17{
+  margin:0!important;
+  background:#eef5f8!important;
+  color:#26374a!important;
+  font-family:Inter,"Segoe UI",Arial,sans-serif!important;
+}
+
+body.cambridge-speaking-final-v17 section:has(#runner){
+  width:min(100%,448px)!important;
+  max-width:448px!important;
+  min-height:100vh!important;
+  margin:0 auto!important;
+  padding:0!important;
+  background:#fff!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+
+body.cambridge-speaking-final-v17 #runner{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:#fff!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-topbar{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:22px!important;
+  width:100%!important;
+  padding:24px 18px 0!important;
+  box-sizing:border-box!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-progress{
+  position:relative!important;
+  width:112px!important;
+  height:19px!important;
+  overflow:hidden!important;
+  border-radius:999px!important;
+  background:#dbe7e8!important;
+  color:#244659!important;
+  font-size:11px!important;
+  line-height:19px!important;
+  font-weight:800!important;
+  text-align:center!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-progress-fill{
+  position:absolute!important;
+  inset:0 auto 0 0!important;
+  min-width:26%!important;
+  border-radius:999px!important;
+  background:#50c8c2!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-progress span{
+  position:relative!important;
+  z-index:2!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-session{
+  display:flex!important;
+  align-items:center!important;
+  gap:6px!important;
+  color:#3d4b5c!important;
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-session svg{
+  width:13px!important;
+  height:13px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.7!important;
+  stroke-linecap:round!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-body{
+  padding:33px 18px 48px!important;
+  box-sizing:border-box!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-panel{
+  width:100%!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-centered{
+  text-align:center!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-instruction{
+  margin:0 0 17px!important;
+  text-align:center!important;
+  color:#313c48!important;
+  font-size:14px!important;
+  line-height:1.4!important;
+  font-weight:500!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-visible-task{
+  margin:0 0 18px!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-task-label{
+  margin-bottom:8px!important;
+  color:#7d8b9c!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  text-transform:uppercase!important;
+  letter-spacing:.07em!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-visible-prompt{
+  color:#26374a!important;
+  font-size:16px!important;
+  line-height:1.55!important;
+  font-weight:600!important;
+  white-space:pre-line!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-listen{
+  width:100%!important;
+  min-height:42px!important;
+  margin:0!important;
+  padding:0 16px!important;
+  border:0!important;
+  border-radius:2px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  background:#35536f!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  box-shadow:none!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-listen svg{
+  width:15px!important;
+  height:15px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:2!important;
+  stroke-linecap:round!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-listen:disabled{
+  background:#d9dcdf!important;
+  color:#a6abb0!important;
+  -webkit-text-fill-color:#a6abb0!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-divider{
+  height:1px!important;
+  margin:25px 0 24px!important;
+  background:#e8ebed!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-now{
+  color:#303b48!important;
+  font-size:14px!important;
+  line-height:1.4!important;
+  font-weight:500!important;
+  text-align:left!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-now-center{
+  margin-bottom:13px!important;
+  text-align:left!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-state-title{
+  margin:0 0 13px!important;
+  color:#4b5663!important;
+  font-size:14px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  text-align:center!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-state-title strong{
+  font-weight:700!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-ring{
+  position:relative!important;
+  width:104px!important;
+  height:104px!important;
+  margin:0 auto 10px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  box-sizing:border-box!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-ring-inner{
+  position:absolute!important;
+  inset:8px!important;
+  border-radius:50%!important;
+  background:#fff!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-ring-number{
+  position:relative!important;
+  z-index:2!important;
+  color:#435268!important;
+  font-size:39px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  letter-spacing:-.03em!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-speak-visual,
+body.cambridge-speaking-final-v17 .final-speaking-action{
+  min-width:116px!important;
+  height:37px!important;
+  margin:0 auto!important;
+  padding:0 20px!important;
+  border:0!important;
+  border-radius:2px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#35536f!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  box-shadow:none!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-recording-label{
+  margin:5px 0 12px!important;
+  color:#58606a!important;
+  font-size:13px!important;
+  line-height:1.3!important;
+  font-weight:500!important;
+  text-align:center!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-recording-label::before{
+  content:""!important;
+  display:inline-block!important;
+  width:7px!important;
+  height:7px!important;
+  margin-right:6px!important;
+  border-radius:50%!important;
+  background:#df5b65!important;
+  vertical-align:1px!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-review-thanks{
+  margin:12px 0 18px!important;
+  color:#4e5965!important;
+  font-size:14px!important;
+  line-height:1.4!important;
+  font-weight:500!important;
+  text-align:center!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-audio-row{
+  width:100%!important;
+  margin:0 0 18px!important;
+  padding:0!important;
+  border-top:1px solid #e5e8ea!important;
+  border-bottom:1px solid #e5e8ea!important;
+  background:transparent!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-audio-row audio{
+  display:block!important;
+  width:100%!important;
+  height:48px!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-review-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:7px!important;
+  width:100%!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-retry,
+body.cambridge-speaking-final-v17 .final-speaking-submit{
+  min-height:38px!important;
+  padding:0 18px!important;
+  border-radius:2px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:12px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  text-transform:uppercase!important;
+  box-shadow:none!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-retry{
+  border:1px solid #98a2ad!important;
+  background:#fff!important;
+  color:#4d5967!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-submit{
+  border:1px solid #35536f!important;
+  background:#35536f!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-submit:disabled{
+  opacity:.5!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-saving{
+  padding:40px 0!important;
+  text-align:center!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-saving-spinner{
+  width:34px!important;
+  height:34px!important;
+  margin:0 auto!important;
+  border:3px solid #e4e8eb!important;
+  border-top-color:#50c8c2!important;
+  border-radius:50%!important;
+  animation:finalSpeakingSpin .8s linear infinite!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-saving-title{
+  margin-top:13px!important;
+  font-size:14px!important;
+  font-weight:600!important;
+}
+
+body.cambridge-speaking-final-v17 .final-speaking-error{
+  margin-top:16px!important;
+  padding:10px 12px!important;
+  border:1px solid #f2b8bc!important;
+  background:#fff4f4!important;
+  color:#a7373f!important;
+  font-size:12px!important;
+  line-height:1.5!important;
+}
+
+@keyframes finalSpeakingSpin{
+  to{transform:rotate(360deg)}
+}
+
+body.cambridge-speaking-final-v17 #micStatus,
+body.cambridge-speaking-final-v17 #micLevel,
+body.cambridge-speaking-final-v17 #recordLevel,
+body.cambridge-speaking-final-v17 #micStatusText,
+body.cambridge-speaking-final-v17 #micDot{
+  display:none!important;
+}
+
+body.cambridge-speaking-final-v17 section:has(#runner) + div{
+  display:none!important;
+}
+
+@media(max-width:520px){
+  body.cambridge-speaking-final-v17{
+    background:#fff!important;
+  }
+
+  body.cambridge-speaking-final-v17 section:has(#runner){
+    width:100%!important;
+    max-width:none!important;
+  }
+
+  body.cambridge-speaking-final-v17 .final-speaking-topbar{
+    padding:20px 15px 0!important;
+  }
+
+  body.cambridge-speaking-final-v17 .final-speaking-body{
+    padding:30px 15px 42px!important;
+  }
+}

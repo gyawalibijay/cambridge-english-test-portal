@@ -1,0 +1,386 @@
+/* ============================================================
+   B1 READY — LISTENING REFERENCE UI V34.4.2
+   Scoped ONLY to objective runner Listening questions.
+   ============================================================ */
+
+body[data-question-skill="listening"]{
+  --b1-listen-teal:#123f49;
+  --b1-listen-teal-hover:#0f3740;
+  --b1-listen-accent:#0fb9b1;
+  --b1-listen-ink:#111827;
+  --b1-listen-muted:#6b7280;
+  --b1-listen-line:#e3e8eb;
+  --b1-listen-soft:#f8fafb;
+}
+
+/* ------------------------------------------------------------
+   Main Listening content
+   ------------------------------------------------------------ */
+
+body[data-question-skill="listening"] .b1-listening-reference-card{
+  max-width:760px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  padding:24px 0 30px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-hidden{
+  display:none !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-reference-title{
+  max-width:760px;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  text-align:center !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-reference-title h1,
+body[data-question-skill="listening"] h1.b1-listening-title{
+  margin:0 !important;
+  color:var(--b1-listen-ink) !important;
+  font-size:18px !important;
+  line-height:1.35 !important;
+  font-weight:800 !important;
+  letter-spacing:-.015em !important;
+  text-align:center !important;
+}
+
+/* Keep the small Part label, but make it quieter like the reference. */
+body[data-question-skill="listening"] .b1-listening-reference-title small{
+  display:block;
+  margin-bottom:10px !important;
+  color:#5d7481 !important;
+  font-size:9px !important;
+  line-height:1.35 !important;
+  font-weight:800 !important;
+  letter-spacing:.08em !important;
+  text-align:center !important;
+}
+
+/* ------------------------------------------------------------
+   Audio player — smaller, centered, reference proportions
+   ------------------------------------------------------------ */
+
+body[data-question-skill="listening"] .b1-listen-player{
+  width:100%;
+  max-width:620px;
+  margin:22px auto 0 !important;
+}
+
+body[data-question-skill="listening"] .b1-listen-button{
+  width:100% !important;
+  min-height:56px !important;
+  height:56px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:15px !important;
+  margin:0 auto !important;
+  padding:0 22px !important;
+  border:0 !important;
+  border-radius:8px !important;
+  background:var(--b1-listen-teal) !important;
+  color:#fff !important;
+  box-shadow:0 3px 8px rgba(18,63,73,.14) !important;
+  font:inherit !important;
+  font-size:16px !important;
+  line-height:1 !important;
+  font-weight:800 !important;
+  letter-spacing:0 !important;
+  cursor:pointer !important;
+  transition:
+    background .16s ease,
+    box-shadow .16s ease,
+    transform .16s ease !important;
+}
+
+body[data-question-skill="listening"] .b1-listen-button:hover{
+  background:var(--b1-listen-teal-hover) !important;
+  box-shadow:0 5px 13px rgba(18,63,73,.18) !important;
+}
+
+body[data-question-skill="listening"] .b1-listen-button:focus-visible{
+  outline:3px solid rgba(15,185,177,.24) !important;
+  outline-offset:3px !important;
+}
+
+body[data-question-skill="listening"] .b1-listen-button:active{
+  transform:translateY(1px) !important;
+}
+
+body[data-question-skill="listening"] .b1-listen-wave{
+  width:38px !important;
+  height:24px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:2px !important;
+  flex:0 0 38px !important;
+}
+
+body[data-question-skill="listening"] .b1-listen-wave i{
+  display:block !important;
+  width:2px !important;
+  border-radius:999px !important;
+  background:currentColor !important;
+  opacity:.96 !important;
+  transform-origin:center !important;
+}
+
+body[data-question-skill="listening"] .b1-listen-wave i:nth-child(1){height:6px}
+body[data-question-skill="listening"] .b1-listen-wave i:nth-child(2){height:10px}
+body[data-question-skill="listening"] .b1-listen-wave i:nth-child(3){height:16px}
+body[data-question-skill="listening"] .b1-listen-wave i:nth-child(4){height:22px}
+body[data-question-skill="listening"] .b1-listen-wave i:nth-child(5){height:16px}
+body[data-question-skill="listening"] .b1-listen-wave i:nth-child(6){height:10px}
+body[data-question-skill="listening"] .b1-listen-wave i:nth-child(7){height:6px}
+
+body[data-question-skill="listening"] .b1-listen-button.is-playing .b1-listen-wave i{
+  animation:b1ListeningWaveV3441 .68s ease-in-out infinite alternate;
+}
+
+body[data-question-skill="listening"] .b1-listen-button.is-playing .b1-listen-wave i:nth-child(2){animation-delay:-.12s}
+body[data-question-skill="listening"] .b1-listen-button.is-playing .b1-listen-wave i:nth-child(3){animation-delay:-.25s}
+body[data-question-skill="listening"] .b1-listen-button.is-playing .b1-listen-wave i:nth-child(4){animation-delay:-.36s}
+body[data-question-skill="listening"] .b1-listen-button.is-playing .b1-listen-wave i:nth-child(5){animation-delay:-.22s}
+body[data-question-skill="listening"] .b1-listen-button.is-playing .b1-listen-wave i:nth-child(6){animation-delay:-.1s}
+
+body[data-question-skill="listening"] .b1-listen-source{
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  padding:0 !important;
+  margin:-1px !important;
+  overflow:hidden !important;
+  clip:rect(0,0,0,0) !important;
+  white-space:nowrap !important;
+  border:0 !important;
+}
+
+/* ------------------------------------------------------------
+   Divider between audio and answers
+   ------------------------------------------------------------ */
+
+body[data-question-skill="listening"] .b1-listening-divider{
+  width:100%;
+  max-width:620px;
+  height:1px;
+  margin:40px auto 28px;
+  background:var(--b1-listen-line);
+}
+
+/* ------------------------------------------------------------
+   Answer options — original-reference style
+   ------------------------------------------------------------ */
+
+body[data-question-skill="listening"] .b1-listening-options{
+  width:100%;
+  max-width:620px;
+  margin:0 auto !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-option{
+  position:relative !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:66px !important;
+  margin:0 0 10px !important;
+  padding:13px 20px !important;
+  border:1px solid #dde2e5 !important;
+  border-radius:8px !important;
+  background:#fff !important;
+  box-shadow:0 1px 3px rgba(15,23,42,.035) !important;
+  color:#171717 !important;
+  text-align:center !important;
+  cursor:pointer !important;
+  transition:
+    border-color .15s ease,
+    background .15s ease,
+    box-shadow .15s ease,
+    transform .15s ease !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-option:last-child{
+  margin-bottom:0 !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-option:hover{
+  border-color:#cbd5da !important;
+  background:#fbfcfc !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-option:active{
+  transform:translateY(1px);
+}
+
+/*
+  Hide the native radio visually only.
+  It stays in the DOM for form submission, keyboard use and marking.
+*/
+body[data-question-skill="listening"] .b1-listening-option input[type="radio"]{
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  margin:0 !important;
+  padding:0 !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-option .b1-listening-option-text{
+  display:block !important;
+  width:100% !important;
+  color:#171717 !important;
+  font-size:16px !important;
+  line-height:1.35 !important;
+  font-weight:700 !important;
+  text-align:center !important;
+  letter-spacing:-.005em !important;
+}
+
+/* Fallback for templates where text isn't inside the injected span. */
+body[data-question-skill="listening"] .b1-listening-option{
+  font-size:16px !important;
+  line-height:1.35 !important;
+  font-weight:700 !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-option.is-selected{
+  border-color:#5ec9c4 !important;
+  background:#f2fbfa !important;
+  box-shadow:
+    0 0 0 2px rgba(15,185,177,.10),
+    0 2px 6px rgba(15,23,42,.035) !important;
+}
+
+body[data-question-skill="listening"] .b1-listening-option:has(input[type="radio"]:focus-visible){
+  outline:3px solid rgba(15,185,177,.20) !important;
+  outline-offset:2px !important;
+}
+
+/* Remove any label prefixes accidentally supplied only by presentation CSS. */
+body[data-question-skill="listening"] .b1-listening-option::before,
+body[data-question-skill="listening"] .b1-listening-option::marker{
+  content:none !important;
+}
+
+/* ------------------------------------------------------------
+   Progress badge: smaller and closer to reference
+   ------------------------------------------------------------ */
+
+body[data-question-skill="listening"] .b1-listening-progress-count{
+  min-width:46px !important;
+  height:28px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 12px !important;
+  border-radius:999px !important;
+  background:#12bbb3 !important;
+  color:#fff !important;
+  font-size:11px !important;
+  line-height:1 !important;
+  font-weight:800 !important;
+  box-shadow:none !important;
+}
+
+/* ------------------------------------------------------------
+   Submit button — keep functionality, visually secondary to answers
+   ------------------------------------------------------------ */
+
+body[data-question-skill="listening"] .b1-listening-reference-card button[type="submit"],
+body[data-question-skill="listening"] .b1-listening-reference-card input[type="submit"]{
+  border-radius:8px !important;
+}
+
+/* ------------------------------------------------------------
+   Mobile — follow supplied original screen proportions
+   ------------------------------------------------------------ */
+
+@media(max-width:700px){
+  body[data-question-skill="listening"] .b1-listening-reference-card{
+    width:100% !important;
+    padding:20px 0 28px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-reference-title h1,
+  body[data-question-skill="listening"] h1.b1-listening-title{
+    font-size:16px !important;
+    line-height:1.4 !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-reference-title small{
+    font-size:8px !important;
+    margin-bottom:10px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listen-player{
+    max-width:none !important;
+    margin-top:22px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listen-button{
+    min-height:56px !important;
+    height:56px !important;
+    gap:13px !important;
+    padding:0 16px !important;
+    border-radius:7px !important;
+    font-size:16px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-divider{
+    max-width:none !important;
+    margin:38px auto 26px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-options{
+    max-width:none !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-option{
+    min-height:66px !important;
+    margin-bottom:10px !important;
+    padding:13px 15px !important;
+    border-radius:7px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-option .b1-listening-option-text,
+  body[data-question-skill="listening"] .b1-listening-option{
+    font-size:15px !important;
+    line-height:1.35 !important;
+    font-weight:700 !important;
+  }
+}
+
+@media(max-width:430px){
+  body[data-question-skill="listening"] .b1-listen-button{
+    min-height:54px !important;
+    height:54px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-option{
+    min-height:64px !important;
+  }
+
+  body[data-question-skill="listening"] .b1-listening-option .b1-listening-option-text,
+  body[data-question-skill="listening"] .b1-listening-option{
+    font-size:14px !important;
+  }
+}
+
+@keyframes b1ListeningWaveV3441{
+  from{transform:scaleY(.48);opacity:.7}
+  to{transform:scaleY(1);opacity:1}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body[data-question-skill="listening"] .b1-listen-button.is-playing .b1-listen-wave i{
+    animation:none !important;
+  }
+}

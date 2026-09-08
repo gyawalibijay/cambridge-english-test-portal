@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Management{% endblock %} | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+    
+</head>
+<body>
+<div class="pv2-mgmt">
+  <aside class="pv2-mgmt-side">
+    <div class="pv2-mgmt-brand">
+      <span class="pv2-brand-mark">ST</span>
+      <span>
+        <strong>Portal Management</strong>
+        <small>Arya Academy</small>
+      </span>
+    </div>
+
+    <nav class="pv2-mgmt-nav">
+      <div class="group">Overview</div>
+      <a href="{% url 'academy_management:dashboard' %}">
+        <span class="ico">⌂</span> Dashboard
+      </a>
+
+      <div class="group">Commerce</div>
+      <a href="{% url 'academy_management:purchases' %}">
+        <span class="ico">₨</span> Payment Verification
+      </a>
+      <a href="/admin/commerce/paymentdestination/" target="_blank">
+        <span class="ico">▣</span> Payment Methods
+      </a>
+      <a href="/store/" target="_blank">
+        <span class="ico">↗</span> Student Store
+      </a>
+
+      <div class="group">Learning</div>
+      <a href="{% url 'academy_management:courses' %}">
+        <span class="ico">▤</span> Courses
+      </a>
+      <a href="{% url 'academy_management:materials' %}">
+        <span class="ico">◫</span> Course Materials
+      </a>
+      <a href="{% url 'academy_management:test_materials' %}">
+        <span class="ico">✎</span> Test Materials
+      </a>
+
+      <div class="group">Students & Testing</div>
+      <a href="{% url 'academy_management:students' %}">
+        <span class="ico">◎</span> Students
+      </a>
+      <a href="{% url 'academy_management:inquiries' %}">
+        <span class="ico">✉</span> Public Enquiries
+      </a>
+      <a href="/evaluation/reviews/">
+        <span class="ico">✓</span> Evaluation Queue
+      </a>
+      <a href="/admin/question_bank/question/" target="_blank">
+        <span class="ico">?</span> Question Bank
+      </a>
+
+      <div class="group">System</div>
+      <a href="/admin/" target="_blank">
+        <span class="ico">⚙</span> Django Admin
+      </a>
+      <a href="{% url 'dashboard' %}">
+        <span class="ico">←</span> Student Portal
+      </a>
+    </nav>
+
+    <div class="pv2-mgmt-user">
+      Signed in as<br>
+      <strong style="color:#fff">{{ request.user.get_full_name|default:request.user.username }}</strong>
+    </div>
+  </aside>
+
+  <section class="pv2-mgmt-main">
+    <header class="pv2-mgmt-top">
+      <div>
+        <strong style="font-size:.9rem">{% block header %}Management{% endblock %}</strong>
+        <span style="display:block;color:var(--pv2-muted);font-size:.65rem;margin-top:2px">
+          Manage licensed test systems, content and student access.
+        </span>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center">
+        <button type="button" class="pv2-theme-toggle" data-theme-toggle>
+          <span data-theme-icon>☾</span>
+        </button>
+        <a class="pv2-btn pv2-btn-outline" style="min-height:42px" href="{% url 'logout' %}">
+          Sign out
+        </a>
+      </div>
+    </header>
+
+    <main class="pv2-mgmt-content">
+      {% if messages %}
+        {% for message in messages %}
+        <div class="pv2-card" style="padding:13px 15px;margin-bottom:15px">
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </section>
+</div>
+    
+</body>
+</html>

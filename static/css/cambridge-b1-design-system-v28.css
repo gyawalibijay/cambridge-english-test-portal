@@ -1,0 +1,208 @@
+/*
+ * CAMBRIDGE_B1_DESIGN_SYSTEM_V28_20260905
+ * Arya Academy branding, compact mobile journey cards and an art-directed
+ * mobile hero. The page keeps the existing routes, content and imagery.
+ */
+.b1x-page .b1x-brand{
+  min-width:240px;
+  gap:10px;
+}
+.b1x-page .b1x-brand-logo{
+  display:block;
+  width:56px!important;
+  height:48px!important;
+  max-width:56px!important;
+  flex:0 0 56px;
+  border-radius:5px;
+  object-fit:contain;
+  object-position:center;
+  background:#fff;
+}
+.b1x-page .b1x-brand-name{
+  max-width:205px;
+  color:#11131a;
+  font-size:16px;
+  line-height:1.12;
+  white-space:nowrap;
+}
+.b1x-page .b1x-brand-name small{
+  margin-top:4px;
+  color:#6d7078;
+  font-size:8px;
+  letter-spacing:.105em;
+}
+.b1x-page .b1x-footer-brand>a{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+.b1x-page .b1x-footer-logo{
+  display:block;
+  width:54px;
+  height:46px;
+  border-radius:4px;
+  object-fit:contain;
+  background:#fff;
+}
+.b1x-page .b1x-footer-brand>a>strong{
+  display:flex;
+  flex-direction:column;
+  color:#fff;
+  font-size:17px;
+  line-height:1.15;
+}
+.b1x-page .b1x-footer-brand>a>strong small{
+  margin-top:4px;
+  color:rgba(255,255,255,.68);
+  font-size:8px;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* Keep the desktop hero exactly as the V27 composition. On mobile the same
+   portrait is a normal flow element after the CTA and supporting benefits. */
+.b1x-page .b1x-hero-v24 .b1x-hero-person-mobile{display:none!important}
+
+@media (min-width:701px){
+  .b1x-page .b1x-journey-line{margin-top:44px}
+  .b1x-page .b1x-journey-line>div{min-height:184px;padding:22px 18px}
+  .b1x-page .b1x-journey-line strong{font-size:17px}
+  .b1x-page .b1x-journey-line p{margin-top:12px;font-size:12px}
+}
+
+@media (max-width:700px){
+  .b1x-page .b1x-brand{min-width:0;gap:7px}
+  .b1x-page .b1x-brand-logo{
+    width:46px!important;
+    height:39px!important;
+    max-width:46px!important;
+    flex-basis:46px;
+  }
+  .b1x-page .b1x-brand-name{
+    max-width:170px;
+    font-size:12.5px;
+    letter-spacing:-.035em;
+  }
+  .b1x-page .b1x-brand-name small{
+    margin-top:3px;
+    font-size:6.5px;
+    letter-spacing:.08em;
+  }
+  .b1x-page .b1x-footer-brand>a>strong{font-size:15px}
+  .b1x-page .b1x-footer-logo{width:48px;height:41px}
+
+  .b1x-page .b1x-hero-v24{
+    min-height:760px;
+    max-height:none;
+    background:#241812;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo{display:none!important}
+  .b1x-page .b1x-hero-v24 .b1x-hero-shade{
+    display:block;
+    background:linear-gradient(180deg,rgba(24,13,10,.86),rgba(24,13,10,.58) 56%,rgba(24,13,10,.88));
+  }
+  .b1x-page .b1x-hero-v24::after{display:none}
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{
+    display:flex;
+    min-height:760px;
+    align-items:flex-start;
+    padding-top:34px;
+    padding-bottom:28px;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-copy{
+    display:flex;
+    width:100%;
+    max-width:100%;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-proof{margin-right:auto;margin-left:auto}
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions{margin-top:22px}
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{
+    display:flex;
+    width:min(100%,320px);
+    max-width:320px;
+    align-items:stretch;
+    flex-direction:column;
+    gap:12px;
+    margin:24px auto 0;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline>div{
+    width:100%;
+    justify-content:center;
+    gap:8px;
+    text-align:center;
+  }
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline svg{width:21px;height:21px;flex-basis:21px}
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline span{font-size:10px;line-height:1.2}
+  .b1x-page .b1x-hero-v24 .b1x-hero-person-mobile{
+    display:block!important;
+    position:relative!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:min(100%,320px);
+    height:215px;
+    max-width:none;
+    margin:24px auto 0;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:20px;
+    object-fit:cover;
+    object-position:50% 17%;
+    filter:drop-shadow(0 18px 28px rgba(0,0,0,.28));
+    transform:none!important;
+    pointer-events:none;
+  }
+
+  /* One compact card per horizontal swipe on the preparation journey. */
+  .b1x-page .b1x-journey{padding-block:42px}
+  .b1x-page .b1x-journey-head{display:block;text-align:center}
+  .b1x-page .b1x-journey-head h2{font-size:clamp(2rem,9.2vw,2.65rem);line-height:1.14}
+  .b1x-page .b1x-journey-line{
+    display:grid;
+    width:100%;
+    grid-auto-flow:column;
+    grid-auto-columns:calc(100vw - 40px);
+    grid-template-columns:none;
+    gap:12px;
+    margin-top:28px;
+    padding:0 20px 8px;
+    overflow-x:auto;
+    border:0;
+    scroll-padding-inline:20px;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:thin;
+  }
+  .b1x-page .b1x-journey-line>div,
+  .b1x-page .b1x-journey-line>div:last-child{
+    min-height:156px;
+    align-items:center;
+    justify-content:space-between;
+    border:1px solid #e1e4ec;
+    border-radius:18px;
+    padding:20px 18px;
+    background:#fff;
+    box-shadow:0 8px 20px rgba(24,35,83,.06);
+    scroll-snap-align:start;
+    text-align:center;
+  }
+  .b1x-page .b1x-journey-line>div::before{top:14px;left:14px;width:8px;height:8px;border-width:2px}
+  .b1x-page .b1x-journey-line strong{max-width:100%;font-size:18px;line-height:1.2}
+  .b1x-page .b1x-journey-line p{max-width:100%;margin-top:8px;font-size:12px;line-height:1.45}
+
+  .b1x-page :where(.b1x-system-card h3,.b1x-cycle-card h3,.b1x-compare-grid h3,.b1x-program-copy h2,.b1x-faq-v12 .b1x-faq-title h2){text-align:center}
+}
+
+@media (max-width:390px){
+  .b1x-page .b1x-brand-logo{width:42px!important;height:36px!important;max-width:42px!important;flex-basis:42px}
+  .b1x-page .b1x-brand-name{font-size:11.5px}
+  .b1x-page .b1x-brand-name small{font-size:6px}
+  .b1x-page .b1x-hero-v24{min-height:740px}
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{min-height:740px}
+  .b1x-page .b1x-hero-v24 .b1x-hero-person-mobile{height:190px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .b1x-page .b1x-hero-v24 .b1x-hero-person-mobile{filter:none}
+}

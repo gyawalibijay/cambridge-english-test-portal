@@ -1,0 +1,51 @@
+{% load static %}
+{# FULL_MOCK_PRACTICE_PARTS_V40_6 #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>{{ skill_label }} | Arya Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/practice-reference.css' %}?v=20260908-v406">
+  <link rel="stylesheet" href="{% static 'css/mobile-bottom-nav.css' %}?v=20260908-v406">
+  <link rel="stylesheet" href="{% static 'css/practice-mock-blue-v29.css' %}?v=20260908-v406">
+</head>
+<body class="skill-mock-page">
+<main class="practice-ref-page">
+  <section class="practice-ref-panel" aria-labelledby="mock-skill-title">
+    <header class="practice-ref-header">
+      <a class="practice-ref-back" href="{% url 'student_mock_tests' %}" aria-label="Back to Mock Test">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"></path></svg>
+      </a>
+      <span id="mock-skill-title">{{ skill_label }}</span>
+    </header>
+<div class="practice-ref-list" aria-label="{{ skill_label }} parts">
+      {% for part in parts %}
+        {% if part.complete %}
+          <div class="practice-ref-row practice-ref-part-row" aria-label="{{ skill_label }} Part {{ part.number }} complete">
+            <span class="practice-ref-number">✓</span>
+            <span class="practice-ref-copy">
+              <span class="practice-ref-title">{{ skill_label }} Part {{ part.number }}</span>
+            </span>
+            <span class="practice-ref-action">DONE</span>
+          </div>
+        {% else %}
+          <a class="practice-ref-row practice-ref-part-row" href="{{ part.start_url }}">
+            <span class="practice-ref-number">{{ part.number }}</span>
+            <span class="practice-ref-copy">
+              <span class="practice-ref-title">{{ skill_label }} Part {{ part.number }}</span>
+            </span>
+            <span class="practice-ref-action">{{ part.duration }} <span class="practice-ref-chevron">›</span></span>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+</main>
+{% include "student_final/_mobile_nav.html" with active="mock" %}
+</body>
+</html>

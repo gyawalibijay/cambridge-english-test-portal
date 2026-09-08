@@ -1,0 +1,9 @@
+/*
+  Emergency cleanup:
+  hide/remove only the icons injected by my V6/V7 scripts.
+  The original/professional icons from your student template remain untouched.
+*/
+.sf-ref-nav-icon,
+.sf-ref-nav-icon-v7{
+  display:none!important;
+}

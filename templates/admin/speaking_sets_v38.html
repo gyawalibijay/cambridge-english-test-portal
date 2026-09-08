@@ -1,0 +1,20 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/b1-speaking-set-builder-v38.css' %}?v=20260908-385">{% endblock %}
+{% block content %}
+<div class="b1s38-page">
+  <header class="b1s38-hero">
+    <div><span class="kicker">CAMBRIDGE · SPEAKING · SETS 02–31</span><h1>Speaking Sets</h1><p>Manage Speaking as <b>Set → Part → Question</b>. Parts 1–2 are listen-and-answer. Parts 3–4 are read aloud. Part 5 is a 40-second preparation + 60-second message task.</p></div>
+    <div class="actions"><a href="/practice/" class="btn ghost" target="_blank">Student Practice ↗</a><a href="/admin/mock-builder/" class="btn primary">Mock Builder →</a></div>
+  </header>
+  <section class="b1s38-summary">
+    <div><small>SETS</small><strong>30</strong></div><div><small>QUESTIONS</small><strong>{{ total_questions }}</strong></div><div><small>PART 1 SOURCE AUDIO</small><strong>{{ p1_library }}</strong></div><div><small>PART 2 SOURCE AUDIO</small><strong>{{ p2_library }}</strong></div>
+  </section>
+  <aside class="b1s38-note"><b>Physical-audio publication rule:</b> browser voice fallback is disabled. A Speaking Set is available to students only when all 4 Part 1 questions and all 4 Part 2 questions have real uploaded audio files (8/8 required). Incomplete Sets remain private automatically. After the final missing audio is uploaded and saved, that Set becomes student-eligible automatically. Currently <b>{{ public_sets }}/30 Sets</b> are public-ready.</aside>
+  <div class="b1s38-grid">
+    {% for row in rows %}<article class="set-card"><header><div><span>SPEAKING SET</span><h2>{{ row.set_no|stringformat:"02d" }}</h2></div><b class="status {% if row.public %}ready{% endif %}">{% if row.public %}PUBLIC · 8/8 AUDIO{% else %}PRIVATE · {{ row.required_audio }}/8 AUDIO{% endif %}</b></header><div class="parts">
+      {% for part in row.parts %}<a href="{{ part.url }}" class="part"><span class="num">{{ part.number }}</span><span class="copy"><b>Part {{ part.number }} · {{ part.label }}</b><small>{{ part.help }}</small></span><span class="count">{{ part.ready }}/{{ part.count }}{% if part.number == 1 or part.number == 2 %}<em>{{ part.audio }} audio</em>{% endif %}</span><span>→</span></a>{% endfor %}
+    </div></article>{% endfor %}
+  </div>
+</div>
+{% endblock %}

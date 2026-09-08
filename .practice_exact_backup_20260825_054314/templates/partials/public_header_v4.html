@@ -1,0 +1,57 @@
+{% load static %}
+<header class="pub4-header">
+  <div class="pub4-nav-wrap">
+    <a class="pub4-logo" href="{% url 'website:home' %}">
+      <span class="pub4-logo-mark">ST</span>
+      <span>
+        <strong>Upskill Practice</strong>
+        <small>Surakshya Technologies</small>
+      </span>
+    </a>
+
+    <nav class="pub4-nav" data-public-menu>
+      <a href="{% url 'website:home' %}">Home</a>
+      <a href="{% url 'website:programs' %}">Programs</a>
+      <a href="{% url 'website:features' %}">Features</a>
+      <a href="{% url 'website:how_it_works' %}">How it works</a>
+      <a href="{% url 'website:pricing' %}">Pricing</a>
+      <a href="{% url 'website:about' %}">About</a>
+      <a href="{% url 'website:faq' %}">FAQ</a>
+      <a href="{% url 'website:contact' %}">Contact</a>
+    </nav>
+
+    <div class="pub4-actions">
+      <button
+        type="button"
+        class="pub4-theme"
+        data-theme-toggle
+        title="Switch theme"
+        aria-label="Switch theme"
+      >
+        <span data-theme-icon></span>
+      </button>
+
+      {% if request.user.is_authenticated %}
+      <a class="pub4-btn ghost" href="{% url 'dashboard' %}">
+        Dashboard
+      </a>
+      {% else %}
+      <a class="pub4-signin" href="{% url 'login' %}">
+        Sign in
+      </a>
+      <a class="pub4-btn primary" href="{% url 'signup' %}">
+        Get started →
+      </a>
+      {% endif %}
+
+      <button
+        class="pub4-mobile-toggle"
+        type="button"
+        data-public-menu-toggle
+        aria-label="Toggle navigation"
+      >
+        <span data-public-menu-icon>☰</span>
+      </button>
+    </div>
+  </div>
+</header>

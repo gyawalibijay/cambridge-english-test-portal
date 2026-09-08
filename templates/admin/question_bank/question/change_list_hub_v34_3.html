@@ -1,0 +1,76 @@
+{% extends "admin/change_list.html" %}
+
+{% block content %}
+{% if b1_question_hub %}
+<div class="b1qh-wrap">
+  <div class="b1qh-head">
+    <div>
+      <span>QUESTION BANK · CAMBRIDGE</span>
+      <h1>Questions</h1>
+      <p>Choose a skill first. Do not manage every question in one long table.</p>
+    </div>
+    <div class="b1qh-actions">
+      <a class="secondary" href="/admin/listening-sets/">Listening Sets</a>
+      <a class="primary" href="{% url 'admin:question_bank_question_add' %}">+ Add Question</a>
+    </div>
+  </div>
+
+  <div class="b1qh-intro">
+    <strong>Question workspace</strong>
+    <small>Select a skill → open its panel → view, edit or delete questions.</small>
+  </div>
+
+  <div class="b1qh-cards">
+    {% for card in b1_question_cards %}
+    <article class="b1qh-card {{ card.slug }}">
+      <div class="top">
+        <span class="icon">
+          {% if card.slug == "listening" %}♫
+          {% elif card.slug == "reading" %}▤
+          {% elif card.slug == "speaking" %}◉
+          {% else %}✎{% endif %}
+        </span>
+        <span class="count">{{ card.count }} question{{ card.count|pluralize }}</span>
+      </div>
+      <div class="copy">
+        <small>{{ card.label|upper }}</small>
+        <h2>{{ card.label }}</h2>
+        <p>{{ card.description }}</p>
+      </div>
+      <div class="bottom">
+        <a class="open" href="{{ card.url }}">Open {{ card.label }} <b>→</b></a>
+        {% if card.slug == "listening" %}
+        <a class="mini" href="/admin/listening-sets/">Manage Sets</a>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="b1qh-wrap b1qh-panel">
+  <div class="b1qh-head">
+    <div>
+      <a class="back" href="{% url 'admin:question_bank_question_changelist' %}">← Question Hub</a>
+      <span>QUESTION BANK · {{ b1_active_skill|upper }}</span>
+      <h1>{{ b1_active_skill }} Questions</h1>
+      <p>Only {{ b1_active_skill|lower }} questions are shown in this panel.</p>
+    </div>
+    <div class="b1qh-actions">
+      {% if b1_active_slug == "listening" %}<a class="secondary" href="/admin/listening-sets/">Listening Sets</a>{% endif %}
+      <a class="primary" href="{% url 'admin:question_bank_question_add' %}">+ Add Question</a>
+    </div>
+  </div>
+
+  <nav class="b1qh-tabs">
+    {% for card in b1_question_cards %}
+    <a class="{% if card.slug == b1_active_slug %}active{% endif %}" href="{{ card.url }}">
+      {{ card.label }} <span>{{ card.count }}</span>
+    </a>
+    {% endfor %}
+  </nav>
+</div>
+
+{{ block.super }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block bodyclass %}{{ block.super }} b1-media-page{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">Administration</a>
+  <span>›</span>
+  Media Center
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="b1-media">
+  <section class="b1-media-hero">
+    <div>
+      <span class="b1-admin-kicker">MEDIA & FILE OPERATIONS</span>
+      <h1>One place for every uploaded file.</h1>
+      <p>This is a safe, read-only index of files stored through Django models. Edit/delete still happens through the original model admin so permissions and existing logic are preserved.</p>
+    </div>
+    <a class="b1-admin-secondary" href="{% url 'admin:index' %}">← Admin dashboard</a>
+  </section>
+
+  <section class="b1-connection-panel">
+    <div class="b1-admin-section-head compact">
+      <div>
+        <span class="b1-admin-kicker">LIVE SOURCE AUDIT</span>
+        <h2>Admin → frontend connection</h2>
+      </div>
+      <span class="b1-audit-note">Checked from the deployed code, not guessed.</span>
+    </div>
+    <div class="b1-connection-grid">
+      {% for key, check in connection_checks.items %}
+      <article class="b1-connection-card {% if check.ok %}is-ok{% else %}is-warn{% endif %}">
+        <span class="b1-connection-status">{% if check.ok %}CONNECTED{% else %}CHECK{% endif %}</span>
+        <strong>{{ check.title }}</strong>
+        <p>{{ check.detail }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="b1-media-stats">
+    <a href="?{% if query %}q={{ query|urlencode }}&amp;{% endif %}" class="{% if not selected_kind %}active{% endif %}"><small>ALL FILES</small><strong>{{ counts.all }}</strong></a>
+    <a href="?kind=audio{% if query %}&amp;q={{ query|urlencode }}{% endif %}" class="{% if selected_kind == 'audio' %}active{% endif %}"><small>AUDIO</small><strong>{{ counts.audio }}</strong></a>
+    <a href="?kind=video{% if query %}&amp;q={{ query|urlencode }}{% endif %}" class="{% if selected_kind == 'video' %}active{% endif %}"><small>VIDEO</small><strong>{{ counts.video }}</strong></a>
+    <a href="?kind=image{% if query %}&amp;q={{ query|urlencode }}{% endif %}" class="{% if selected_kind == 'image' %}active{% endif %}"><small>IMAGES</small><strong>{{ counts.image }}</strong></a>
+    <a href="?kind=document{% if query %}&amp;q={{ query|urlencode }}{% endif %}" class="{% if selected_kind == 'document' %}active{% endif %}"><small>DOCUMENTS</small><strong>{{ counts.document }}</strong></a>
+  </section>
+
+  <form method="get" class="b1-media-filter">
+    <label class="b1-media-search"><span>⌕</span><input type="search" name="q" value="{{ query }}" placeholder="Search filename, object, model or field…"></label>
+    <select name="kind">
+      <option value="">All file types</option>
+      <option value="audio" {% if selected_kind == 'audio' %}selected{% endif %}>Audio</option>
+      <option value="video" {% if selected_kind == 'video' %}selected{% endif %}>Video</option>
+      <option value="image" {% if selected_kind == 'image' %}selected{% endif %}>Images</option>
+      <option value="document" {% if selected_kind == 'document' %}selected{% endif %}>Documents</option>
+      <option value="other" {% if selected_kind == 'other' %}selected{% endif %}>Other</option>
+    </select>
+    <select name="model">
+      <option value="">All models</option>
+      {% for item in model_choices %}
+        <option value="{{ item }}" {% if selected_model == item %}selected{% endif %}>{{ item }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+    <a href="{% url 'admin:media_center' %}">Reset</a>
+  </form>
+
+  {% if scan_warnings %}
+  <div class="b1-admin-warning">
+    <strong>Some model files could not be scanned.</strong>
+    {% for warning in scan_warnings %}<span>{{ warning }}</span>{% endfor %}
+  </div>
+  {% endif %}
+
+  <section class="b1-media-list">
+    {% for item in entries %}
+    <article class="b1-media-row">
+      <div class="b1-media-preview">
+        {% if item.kind == "image" and item.url %}
+          <img src="{{ item.url }}" alt="">
+        {% elif item.kind == "audio" and item.url %}
+          <div class="b1-kind-icon">♫</div>
+          <audio controls preload="none" src="{{ item.url }}"></audio>
+        {% elif item.kind == "video" and item.url %}
+          <video controls preload="metadata" src="{{ item.url }}"></video>
+        {% elif item.kind == "document" %}
+          <div class="b1-kind-icon">DOC</div>
+        {% else %}
+          <div class="b1-kind-icon">FILE</div>
+        {% endif %}
+      </div>
+
+      <div class="b1-media-info">
+        <div class="b1-media-badges">
+          <span class="b1-type-badge is-{{ item.kind }}">{{ item.kind|upper }}</span>
+          {% if item.frontend_connected %}
+            <span class="b1-ref-badge is-connected">SOURCE REFERENCE FOUND</span>
+          {% else %}
+            <span class="b1-ref-badge">NO FRONTEND REFERENCE DETECTED</span>
+          {% endif %}
+        </div>
+        <strong class="b1-media-name">{{ item.name }}</strong>
+        <p>{{ item.object }}</p>
+        <div class="b1-media-meta">
+          <span>{{ item.model_label }}</span>
+          <span>field: {{ item.field }}</span>
+          <span>{{ item.size }}</span>
+        </div>
+        {% if item.frontend_refs %}
+        <details>
+          <summary>Source references</summary>
+          <div class="b1-source-paths">{% for ref in item.frontend_refs %}<code>{{ ref }}</code>{% endfor %}</div>
+        </details>
+        {% endif %}
+      </div>
+
+      <div class="b1-media-actions">
+        {% if item.admin_url %}<a class="b1-admin-primary small" href="{{ item.admin_url }}">Edit record</a>{% endif %}
+        {% if item.url %}<a class="b1-admin-secondary small" href="{{ item.url }}" target="_blank" rel="noopener">Open file ↗</a>{% endif %}
+      </div>
+    </article>
+    {% empty %}
+    <div class="b1-media-empty">
+      <div>▣</div>
+      <h2>No files match these filters.</h2>
+      <p>Try clearing the search/type filters, or upload content from its original model admin.</p>
+    </div>
+    {% endfor %}
+  </section>
+
+  {% if counts.all >= entry_limit %}
+    <p class="b1-limit-note">Showing the first {{ entry_limit }} matching file records to keep the admin responsive.</p>
+  {% endif %}
+</div>
+{% endblock %}

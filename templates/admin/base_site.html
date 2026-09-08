@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ title }} | B1 Ready Administration{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/b1-admin-part1-v33-5.css' %}?v=20260907-335">
+<link rel="stylesheet" href="{% static 'css/b1-admin-part2-v33-6.css' %}?v=20260907-336">
+<link rel="stylesheet" href="{% static 'css/b1-admin-part3-v33-7-1.css' %}?v=20260907-3371">
+<link rel="stylesheet" href="{% static 'css/b1-admin-v33-8-1.css' %}?v=20260907-3381">
+<link rel="stylesheet" href="{% static 'css/b1-admin-v33-9-1.css' %}?v=20260907-3391">
+<link rel="stylesheet" href="{% static 'css/b1-listening-set-builder-v34-2.css' %}?v=20260907-342">
+<link rel="stylesheet" href="{% static 'css/b1-question-hub-v34-3.css' %}?v=20260907-343">
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script defer src="{% static 'js/b1-admin-part1-v33-5.js' %}?v=20260907-335"></script>
+<script defer src="{% static 'js/b1-admin-part2-v33-6.js' %}?v=20260907-336"></script>
+<script defer src="{% static 'js/b1-admin-part3-v33-7-1.js' %}?v=20260907-3371"></script>
+<script defer src="{% static 'js/b1-admin-v33-8-1.js' %}?v=20260907-3381"></script>
+<script defer src="{% static 'js/b1-admin-v33-9-1.js' %}?v=20260907-3391"></script>
+<script defer src="{% static 'js/b1-listening-set-builder-v34-2.js' %}?v=20260908-3465"></script>
+<script defer src="{% static 'js/b1-question-hub-v34-3.js' %}?v=20260907-343"></script>
+{% endblock %}
+
+{% block branding %}
+<a class="b1-brand" href="{% url 'admin:index' %}" aria-label="B1 Ready administration home">
+  <span class="b1-brand-mark">B1.</span>
+  <span class="b1-brand-copy">
+    <strong>B1 READY</strong>
+    <small>ADMINISTRATION · ARYA ACADEMY</small>
+  </span>
+</a>
+{% endblock %}
+
+{% block nav-global %}
+<div class="b1-header-actions">
+  <button class="b1-mobile-menu" type="button" data-b1-sidebar-toggle aria-label="Open admin navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+
+  <a href="/admin/operations-center/" class="b1-header-btn b1-header-btn-ops">
+    <span class="b1-header-btn-icon">◫</span>
+    <span>Operations</span>
+  </a>
+
+  <a href="/admin/media-center/" class="b1-header-btn b1-header-btn-light">
+    <span class="b1-header-btn-icon">▣</span>
+    <span>Media Center</span>
+  </a>
+
+  <a href="/" class="b1-header-btn" target="_blank" rel="noopener">
+    <span>View Website</span><span>↗</span>
+  </a>
+</div>
+{% endblock %}
+
+{% block nav-sidebar %}
+{% include "admin/b1_sidebar.html" %}
+{% endblock %}

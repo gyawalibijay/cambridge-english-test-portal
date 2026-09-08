@@ -1,0 +1,163 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}Management Dashboard{% endblock %}
+{% block header %}Management Dashboard{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Administration</div>
+    <h1>Everything important, in one place.</h1>
+    <p>
+      Purchases, licensed test systems, courses, uploaded test material, students and attempts.
+    </p>
+  </div>
+
+  <div style="display:flex;gap:9px;flex-wrap:wrap">
+    <a class="pv2-btn pv2-btn-outline" href="{% url 'academy_management:test_material_create' %}">
+      + Test Material
+    </a>
+    <a class="pv2-btn pv2-btn-primary" href="{% url 'academy_management:course_create' %}">
+      + New Course
+    </a>
+  </div>
+</div>
+
+<section class="pv2-mgmt-stat-grid">
+  <article class="pv2-card pv2-mgmt-stat">
+    <div class="pv2-eyebrow">Pending</div>
+    <div class="n">{{ pending_purchases }}</div>
+    <div class="l">Payments to verify</div>
+  </article>
+
+  <article class="pv2-card pv2-mgmt-stat">
+    <div class="pv2-eyebrow">Students</div>
+    <div class="n">{{ student_count }}</div>
+    <div class="l">Active access users</div>
+  </article>
+
+  <article class="pv2-card pv2-mgmt-stat">
+    <div class="pv2-eyebrow">Courses</div>
+    <div class="n">{{ course_count }}</div>
+    <div class="l">Managed courses</div>
+  </article>
+
+  <article class="pv2-card pv2-mgmt-stat">
+    <div class="pv2-eyebrow">Materials</div>
+    <div class="n">{{ material_count }}</div>
+    <div class="l">Course resources</div>
+  </article>
+
+  <article class="pv2-card pv2-mgmt-stat">
+    <div class="pv2-eyebrow">Test content</div>
+    <div class="n">{{ test_material_count }}</div>
+    <div class="l">Uploaded test materials</div>
+  </article>
+
+  <article class="pv2-card pv2-mgmt-stat">
+    <div class="pv2-eyebrow">Attempts</div>
+    <div class="n">{{ attempt_count }}</div>
+    <div class="l">Practice attempts</div>
+  </article>
+</section>
+
+<div class="pv2-section-head">
+  <h2>Your licensed test systems</h2>
+  {% if not program_cards %}
+  <a href="/store/">Purchase test access →</a>
+  {% endif %}
+</div>
+
+{% if program_cards %}
+<section class="pv2-license-grid">
+  {% for card in program_cards %}
+  <article class="pv2-card pv2-license-card">
+    <div class="pv2-eyebrow">Licensed test system</div>
+    <h3 style="font-size:1.08rem;margin:8px 0">{{ card.program.name }}</h3>
+
+    <div class="pv2-license-meta">
+      <div><strong>{{ card.courses }}</strong><span>Courses</span></div>
+      <div><strong>{{ card.test_materials }}</strong><span>Test materials</span></div>
+      <div><strong>{{ card.students }}</strong><span>Students</span></div>
+      <div><strong>{{ card.attempts }}</strong><span>Attempts</span></div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+      <a class="pv2-admin-mini-btn good" href="{% url 'academy_management:course_create' %}">
+        + Add Course
+      </a>
+      <a class="pv2-admin-mini-btn" href="{% url 'academy_management:test_material_create' %}">
+        + Upload Test Material
+      </a>
+    </div>
+  </article>
+  {% endfor %}
+</section>
+{% else %}
+<div class="pv2-card pv2-empty">
+  <h3 style="color:var(--pv2-text)">No licensed test systems yet</h3>
+  <p>
+    This admin account needs active program access before it can create courses or upload test material.
+  </p>
+  <a class="pv2-btn pv2-btn-primary" href="/store/">Browse Test Packages →</a>
+</div>
+{% endif %}
+
+<section class="pv2-two-col">
+  <div>
+    <div class="pv2-section-head">
+      <h2>Recent purchases</h2>
+      <a href="{% url 'academy_management:purchases' %}">Manage all →</a>
+    </div>
+
+    <div class="pv2-card pv2-panel pv2-table-scroll">
+      <table class="pv2-admin-table">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Package</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for purchase in recent_purchases %}
+          <tr>
+            <td>
+              <strong>{{ purchase.user.get_full_name|default:purchase.user.username }}</strong><br>
+              <span style="color:var(--pv2-muted)">{{ purchase.user.email }}</span>
+            </td>
+            <td>{{ purchase.package.title }}</td>
+            <td><span class="pv2-status {% if purchase.status == 'approved' %}good{% endif %}">{{ purchase.get_status_display }}</span></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3">No purchases yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <div class="pv2-section-head">
+      <h2>Recent courses</h2>
+      <a href="{% url 'academy_management:courses' %}">Manage all →</a>
+    </div>
+
+    <div class="pv2-card pv2-panel">
+      <div class="pv2-list">
+        {% for course in recent_courses %}
+        <a class="pv2-row" style="text-decoration:none" href="{% url 'academy_management:course_edit' course.id %}">
+          <div>
+            <strong>{{ course.title }}</strong>
+            <small>{{ course.program.short_name|default:course.program.name }}</small>
+          </div>
+          <span>→</span>
+        </a>
+        {% empty %}
+        <div class="pv2-empty">No courses created yet.</div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

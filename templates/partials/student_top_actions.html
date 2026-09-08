@@ -1,0 +1,43 @@
+{% if request.user.is_authenticated %}
+<div class="portal-top-actions {% if top_actions_variant == 'compact' %}is-compact{% endif %}" data-portal-actions>
+  <div class="portal-action-menu">
+    <button class="portal-bell-button" type="button" data-portal-notification-trigger aria-haspopup="true" aria-expanded="false" aria-label="Notifications">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a4 4 0 0 0-4 4v2.3c0 .8-.23 1.58-.68 2.24L6 14.5h12l-1.32-1.96A4 4 0 0 1 16 10.3V8a4 4 0 0 0-4-4Z"/><path d="M10.3 18a1.8 1.8 0 0 0 3.4 0"/></svg>
+      <span class="portal-notification-dot" aria-hidden="true"></span>
+    </button>
+    <div class="portal-actions-popover portal-notification-popover" data-portal-notification-popover hidden>
+      <div class="portal-popover-title"><strong>Notifications</strong><span>Student updates</span></div>
+      <div class="portal-notification-empty"><span class="portal-notification-check">✓</span><div><strong>You're all caught up</strong><small>New course and result updates will appear here.</small></div></div>
+    </div>
+  </div>
+
+  <div class="portal-action-menu">
+    <button class="portal-profile-button" type="button" data-portal-profile-trigger aria-haspopup="true" aria-expanded="false">
+      <span class="portal-profile-avatar">
+        {% if request.user.student_profile.profile_photo %}
+          <img src="{{ request.user.student_profile.profile_photo.url }}" alt="{{ request.user.get_full_name|default:request.user.username }}">
+        {% else %}
+          <span>{{ request.user.first_name|default:request.user.username|slice:":1"|upper }}</span>
+        {% endif %}
+      </span>
+      <span class="portal-profile-name">{{ request.user.get_full_name|default:request.user.username }}</span>
+      <svg class="portal-profile-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+    </button>
+    <div class="portal-actions-popover portal-profile-popover" data-portal-profile-popover hidden>
+      <div class="portal-profile-popover-head">
+        <span class="portal-profile-avatar is-large">
+          {% if request.user.student_profile.profile_photo %}
+            <img src="{{ request.user.student_profile.profile_photo.url }}" alt="{{ request.user.get_full_name|default:request.user.username }}">
+          {% else %}
+            <span>{{ request.user.first_name|default:request.user.username|slice:":1"|upper }}</span>
+          {% endif %}
+        </span>
+        <span><strong>{{ request.user.get_full_name|default:request.user.username }}</strong><small>{{ request.user.email|default:"Student account" }}</small></span>
+      </div>
+      <div class="portal-popover-divider"></div>
+      <a class="portal-popover-action" href="{% url 'student_profile_summary' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6"/></svg><span>Profile</span></a>
+      <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="portal-popover-action is-logout" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5H5v14h5M14 8l4 4-4 4M18 12H9"/></svg><span>Sign out</span></button></form>
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,213 @@
+/* =========================================================
+   SPEAKING TIMER CLEAN V16
+   Visual override only — timer/recording logic remains native.
+   ========================================================= */
+
+body.cambridge-speaking-safe-v15{
+  background:#eef4f7!important;
+}
+
+/* Keep the white exam column compact and centred. */
+body.cambridge-speaking-safe-v15 #runner,
+body.cambridge-speaking-safe-v15 .speaking-runner,
+body.cambridge-speaking-safe-v15 [data-attempt-id][data-part-order]{
+  width:min(100%,480px)!important;
+  min-height:100vh!important;
+  margin:0 auto!important;
+  padding:26px 24px 48px!important;
+  background:#fff!important;
+  box-sizing:border-box!important;
+}
+
+/* More readable practice typography. */
+body.cambridge-speaking-safe-v15 .v15-task-title{
+  font-size:18px!important;
+  line-height:1.4!important;
+  font-weight:600!important;
+  margin:30px 0 18px!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-answer-title{
+  font-size:18px!important;
+  line-height:1.4!important;
+  font-weight:500!important;
+  margin:28px 0 20px!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-state-title{
+  font-size:17px!important;
+  line-height:1.4!important;
+  font-weight:500!important;
+  margin:0 0 14px!important;
+}
+
+/* Listen button. */
+body.cambridge-speaking-safe-v15 .v15-listen{
+  min-height:52px!important;
+  font-size:16px!important;
+  font-weight:800!important;
+  border-radius:3px!important;
+  background:#35536f!important;
+}
+
+/* Top progress badge + clock. */
+body.cambridge-speaking-safe-v15 .v15-progress{
+  min-width:52px!important;
+  height:25px!important;
+  padding:0 13px!important;
+  font-size:13px!important;
+  font-weight:800!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-clock{
+  font-size:13px!important;
+  font-weight:700!important;
+}
+
+/* ---------------------------------------------------------
+   TIMER RING
+   - smooth circle
+   - starts at 12 o'clock
+   - runs clockwise
+   --------------------------------------------------------- */
+body.cambridge-speaking-safe-v15 .v15-ring,
+body.cambridge-speaking-safe-v15 #prepRing,
+body.cambridge-speaking-safe-v15 .prep-ring,
+body.cambridge-speaking-safe-v15 .countdown-ring,
+body.cambridge-speaking-safe-v15 .recording-ring{
+  position:relative!important;
+  width:124px!important;
+  height:124px!important;
+  margin:0 auto 14px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+}
+
+/* If the runner uses SVG circles, make the progress start at 12 o'clock. */
+body.cambridge-speaking-safe-v15 .v15-ring svg,
+body.cambridge-speaking-safe-v15 #prepRing svg,
+body.cambridge-speaking-safe-v15 .prep-ring svg,
+body.cambridge-speaking-safe-v15 .countdown-ring svg,
+body.cambridge-speaking-safe-v15 .recording-ring svg{
+  width:124px!important;
+  height:124px!important;
+  overflow:visible!important;
+  transform:rotate(-90deg)!important;
+  transform-origin:50% 50%!important;
+}
+
+/* Keep circle edges smooth. */
+body.cambridge-speaking-safe-v15 .v15-ring svg circle,
+body.cambridge-speaking-safe-v15 #prepRing svg circle,
+body.cambridge-speaking-safe-v15 .prep-ring svg circle,
+body.cambridge-speaking-safe-v15 .countdown-ring svg circle,
+body.cambridge-speaking-safe-v15 .recording-ring svg circle{
+  stroke-linecap:round!important;
+  transition:stroke-dashoffset .12s linear!important;
+}
+
+/* Track circle. */
+body.cambridge-speaking-safe-v15 .v15-ring svg circle:first-of-type,
+body.cambridge-speaking-safe-v15 #prepRing svg circle:first-of-type,
+body.cambridge-speaking-safe-v15 .prep-ring svg circle:first-of-type,
+body.cambridge-speaking-safe-v15 .countdown-ring svg circle:first-of-type,
+body.cambridge-speaking-safe-v15 .recording-ring svg circle:first-of-type{
+  stroke:#e0e5e9!important;
+  stroke-width:8!important;
+}
+
+/* Active countdown arc. */
+body.cambridge-speaking-safe-v15 .v15-ring svg circle:last-of-type,
+body.cambridge-speaking-safe-v15 #prepRing svg circle:last-of-type,
+body.cambridge-speaking-safe-v15 .prep-ring svg circle:last-of-type,
+body.cambridge-speaking-safe-v15 .countdown-ring svg circle:last-of-type,
+body.cambridge-speaking-safe-v15 .recording-ring svg circle:last-of-type{
+  stroke:#aeb6bd!important;
+  stroke-width:8!important;
+}
+
+/*
+  If the current timer is a CSS border/conic-gradient rather than SVG,
+  make it a clean circular progress surface without affecting its JS.
+*/
+body.cambridge-speaking-safe-v15 .v15-ring:not(:has(svg)),
+body.cambridge-speaking-safe-v15 #prepRing:not(:has(svg)),
+body.cambridge-speaking-safe-v15 .prep-ring:not(:has(svg)),
+body.cambridge-speaking-safe-v15 .countdown-ring:not(:has(svg)),
+body.cambridge-speaking-safe-v15 .recording-ring:not(:has(svg)){
+  border:8px solid #e0e5e9!important;
+  background:#fff!important;
+}
+
+/* Number stays upright even though SVG itself is rotated. */
+body.cambridge-speaking-safe-v15 .v15-big-number,
+body.cambridge-speaking-safe-v15 #prepNumber{
+  position:relative!important;
+  z-index:5!important;
+  color:#40546b!important;
+  font-size:48px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  letter-spacing:-.04em!important;
+  transform:none!important;
+}
+
+/* Speak / Done buttons. */
+body.cambridge-speaking-safe-v15 .v15-action{
+  min-width:128px!important;
+  min-height:42px!important;
+  padding:0 24px!important;
+  font-size:15px!important;
+  font-weight:800!important;
+  background:#35536f!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Recording label. */
+body.cambridge-speaking-safe-v15 .v15-recording{
+  margin:12px 0 18px!important;
+  font-size:16px!important;
+}
+
+/* ---------------------------------------------------------
+   REMOVE MIC DEBUG UI FROM THE PAGE
+   These are page elements only, not the browser privacy icon.
+   --------------------------------------------------------- */
+body.cambridge-speaking-safe-v15 .v15-debug-leaf,
+body.cambridge-speaking-safe-v15 .v15-mic-debug,
+body.cambridge-speaking-safe-v15 [id*="mic"][id*="level"],
+body.cambridge-speaking-safe-v15 [class*="mic"][class*="level"],
+body.cambridge-speaking-safe-v15 [id*="microphone"][id*="status"],
+body.cambridge-speaking-safe-v15 [class*="microphone"][class*="status"],
+body.cambridge-speaking-safe-v15 [data-mic-level],
+body.cambridge-speaking-safe-v15 [data-microphone-status]{
+  display:none!important;
+}
+
+/* Replay controls. */
+body.cambridge-speaking-safe-v15 audio{
+  width:100%!important;
+  height:42px!important;
+  margin:8px 0 18px!important;
+}
+
+body.cambridge-speaking-safe-v15 .v15-retry,
+body.cambridge-speaking-safe-v15 .v15-submit{
+  min-height:44px!important;
+  font-size:15px!important;
+}
+
+@media(max-width:560px){
+  body.cambridge-speaking-safe-v15 #runner,
+  body.cambridge-speaking-safe-v15 .speaking-runner,
+  body.cambridge-speaking-safe-v15 [data-attempt-id][data-part-order]{
+    padding:22px 18px 40px!important;
+  }
+
+  body.cambridge-speaking-safe-v15 .v15-task-title,
+  body.cambridge-speaking-safe-v15 .v15-answer-title{
+    font-size:17px!important;
+  }
+}

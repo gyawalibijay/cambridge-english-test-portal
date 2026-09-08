@@ -1,0 +1,53 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}Course Materials{% endblock %}
+{% block header %}Course Materials{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Learning resources</div>
+    <h1>Course materials</h1>
+    <p>Manage documents, PDFs, audio lessons, text lessons, downloads and external links.</p>
+  </div>
+
+  <a class="pv2-btn pv2-btn-primary" href="{% url 'academy_management:material_create' %}">
+    + Add Material
+  </a>
+</div>
+
+<div class="pv2-card pv2-panel pv2-table-scroll">
+  <table class="pv2-admin-table">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Course</th>
+        <th>Skill</th>
+        <th>Type</th>
+        <th>Published</th>
+        <th>File</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for material in materials %}
+      <tr>
+        <td><strong>{{ material.title }}</strong></td>
+        <td>{{ material.course.title }}<br><span style="color:var(--pv2-muted)">{{ material.course.program.short_name|default:material.course.program.name }}</span></td>
+        <td>{{ material.get_skill_display }}</td>
+        <td>{{ material.get_material_type_display }}</td>
+        <td>{% if material.is_published %}<span class="pv2-status good">Published</span>{% else %}<span class="pv2-status">Draft</span>{% endif %}</td>
+        <td>
+          {% if material.file %}<a href="{{ material.file.url }}" target="_blank">Open</a>
+          {% elif material.audio_file %}<a href="{{ material.audio_file.url }}" target="_blank">Audio</a>
+          {% elif material.external_url %}<a href="{{ material.external_url }}" target="_blank">Link</a>
+          {% else %}Text{% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6">No course materials yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

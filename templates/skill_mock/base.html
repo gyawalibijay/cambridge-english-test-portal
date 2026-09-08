@@ -1,0 +1,27 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>{% block title %}Mock Test{% endblock %} | Cambridge English Test</title>
+  <link rel="stylesheet" href="{% static 'css/practice-reference.css' %}">
+  <link rel="stylesheet" href="{% static 'css/mobile-bottom-nav.css' %}">
+  <link rel="stylesheet" href="{% static 'css/practice-mock-blue-v29.css' %}?v=20260905-teal-v30-1">
+</head>
+<body class="skill-mock-page">
+<main class="practice-ref-page">
+  <section class="practice-ref-panel">
+    <header class="practice-ref-header">
+      <a class="practice-ref-back" href="{% block back %}{% url 'student_mock_tests' %}{% endblock %}" aria-label="Back">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg>
+      </a>
+      <span>{% block heading %}Mock Test{% endblock %}</span>
+    </header>
+    {% block content %}{% endblock %}
+  </section>
+</main>
+{% include 'student_final/_mobile_nav.html' with active='mock' %}
+</body>
+</html>

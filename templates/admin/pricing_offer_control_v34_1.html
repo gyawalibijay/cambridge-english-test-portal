@@ -1,0 +1,95 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<style>
+.b1-offer-admin{max-width:980px;margin:0 auto}
+.b1-offer-hero{padding:28px;border-radius:18px;background:linear-gradient(135deg,#08244d,#12467e);color:#fff;box-shadow:0 16px 36px rgba(11,35,77,.12)}
+.b1-offer-hero small{display:block;margin-bottom:8px;color:#71eee8;font-size:10px;font-weight:900;letter-spacing:.13em}
+.b1-offer-hero h1{margin:0!important;color:#fff!important;font-size:31px!important}
+.b1-offer-hero p{max-width:680px;margin:9px 0 0;color:#dbe8f7;font-size:13px;line-height:1.6}
+.b1-offer-status{display:inline-flex;align-items:center;gap:7px;margin-top:15px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.11);font-size:11px;font-weight:800}
+.b1-offer-status:before{content:"";width:8px;height:8px;border-radius:50%;background:{% if offer.active %}#35dca7{% else %}#ff7b8a{% endif %}}
+.b1-offer-grid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:18px;margin-top:18px}
+.b1-offer-panel{padding:22px;border:1px solid #dce5f2;border-radius:15px;background:#fff}
+.b1-offer-panel h2{margin:0 0 16px!important;color:#173761!important;font-size:18px!important}
+.b1-offer-field{margin-bottom:17px}
+.b1-offer-field label{display:block;margin-bottom:7px;color:#29466d;font-size:12px;font-weight:800}
+.b1-offer-field input{box-sizing:border-box;width:100%;min-height:46px;padding:10px 12px;border:1px solid #cad7e8;border-radius:10px;color:#18345e;font-size:13px}
+.b1-offer-check{display:flex;align-items:center;gap:9px;padding:12px;border-radius:10px;background:#f6f8fc;color:#344f73;font-size:12px;font-weight:700}
+.b1-offer-check input{width:18px;height:18px}
+.b1-offer-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.b1-offer-actions button{min-height:40px;padding:8px 13px;border:0;border-radius:9px;cursor:pointer;font-size:11px;font-weight:850}
+.b1-offer-actions .primary{background:#285cf5;color:#fff}
+.b1-offer-actions .reset{background:#0d365f;color:#fff}
+.b1-offer-actions .muted{background:#eef2f7;color:#526680}
+.b1-offer-panel dl{margin:0}
+.b1-offer-panel dt{margin-top:13px;color:#8592a5;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.b1-offer-panel dt:first-child{margin-top:0}
+.b1-offer-panel dd{margin:4px 0 0;color:#1e3b63;font-size:13px;font-weight:750;line-height:1.45}
+.b1-offer-note{margin-top:17px;padding:13px;border-radius:10px;background:#f1f6ff;color:#536986;font-size:11px;line-height:1.55}
+@media(max-width:850px){.b1-offer-grid{grid-template-columns:1fr}}
+</style>
+
+<div class="b1-offer-admin">
+  <section class="b1-offer-hero">
+    <small>LANDING PAGE · PRICING</small>
+    <h1>Limited-time offer control</h1>
+    <p>
+      Set the exact deadline shown in the landing-page pricing section.
+      The countdown is shared by every visitor and does not restart on refresh.
+    </p>
+    <span class="b1-offer-status">
+      {% if offer.active %}Offer live{% elif config.enabled %}Offer expired{% else %}Offer disabled{% endif %}
+    </span>
+  </section>
+
+  <div class="b1-offer-grid">
+    <form method="post" class="b1-offer-panel">
+      {% csrf_token %}
+      <h2>Offer settings</h2>
+
+      <div class="b1-offer-field">
+        <label for="id_label">Offer label</label>
+        <input id="id_label" type="text" name="label" value="{{ config.label }}">
+      </div>
+
+      <div class="b1-offer-field">
+        <label for="id_ends_at">Offer ends at</label>
+        <input id="id_ends_at" type="datetime-local" name="ends_at" value="{{ ends_input }}" required>
+      </div>
+
+      <label class="b1-offer-check">
+        <input type="checkbox" name="enabled" {% if config.enabled %}checked{% endif %}>
+        Show countdown on the landing page
+      </label>
+
+      <div class="b1-offer-actions">
+        <button class="primary" type="submit" name="action" value="save">Save timer</button>
+        <button class="reset" type="submit" name="action" value="reset5">Reset to 5 days</button>
+        {% if config.enabled %}
+          <button class="muted" type="submit" name="action" value="disable">Disable</button>
+        {% else %}
+          <button class="muted" type="submit" name="action" value="enable">Enable</button>
+        {% endif %}
+      </div>
+    </form>
+
+    <aside class="b1-offer-panel">
+      <h2>Current status</h2>
+      <dl>
+        <dt>Countdown</dt>
+        <dd>{% if offer.active %}Live{% elif config.enabled %}Expired{% else %}Disabled{% endif %}</dd>
+        <dt>Ends</dt>
+        <dd>{{ offer.ends_display|default:"Not set" }}</dd>
+        <dt>Public section</dt>
+        <dd>Clear Pricing · Cambridge B1 plans</dd>
+      </dl>
+
+      <div class="b1-offer-note">
+        <strong>Quick option:</strong> “Reset to 5 days” immediately starts a new
+        five-day campaign. Use “Save timer” for a specific deadline.
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

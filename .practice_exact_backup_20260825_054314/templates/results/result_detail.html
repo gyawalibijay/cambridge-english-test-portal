@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Practice Report | English Mock Portal{% endblock %}
+
+{% block content %}
+<style>
+@media print {
+  header, nav, .no-print { display: none !important; }
+  body { background: white !important; }
+  .print-card { break-inside: avoid; box-shadow: none !important; }
+}
+</style>
+
+<section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+
+  <div class="rounded-3xl bg-slate-950 p-7 text-white shadow-xl sm:p-9">
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+
+      <div>
+        <div class="text-xs font-bold uppercase tracking-[0.18em] text-amber-300">Practice Report</div>
+        <h1 class="mt-2 text-3xl font-bold">{{ attempt.mock_test.title }}</h1>
+        <div class="mt-3 text-sm text-slate-300">
+          {{ attempt.mock_test.program.name }} · {{ attempt.started_at|date:"M j, Y · g:i A" }}
+        </div>
+      </div>
+
+      {% if overall_percentage != None %}
+      <div class="rounded-2xl border border-white/10 bg-white/5 px-6 py-4 text-center">
+        <div class="text-xs uppercase tracking-wider text-slate-400">Scored items</div>
+        <div class="mt-1 text-4xl font-black text-amber-300">{{ overall_percentage }}%</div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  {% if pending_count %}
+  <div class="mt-6 rounded-2xl border border-blue-200 bg-blue-50 p-5 text-sm text-blue-800">
+    {{ pending_count }} response{{ pending_count|pluralize }} still being analysed.
+    Refresh later for completed feedback.
+  </div>
+  {% endif %}
+
+  <div class="mt-8 space-y-5">
+    {% for item in items %}
+    <article class="print-card rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-7">
+
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-wider text-amber-700">
+            {{ item.skill_label }} · {{ item.part.title }}
+          </div>
+          <div class="mt-2 font-bold leading-7 text-slate-950">
+            {{ item.question.prompt_text }}
+          </div>
+        </div>
+
+        {% if item.pending %}
+        <div class="rounded-full bg-blue-50 px-4 py-2 text-xs font-bold text-blue-700">
+          Processing
+        </div>
+        {% elif item.percent != None %}
+        <div class="rounded-full bg-slate-950 px-4 py-2 text-sm font-bold text-white">
+          {{ item.percent }}%
+        </div>
+        {% elif item.feedback.status == "no_speech" %}
+        <div class="rounded-full bg-amber-50 px-4 py-2 text-xs font-bold text-amber-800">
+          No clear speech
+        </div>
+        {% endif %}
+      </div>
+
+      {% if item.response.audio_response %}
+      <div class="mt-5">
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Recording</div>
+        <audio controls class="mt-2 w-full" src="{{ item.response.audio_response.url }}"></audio>
+      </div>
+      {% endif %}
+
+      {% if item.response.text_response %}
+      <div class="mt-5">
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">
+          {% if item.skill == "speaking" %}Transcript{% else %}Response{% endif %}
+        </div>
+        <div class="mt-2 whitespace-pre-line rounded-2xl bg-slate-50 p-5 text-sm leading-7 text-slate-700">
+          {{ item.response.text_response }}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if item.feedback.score_total != None %}
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+
+        {% if item.skill == "speaking" %}
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Task</div><strong>{{ item.feedback.task_response }}/25</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Language</div><strong>{{ item.feedback.language_control }}/20</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Vocabulary</div><strong>{{ item.feedback.vocabulary }}/20</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Fluency</div><strong>{{ item.feedback.fluency }}/20</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Intelligibility</div><strong>{{ item.feedback.intelligibility_proxy }}/15</strong></div>
+
+        {% elif item.skill == "writing" %}
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Task</div><strong>{{ item.feedback.task_completion }}/30</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Organization</div><strong>{{ item.feedback.organization }}/20</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Language</div><strong>{{ item.feedback.language_control }}/25</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Vocabulary</div><strong>{{ item.feedback.vocabulary }}/15</strong></div>
+        <div class="rounded-xl bg-slate-50 p-4"><div class="text-xs text-slate-400">Mechanics</div><strong>{{ item.feedback.mechanics }}/10</strong></div>
+        {% endif %}
+
+      </div>
+
+      {% if item.feedback.cefr_estimate %}
+      <div class="mt-5 inline-flex rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-bold text-amber-900">
+        Practice CEFR estimate: {{ item.feedback.cefr_estimate }}
+      </div>
+      {% endif %}
+
+      {% if item.feedback.strengths %}
+      <div class="mt-5">
+        <div class="font-bold text-slate-950">Strengths</div>
+        <ul class="mt-2 space-y-2 text-sm leading-6 text-slate-600">
+          {% for value in item.feedback.strengths %}
+          <li>✓ {{ value }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if item.feedback.improvements %}
+      <div class="mt-5">
+        <div class="font-bold text-slate-950">Improve next</div>
+        <ul class="mt-2 space-y-2 text-sm leading-6 text-slate-600">
+          {% for value in item.feedback.improvements %}
+          <li>→ {{ value }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+      {% endif %}
+
+      {% if item.response.feedback %}
+      <div class="mt-5 rounded-2xl border border-teal-200 bg-teal-50 p-5">
+        <div class="text-xs font-bold uppercase tracking-wider text-teal-700">Evaluator feedback</div>
+        <div class="mt-2 text-sm leading-7 text-teal-950">{{ item.response.feedback }}</div>
+      </div>
+      {% endif %}
+
+    </article>
+    {% empty %}
+    <div class="rounded-2xl border border-slate-200 bg-white p-10 text-center text-slate-500">
+      No submitted responses are available for this attempt.
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="no-print mt-8 flex flex-wrap gap-3">
+    <a href="{% url 'results:list' %}" class="btn-secondary">All Results</a>
+    <a href="{% url 'dashboard' %}" class="btn-secondary">Dashboard</a>
+    <button type="button" onclick="window.print()" class="btn-primary">Print Report</button>
+  </div>
+
+  <div class="mt-8 text-xs leading-5 text-slate-400">
+    Practice estimates are not official Cambridge/IELTS scores, visa decisions or qualified-examiner assessments.
+  </div>
+
+</section>
+{% endblock %}

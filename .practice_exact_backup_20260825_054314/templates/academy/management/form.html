@@ -1,0 +1,44 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block header %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Content management</div>
+    <h1>{{ title }}</h1>
+    <p>{{ subtitle }}</p>
+  </div>
+</div>
+
+<form method="post" enctype="multipart/form-data" class="pv2-card pv2-panel pv2-mgmt-form">
+  {% csrf_token %}
+
+  {% if form.non_field_errors %}
+  <div class="pv2-error">{{ form.non_field_errors|striptags }}</div>
+  {% endif %}
+
+  <div class="pv2-form-grid">
+    {% for field in form %}
+    <div class="pv2-field {% if field.field.widget.input_type == 'textarea' %}full{% endif %}">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+
+      {% if field.help_text %}
+      <div style="font-size:.67rem;color:var(--pv2-muted);line-height:1.5">{{ field.help_text }}</div>
+      {% endif %}
+
+      {% if field.errors %}
+      <div class="pv2-field-error">{{ field.errors|striptags }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:22px">
+    <button class="pv2-btn pv2-btn-primary" type="submit">{{ submit_label }}</button>
+    <a class="pv2-btn pv2-btn-outline" href="javascript:history.back()">Cancel</a>
+  </div>
+</form>
+{% endblock %}

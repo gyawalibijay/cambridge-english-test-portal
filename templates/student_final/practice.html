@@ -1,0 +1,44 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Practice | Arya Academy{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">PRACTICE</div>
+  <h1>Practice</h1>
+  <p>Build confidence one skill at a time.</p>
+</section>
+
+<section class="sf-two-grid sf-skill-grid">
+  {% for key, stat in skill_stats.items %}
+  <article class="sf-skill-card">
+    <div class="sf-skill-title-row">
+      <div class="sf-action-icon">
+        {% if key == 'reading' %}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3.4-.9 6-.2 8 1.5v12c-2-1.7-4.6-2.4-8-1.5Z"></path><path d="M20 5.5c-3.4-.9-6-.2-8 1.5v12c2-1.7 4.6-2.4 8-1.5Z"></path></svg>
+        {% elif key == 'writing' %}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5.5 4 4M5 19l2.2-5.2L16.8 4.2a1.7 1.7 0 0 1 2.4 0l.6.6a1.7 1.7 0 0 1 0 2.4l-9.6 9.6L5 19Z"></path><path d="M13 19H5"></path></svg>
+        {% elif key == 'listening' %}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 13v-2a7.5 7.5 0 0 1 15 0v2"></path><path d="M4.5 12.5h2.8v6H6a1.5 1.5 0 0 1-1.5-1.5ZM19.5 12.5h-2.8v6H18a1.5 1.5 0 0 0 1.5-1.5Z"></path></svg>
+        {% else %}
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6"></path></svg>
+        {% endif %}
+      </div>
+      <div>
+        <h2>{{ stat.label }}</h2>
+        <p>{% if key == 'reading' %}Read smarter. Improve comprehension.{% elif key == 'writing' %}Build accurate, confident writing.{% elif key == 'listening' %}Train your understanding of spoken English.{% else %}Improve fluency, pronunciation and confidence.{% endif %}</p>
+      </div>
+    </div>
+
+    <div class="sf-card-progress-head"><span>PROGRESS</span><strong>{{ stat.progress|floatformat:0 }}%</strong></div>
+    <div class="sf-progress"><span style="width:{{ stat.progress }}%"></span></div>
+
+    <div class="sf-skill-metrics">
+      <div><small>COMPLETED</small><strong>{{ stat.completed }}/{{ stat.target }}</strong></div>
+      <div><small>ACCURACY</small><strong>{{ stat.accuracy|floatformat:0 }}%</strong></div>
+    </div>
+
+    <div class="sf-recommend"><small>RECOMMENDED</small><strong>{{ stat.recommended }}</strong></div>
+    <a class="sf-primary" href="/practice/{{ key }}/">Start {{ stat.label }} <span>→</span></a>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

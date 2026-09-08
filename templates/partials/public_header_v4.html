@@ -1,0 +1,42 @@
+{% load static website_tags %}
+{% public_site_settings as portal_site %}
+{% public_program_links as portal_programs %}
+<header class="pub4-header up-public-header" data-public-header>
+  <div class="pub4-nav-wrap">
+    <a class="pub4-logo up-brand" href="{% url 'website:home' %}" aria-label="Arya Academy home">
+      <img class="up-brand-image" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+    </a>
+
+    <nav class="pub4-nav up-nav" data-public-menu aria-label="Public navigation">
+      <a href="{% url 'website:home' %}">Home</a>
+      <div class="up-nav-programs">
+        <a href="{% url 'website:home' %}#programs">Programs</a>
+        <div class="up-nav-dropdown">
+          {% for item in portal_programs %}
+            {% if item.program_key == 'cambridge-english' %}
+              <a href="{% url 'website:cambridge_landing' %}">{{ item.short_label }}</a>
+            {% elif item.program_key == 'ielts' %}
+              <a href="{% url 'website:ielts_landing' %}">{{ item.short_label }}</a>
+            {% elif item.program_key == 'uk-interview' %}
+              <a href="{% url 'website:uk_interview_landing' %}">{{ item.short_label }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <a href="{% url 'website:how_it_works' %}">How it works</a>
+      <a href="{% url 'website:contact' %}">Contact</a>
+    </nav>
+
+    <div class="pub4-actions up-nav-actions">
+      {% if request.user.is_authenticated %}
+        <a class="pub4-btn ghost" href="{% url 'dashboard' %}">Dashboard</a>
+      {% else %}
+        <a class="pub4-signin" href="{% url 'login' %}">Sign in</a>
+        <a class="pub4-btn primary" href="{% url 'signup' %}">Get started <span>→</span></a>
+      {% endif %}
+      <button class="pub4-mobile-toggle" type="button" data-public-menu-toggle aria-label="Open navigation" aria-expanded="false">
+        <span data-public-menu-icon>☰</span>
+      </button>
+    </div>
+  </div>
+</header>

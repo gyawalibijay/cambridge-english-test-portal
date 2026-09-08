@@ -1,0 +1,29 @@
+{% extends 'skill_mock/base.html' %}
+{% block back %}{% url 'dashboard' %}{% endblock %}
+{% block content %}
+<div class="mock-intro">
+  <h1>Choose a skill</h1>
+  <p>One complete test at a time. Your answers are saved as you go.</p>
+</div>
+{% if active_mock %}
+<div class="mock-notice" role="status">
+  <strong>{{ active_mock.mock_test.title }} in progress</strong>
+  <p>Finish your current mock before starting another skill.</p>
+  <a href="{% url 'attempts:dispatch' active_mock.pk %}">Resume your test →</a>
+</div>
+{% endif %}
+<div class="practice-ref-list">
+{% for row in rows %}
+  {% if row.available %}<a class="practice-ref-row" href="{{ row.url }}" aria-label="{{ row.action|title }} {{ row.label }} mock test">
+  {% else %}<div class="practice-ref-row mock-row-disabled" aria-disabled="true">{% endif %}
+    <span class="practice-ref-icon">{% include 'skill_mock/icon.html' with skill=row.key %}</span>
+    <span class="practice-ref-copy">
+      <span class="practice-ref-title">{{ row.label }}</span>
+      <span class="practice-ref-sub">{% if row.parts %}{{ row.parts }} parts · {{ row.questions }} questions{% else %}Questions not available yet{% endif %}</span>
+    </span>
+    <span class="practice-ref-action">{% if active_mock and not row.available %}WAIT{% else %}{{ row.action }}{% endif %}</span>
+  {% if row.available %}</a>{% else %}</div>{% endif %}
+{% endfor %}
+</div>
+<p class="mock-footnote">Original preparation exercises. These are not official Cambridge exams or scores.</p>
+{% endblock %}

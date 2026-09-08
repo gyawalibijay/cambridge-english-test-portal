@@ -1,0 +1,950 @@
+<link rel="stylesheet" href="{% static 'css/speaking-timer-reference-v7.css' %}">
+{% load static %}
+{% extends "base.html" %}
+
+{% block title %}Cambridge Speaking | English Mock Portal{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-3xl px-3 py-5 sm:px-6 sm:py-8 lg:px-8">
+
+  <div
+    id="runner"
+    class="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-xl"
+    data-submit-url="{% url 'attempts:submit_speaking_response' attempt.id item.id %}"
+    data-prep="{{ preparation_seconds|default:0 }}"
+    data-response="{% if response_seconds != None %}{{ response_seconds }}{% endif %}"
+    data-minimum="{% if minimum_response_seconds != None %}{{ minimum_response_seconds }}{% else %}0{% endif %}"
+    data-part-order="{{ item.part.order }}"
+    data-audio-url="{{ prompt_audio_url }}"
+    data-attempt-id="{{ attempt.id }}"
+    data-section-seconds="{{ item.part.section.duration_seconds|default:720 }}"
+    data-started-at="{{ attempt.started_at|date:'c' }}"
+    data-question-visible="{% if item.part.question_visible %}1{% else %}0{% endif %}"
+  >
+
+    <!-- Compact top bar inspired by the supplied reference video -->
+    <div class="border-b border-slate-100 bg-white px-4 py-4 sm:px-6">
+
+      <div class="flex items-center justify-between gap-4">
+
+        <div>
+          <div class="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+            Speaking
+          </div>
+          <div class="mt-1 text-sm font-bold text-slate-950">
+            {{ item.part.title }}
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 text-sm font-semibold text-slate-600">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="9" stroke-width="1.8"></circle>
+            <path d="M12 7v5l3 2" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+          <span id="sessionTimer">--:--</span>
+        </div>
+
+      </div>
+
+      <div class="mt-4 flex items-center gap-3">
+
+        <div class="rounded-full bg-teal-50 px-3 py-1 text-xs font-bold text-teal-700">
+          {{ part_position }}/{{ part_total }}
+        </div>
+
+        <div class="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+          <div
+            class="h-full rounded-full bg-teal-500 transition-all duration-500"
+            style="width: {% widthratio part_position part_total 100 %}%"
+          ></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="px-4 py-6 sm:px-8 sm:py-8">
+
+      <!-- Prompt phase -->
+      <div id="promptPanel">
+
+        {% if item.part.question_visible %}
+        <div class="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+          <div class="text-xs font-bold uppercase tracking-wider text-slate-400">
+            Read the task
+          </div>
+          <div class="mt-2 whitespace-pre-line text-base font-semibold leading-7 text-slate-950">
+            {{ item.question.prompt_text }}
+          </div>
+        </div>
+        {% else %}
+        <div class="mb-5 text-center">
+          <div class="text-sm font-semibold text-slate-600">
+            Listen and answer the question
+          </div>
+          <div class="mt-1 text-xs text-slate-400">
+            The written question is hidden for this part.
+          </div>
+        </div>
+        {% endif %}
+
+
+        {% if not item.part.question_visible %}
+        <button
+          id="listenButton"
+          type="button"
+          class="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-800 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M8 9v6M12 7v10M16 10v4" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <span id="listenButtonText">Listen</span>
+        </button>
+        {% else %}
+        <button
+          id="listenButton"
+          type="button"
+          class="hidden"
+        >Continue</button>
+        {% endif %}
+
+        <div class="mt-8 border-t border-slate-100 pt-6">
+
+          <div class="text-sm font-semibold text-slate-700">
+            Now record your answer
+          </div>
+
+          <div id="micStatus" class="mt-2 flex items-center gap-2 text-xs text-slate-400">
+            <span id="micDot" class="h-2 w-2 rounded-full bg-slate-300"></span>
+            <span id="micStatusText">Microphone will be checked before recording.</span>
+          </div>
+
+          <div class="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100">
+            <div
+              id="micLevel"
+              class="h-full w-0 rounded-full bg-teal-500 transition-[width] duration-100"
+            ></div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- Preparation phase -->
+      <div id="preparePanel" class="hidden text-center">
+
+        <div class="text-sm font-semibold text-slate-600">
+          Start speaking in
+        </div>
+
+        <div class="mt-7 flex justify-center">
+          <div
+            id="prepRing"
+            class="relative flex h-36 w-36 items-center justify-center rounded-full"
+            style="background: conic-gradient(#14b8a6 0deg, #e2e8f0 0deg);"
+          >
+            <div class="absolute inset-[10px] rounded-full bg-white"></div>
+            <div id="prepNumber" class="relative text-5xl font-black text-slate-900">4</div>
+          </div>
+        </div>
+
+        <div class="mx-auto mt-6 max-w-md text-sm leading-6 text-slate-500">
+          Prepare your first sentence. Recording starts automatically.
+        </div>
+
+      </div>
+
+
+      <!-- Recording phase -->
+      <div id="recordPanel" class="hidden text-center">
+
+        <div class="text-sm font-semibold text-slate-600">
+          You have <strong>{{ response_seconds|default:10 }} seconds</strong> to answer
+        </div>
+
+        <div class="mt-7 flex justify-center">
+          <div
+            id="recordRing"
+            class="relative flex h-40 w-40 items-center justify-center rounded-full"
+            style="background: conic-gradient(#ef4444 0deg, #e2e8f0 0deg);"
+          >
+            <div class="absolute inset-[10px] rounded-full bg-white"></div>
+            <div class="relative">
+              <div id="recordNumber" class="text-5xl font-black text-slate-900">
+                {{ response_seconds|default:10 }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 flex items-center justify-center gap-2 text-sm font-semibold text-red-600">
+          <span class="h-2.5 w-2.5 animate-pulse rounded-full bg-red-500"></span>
+          Recording
+        </div>
+
+        <div class="mx-auto mt-4 max-w-sm">
+          <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+            <div
+              id="recordLevel"
+              class="h-full w-0 rounded-full bg-red-500 transition-[width] duration-100"
+            ></div>
+          </div>
+          <div class="mt-2 text-xs text-slate-400">
+            Live microphone level
+          </div>
+        </div>
+
+        <button
+          id="doneButton"
+          type="button"
+          class="mt-7 rounded-xl bg-slate-800 px-8 py-3 text-sm font-bold text-white transition hover:bg-slate-900"
+        >
+          Done
+        </button>
+
+      </div>
+
+
+      <!-- Review phase -->
+      <div id="reviewPanel" class="hidden">
+
+        <div class="text-center">
+          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-50 text-teal-600">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="m5 12 4 4L19 6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <div class="mt-4 text-lg font-bold text-slate-950">
+            Thanks for your answer
+          </div>
+          <div class="mt-1 text-sm text-slate-500">
+            Replay your recording before submitting it.
+          </div>
+        </div>
+
+        <div class="mt-7 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+
+          <div class="flex items-center justify-between gap-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400">
+              Your answer
+            </div>
+            <div id="recordedDuration" class="text-xs font-semibold text-slate-500">
+              00:00
+            </div>
+          </div>
+
+          <audio
+            id="answerPlayback"
+            class="mt-4 w-full"
+            controls
+            preload="metadata"
+          ></audio>
+
+          <div id="audioQualityHint" class="mt-3 text-xs leading-5 text-slate-500">
+            Listen once to confirm your voice is clear enough before submitting.
+          </div>
+
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3">
+
+          <button
+            id="retryButton"
+            type="button"
+            class="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition hover:bg-slate-50"
+          >
+            Retry
+          </button>
+
+          <button
+            id="submitButton"
+            type="button"
+            class="rounded-xl bg-slate-800 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            Submit
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- Saving phase -->
+      <div id="savingPanel" class="hidden py-10 text-center">
+
+        <div class="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-teal-500"></div>
+
+        <div class="mt-5 text-lg font-bold text-slate-950">
+          Saving your answer
+        </div>
+
+        <div class="mt-2 text-sm text-slate-500">
+          Your selected recording is being uploaded securely.
+        </div>
+
+      </div>
+
+
+      <!-- Final completion phase -->
+      <div id="finishPanel" class="hidden py-6 text-center">
+
+        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal-50 text-teal-600">
+          <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="m5 12 4 4L19 6" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+
+        <div class="mt-5 text-2xl font-bold text-slate-950">
+          Speaking practice completed
+        </div>
+
+        <div class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+          Your answers have been submitted. Local AI grading may still be processing in the background.
+        </div>
+
+        <a
+          id="viewResultButton"
+          href="#"
+          class="mt-7 inline-flex min-w-[220px] items-center justify-center gap-2 rounded-xl bg-slate-900 px-7 py-3.5 text-sm font-bold text-white transition hover:bg-slate-800"
+        >
+          View Result
+          <span aria-hidden="true">→</span>
+        </a>
+
+        <a
+          href="/dashboard/"
+          class="mt-3 block text-sm font-semibold text-slate-500 hover:text-slate-900"
+        >
+          Return to Dashboard
+        </a>
+
+      </div>
+
+
+      <div
+        id="errorBox"
+        class="mt-6 hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700"
+      ></div>
+
+    </div>
+
+  </div>
+
+  <div class="mt-4 text-center text-xs leading-5 text-slate-400">
+    For the current development build, browser text-to-speech is used only when a recorded question-audio file has not yet been uploaded.
+  </div>
+
+</section>
+
+{{ item.question.prompt_text|json_script:"hidden-question-prompt" }}
+
+<script>
+(() => {
+  const runner = document.getElementById('runner');
+
+  const listenButton = document.getElementById('listenButton');
+  const listenButtonText = document.getElementById('listenButtonText');
+
+  const promptPanel = document.getElementById('promptPanel');
+  const preparePanel = document.getElementById('preparePanel');
+  const recordPanel = document.getElementById('recordPanel');
+  const reviewPanel = document.getElementById('reviewPanel');
+  const savingPanel = document.getElementById('savingPanel');
+  const finishPanel = document.getElementById('finishPanel');
+  const viewResultButton = document.getElementById('viewResultButton');
+
+  const prepRing = document.getElementById('prepRing');
+  const prepNumber = document.getElementById('prepNumber');
+
+  const recordRing = document.getElementById('recordRing');
+  const recordNumber = document.getElementById('recordNumber');
+
+  const micDot = document.getElementById('micDot');
+  const micStatusText = document.getElementById('micStatusText');
+  const micLevel = document.getElementById('micLevel');
+  const recordLevel = document.getElementById('recordLevel');
+
+  const doneButton = document.getElementById('doneButton');
+  const retryButton = document.getElementById('retryButton');
+  const submitButton = document.getElementById('submitButton');
+
+  const answerPlayback = document.getElementById('answerPlayback');
+  const recordedDuration = document.getElementById('recordedDuration');
+  const audioQualityHint = document.getElementById('audioQualityHint');
+
+  const errorBox = document.getElementById('errorBox');
+  const sessionTimer = document.getElementById('sessionTimer');
+
+  const prepSeconds = Number(runner.dataset.prep || 0);
+  const fixedResponseSeconds = Number(runner.dataset.response || 0);
+  const minimumSeconds = Number(runner.dataset.minimum || 0);
+  const partOrder = Number(runner.dataset.partOrder || 1);
+  const responseSeconds = fixedResponseSeconds || (minimumSeconds ? 120 : 10);
+  const audioUrl = runner.dataset.audioUrl || '';
+  const submitUrl = runner.dataset.submitUrl;
+  const attemptId = runner.dataset.attemptId;
+  const sectionSeconds = Number(runner.dataset.sectionSeconds || 720);
+  const startedAtRaw = runner.dataset.startedAt;
+  const questionVisible = runner.dataset.questionVisible === '1';
+
+  const promptText = JSON.parse(
+    document.getElementById('hidden-question-prompt').textContent
+  );
+
+  let stream = null;
+  let recorder = null;
+  let chunks = [];
+  let recordedBlob = null;
+  let recordedUrl = null;
+  let recordingStartedAt = 0;
+  let actualDuration = 0;
+  let currentPhase = 'ready';
+  let stopRequested = false;
+
+  let audioContext = null;
+  let analyser = null;
+  let levelFrame = null;
+
+  function csrfToken() {
+    const cookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('csrftoken='));
+
+    return cookie
+      ? decodeURIComponent(cookie.split('=')[1])
+      : '';
+  }
+
+  function showError(message) {
+    errorBox.textContent = message;
+    errorBox.classList.remove('hidden');
+  }
+
+  function clearError() {
+    errorBox.classList.add('hidden');
+    errorBox.textContent = '';
+  }
+
+  function showOnly(panel) {
+    [
+      promptPanel,
+      preparePanel,
+      recordPanel,
+      reviewPanel,
+      savingPanel,
+      finishPanel
+    ].forEach(el => el.classList.add('hidden'));
+
+    panel.classList.remove('hidden');
+  }
+
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function formatTime(seconds) {
+    const safe = Math.max(0, Math.round(seconds));
+    const min = Math.floor(safe / 60);
+    const sec = safe % 60;
+    return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+  }
+
+  // Session timer based on server attempt start time so it survives page changes.
+  function updateSessionTimer() {
+    let startMs = Date.parse(startedAtRaw);
+
+    if (!Number.isFinite(startMs)) {
+      const key = `speaking-start-${attemptId}`;
+      const stored = Number(localStorage.getItem(key));
+
+      if (stored) {
+        startMs = stored;
+      } else {
+        startMs = Date.now();
+        localStorage.setItem(key, String(startMs));
+      }
+    }
+
+    const elapsed = Math.max(0, (Date.now() - startMs) / 1000);
+    const remaining = Math.max(0, sectionSeconds - elapsed);
+
+    sessionTimer.textContent = formatTime(remaining);
+  }
+
+  updateSessionTimer();
+  setInterval(updateSessionTimer, 1000);
+
+
+  async function ensureMicrophone() {
+    if (stream && stream.active) {
+      return stream;
+    }
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error(
+        'Microphone recording is not supported in this browser. Use a current Chrome or Edge browser over HTTPS.'
+      );
+    }
+
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true,
+        channelCount: 1
+      }
+    });
+
+    micDot.className = 'h-2 w-2 rounded-full bg-teal-500';
+    micStatusText.textContent = 'Microphone ready';
+
+    setupLevelMeter(stream);
+
+    return stream;
+  }
+
+
+  function setupLevelMeter(mediaStream) {
+    try {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      const source = audioContext.createMediaStreamSource(mediaStream);
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 512;
+      analyser.smoothingTimeConstant = 0.75;
+
+      source.connect(analyser);
+
+      const data = new Uint8Array(analyser.frequencyBinCount);
+
+      function tick() {
+        if (!analyser) return;
+
+        analyser.getByteFrequencyData(data);
+
+        const average = data.reduce((sum, value) => sum + value, 0) / data.length;
+        const percent = Math.min(100, Math.max(2, average * 1.7));
+
+        micLevel.style.width = `${percent}%`;
+
+        if (currentPhase === 'recording') {
+          recordLevel.style.width = `${percent}%`;
+        }
+
+        levelFrame = requestAnimationFrame(tick);
+      }
+
+      if (levelFrame) cancelAnimationFrame(levelFrame);
+      tick();
+
+    } catch (error) {
+      console.warn('Microphone level meter unavailable:', error);
+    }
+  }
+
+
+  function speakPrompt() {
+    return new Promise((resolve, reject) => {
+
+      if (audioUrl) {
+        const audio = new Audio(audioUrl);
+
+        audio.onended = resolve;
+        audio.onerror = () => reject(
+          new Error('The question audio could not be played.')
+        );
+
+        audio.play().catch(reject);
+        return;
+      }
+
+      if (!('speechSynthesis' in window)) {
+        reject(
+          new Error('This browser cannot play the development voice prompt.')
+        );
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(promptText);
+      utterance.lang = 'en-GB';
+      utterance.rate = 0.92;
+
+      utterance.onend = resolve;
+      utterance.onerror = () => reject(
+        new Error('The spoken question could not be played.')
+      );
+
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+
+
+  async function runRingCountdown(seconds, ring, number, color) {
+    if (seconds <= 0) return;
+
+    for (let remaining = seconds; remaining > 0; remaining--) {
+      number.textContent = remaining;
+
+      const completed = seconds - remaining;
+      const degrees = (completed / seconds) * 360;
+
+      ring.style.background = `conic-gradient(${color} ${degrees}deg, #e2e8f0 ${degrees}deg)`;
+
+      await sleep(1000);
+    }
+
+    number.textContent = '0';
+    ring.style.background = `conic-gradient(${color} 360deg, #e2e8f0 360deg)`;
+  }
+
+
+  function releaseOldRecordingUrl() {
+    if (recordedUrl) {
+      URL.revokeObjectURL(recordedUrl);
+      recordedUrl = null;
+    }
+  }
+
+
+  async function startRecording() {
+    clearError();
+
+    const mediaStream = await ensureMicrophone();
+
+    chunks = [];
+    recordedBlob = null;
+    stopRequested = false;
+
+    let options = {
+      audioBitsPerSecond: 64000
+    };
+
+    if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+      options.mimeType = 'audio/webm;codecs=opus';
+    } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+      options.mimeType = 'audio/webm';
+    }
+
+    recorder = new MediaRecorder(mediaStream, options);
+
+    recorder.ondataavailable = event => {
+      if (event.data && event.data.size > 0) {
+        chunks.push(event.data);
+      }
+    };
+
+    const stopped = new Promise(resolve => {
+      recorder.onstop = resolve;
+    });
+
+    showOnly(recordPanel);
+    currentPhase = 'recording';
+
+    recordNumber.textContent = responseSeconds;
+    recordRing.style.background =
+      'conic-gradient(#ef4444 0deg, #e2e8f0 0deg)';
+
+    recordingStartedAt = performance.now();
+
+    recorder.start(250);
+
+    if (fixedResponseSeconds > 0) {
+      doneButton.disabled = false;
+
+      for (
+        let remaining = fixedResponseSeconds;
+        remaining > 0 && !stopRequested;
+        remaining--
+      ) {
+        recordNumber.textContent = remaining;
+
+        const completed = fixedResponseSeconds - remaining;
+        const degrees = (completed / fixedResponseSeconds) * 360;
+
+        recordRing.style.background =
+          `conic-gradient(#ef4444 ${degrees}deg, #e2e8f0 ${degrees}deg)`;
+
+        await sleep(1000);
+      }
+    } else {
+      doneButton.disabled = true;
+
+      for (
+        let elapsed = 0;
+        elapsed < responseSeconds && !stopRequested;
+        elapsed++
+      ) {
+        recordNumber.textContent = elapsed;
+
+        const degrees = Math.min(
+          360,
+          minimumSeconds ? (elapsed / minimumSeconds) * 360 : 0
+        );
+
+        recordRing.style.background =
+          `conic-gradient(#ef4444 ${degrees}deg, #e2e8f0 ${degrees}deg)`;
+
+        if (elapsed >= minimumSeconds) {
+          doneButton.disabled = false;
+        }
+
+        await sleep(1000);
+      }
+    }
+
+    if (recorder && recorder.state === 'recording') {
+      recorder.stop();
+    }
+
+    await stopped;
+
+    actualDuration = Math.min(
+      responseSeconds,
+      Math.max(
+        0.2,
+        (performance.now() - recordingStartedAt) / 1000
+      )
+    );
+
+    const mimeType = recorder.mimeType || 'audio/webm';
+
+    recordedBlob = new Blob(
+      chunks,
+      { type: mimeType }
+    );
+
+    if (!recordedBlob || recordedBlob.size < 900) {
+      throw new Error(
+        'The recording appears to be empty. Please check your microphone and try again.'
+      );
+    }
+
+    releaseOldRecordingUrl();
+
+    recordedUrl = URL.createObjectURL(recordedBlob);
+    answerPlayback.src = recordedUrl;
+
+    recordedDuration.textContent = formatTime(actualDuration);
+
+    audioQualityHint.textContent =
+      'Replay your answer. If your voice is missing, too quiet or unclear, choose Retry before submitting.';
+
+    currentPhase = 'review';
+    showOnly(reviewPanel);
+  }
+
+
+  async function beginQuestion() {
+    if (currentPhase !== 'ready') return;
+
+    clearError();
+
+    try {
+      listenButton.disabled = true;
+
+      await ensureMicrophone();
+
+      if (!questionVisible) {
+        listenButtonText.textContent = 'Playing…';
+        if (partOrder === 1 || partOrder === 2) {
+        await speakPrompt();
+      }
+        listenButtonText.textContent = 'Listened';
+      }
+
+      currentPhase = 'preparing';
+
+      if (prepSeconds > 0) {
+        showOnly(preparePanel);
+
+        prepNumber.textContent = prepSeconds;
+        prepRing.style.background =
+          'conic-gradient(#14b8a6 0deg, #e2e8f0 0deg)';
+
+        await runRingCountdown(
+          prepSeconds,
+          prepRing,
+          prepNumber,
+          '#14b8a6'
+        );
+      }
+
+      await startRecording();
+
+    } catch (error) {
+      console.error(error);
+
+      currentPhase = 'ready';
+      showOnly(promptPanel);
+
+      listenButton.disabled = false;
+
+      if (listenButtonText) {
+        listenButtonText.textContent = questionVisible
+          ? 'Continue'
+          : 'Listen';
+      }
+
+      showError(
+        error.message || 'Something went wrong. Please try again.'
+      );
+    }
+  }
+
+
+  function retryRecording() {
+    clearError();
+
+    releaseOldRecordingUrl();
+
+    answerPlayback.removeAttribute('src');
+    answerPlayback.load();
+
+    recordedBlob = null;
+    chunks = [];
+    actualDuration = 0;
+
+    currentPhase = 'ready';
+    showOnly(promptPanel);
+
+    listenButton.disabled = false;
+
+    if (listenButtonText) {
+      listenButtonText.textContent = questionVisible
+        ? 'Continue'
+        : 'Listen';
+    }
+  }
+
+
+  async function submitRecording() {
+    if (!recordedBlob) {
+      showError('Please record an answer before submitting.');
+      return;
+    }
+
+    clearError();
+
+    submitButton.disabled = true;
+    retryButton.disabled = true;
+
+    currentPhase = 'saving';
+    showOnly(savingPanel);
+
+    try {
+      const form = new FormData();
+
+      const extension = recordedBlob.type.includes('ogg')
+        ? 'ogg'
+        : 'webm';
+
+      form.append(
+        'audio',
+        recordedBlob,
+        `speaking-response.${extension}`
+      );
+
+      form.append(
+        'duration_seconds',
+        actualDuration.toFixed(2)
+      );
+
+      const response = await fetch(
+        submitUrl,
+        {
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': csrfToken()
+          },
+          body: form,
+          credentials: 'same-origin'
+        }
+      );
+
+      let data = {};
+
+      try {
+        data = await response.json();
+      } catch (error) {}
+
+      if (!response.ok || !data.ok) {
+        throw new Error(
+          data.error || 'Your recording could not be saved.'
+        );
+      }
+
+      releaseOldRecordingUrl();
+
+      const nextUrl = data.next_url || '';
+
+      if (nextUrl.includes('/complete/')) {
+        currentPhase = 'finished';
+        viewResultButton.href = nextUrl;
+        showOnly(finishPanel);
+        return;
+      }
+
+      window.location.href = nextUrl;
+
+    } catch (error) {
+      console.error(error);
+
+      currentPhase = 'review';
+      showOnly(reviewPanel);
+
+      submitButton.disabled = false;
+      retryButton.disabled = false;
+
+      showError(
+        error.message || 'The recording could not be submitted. Please try again.'
+      );
+    }
+  }
+
+
+  doneButton.addEventListener('click', () => {
+    if (
+      currentPhase === 'recording'
+      && recorder
+      && recorder.state === 'recording'
+    ) {
+      stopRequested = true;
+      recorder.stop();
+    }
+  });
+
+  listenButton.addEventListener('click', beginQuestion);
+  retryButton.addEventListener('click', retryRecording);
+  submitButton.addEventListener('click', submitRecording);
+
+  if (questionVisible) {
+    listenButton.classList.remove('hidden');
+    listenButton.className =
+      'mt-2 w-full rounded-xl bg-slate-800 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50';
+
+    listenButton.textContent = 'Start Task';
+  }
+
+  window.addEventListener('beforeunload', event => {
+    if (
+      currentPhase === 'recording'
+      || currentPhase === 'review'
+      || currentPhase === 'saving'
+    ) {
+      event.preventDefault();
+      event.returnValue = '';
+    }
+  });
+
+})();
+</script>
+
+{% endblock %}
+
+<script defer src="{% static 'js/speaking-timer-reference-v7.js' %}"></script>

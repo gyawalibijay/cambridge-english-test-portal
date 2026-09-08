@@ -1,0 +1,67 @@
+/* Cambridge B1 landing — Class Times V35.6 */
+.b1x-page .b1x-class-times-v356{
+  --ct-navy:#081d49;
+  --ct-blue:#113c95;
+  --ct-teal:#27d3c3;
+  --ct-ink:#081335;
+  --ct-copy:#5e6b83;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:76px 26px 82px!important;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(10,91,154,.13),transparent 29%),
+    radial-gradient(circle at 90% 90%,rgba(24,207,200,.12),transparent 27%),
+    linear-gradient(180deg,#fff 0%,#f5fbff 48%,#eefbfc 100%);
+}
+.b1x-page .b1x-class-times-v356:before,.b1x-page .b1x-class-times-v356:after{
+  content:"";position:absolute;z-index:-1;width:390px;height:390px;border:1px solid rgba(23,188,190,.11);border-radius:50%;pointer-events:none;
+}
+.b1x-page .b1x-class-times-v356:before{left:-250px;top:-220px;box-shadow:0 0 0 34px rgba(15,159,179,.028),0 0 0 68px rgba(15,159,179,.018)}
+.b1x-page .b1x-class-times-v356:after{right:-230px;bottom:-250px;box-shadow:0 0 0 34px rgba(15,159,179,.028),0 0 0 68px rgba(15,159,179,.018)}
+.b1x-page .b1x-class-times-v356__shell{width:min(1180px,calc(100% - 34px));margin:0 auto}
+.b1x-page .b1x-class-times-v356__head{max-width:850px;margin:0 auto 31px;text-align:center}
+.b1x-page .b1x-class-times-v356__eyebrow{display:flex;align-items:center;justify-content:center;gap:14px;margin:0 0 14px;color:#1d4fa3;font-size:12px;font-weight:850;letter-spacing:.24em;text-transform:uppercase}
+.b1x-page .b1x-class-times-v356__eyebrow:before,.b1x-page .b1x-class-times-v356__eyebrow:after{content:"";width:54px;height:1px;background:linear-gradient(90deg,#214e9a,#2dd8ca)}
+.b1x-page .b1x-class-times-v356__head h2{margin:0!important;color:var(--ct-ink)!important;font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(38px,5vw,60px)!important;font-weight:700!important;line-height:.98!important;letter-spacing:-.045em!important}
+.b1x-page .b1x-class-times-v356__head h2 span{background:linear-gradient(90deg,#143f98,#2bd2c5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.b1x-page .b1x-class-times-v356__head>p:last-child{max-width:660px;margin:13px auto 0!important;color:#5b6980!important;font-size:17px!important;line-height:1.6!important}
+
+.b1x-page .b1x-class-times-v356__board{position:relative;overflow:hidden;border:1px solid rgba(24,74,160,.14);border-radius:28px;padding:74px 25px 27px;background:rgba(255,255,255,.88);box-shadow:0 22px 55px rgba(8,29,73,.10);backdrop-filter:blur(10px)}
+.b1x-page .b1x-class-times-v356__board:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(30,220,211,.06),transparent 33%,rgba(10,91,154,.045) 75%,transparent)}
+.b1x-page .b1x-class-times-v356__badge{position:absolute;top:0;left:50%;display:inline-flex;min-width:300px;min-height:62px;align-items:center;justify-content:center;gap:14px;border-radius:0 0 24px 24px;padding:0 30px;color:#fff;background:linear-gradient(100deg,#0b2f78,#143f98 52%,#2bcfc4);box-shadow:0 13px 31px rgba(8,29,73,.22);transform:translateX(-50%)}
+.b1x-page .b1x-class-times-v356__badge svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.b1x-page .b1x-class-times-v356__badge strong{font-size:22px;font-weight:850;letter-spacing:-.025em}
+.b1x-page .b1x-class-times-v356__grid{position:relative;display:grid;grid-template-columns:1.2fr .9fr .95fr;gap:0}
+.b1x-page .b1x-class-times-v356__slot{min-width:0;padding:13px 31px 18px;text-align:center}
+.b1x-page .b1x-class-times-v356__slot+ .b1x-class-times-v356__slot{border-left:1px solid #d7e6f6}
+.b1x-page .b1x-class-times-v356__label{display:inline-flex;min-width:150px;min-height:42px;align-items:center;justify-content:center;border-radius:999px;padding:8px 22px;color:#fff;background:linear-gradient(90deg,#081d49,#143f98);font-size:15px;font-weight:850;box-shadow:0 8px 19px rgba(8,65,104,.13)}
+.b1x-page .b1x-class-times-v356__slot.is-day .b1x-class-times-v356__label{background:linear-gradient(90deg,#0f4f98,#2bcfc4)}
+.b1x-page .b1x-class-times-v356__slot.is-evening .b1x-class-times-v356__label{background:linear-gradient(90deg,#143f98,#2bcfc4)}
+.b1x-page .b1x-class-times-v356__times{display:grid;gap:11px;margin-top:19px}
+.b1x-page .b1x-class-times-v356__time{display:flex;min-height:42px;align-items:center;justify-content:center;border:1px solid #d7e4f6;border-radius:12px;padding:8px 13px;color:#102d6a;background:#fff;font-size:17px;font-weight:750;letter-spacing:-.02em;box-shadow:0 5px 13px rgba(23,74,100,.04)}
+.b1x-page .b1x-class-times-v356__note{display:flex;align-items:center;justify-content:center;gap:9px;margin:24px auto 0;color:#607174;font-size:12px;font-weight:650;text-align:center}
+.b1x-page .b1x-class-times-v356__note span{display:grid;width:23px;height:23px;place-items:center;border-radius:50%;color:#143f98;background:#dff6f3;font-size:12px;font-weight:900}
+
+@media(max-width:900px){
+  .b1x-page .b1x-class-times-v356{padding:62px 18px 66px!important}
+  .b1x-page .b1x-class-times-v356__shell{width:min(100%,720px)}
+  .b1x-page .b1x-class-times-v356__board{padding:77px 18px 20px}
+  .b1x-page .b1x-class-times-v356__grid{grid-template-columns:1fr}
+  .b1x-page .b1x-class-times-v356__slot{padding:16px 12px 20px}
+  .b1x-page .b1x-class-times-v356__slot+ .b1x-class-times-v356__slot{border-left:0;border-top:1px solid #d7e6f6}
+  .b1x-page .b1x-class-times-v356__times{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+}
+@media(max-width:540px){
+  .b1x-page .b1x-class-times-v356{padding:54px 12px 58px!important}
+  .b1x-page .b1x-class-times-v356__head{margin-bottom:24px}
+  .b1x-page .b1x-class-times-v356__eyebrow{gap:8px;font-size:9px;letter-spacing:.18em}
+  .b1x-page .b1x-class-times-v356__eyebrow:before,.b1x-page .b1x-class-times-v356__eyebrow:after{width:30px}
+  .b1x-page .b1x-class-times-v356__head h2{font-size:38px!important}
+  .b1x-page .b1x-class-times-v356__head>p:last-child{font-size:14px!important}
+  .b1x-page .b1x-class-times-v356__board{border-radius:22px;padding:68px 12px 15px}
+  .b1x-page .b1x-class-times-v356__badge{min-width:0;width:calc(100% - 36px);min-height:56px;border-radius:0 0 19px 19px;padding:0 18px}
+  .b1x-page .b1x-class-times-v356__badge strong{font-size:19px}
+  .b1x-page .b1x-class-times-v356__times{grid-template-columns:1fr}
+  .b1x-page .b1x-class-times-v356__time{font-size:16px}
+}

@@ -1,0 +1,478 @@
+/*
+ * V19 — landing-page typography, spacing and motion system.
+ * This file intentionally loads last so the long-lived visual components can
+ * share one predictable Inter-based hierarchy without changing their markup.
+ */
+.b1x-page{
+  --b1x-font-sans:"Inter","Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --b1x-display:var(--b1x-font-sans);
+  --b1x-nepali:var(--b1x-font-sans);
+  --b1x-hero-font:var(--b1x-font-sans);
+  --b1x-type-display:clamp(3rem,5vw,4rem);
+  --b1x-type-section:clamp(2.25rem,3.75vw,3rem);
+  --b1x-type-subsection:clamp(1.5rem,2.35vw,2rem);
+  --b1x-type-card:clamp(1.2rem,1.65vw,1.55rem);
+  --b1x-type-body:clamp(1rem,1.06vw,1.125rem);
+  --b1x-type-small:.875rem;
+  --b1x-type-button:clamp(.875rem,.95vw,1rem);
+  --b1x-leading-display:1.06;
+  --b1x-leading-heading:1.12;
+  --b1x-leading-body:1.58;
+  --b1x-tracking-display:-.05em;
+  --b1x-tracking-heading:-.04em;
+  --b1x-section-space:clamp(4.75rem,7vw,5.75rem);
+  --b1x-section-space-tight:clamp(3rem,5vw,4.5rem);
+  font-family:var(--b1x-font-sans);
+  font-size:16px;
+  font-synthesis:none;
+  font-optical-sizing:auto;
+  line-height:var(--b1x-leading-body);
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.b1x-page :where(button,input,select,textarea){font-family:inherit}
+.b1x-page :where(h1,h2,h3,h4,p,li,a,button,strong,small,span){font-family:inherit}
+.b1x-page :where(h1,h2,h3,h4){margin-block-start:0;text-wrap:balance}
+.b1x-page :where(p,li){text-wrap:pretty}
+.b1x-page :where(h1,h2,h3,h4,p,li,a,button){overflow-wrap:break-word}
+.b1x-page :where(section,article,header,div){min-width:0}
+.b1x-page :where(p,li){font-weight:400;line-height:var(--b1x-leading-body)}
+.b1x-page :where(strong,b){font-weight:700}
+
+.b1x-shell{width:min(calc(100% - 64px),1180px)}
+.b1x-kicker,
+.b1x-proof,
+.b1x-system-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.12em;line-height:1.35}
+
+.b1x-button,
+.b1x-header-cta,
+.b1x-login,
+.b1x-nav a,
+.b1x-instructor-cta,
+.b1x-plan-v10>a,
+.b1x-portal-plan-v10-action>a,
+.b1x-mock-showcase-action a,
+.b1x-pre-faq-cta-copy>a,
+.b1x-policy-details summary{
+  font-size:var(--b1x-type-button);
+  font-weight:700;
+  letter-spacing:-.015em;
+  line-height:1.15;
+}
+
+/* One shared heading scale for every major landing-page section. */
+.b1x-instructor-message h2,
+.b1x-system-header h2,
+.b1x-manifesto-inner h2,
+.b1x-method-intro h2,
+.b1x-editorial-head h2,
+.b1x-course-focus-head h2,
+.b1x-problem-intro h2,
+.b1x-package-head h2,
+.b1x-promise-head h2,
+.b1x-refund-copy h2,
+.b1x-continuation-card h2,
+.b1x-cycle-intro h2,
+.b1x-free-lesson-copy h2,
+.b1x-pricing-v10-head h2,
+.b1x-mock-showcase-head h2,
+.b1x-comparison h2,
+.b1x-journey-head h2,
+.b1x-program-copy h2,
+.b1x-faq-v12 .b1x-faq-title h2,
+.b1x-final-copy h2{
+  font-family:var(--b1x-font-sans);
+  font-size:var(--b1x-type-section);
+  font-weight:800;
+  letter-spacing:var(--b1x-tracking-heading);
+  line-height:var(--b1x-leading-heading);
+}
+
+.b1x-fit-card h2,
+.b1x-guidance-card h2,
+.b1x-pre-faq-cta-copy h2,
+.b1x-mid-cta-copy h2{
+  font-family:var(--b1x-font-sans);
+  font-size:clamp(2rem,3.1vw,2.75rem);
+  font-weight:800;
+  letter-spacing:var(--b1x-tracking-heading);
+  line-height:1.1;
+}
+
+.b1x-page :where(
+  .b1x-system-header>p:last-child,
+  .b1x-manifesto-inner>p:last-child,
+  .b1x-method-intro>p:last-child,
+  .b1x-editorial-head>p:last-child,
+  .b1x-course-focus-head>p:last-child,
+  .b1x-promise-head>p:last-child,
+  .b1x-problem-intro>p:last-child,
+  .b1x-package-head>p:last-child,
+  .b1x-refund-copy>p:not(.b1x-kicker),
+  .b1x-continuation-card>p:not(.b1x-kicker),
+  .b1x-cycle-intro>p:not(.b1x-kicker),
+  .b1x-free-lesson-copy>p:not(.b1x-kicker),
+  .b1x-pricing-v10-head>p:last-child,
+  .b1x-mock-showcase-head>p:last-child,
+  .b1x-program-copy>p,
+  .b1x-guidance-card>p:not(.b1x-kicker)
+){font-size:var(--b1x-type-body);line-height:var(--b1x-leading-body)}
+
+/* Compact, repeatable section rhythm. */
+.b1x-instructor-message,
+.b1x-complete-system,
+.b1x-manifesto,
+.b1x-method,
+.b1x-included,
+.b1x-course-focus,
+.b1x-portal-v8,
+.b1x-promise,
+.b1x-real-problem,
+.b1x-b1-package,
+.b1x-prep-cycle,
+.b1x-free-lesson,
+.b1x-pricing-v10,
+.b1x-mock-showcase,
+.b1x-comparison,
+.b1x-journey,
+.b1x-program{
+  padding-block:var(--b1x-section-space);
+}
+.b1x-mid-cta-section{padding-block:var(--b1x-section-space-tight)}
+.b1x-refund{padding:var(--b1x-section-space) 0 1.75rem}
+.b1x-continuation{padding:1.75rem 0 var(--b1x-section-space)}
+.b1x-fit-guidance{padding:1.5rem 0 var(--b1x-section-space)}
+.b1x-pre-faq-cta{padding:var(--b1x-section-space-tight) 0}
+.b1x-faq.b1x-faq-v12{padding:var(--b1x-section-space) 0}
+.b1x-final{padding-block:var(--b1x-section-space)}
+
+/* Header and hero. */
+.b1x-header-inner{min-height:72px}
+.b1x-brand-name{font-size:1rem;font-weight:700;letter-spacing:-.03em}
+.b1x-nav{gap:clamp(1rem,2vw,1.75rem)}
+.b1x-nav a{font-size:.875rem;font-weight:600}
+.b1x-header-cta{min-height:44px;padding-inline:1.25rem}
+
+@media (min-width:961px){
+  .b1x-hero-v5{height:clamp(620px,calc(100svh - 72px),680px);min-height:620px}
+  .b1x-hero-v5 .b1x-hero-photo{background-position:50% 0}
+  .b1x-hero-v5 .b1x-hero-content{min-height:100%;align-items:flex-start;padding-top:clamp(5.2rem,10vh,6.6rem);padding-bottom:10.5rem}
+  .b1x-hero-v5 .b1x-hero-copy{width:610px;max-width:51%}
+  .b1x-hero-v5 h1{font-size:var(--b1x-type-display)}
+  .b1x-hero-v5 .b1x-hero-features{bottom:2.75rem;left:max(32px,calc((100vw - 1180px)/2));width:min(650px,calc(53vw - 32px))}
+}
+.b1x-hero-v5 h1{
+  max-width:660px;
+  margin:0;
+  font-family:var(--b1x-font-sans);
+  font-weight:800;
+  letter-spacing:var(--b1x-tracking-display);
+  line-height:var(--b1x-leading-display);
+}
+.b1x-hero-v5 h1 span,
+.b1x-page .b1x-hero-v5 h1 em{
+  display:inline;
+  margin:0;
+  color:#fff;
+  font-family:var(--b1x-font-sans);
+  font-size:1em;
+  font-style:normal;
+  font-weight:800;
+  letter-spacing:inherit;
+  line-height:inherit;
+}
+.b1x-proof{margin-bottom:1.4rem;text-transform:none}
+.b1x-hero-lead{max-width:560px;margin-top:1.5rem;font-size:var(--b1x-type-body);font-weight:500;line-height:1.55}
+.b1x-hero-actions{margin-top:1.75rem}
+.b1x-hero-v5 .b1x-hero-features{gap:clamp(.75rem,2vw,1.5rem)}
+.b1x-hero-v5 .b1x-hero-features span{font-size:.75rem;font-weight:600;line-height:1.3}
+
+/* Cards use the same compact typographic hierarchy. */
+.b1x-system-card h3,
+.b1x-method-steps article h3,
+.b1x-included-grid article h3,
+.b1x-portal-feature-grid h3,
+.b1x-promise-grid h3,
+.b1x-package-card h3,
+.b1x-cycle-card h3,
+.b1x-mock-showcase-card h3,
+.b1x-compare-grid h3,
+.b1x-plan-v10 h3,
+.b1x-portal-plan-v10 h3{
+  font-size:var(--b1x-type-card);
+  font-weight:700;
+  letter-spacing:-.03em;
+  line-height:1.18;
+}
+.b1x-system-card p,
+.b1x-method-steps article p,
+.b1x-included-grid article p,
+.b1x-portal-feature-grid p,
+.b1x-promise-grid p,
+.b1x-package-card>p,
+.b1x-cycle-card p,
+.b1x-mock-showcase-card p,
+.b1x-compare-grid p{
+  font-size:clamp(.9375rem,1vw,1rem);
+  line-height:1.6;
+}
+
+.b1x-system-cards,
+.b1x-promise-grid,
+.b1x-package-grid,
+.b1x-mock-showcase-grid{margin-top:clamp(2.5rem,4vw,3.5rem)}
+.b1x-editorial-head{margin-bottom:clamp(2.5rem,4vw,3.5rem)}
+
+/* Keep every bento card in normal document flow to prevent collisions. */
+.b1x-included-grid{
+  grid-template-rows:repeat(2,minmax(300px,auto));
+  gap:1.125rem;
+}
+.b1x-included-grid article{padding:2rem}
+.b1x-included-live{display:flex;flex-direction:column}
+.b1x-included-live h3{margin-top:2rem!important;font-size:clamp(2rem,3vw,2.75rem)!important;line-height:1.1!important}
+.b1x-included-live p{font-size:1rem!important;line-height:1.6!important}
+.b1x-included-live ul{position:relative;right:auto;bottom:auto;left:auto;margin-top:auto;padding-top:1.75rem}
+.b1x-included-feedback{display:flex;flex-direction:column}
+.b1x-included-feedback p{position:relative;right:auto;bottom:auto;left:auto;margin-top:auto!important;padding-top:1.5rem}
+.b1x-included-number>strong{font-weight:800}
+.b1x-included-progress>div:first-child strong{font-size:clamp(2rem,3.1vw,3rem);font-weight:700;line-height:1.05}
+
+.b1x-course-focus-stage{min-height:560px;margin-top:clamp(2.5rem,4vw,3.5rem)}
+.b1x-course-coach-copy h3{font-size:clamp(1.45rem,2.25vw,2rem);font-weight:700;letter-spacing:-.035em;line-height:1.15}
+.b1x-course-stats strong{font-weight:700}
+.b1x-course-accordion summary{font-size:.9375rem;font-weight:600;line-height:1.35}
+
+.b1x-portal-head-v8{margin-bottom:3.25rem}
+.b1x-portal-feature-grid{margin-top:3rem}
+.b1x-portal-feature-grid article{min-height:170px;padding:1.75rem}
+
+.b1x-promise-grid article{min-height:260px;padding:1.875rem}
+.b1x-promise-badge strong{font-weight:800}
+
+/* Preserve the sticky problem animation with a readable, smaller scale. */
+.b1x-problem-layout{gap:clamp(2.75rem,5vw,4.5rem)}
+.b1x-problem-intro h2 span{font-family:inherit;font-size:1em;letter-spacing:inherit}
+.b1x-problem-stack{padding-bottom:7rem}
+.b1x-problem-card{min-height:155px;grid-template-columns:76px 1fr;gap:1.5rem;padding:1.75rem 2rem}
+.b1x-problem-card>span{font-size:3.5rem;font-weight:800}
+.b1x-problem-card p{font-size:clamp(1.25rem,1.8vw,1.625rem);line-height:1.4}
+.b1x-problem-answer{padding:2.5rem 3rem}
+.b1x-problem-answer h3{font-size:clamp(2rem,3.2vw,3rem);font-weight:800;line-height:1.05}
+
+.b1x-package-card{display:flex;flex-direction:column;padding-bottom:2rem}
+.b1x-package-card>p{margin-top:.875rem}
+.b1x-package-visual{min-height:220px}
+
+.b1x-refund-card{min-height:300px;grid-template-columns:1fr 260px;gap:3rem;padding:3rem 3.75rem}
+.b1x-refund-copy h2{margin-top:.75rem}
+.b1x-refund-seal{width:165px;height:165px}
+.b1x-continuation-card{padding:3rem}
+.b1x-policy-details{margin-top:1.75rem}
+
+.b1x-cycle-layout{gap:clamp(2.75rem,5vw,4.5rem)}
+.b1x-cycle-card{min-height:225px;padding:1.75rem}
+.b1x-cycle-card>span{font-weight:800}
+
+.b1x-free-lesson-grid{grid-template-columns:minmax(280px,.7fr) minmax(480px,1.3fr);gap:clamp(2.5rem,5vw,4rem)}
+.b1x-free-lesson-copy h2{line-height:1.06}
+.b1x-free-lesson-video{border-width:5px}
+.b1x-fit-card,.b1x-guidance-card{min-height:400px;padding:clamp(2rem,3.2vw,3rem)}
+.b1x-fit-list{margin-top:2rem}
+
+.b1x-pricing-v10-grid{margin-top:3rem}
+.b1x-plan-v10{min-height:0;padding:2.25rem 2rem 1.5rem}
+.b1x-plan-v10 h3{font-size:1.625rem}
+.b1x-plan-v10-summary{min-height:0}
+.b1x-plan-v10-price strong{font-size:clamp(2.65rem,4vw,3.25rem);font-weight:800}
+.b1x-plan-v10 li{font-size:.8125rem;line-height:1.5}
+.b1x-plan-v10>a{min-height:52px}
+
+.b1x-mock-showcase-grid{gap:1.125rem}
+.b1x-mock-showcase-card{padding:2rem}
+
+.b1x-pre-faq-cta-card{min-height:235px}
+.b1x-pre-faq-cta-copy{padding:2.5rem 3.5rem 2.5rem 2rem}
+.b1x-faq-v12 .b1x-faq-title{margin-bottom:3rem}
+.b1x-faq-v12 .b1x-faq-title h2{line-height:1.05}
+.b1x-faq-v12 .b1x-accordion button{min-height:74px;padding-block:1.15rem}
+.b1x-faq-v12 .b1x-accordion button span{font-size:1rem;font-weight:600;line-height:1.5}
+.b1x-faq-v12 .b1x-accordion article>div p{font-size:.9375rem;line-height:1.65}
+
+/* Premium motion: short travel, soft easing, no layout movement. */
+.b1x-js .b1x-reveal{
+  opacity:0;
+  filter:blur(4px);
+  transform:translate3d(0,26px,0);
+  transition:
+    opacity .62s cubic-bezier(.22,1,.36,1) var(--b1x-delay,0ms),
+    filter .62s ease var(--b1x-delay,0ms),
+    transform .78s cubic-bezier(.22,1,.36,1) var(--b1x-delay,0ms);
+  will-change:opacity,filter,transform;
+}
+.b1x-js .b1x-reveal.is-visible{opacity:1;filter:none;transform:translate3d(0,0,0)}
+.b1x-js .b1x-reveal.is-visible[data-b1-drift]{transform:translate3d(0,var(--b1x-drift,0),0)}
+.b1x-page :where(
+  .b1x-system-card,
+  .b1x-package-card,
+  .b1x-promise-grid article,
+  .b1x-cycle-card,
+  .b1x-mock-showcase-card,
+  .b1x-plan-v10
+){transition-duration:.32s;transition-timing-function:cubic-bezier(.22,1,.36,1)}
+
+@media (max-width:960px){
+  .b1x-page{
+    --b1x-type-display:clamp(2.25rem,5.3vw,2.75rem);
+    --b1x-type-section:clamp(2.15rem,5vw,2.75rem);
+    --b1x-section-space:clamp(4.25rem,8vw,5rem);
+  }
+  .b1x-shell{width:min(calc(100% - 48px),760px)}
+  .b1x-hero-v5 h1{font-size:var(--b1x-type-display)}
+  .b1x-problem-intro,.b1x-cycle-intro{position:relative;top:auto}
+  .b1x-free-lesson-grid{grid-template-columns:1fr}
+  .b1x-free-lesson-copy{max-width:650px}
+  .b1x-fit-card,.b1x-guidance-card{min-height:0}
+  .b1x-pricing-v10-grid{grid-template-columns:1fr}
+  .b1x-plan-v10{min-height:0}
+}
+
+@media (max-width:700px){
+  .b1x-page{
+    --b1x-type-display:clamp(1.875rem,9.2vw,2.25rem);
+    --b1x-type-section:clamp(1.875rem,8.6vw,2.25rem);
+    --b1x-type-subsection:clamp(1.4rem,7vw,1.75rem);
+    --b1x-type-card:clamp(1.125rem,5.3vw,1.375rem);
+    --b1x-type-body:1rem;
+    --b1x-section-space:clamp(3.75rem,15vw,4.5rem);
+    --b1x-section-space-tight:clamp(2.75rem,11vw,3.5rem);
+  }
+  .b1x-shell{width:min(calc(100% - 32px),620px)}
+  .b1x-kicker{margin-bottom:.875rem;font-size:.6875rem}
+  .b1x-button{width:100%;min-height:54px;padding-inline:1.25rem}
+
+  .b1x-hero-v5{height:auto;min-height:620px}
+  .b1x-hero-v5 .b1x-hero-content{min-height:620px;padding-top:2.5rem;padding-bottom:13.25rem}
+  .b1x-hero-v5 .b1x-hero-copy{width:100%;max-width:100%}
+  .b1x-hero-v5 h1{font-size:var(--b1x-type-display);line-height:1.08}
+  .b1x-proof{margin-bottom:1rem;font-size:.6875rem;line-height:1.4}
+  .b1x-hero-lead{margin-top:1rem;font-size:1rem;line-height:1.55}
+  .b1x-hero-actions{margin-top:1.35rem}
+  .b1x-hero-v5 .b1x-hero-features{right:1rem;bottom:1rem;left:1rem;width:auto;gap:0}
+  .b1x-hero-v5 .b1x-hero-features>div{min-height:58px;padding-inline:.35rem}
+  .b1x-hero-v5 .b1x-hero-features span{font-size:.625rem;line-height:1.2}
+
+  .b1x-page :where(
+    .b1x-instructor-message h2,
+    .b1x-system-header h2,
+    .b1x-manifesto-inner h2,
+    .b1x-method-intro h2,
+    .b1x-editorial-head h2,
+    .b1x-course-focus-head h2,
+    .b1x-problem-intro h2,
+    .b1x-package-head h2,
+    .b1x-promise-head h2,
+    .b1x-refund-copy h2,
+    .b1x-continuation-card h2,
+    .b1x-cycle-intro h2,
+    .b1x-free-lesson-copy h2,
+    .b1x-pricing-v10-head h2,
+    .b1x-mock-showcase-head h2,
+    .b1x-comparison h2,
+    .b1x-journey-head h2,
+    .b1x-program-copy h2,
+    .b1x-faq-v12 .b1x-faq-title h2,
+    .b1x-final-copy h2
+  ){font-size:var(--b1x-type-section);line-height:1.1}
+
+  .b1x-page :where(
+    .b1x-course-focus-head h2,
+    .b1x-package-head h2,
+    .b1x-free-lesson-copy h2,
+    .b1x-pricing-v10-head h2,
+    .b1x-mock-showcase-head h2,
+    .b1x-pre-faq-cta-copy h2
+  ) br{display:none}
+
+  .b1x-system-cards,
+  .b1x-promise-grid,
+  .b1x-package-grid,
+  .b1x-mock-showcase-grid{margin-top:2rem}
+
+  .b1x-included-grid{display:grid;grid-template-columns:1fr;grid-template-rows:auto;gap:.875rem}
+  .b1x-included-grid article{grid-column:1;grid-row:auto;min-height:0;padding:1.5rem}
+  .b1x-included-live h3{margin-top:1.5rem!important;font-size:1.75rem!important}
+  .b1x-included-live ul{margin-top:1.5rem}
+  .b1x-included-feedback p{margin-top:1rem!important;padding-top:0}
+  .b1x-included-progress{display:block}
+  .b1x-included-progress .b1x-bars{margin-top:1.75rem}
+
+  .b1x-course-focus-stage{min-height:0;margin-top:2rem}
+  .b1x-portal-feature-grid{grid-template-columns:1fr;gap:.875rem;margin-top:2rem}
+  .b1x-portal-feature-grid article{min-height:0;padding:1.5rem}
+  .b1x-promise-grid article{min-height:0;padding:1.5rem}
+
+  .b1x-problem-layout{gap:2rem}
+  .b1x-problem-intro{text-align:left}
+  .b1x-problem-stack{padding-bottom:4rem}
+  .b1x-problem-card{min-height:128px;grid-template-columns:52px 1fr;gap:1rem;margin-bottom:.75rem;padding:1.25rem}
+  .b1x-problem-card>span{font-size:2.5rem}
+  .b1x-problem-card p{font-size:1.125rem;line-height:1.45}
+  .b1x-problem-answer{padding:2rem 1.5rem}
+  .b1x-problem-answer h3{font-size:1.875rem;line-height:1.08}
+
+  .b1x-package-visual{min-height:210px}
+  .b1x-refund-card{grid-template-columns:1fr;gap:2rem;padding:2rem 1.5rem 2.5rem;text-align:center}
+  .b1x-refund-copy .b1x-button{width:100%}
+  .b1x-refund-seal{width:145px;height:145px}
+  .b1x-continuation-card{padding:2rem 1.5rem}
+  .b1x-policy-details summary{font-size:.875rem}
+
+  .b1x-cycle-layout{gap:2rem}
+  .b1x-cycle-intro{text-align:left}
+  .b1x-cycle-grid{grid-template-columns:1fr;gap:.875rem}
+  .b1x-cycle-card{min-height:0;padding:1.5rem}
+  .b1x-cycle-flow{font-size:.75rem}
+
+  .b1x-free-lesson-grid{gap:2rem}
+  .b1x-free-lesson-copy h2{line-height:1.08}
+  .b1x-fit-guidance-grid{gap:.875rem}
+  .b1x-fit-card,.b1x-guidance-card{padding:1.75rem 1.5rem}
+  .b1x-fit-card h2,.b1x-guidance-card h2{font-size:1.875rem;line-height:1.1}
+
+  .b1x-pricing-v10-grid{gap:1rem;margin-top:2rem}
+  .b1x-plan-v10{padding:1.75rem 1.4rem 1.25rem}
+  .b1x-plan-v10 h3{padding-right:0;font-size:1.5rem}
+  .b1x-plan-v10-columns{grid-template-columns:1fr}
+  .b1x-portal-plan-v10{grid-template-columns:1fr;gap:1.5rem;padding:1.5rem}
+
+  .b1x-mock-showcase-grid{grid-template-columns:1fr;grid-auto-rows:auto;gap:.875rem}
+  .b1x-mock-showcase-card,
+  .b1x-mock-showcase-card.is-four-skills,
+  .b1x-mock-showcase-card.is-exam-style,
+  .b1x-mock-showcase-card.is-ai-feedback,
+  .b1x-mock-showcase-card.is-progress{grid-column:1;min-height:210px;padding:1.5rem}
+
+  .b1x-pre-faq-cta-card{min-height:350px}
+  .b1x-pre-faq-cta-copy{padding:10rem 1.5rem 1.75rem}
+  .b1x-pre-faq-cta-copy h2{font-size:2rem;line-height:1.1}
+  .b1x-faq-v12 .b1x-faq-title{margin-bottom:2rem}
+  .b1x-faq-v12 .b1x-accordion button{min-height:68px;gap:1rem;padding:1rem .15rem}
+  .b1x-faq-v12 .b1x-accordion button span{font-size:.9375rem}
+  .b1x-faq-v12 .b1x-accordion article>div p{padding:0 2rem 1.4rem .15rem;font-size:.875rem}
+}
+
+@media (max-width:390px){
+  .b1x-shell{width:min(calc(100% - 28px),620px)}
+  .b1x-hero-v5 h1{font-size:1.875rem}
+  .b1x-hero-v5 .b1x-hero-content{padding-bottom:12.75rem}
+  .b1x-pre-faq-cta-copy h2{font-size:1.875rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .b1x-js .b1x-reveal,
+  .b1x-js .b1x-reveal.is-visible,
+  .b1x-js .b1x-reveal.is-visible[data-b1-drift]{opacity:1;filter:none;transform:none;transition:none;will-change:auto}
+}

@@ -1,0 +1,137 @@
+{% load static website_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>{{ site_settings.seo_title }}</title>
+  <meta name="description" content="{{ site_settings.seo_description }}">
+  <meta name="keywords" content="{{ site_settings.seo_keywords }}">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#174ee8">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ site_settings.seo_title }}">
+  <meta property="og:description" content="{{ site_settings.seo_description }}">
+  <meta property="og:url" content="{{ request.build_absolute_uri }}">
+  {% if site_settings.logo %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_settings.logo.url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/public-launch-v14-9.css' %}?v=20260903-1411">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"{{ site_settings.site_name|escapejs }}",
+    "url":"{{ request.build_absolute_uri|escapejs }}",
+    "description":"{{ site_settings.seo_description|escapejs }}",
+    "inLanguage":"en"
+  }
+  </script>
+</head>
+<body class="launch-body launch-home">
+{% include "partials/public_header_v8.html" %}
+
+<main class="launch-stage">
+  <div class="launch-bg" aria-hidden="true">
+    <span class="launch-orb orb-one"></span>
+    <span class="launch-orb orb-two"></span>
+    <span class="launch-grid-light"></span>
+  </div>
+
+  <section class="launch-shell" aria-labelledby="launch-title">
+    <header class="launch-heading launch-reveal" data-reveal>
+      <span class="launch-eyebrow"><i></i>{{ site_settings.site_name|default:"Arya Academy" }} · English Test Preparation</span>
+      <h1 id="launch-title">Choose your <span>preparation.</span></h1>
+      <p>Cambridge is ready now. IELTS and UKVI preparation are coming soon.</p>
+    </header>
+
+    <div class="launch-card-grid" aria-label="Preparation options">
+      {% for item in landing_programs %}
+        {% if item.program_key == 'cambridge-english' %}
+          {% if request.user.is_authenticated %}
+            {% url 'dashboard' as cambridge_target %}
+          {% else %}
+            {% url 'dashboard' as dashboard_target %}
+            {% url 'login' as login_target %}
+          {% endif %}
+
+          <a class="launch-card launch-card-live launch-reveal"
+             data-reveal data-tilt data-pointer-label="Start Cambridge"
+             data-program="cambridge"
+             href="{% if request.user.is_authenticated %}{{ cambridge_target }}{% else %}{{ login_target }}?next={{ dashboard_target }}{% endif %}">
+            <span class="launch-card-glow" aria-hidden="true"></span>
+            <span class="launch-card-top">
+              <span class="launch-icon launch-icon-cambridge" aria-hidden="true">
+                <img src="{% static 'images/launch-icons/cambridge-card.svg' %}" alt="">
+              </span>
+              <span class="launch-status is-live"><i></i>READY NOW</span>
+            </span>
+            <span class="launch-card-copy">
+              <small>CAMBRIDGE / GENERAL ENGLISH</small>
+              <strong>{{ item.card_title|default:"Cambridge Test Preparation" }}</strong>
+              <span>{{ item.card_summary|default:"Practice all four skills, take mock tests and track your preparation."|truncatewords:19 }}</span>
+            </span>
+            <span class="launch-card-action">
+              {% if request.user.is_authenticated %}Open dashboard{% else %}Start Cambridge{% endif %}
+              <i>↗</i>
+            </span>
+          </a>
+
+        {% elif item.program_key == 'ielts' %}
+          <article class="launch-card launch-card-soon launch-reveal"
+                   data-reveal data-tilt data-pointer-label="Coming soon"
+                   data-program="ielts" aria-disabled="true">
+            <span class="launch-card-glow" aria-hidden="true"></span>
+            <span class="launch-card-top">
+              <span class="launch-icon launch-icon-ielts" aria-hidden="true">
+                <img src="{% static 'images/launch-icons/ielts-card.svg' %}" alt="">
+              </span>
+              <span class="launch-status is-soon"><i></i>IN DEVELOPMENT</span>
+            </span>
+            <span class="launch-card-copy">
+              <small>ACADEMIC & GENERAL</small>
+              <strong>{{ item.card_title|default:"IELTS Preparation" }}</strong>
+              <span>{{ item.card_summary|default:"Focused IELTS Academic and General Training preparation."|truncatewords:19 }}</span>
+            </span>
+            <span class="launch-card-action muted">Coming soon <i>•</i></span>
+          </article>
+
+        {% elif item.program_key == 'uk-interview' %}
+          <article class="launch-card launch-card-soon launch-reveal"
+                   data-reveal data-tilt data-pointer-label="Coming soon"
+                   data-program="ukvi" aria-disabled="true">
+            <span class="launch-card-glow" aria-hidden="true"></span>
+            <span class="launch-card-top">
+              <span class="launch-icon launch-icon-ukvi" aria-hidden="true">
+                <img src="{% static 'images/launch-icons/ukvi-card.svg' %}" alt="">
+              </span>
+              <span class="launch-status is-soon"><i></i>IN DEVELOPMENT</span>
+            </span>
+            <span class="launch-card-copy">
+              <small>UK STUDENT / UKVI</small>
+              <strong>{{ item.card_title|default:"UKVI Interview Preparation" }}</strong>
+              <span>{{ item.card_summary|default:"Prepare for UK student and credibility interviews with focused practice."|truncatewords:19 }}</span>
+            </span>
+            <span class="launch-card-action muted">Coming soon <i>•</i></span>
+          </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <a class="launch-pricing-link launch-reveal" data-reveal href="/pricing/" data-pointer-label="View pricing">
+      View pricing for all programs <span>→</span>
+    </a>
+  </section>
+</main>
+
+<div class="launch-pointer" data-launch-pointer aria-hidden="true">
+  <span class="launch-pointer-dot"></span>
+  <span class="launch-pointer-label">Explore</span>
+</div>
+
+<script defer src="{% static 'js/public-launch-v14-9.js' %}?v=20260903-1411"></script>
+</body>
+</html>

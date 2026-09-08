@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Results | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+
+  <section class="pv2-results-hero">
+    <div>
+      <div style="text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;font-weight:900;color:#63ded9">
+        Student Results
+      </div>
+      <h1>Your practice history</h1>
+      <p>
+        Review completed attempts, objective scores, Speaking transcripts,
+        Writing feedback and evaluator-reviewed results.
+      </p>
+
+      <div class="pv2-results-summary">
+        <span>{{ attempt_count }} total attempts</span>
+        <span>{{ scored_count }} scored attempts</span>
+        <span>
+          {% if average_score != None %}
+            {{ average_score }}% average
+          {% else %}
+            No scored average yet
+          {% endif %}
+        </span>
+      </div>
+    </div>
+
+    <a class="pv2-btn" style="background:#fff;color:#17354a" href="/practice/cambridge/">
+      Continue Practice →
+    </a>
+  </section>
+
+  <div class="pv2-section-head">
+    <h2>All attempts</h2>
+    <a href="{% url 'dashboard' %}">Dashboard →</a>
+  </div>
+
+  {% if summaries %}
+  <section class="pv2-result-list">
+    {% for item in summaries %}
+    <article class="pv2-result-card">
+      <div>
+        <div class="pv2-result-program">
+          {{ item.attempt.mock_test.program.short_name|default:item.attempt.mock_test.program.name }}
+        </div>
+
+        <h3>{{ item.attempt.mock_test.title }}</h3>
+
+        <div class="pv2-result-meta">
+          <span>{{ item.attempt.started_at|date:"M j, Y · g:i A" }}</span>
+          <span>{{ item.response_count }} response{{ item.response_count|pluralize }}</span>
+          <span>{{ item.attempt.get_status_display }}</span>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        {% if item.score_percent != None %}
+        <div class="pv2-score-chip {% if item.score_percent == 0 %}zero{% endif %}">
+          {{ item.score_percent }}%
+        </div>
+        {% else %}
+        <div class="pv2-score-chip" style="color:var(--pv2-muted)">—</div>
+        {% endif %}
+
+        <a class="pv2-btn pv2-btn-primary" href="{% url 'results:attempt_report' item.attempt.id %}">
+          View Report →
+        </a>
+      </div>
+    </article>
+    {% endfor %}
+  </section>
+  {% else %}
+  <div class="pv2-card pv2-empty" style="margin-top:20px">
+    <h3 style="color:var(--pv2-text)">No results yet</h3>
+    <p>Complete your first practice section to create a report.</p>
+    <a class="pv2-btn pv2-btn-primary" href="/practice/cambridge/">Start Practice →</a>
+  </div>
+  {% endif %}
+
+</main>
+</body>
+</html>

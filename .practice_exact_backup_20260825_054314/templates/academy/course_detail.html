@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ course.title }} | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-app">
+{% include 'partials/student_header.html' %}
+
+<main class="pv2-container">
+  <div class="pv2-page-title">
+    <div>
+      <div class="pv2-eyebrow">
+        {{ course.program.short_name|default:course.program.name }}
+      </div>
+      <h1>{{ course.title }}</h1>
+      <p>{{ course.short_description }}</p>
+    </div>
+
+    <a class="pv2-btn pv2-btn-teal" href="/practice/cambridge/">
+      Open Practice →
+    </a>
+  </div>
+
+  {% if course.description %}
+  <section class="pv2-card pv2-panel">
+    {{ course.description|linebreaks }}
+  </section>
+  {% endif %}
+
+  <div class="pv2-section-head">
+    <h2>Course materials</h2>
+  </div>
+
+  <section class="pv2-material-list">
+    {% for material in materials %}
+    <article class="pv2-material-item">
+      <div class="pv2-eyebrow">
+        {{ material.get_skill_display }} · {{ material.get_material_type_display }}
+      </div>
+
+      <h3>{{ material.title }}</h3>
+
+      {% if material.description %}
+      <p>{{ material.description }}</p>
+      {% endif %}
+
+      {% if material.content_text %}
+      <div class="pv2-transcript" style="margin-top:12px">
+        {{ material.content_text|linebreaks }}
+      </div>
+      {% endif %}
+
+      {% if material.audio_file %}
+      <audio controls preload="metadata" style="width:100%;margin-top:12px">
+        <source src="{{ material.audio_file.url }}">
+      </audio>
+      {% endif %}
+
+      <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px">
+        {% if material.file %}
+        <a class="pv2-btn pv2-btn-outline" href="{{ material.file.url }}" target="_blank">
+          Open File →
+        </a>
+        {% endif %}
+
+        {% if material.external_url %}
+        <a class="pv2-btn pv2-btn-outline" href="{{ material.external_url }}" target="_blank" rel="noopener">
+          Open Link →
+        </a>
+        {% endif %}
+      </div>
+    </article>
+    {% empty %}
+    <div class="pv2-card pv2-empty">
+      Course materials are being prepared.
+    </div>
+    {% endfor %}
+  </section>
+</main>
+</body>
+</html>

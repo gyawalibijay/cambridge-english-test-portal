@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ item.part.section.title }} | {% if attempt.metadata.practice_mode == "full_mock" %}Upskill Mock Test{% else %}Arya Academy{% endif %}</title>
+  <link rel="stylesheet" href="{% static 'css/cambridge-shell.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cambridge-exam.css' %}">
+  <link rel="stylesheet" href="{% static 'css/arya-academy-official-v35-4.css' %}?v=20260908-354">
+  <link rel="stylesheet" href="{% static 'css/b1-listening-timer-v34-6-3.css' %}?v=20260908-3463">
+  <link rel="stylesheet" href="{% static 'css/b1-listening-wave-v34-4.css' %}?v=20260907-344">
+  <link rel="stylesheet" href="{% static 'css/practice-mock-blue-v29.css' %}?v=20260905-teal-v30-1">
+</head>
+<body class="exam-page exam-shell" data-question-skill="{{ item.question.skill }}">
+
+<header class="exam-top">
+  <div class="exam-brand"><b>Upskill</b> {% if attempt.metadata.practice_mode == 'skill_mock' or attempt.metadata.practice_mode == 'full_mock' %}Mock Test{% else %}Practice{% endif %}</div>
+  <div
+    id="sectionTimer"
+    class="exam-clock"
+    data-listening-timer="{% if item.question.skill == 'listening' and attempt.metadata.practice_mode != 'full_mock' %}1{% else %}0{% endif %}"
+    data-remaining-ms="{% if item.question.skill == 'listening' and attempt.metadata.practice_mode != 'full_mock' %}{{ listening_timer_remaining_ms|default:0 }}{% endif %}"
+    data-duration-seconds="{% if item.question.skill == 'listening' and attempt.metadata.practice_mode != 'full_mock' %}{{ listening_timer_duration_seconds|default:300 }}{% endif %}"
+    data-seconds="{{ item.part.section.duration_seconds|default:0 }}"
+    data-started="{{ attempt.started_at|date:'c' }}"
+    data-full-mock-timer="{% if attempt.metadata.practice_mode == 'full_mock' %}1{% else %}0{% endif %}"
+    data-full-mock-timer-url="{% if attempt.metadata.practice_mode == 'full_mock' %}{% url 'attempts:full_mock_timer' attempt.id %}{% endif %}"
+  >◷ {% if attempt.metadata.practice_mode == 'full_mock' %}--:--{% elif item.question.skill == "listening" %}{{ listening_timer_initial|default:"05:00" }}{% else %}--:--{% endif %}</div>
+  <!-- B1_FULL_MOCK_TIMER_OBJECTIVE_V35_1 -->
+  <div class="exam-tools">{% if attempt.metadata.practice_mode == 'skill_mock' or attempt.metadata.practice_mode == 'full_mock' %}<a href="{% url 'student_mock_tests' %}">Save & exit</a>{% endif %}<button onclick="document.documentElement.requestFullscreen?.()" style="border:0;background:none;color:inherit;cursor:pointer">⛶ Full Screen</button></div>
+</header>
+
+<main class="exam-work">
+  <div class="exam-work-head">
+    <div><small>{{ item.part.section.title }} · {{ item.part.title }}</small><h1>{% if item.question.skill == "listening" %}{% if item.question.question_type == "single_choice" or item.question.question_type == "multiple_choice" %}Listen and choose the correct reply{% elif item.question.question_type == "ordering" %}Listen and put the items in order{% else %}Listen and answer{% endif %}{% elif item.question.show_prompt_text %}Question{% else %}Listen and answer{% endif %}</h1></div>
+    <span class="exam-progress-pill">{# B1_MOCK_PART_LOCAL_COUNTER_V40_8_3 START #}{% if mock_part_position and mock_part_total %}{{ mock_part_position }} / {{ mock_part_total }}{% else %}{{ answered|add:"1" }} / {{ total }}{% endif %}{# B1_MOCK_PART_LOCAL_COUNTER_V40_8_3 END #}</span>
+</div>
+
+  <div class="exam-progress-track"><span style="width:{% widthratio answered total 100 %}%"></span></div>
+
+  <section class="exam-question-card">
+    <div class="exam-question-body">
+      {% if stimulus and stimulus.content %}<div class="exam-stimulus">{{ stimulus.content }}</div>{% endif %}
+
+      {% if stimulus_audio_url %}
+      <div class="exam-device" style="padding-top:0;border-top:0;margin-top:0;margin-bottom:20px">
+        <h3>Listen carefully</h3>
+        <audio controls preload="metadata" src="{{ stimulus_audio_url }}" style="width:100%"></audio>
+</div>
+      {% endif %}
+
+      {% if prompt_audio_url %}
+      <div class="exam-device" style="padding-top:0;border-top:0;margin-top:0;margin-bottom:20px">
+        <audio controls preload="metadata" src="{{ prompt_audio_url }}" style="width:100%"></audio>
+</div>
+      {% endif %}
+
+      {% if item.question.show_prompt_text %}<div class="exam-question">{{ item.question.prompt_text }}</div>{% endif %}
+
+      <form method="post" action="{% url 'attempts:submit_objective_response' attempt.id item.id %}">
+        {% csrf_token %}
+
+        {% if item.question.question_type == "single_choice" %}
+        <div class="exam-options">
+          {% for option in item.question.options.all %}
+          <label class="exam-option"><input type="radio" name="option" value="{{ option.id }}" required><span>{{ option.text }}</span></label>
+          {% endfor %}
+</div>
+
+        {% elif item.question.question_type == "multiple_choice" %}
+        <div class="exam-options">
+          {% for option in item.question.options.all %}
+          <label class="exam-option"><input type="checkbox" name="options" value="{{ option.id }}"><span>{{ option.text }}</span></label>
+          {% endfor %}
+</div>
+
+        {% elif item.question.question_type == "short_answer" or item.question.question_type == "gap_fill" %}
+        <div style="margin-top:20px"><input name="text" required autocomplete="off" style="width:100%;height:46px;border:1px solid #d6e2e6;border-radius:10px;padding:0 13px;font-size:12px;outline:none" placeholder="Type your answer"></div>
+
+        {% elif item.question.question_type == "ordering" %}
+        <input type="hidden" name="ordering" id="orderingValue" value="[]">
+        <div id="orderingList" style="margin-top:16px">
+          {% for order_item in item.question.ordering_items.all %}
+          <div class="order-row" data-id="{{ order_item.id }}">
+            <span class="order-num">{{ forloop.counter }}</span><span style="font-size:11px">{{ order_item.text }}</span>
+            <span class="order-actions"><button type="button" data-dir="up">↑</button><button type="button" data-dir="down">↓</button></span>
+</div>
+          {% endfor %}
+</div>
+        {% endif %}
+
+        <div class="exam-submit"><button class="exam-btn" type="submit">{% if attempt.metadata.practice_mode == 'skill_mock' and answered|add:'1' == total %}Finish mock test →{% else %}Submit & Continue →{% endif %}</button></div>
+      </form>
+</div>
+  </section>
+</main>
+
+<script>
+// Timer owned by b1-listening-timer-v34-6-3.js
+const list=document.getElementById('orderingList');
+if(list){
+ const hidden=document.getElementById('orderingValue');
+ // B1_LISTENING_ORDERING_SHUFFLE_V38: do not reveal correct stored order on first load.
+ const originalRows=[...list.querySelectorAll('.order-row')];
+ if(originalRows.length>1){
+   const shuffled=[...originalRows];
+   for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}
+   if(shuffled.every((row,i)=>row===originalRows[i])) shuffled.push(shuffled.shift());
+   shuffled.forEach(row=>list.appendChild(row));
+ }
+
+ function sync(){const rows=[...list.querySelectorAll('.order-row')]; hidden.value=JSON.stringify(rows.map(r=>Number(r.dataset.id))); rows.forEach((r,i)=>r.querySelector('.order-num').textContent=i+1)}
+ list.addEventListener('click',e=>{const b=e.target.closest('button'), row=e.target.closest('.order-row'); if(!b||!row)return; if(b.dataset.dir==='up'&&row.previousElementSibling)list.insertBefore(row,row.previousElementSibling); if(b.dataset.dir==='down'&&row.nextElementSibling)list.insertBefore(row.nextElementSibling,row); sync()}); sync();
+}
+</script>
+<script defer src="{% static 'js/b1-listening-timer-v34-6-3.js' %}?v=20260908-3463"></script>
+<script defer src="{% static 'js/full-mock-section-timer-v35-part2.js' %}?v=20260908-351"></script>
+<script defer src="{% static 'js/b1-listening-wave-v34-4.js' %}?v=20260907-344"></script>
+</body>
+</html>

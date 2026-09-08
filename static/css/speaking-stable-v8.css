@@ -1,0 +1,51 @@
+body.speaking-stable-v8{
+  background:#eef3f7!important;
+}
+
+body.speaking-stable-v8 .speaking-v8-action{
+  min-width:116px!important;
+  height:36px!important;
+  padding:0 18px!important;
+  border:none!important;
+  border-radius:3px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#344f73!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  opacity:1!important;
+  box-shadow:none!important;
+  font-size:12px!important;
+  font-weight:700!important;
+}
+
+body.speaking-stable-v8 .speaking-v8-action:disabled{
+  background:#344f73!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  opacity:.88!important;
+}
+
+body.speaking-stable-v8 .speaking-v8-clock{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:5px!important;
+  min-width:58px!important;
+  color:#42536a!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+body.speaking-stable-v8 .speaking-v8-clock svg{
+  width:12px!important;
+  height:12px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.8!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+}

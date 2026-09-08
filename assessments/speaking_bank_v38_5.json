@@ -1,0 +1,1362 @@
+{
+  "sets": {
+    "2": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where are you from?",
+        "Do you work or do you study?"
+      ],
+      "2": [
+        "Why is English important in your country?",
+        "Why is English important for your career?",
+        "Describe a hobby or activity you enjoy. Why do you like it?",
+        "What are your plans for the future?"
+      ],
+      "3": [
+        "Please send the report before lunch.",
+        "I usually take the bus to work.",
+        "The meeting starts at ten o'clock.",
+        "Your appointment is on Monday morning."
+      ],
+      "4": [
+        "I'm sorry, but the 9:30 appointment is no longer available. Would eleven o'clock be suitable?",
+        "The delivery will arrive on Thursday afternoon, so please make sure someone is at home.",
+        "If you have any questions about the new service, please call our office before five.",
+        "I can't attend the meeting today because I have an appointment at the hospital."
+      ],
+      "5": {
+        "task": "You work at a hotel. A customer has made a late booking request. Leave a voicemail message for the customer.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "explain the booking situation",
+          "tell the customer what action they need to take"
+        ]
+      }
+    },
+    "3": {
+      "1": [
+        "What is your name?",
+        "Where do you live now?",
+        "What do you do?",
+        "How do you travel to work or class?"
+      ],
+      "2": [
+        "What do you like to do in your free time?",
+        "What is your favourite hobby?",
+        "Where did you go on your last trip?",
+        "How do you travel to work every day?"
+      ],
+      "3": [
+        "I left the documents on your desk.",
+        "Please call me when you arrive.",
+        "The kitchen closes at eight tonight.",
+        "We need two chairs for the meeting."
+      ],
+      "4": [
+        "The computer stopped working after the update, and I haven't been able to open my files.",
+        "Could you send the repaired laptop back to our office by Wednesday afternoon?",
+        "I'm calling to confirm that your room is booked for two nights, starting on the 14th.",
+        "Please leave your name and telephone number, and I'll return your call as soon as possible."
+      ],
+      "5": {
+        "task": "You work for an organisation, and your work laptop has broken down. Leave a voicemail message for the IT department.",
+        "bullets": [
+          "explain what happened to the laptop",
+          "say when you need the repaired laptop",
+          "ask how soon the IT department can repair it"
+        ]
+      }
+    },
+    "4": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "What is your job?",
+        "What time do you start work or class?"
+      ],
+      "2": [
+        "What do you want to do this evening?",
+        "What do you usually do in the evening?",
+        "What skill do you want to learn in the future?",
+        "What is your favourite place to visit in your city?"
+      ],
+      "3": [
+        "My supervisor will speak to you tomorrow.",
+        "The customer is waiting near the entrance.",
+        "Please wash your hands before lunch.",
+        "I finished the training course last week."
+      ],
+      "4": [
+        "The bus was delayed for almost forty minutes, but I should reach the office by ten.",
+        "Would you mind telling the manager that I've already completed the morning report?",
+        "The event will begin at 6:30 p.m. in the main meeting hall on the third floor.",
+        "I'm afraid the blue model is out of stock. Would you like to see the black one instead?"
+      ],
+      "5": {
+        "task": "You are going to be late for work. Leave a voicemail message for a colleague.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "explain why you will be late",
+          "say what help or action you need"
+        ]
+      }
+    },
+    "5": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "Do you work or study?",
+        "Who do you live with?"
+      ],
+      "2": [
+        "How do people use English in your country?",
+        "Tell me about a memorable time when you went out with friends.",
+        "What were your favourite things to do as a child?",
+        "Do you prefer group work or individual work? Why?"
+      ],
+      "3": [
+        "The pharmacy is opposite the main hospital.",
+        "I will check the schedule after breakfast.",
+        "Please put the clean towels in the cupboard.",
+        "Our office is closed on public holidays."
+      ],
+      "4": [
+        "Your appointment has been moved from Monday the 12th to Wednesday the 14th at the same time.",
+        "Please bring your passport, a recent photograph, and a copy of the completed application form.",
+        "I ordered the item two weeks ago, but it still hasn't arrived at my address.",
+        "Could you check the payment and tell me when I should expect the delivery?"
+      ],
+      "5": {
+        "task": "You are organising a Diwali function at your workplace. Leave a voicemail message for a colleague.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "invite your colleague to the function",
+          "give the time, date and place"
+        ]
+      }
+    },
+    "6": {
+      "1": [
+        "What is your name?",
+        "Where do you live?",
+        "What do you do every morning?",
+        "Do you travel by bus or on foot?"
+      ],
+      "2": [
+        "Describe an interesting person you met recently. What made the person memorable?",
+        "Tell me about an activity you enjoy doing in your free time. Why do you like it?",
+        "What is the most important quality in a good manager? Why?",
+        "Describe a new skill you want to learn and explain how you plan to learn it."
+      ],
+      "3": [
+        "The new employee starts work next Tuesday.",
+        "I need some help with this computer.",
+        "Please wait in the reception area.",
+        "We visited our friends at the weekend."
+      ],
+      "4": [
+        "The doctor is dealing with an emergency, so your appointment will start thirty minutes later.",
+        "I'm pleased to invite you to our Diwali celebration at the office next Friday evening.",
+        "The hotel can provide breakfast from seven, but room service ends at ten o'clock.",
+        "Would you call me back before 4 p.m. to confirm which option you prefer?"
+      ],
+      "5": {
+        "task": "You ordered an item from a company and paid through the bank, but the item has not arrived. Leave a voicemail message for the company.",
+        "bullets": [
+          "explain that you have already paid",
+          "explain that the item has not arrived",
+          "say what action you want the company to take"
+        ]
+      }
+    },
+    "7": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where are you from?",
+        "What do you do at the moment?"
+      ],
+      "2": [
+        "What type of work do you prefer?",
+        "Do you prefer shopping online or in a shop? Why?",
+        "What kind of films do you like?",
+        "What sports do you like?"
+      ],
+      "3": [
+        "The manager has changed the work schedule.",
+        "I bought this phone three months ago.",
+        "Please keep the door open for the delivery.",
+        "The doctor will arrive in a few minutes."
+      ],
+      "4": [
+        "I've applied for the customer assistant position and would like to arrange an interview.",
+        "The screen suddenly went black while I was working, and the laptop won't restart.",
+        "Please tell me whether you can repair it by Friday, because I need it for a presentation.",
+        "The electric kettle switches off too early, so the water never becomes hot."
+      ],
+      "5": {
+        "task": "You have applied for a new job. Leave a voicemail message for the hiring manager about arranging an interview.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "mention the job you applied for",
+          "ask about an interview appointment"
+        ]
+      }
+    },
+    "8": {
+      "1": [
+        "What is your name?",
+        "What city do you live in?",
+        "Do you work or do you study?",
+        "How do you usually get to work?"
+      ],
+      "2": [
+        "Describe your best friend.",
+        "Describe your hometown.",
+        "Describe your work experience.",
+        "What are you doing at the moment?"
+      ],
+      "3": [
+        "I am free after four this afternoon.",
+        "The patient would like a glass of water.",
+        "Please write your name at the top.",
+        "We can discuss the problem after the meeting."
+      ],
+      "4": [
+        "I'm going to be about twenty minutes late because traffic is moving very slowly.",
+        "Could you open the meeting room and place the documents on each person's chair?",
+        "The new delivery date is Tuesday the 23rd, between ten in the morning and noon.",
+        "Please contact us if the parcel has not arrived by the end of the day."
+      ],
+      "5": {
+        "task": "Your laptop has crashed and is not working properly. Leave a voicemail message for a computer repair company.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "explain what happened to the laptop",
+          "explain what repair service you need"
+        ]
+      }
+    },
+    "9": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "What is your job?",
+        "What time do you finish work or class?"
+      ],
+      "2": [
+        "Why is technology important nowadays?",
+        "What technology are you using today?",
+        "What kind of classmates or coworkers would you like to have?",
+        "Why do you like it when your coworkers help you?"
+      ],
+      "3": [
+        "The bus stop is outside the shopping centre.",
+        "I will bring the forms to your office.",
+        "Please check the price before you pay.",
+        "My colleague is working from home today."
+      ],
+      "4": [
+        "The patient asked to see the doctor earlier, but no morning appointments are available.",
+        "Your new appointment is at 2:45 p.m. on Thursday, and the clinic has sent a confirmation message.",
+        "I'm sorry for the short notice, but a staff member has become ill today.",
+        "Would you please repeat the address slowly so I can write it down correctly?"
+      ],
+      "5": {
+        "task": "You recently bought an electrical item, but it is not working properly. Leave a voicemail message for the company.",
+        "bullets": [
+          "say what item you bought",
+          "explain what is wrong with it",
+          "say what action you want the company to take"
+        ]
+      }
+    },
+    "10": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where do you live now?",
+        "Do you work full-time or part-time?"
+      ],
+      "2": [
+        "What qualities should a good caregiver have?",
+        "Tell me about a time when you helped someone.",
+        "Why would you like to work abroad?",
+        "What type of coworker do you like to work with?"
+      ],
+      "3": [
+        "The training room is on the second floor.",
+        "I have already sent the email.",
+        "Please speak slowly and clearly.",
+        "The shop opens at nine every morning."
+      ],
+      "4": [
+        "The care assistant will visit every Tuesday and Friday, unless the family requests a change.",
+        "I'm not sure which form to complete. Could you show me the correct one?",
+        "The meeting has been moved to Room 12 because the main hall is being repaired.",
+        "Please check the label carefully before giving the medicine to the patient."
+      ],
+      "5": {
+        "task": "You are going to be late for work because of heavy traffic. Leave a voicemail message for a friend who is already at the office.",
+        "bullets": [
+          "explain why you will be late",
+          "tell your friend what they need to do",
+          "say approximately when you will reach the office"
+        ]
+      }
+    },
+    "11": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "Do you work or study?",
+        "How long is your journey to work or class?"
+      ],
+      "2": [
+        "What is the first thing you do every morning?",
+        "Tell me about something enjoyable you did last weekend.",
+        "What meal do you enjoy preparing?",
+        "Which type of transport do you prefer, and why?"
+      ],
+      "3": [
+        "We are meeting the new customer today.",
+        "I need to charge my phone.",
+        "Please take your medicine after dinner.",
+        "The taxi is waiting outside the hotel."
+      ],
+      "4": [
+        "I enjoyed the training session, although some of the new computer tasks were difficult.",
+        "Could we meet at the bus station at 8:15 and travel to the office together?",
+        "The customer has already paid in full, but the order is still marked as unpaid.",
+        "I'll speak to the accounts team this afternoon and send you an update by email."
+      ],
+      "5": {
+        "task": "You need to leave a voicemail for a patient about a change to the time of an appointment.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "give the new appointment time",
+          "explain why the change was necessary"
+        ]
+      }
+    },
+    "12": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "What do you do?",
+        "Where is your workplace or college?"
+      ],
+      "2": [
+        "Tell me about your present job or course.",
+        "What responsibilities do you have during a normal day?",
+        "How do you manage a very busy day?",
+        "Which work skill would you most like to improve?"
+      ],
+      "3": [
+        "The course begins on the first of June.",
+        "I will finish this task before noon.",
+        "Please bring your identity card with you.",
+        "The lift is next to the stairs."
+      ],
+      "4": [
+        "The new employee will work with our team from Monday until the end of September.",
+        "Please make sure the patient is sitting comfortably before you serve the evening meal.",
+        "I'm afraid I can't work the early shift tomorrow. Could we exchange shifts?",
+        "The course costs 4,500 rupees, including the workbook and final certificate."
+      ],
+      "5": {
+        "task": "You need to leave a voicemail for a patient about a change to the date of an appointment.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "give the new appointment date",
+          "explain why the change was necessary"
+        ]
+      }
+    },
+    "13": {
+      "1": [
+        "What is your name?",
+        "Where do you live?",
+        "Do you work or study?",
+        "What do you usually eat for breakfast?"
+      ],
+      "2": [
+        "What do you like most about your hometown?",
+        "Where would you take a visitor in your area?",
+        "Describe a useful service near your home.",
+        "What would you like to improve in your neighbourhood?"
+      ],
+      "3": [
+        "Our team has a short meeting every Friday.",
+        "The parcel arrived this morning.",
+        "Please leave your shoes near the door.",
+        "I can help you with the application."
+      ],
+      "4": [
+        "The hotel has reserved a quiet room for you, and breakfast is included in the price.",
+        "Could you bring a printed copy of your booking confirmation when you check in?",
+        "The pharmacy will keep your medicine until six, but it will be closed tomorrow.",
+        "I'm calling because the date on your application form doesn't match your identity card."
+      ],
+      "5": {
+        "task": "You are organising a Dashain event at your workplace. Leave a voicemail message for a colleague.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "invite your colleague to the event",
+          "give the time, date and place"
+        ]
+      }
+    },
+    "14": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "What is your job?",
+        "How do you travel to work?"
+      ],
+      "2": [
+        "How would you speak to an older person who feels worried?",
+        "What can a caregiver do to help a patient feel safe?",
+        "What would you do if you did not understand an instruction at work?",
+        "Why is careful work important in caregiving?"
+      ],
+      "3": [
+        "The nurse will check your blood pressure.",
+        "I am looking for the blue folder.",
+        "Please turn off the lights before leaving.",
+        "The bank is closed this afternoon."
+      ],
+      "4": [
+        "If the patient feels dizzy again, help them sit down and call the nurse immediately.",
+        "The family meeting will take place on the 5th of August at around 3 p.m.",
+        "I'm sorry, but visitors aren't allowed after eight o'clock in the evening.",
+        "Would you like me to explain the instructions again before you begin the task?"
+      ],
+      "5": {
+        "task": "You are inviting a friend to have lunch at your home. Leave a voicemail message for your friend.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "invite your friend to lunch",
+          "give the time, date and place"
+        ]
+      }
+    },
+    "15": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where do you live now?",
+        "What time do you wake up?"
+      ],
+      "2": [
+        "What do you enjoy about working with other people?",
+        "What qualities do you want in a supervisor?",
+        "Tell me about a mistake you made and what you learned from it.",
+        "When should a worker ask a colleague for help?"
+      ],
+      "3": [
+        "We need to order more cleaning supplies.",
+        "I spoke to the customer yesterday.",
+        "Please sit down and make yourself comfortable.",
+        "The next bus leaves in fifteen minutes."
+      ],
+      "4": [
+        "The supervisor has approved your leave request, but you need to complete one more form.",
+        "I've left the keys with reception, so you can collect them when you arrive.",
+        "The repair should take two working days, and we'll call you when the item is ready.",
+        "Please don't use the lift during the fire drill; take the stairs beside the kitchen."
+      ],
+      "5": {
+        "task": "You need to leave a message for a hotel guest about a booking.",
+        "bullets": [
+          "confirm the booking details",
+          "explain an important hotel service",
+          "tell the guest what they should bring"
+        ]
+      }
+    },
+    "16": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "Do you work or do you study?",
+        "What time does your day begin?"
+      ],
+      "2": [
+        "Tell me about a celebration you attended recently.",
+        "Which family tradition is important to you?",
+        "What kind of gift do you enjoy giving people?",
+        "What would you like to do on your next holiday?"
+      ],
+      "3": [
+        "The office has moved to a new building.",
+        "I will prepare lunch for the guests.",
+        "Please keep this receipt in a safe place.",
+        "My class finishes at half past three."
+      ],
+      "4": [
+        "Our Dashain programme starts at four on Saturday, and families are welcome to attend.",
+        "Could you arrive thirty minutes early to help us arrange the chairs and decorations?",
+        "The patient has a new diet plan, so please don't offer food from outside.",
+        "I'm returning your call about the evening shift that begins at 6:30 tomorrow."
+      ],
+      "5": {
+        "task": "You need to leave a message for a customer about a delivery problem.",
+        "bullets": [
+          "explain the delivery problem",
+          "give the new delivery date",
+          "explain what the customer should do"
+        ]
+      }
+    },
+    "17": {
+      "1": [
+        "What is your name?",
+        "Where do you live?",
+        "What do you do?",
+        "Do you work indoors or outdoors?"
+      ],
+      "2": [
+        "What do you do to stay healthy?",
+        "Where do you like to go for a walk?",
+        "What food can you cook well?",
+        "What healthy habit would you like to develop?"
+      ],
+      "3": [
+        "The receptionist will give you a visitor's pass.",
+        "I forgot to bring my umbrella today.",
+        "Please sign the form at the bottom.",
+        "The patient is resting in the next room."
+      ],
+      "4": [
+        "The package was sent to the wrong address, but the driver will try again on Monday.",
+        "Please check your email for the new tracking number and delivery time.",
+        "I can't find my staff identity card, and I think I dropped it near the entrance.",
+        "Would you inform security and tell me how I can request a replacement?"
+      ],
+      "5": {
+        "task": "You need to exchange your work shift with a colleague next week. Leave a voicemail message for the colleague.",
+        "bullets": [
+          "say why you need to change your shift",
+          "suggest a different shift",
+          "ask the colleague to confirm whether they can help"
+        ]
+      }
+    },
+    "18": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where are you from?",
+        "How do you usually travel around your city?"
+      ],
+      "2": [
+        "How do you use technology in your daily life?",
+        "Which feature on your phone is most useful to you?",
+        "What have you learned online recently?",
+        "Tell me about a problem you solved with technology."
+      ],
+      "3": [
+        "Our manager is away on business this week.",
+        "I need to buy some groceries after work.",
+        "Please check that the window is closed.",
+        "The doctor called while you were outside."
+      ],
+      "4": [
+        "The first-aid course has been moved to Friday because the trainer is unavailable on Wednesday.",
+        "Please confirm your attendance by noon tomorrow so we can prepare enough materials.",
+        "I'm calling from the clinic to remind you that your test results are ready.",
+        "You can collect them in person, or we can send them securely by email."
+      ],
+      "5": {
+        "task": "A workplace training session has been moved to a new date. Leave a voicemail message for an employee.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "give the new date, time and place",
+          "ask the employee to confirm attendance"
+        ]
+      }
+    },
+    "19": {
+      "1": [
+        "What is your name?",
+        "Where do you live now?",
+        "Do you work or study?",
+        "What is your first language?"
+      ],
+      "2": [
+        "What makes customer service good?",
+        "Tell me about a helpful shop assistant you remember.",
+        "What was the last useful item you bought?",
+        "Why do customers sometimes prefer to speak to a person?"
+      ],
+      "3": [
+        "The delivery driver has your correct address.",
+        "I am going to visit my family tomorrow.",
+        "Please use the side entrance after six.",
+        "The meeting room has enough seats for everyone."
+      ],
+      "4": [
+        "The patient slept well last night, but she didn't eat much at breakfast.",
+        "Could you ask the nurse whether we should continue with the same meal plan?",
+        "The customer would like a refund because the replacement item is also damaged.",
+        "I'll review the order today and contact you again before the office closes."
+      ],
+      "5": {
+        "task": "A patient's prescription is ready to collect from the pharmacy. Leave a voicemail message for the patient.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "explain when and where to collect the medicine",
+          "say what the patient should bring"
+        ]
+      }
+    },
+    "20": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "What is your job?",
+        "Do you start work in the morning?"
+      ],
+      "2": [
+        "How do you prepare for a long journey?",
+        "Tell me about a place you would like to visit.",
+        "What is the best way to travel around your city?",
+        "What would you do if your bus or train was delayed?"
+      ],
+      "3": [
+        "The customer asked for a different colour.",
+        "I will clean the kitchen this evening.",
+        "Please keep your phone on silent.",
+        "The train arrives at platform four."
+      ],
+      "4": [
+        "Your training application is incomplete because the copy of your certificate is missing.",
+        "Please upload the document before the 18th, or your place may be offered to someone else.",
+        "I'm afraid the restaurant is fully booked at seven. Would 8:30 be convenient?",
+        "The table will be near the window, and the staff can prepare a vegetarian meal."
+      ],
+      "5": {
+        "task": "You work at a care home and need to arrange a meeting with a patient's family. Leave a voicemail message for a family member.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "suggest a meeting date and time",
+          "ask the family member to confirm or suggest another time"
+        ]
+      }
+    },
+    "21": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where do you live?",
+        "How do you travel to work or college?"
+      ],
+      "2": [
+        "How do you practise speaking English?",
+        "Which part of learning English is difficult for you?",
+        "What helps you remember new words?",
+        "How will better English make you more confident at work?"
+      ],
+      "3": [
+        "We have a new safety rule at work.",
+        "I sent the payment through the bank.",
+        "Please place the bag under the chair.",
+        "My appointment is at eleven tomorrow morning."
+      ],
+      "4": [
+        "The water supply will be turned off from ten until noon while the building is repaired.",
+        "Please fill two clean bottles beforehand so the patient has enough drinking water.",
+        "I'm calling to ask whether you can work the afternoon shift next Tuesday.",
+        "If that isn't possible, let me know today and I'll ask another colleague."
+      ],
+      "5": {
+        "task": "You are ill and cannot go to work today. Leave a voicemail message for your supervisor.",
+        "bullets": [
+          "say why you cannot come to work",
+          "explain which duties need to be covered",
+          "say when you expect to return"
+        ]
+      }
+    },
+    "22": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "Do you work or study?",
+        "What do you do after breakfast?"
+      ],
+      "2": [
+        "What qualities are important in a good friend?",
+        "How do you usually meet new people?",
+        "Tell me about a time when a friend helped you.",
+        "What do you enjoy doing with your friends?"
+      ],
+      "3": [
+        "The hotel serves breakfast from seven o'clock.",
+        "I need to speak with the IT department.",
+        "Please give this message to your supervisor.",
+        "The weather will be warmer this weekend."
+      ],
+      "4": [
+        "The driver will collect you at 6:45 a.m. outside the main entrance of the hotel.",
+        "Please be ready ten minutes early and keep your booking number with you.",
+        "I haven't received the form you promised to send after yesterday's meeting.",
+        "Could you email it to me before lunch so I can complete the report?"
+      ],
+      "5": {
+        "task": "A transport company has changed a customer's pickup time. Leave a voicemail message for the customer.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "give the new pickup time and place",
+          "ask the customer to be ready early"
+        ]
+      }
+    },
+    "23": {
+      "1": [
+        "What is your name?",
+        "Where do you live now?",
+        "What do you do?",
+        "Is your workplace near your home?"
+      ],
+      "2": [
+        "What do you like about your usual work schedule?",
+        "How do you prepare for work in the morning?",
+        "What do you normally do after work?",
+        "How do you like to spend a day off?"
+      ],
+      "3": [
+        "Our class is practising telephone conversations today.",
+        "I left my keys in the office.",
+        "Please take a seat beside the window.",
+        "The shop assistant showed me another size."
+      ],
+      "4": [
+        "The patient's daughter will arrive at three and would like a short update about her mother.",
+        "Please write down any changes you noticed during the morning shift.",
+        "I'm sorry, but the item you ordered is no longer available in that colour.",
+        "We can offer a different colour or return the full payment to your bank."
+      ],
+      "5": {
+        "task": "You have lost your staff identity card. Leave a voicemail message for the security office.",
+        "bullets": [
+          "say who you are and what happened",
+          "explain where you may have lost the card",
+          "ask how to get a replacement"
+        ]
+      }
+    },
+    "24": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where are you from?",
+        "What time do you leave home?"
+      ],
+      "2": [
+        "How can a caregiver show respect to an older person?",
+        "What would you do if a patient felt nervous?",
+        "Why should a caregiver report a change in a patient's condition?",
+        "Why is privacy important when caring for someone?"
+      ],
+      "3": [
+        "The care home has a large garden.",
+        "I will update the patient record now.",
+        "Please call the nurse if you feel unwell.",
+        "The family is arriving after lunch."
+      ],
+      "4": [
+        "The maintenance worker is coming between nine and eleven to repair the bathroom tap.",
+        "Please keep the area clear and make sure an adult is at home.",
+        "I'm calling to confirm your place on the English course that begins next month.",
+        "You need to pay the registration fee by Friday to keep your place."
+      ],
+      "5": {
+        "task": "A hotel guest left a bag in the restaurant. Leave a voicemail message for the guest.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "describe where the bag was found",
+          "explain when and where the guest can collect it"
+        ]
+      }
+    },
+    "25": {
+      "1": [
+        "What is your name?",
+        "Where do you live?",
+        "Do you work or do you study?",
+        "How many people are in your family?"
+      ],
+      "2": [
+        "Why is careful listening important at work?",
+        "How can you check that you understood an instruction?",
+        "What information should you give when reporting a problem?",
+        "How does good teamwork make a workplace safer?"
+      ],
+      "3": [
+        "We are planning a small party at work.",
+        "I need to print three copies of this letter.",
+        "Please return the book by Friday.",
+        "The customer paid for express delivery."
+      ],
+      "4": [
+        "The patient has asked for a quieter room because the television is disturbing her sleep.",
+        "Could you speak to reception and check whether another room is available?",
+        "Our office will close early on the 24th, but the emergency telephone line will remain open.",
+        "Please save the number in your phone in case you need help during the holiday."
+      ],
+      "5": {
+        "task": "A student's course registration is incomplete. Leave a voicemail message for the student.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "explain which document or payment is missing",
+          "give a deadline for completing the registration"
+        ]
+      }
+    },
+    "26": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "What is your job?",
+        "How do you usually go shopping?"
+      ],
+      "2": [
+        "What training would you like to take next?",
+        "How do you plan to improve your professional skills?",
+        "What kind of course is useful for your future?",
+        "Where do you hope to be working in three years?"
+      ],
+      "3": [
+        "The doctor has written a new prescription.",
+        "I will meet you outside the main gate.",
+        "Please check the patient's name carefully.",
+        "Our office uses an online booking system."
+      ],
+      "4": [
+        "The medicine should be taken after breakfast, unless the doctor gives different instructions.",
+        "Please record the time in the patient's notes after each dose.",
+        "I'm calling about the bag you left in the hotel restaurant last night.",
+        "We have found it, and you can collect it from reception before 9 p.m."
+      ],
+      "5": {
+        "task": "You need a document from a colleague to finish an important report. Leave a voicemail message for the colleague.",
+        "bullets": [
+          "say which document you need",
+          "explain why it is needed urgently",
+          "ask the colleague to send it by a specific time"
+        ]
+      }
+    },
+    "27": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where do you live now?",
+        "Do you take a bus to work or class?"
+      ],
+      "2": [
+        "Would you rather live in a city or a village? Why?",
+        "Which local service do you use most often?",
+        "What do you like about the area where you live?",
+        "What change would make your town a better place?"
+      ],
+      "3": [
+        "The supermarket is busy on Saturday mornings.",
+        "I need to change my appointment time.",
+        "Please put the medicine in the locked cupboard.",
+        "The team completed the project on time."
+      ],
+      "4": [
+        "The online payment failed twice, although the money appears to have left my account.",
+        "Could you check the transaction before I try to pay again?",
+        "The team meeting will finish at noon, and lunch will be served in the garden.",
+        "Please tell us about any special food requirements by Wednesday afternoon."
+      ],
+      "5": {
+        "task": "You need to change a restaurant reservation for a small family celebration. Leave a voicemail message for the restaurant.",
+        "bullets": [
+          "give the existing reservation details",
+          "request a new time or number of guests",
+          "ask the restaurant to confirm the change"
+        ]
+      }
+    },
+    "28": {
+      "1": [
+        "What is your name?",
+        "Where are you from?",
+        "Do you work or study?",
+        "What do you carry to work or class?"
+      ],
+      "2": [
+        "What is your favourite meal, and why?",
+        "Who taught you how to cook?",
+        "What food do you prepare when guests visit?",
+        "Why is a healthy diet important for older people?"
+      ],
+      "3": [
+        "The customer service desk is downstairs.",
+        "I will ask my manager for permission.",
+        "Please bring a warm coat for the journey.",
+        "The patient enjoyed a walk in the garden."
+      ],
+      "4": [
+        "I'm unable to come to work today because I have a fever and need to see a doctor.",
+        "Could you tell the supervisor and ask someone to cover my morning duties?",
+        "The home visit is now scheduled for the 30th at around 10:15 a.m.",
+        "Please call us if you need to change the date or the address."
+      ],
+      "5": {
+        "task": "A repair worker is coming to a customer's home at a different time. Leave a voicemail message for the customer.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "give the new visit time",
+          "explain what the customer should do before the worker arrives"
+        ]
+      }
+    },
+    "29": {
+      "1": [
+        "What is your name?",
+        "Where do you live?",
+        "What do you do?",
+        "What day does your working week begin?"
+      ],
+      "2": [
+        "How does bad weather change your daily routine?",
+        "What do you usually do on a rainy day?",
+        "Which season do you like best, and why?",
+        "How do you prepare your home for cold weather?"
+      ],
+      "3": [
+        "The repair company will call us tomorrow.",
+        "I need to collect my certificate next week.",
+        "Please read the instructions before you begin.",
+        "The staff meeting ended earlier than expected."
+      ],
+      "4": [
+        "The customer complained that the parcel was open and one of the items was missing.",
+        "We'll send the missing item tomorrow at no extra cost.",
+        "Please keep the original packaging until the delivery team contacts you.",
+        "I'm sorry for the inconvenience, and I'll follow up again on Friday."
+      ],
+      "5": {
+        "task": "You are organising a first-aid course at work. Leave a voicemail message for a colleague.",
+        "bullets": [
+          "invite the colleague to the course",
+          "give the date, time and place",
+          "ask the colleague to confirm attendance"
+        ]
+      }
+    },
+    "30": {
+      "1": [
+        "What is your name?",
+        "How old are you?",
+        "Where are you from?",
+        "How do you travel to work every day?"
+      ],
+      "2": [
+        "What are you saving money for?",
+        "How do you plan your monthly spending?",
+        "Do you prefer paying by cash or by phone? Why?",
+        "Why is it useful to keep a simple budget?"
+      ],
+      "3": [
+        "The family sent a message this morning.",
+        "I will prepare the room for the visitor.",
+        "Please keep the walkway clear.",
+        "The bus journey takes about forty minutes."
+      ],
+      "4": [
+        "The patient's walking frame has a loose handle, so it isn't safe to use at the moment.",
+        "Please bring the spare frame from the storage room and report the damage.",
+        "I'm calling to remind you that the appointment is at 1:20 p.m., not 2:20.",
+        "Could you arrive fifteen minutes early to complete the registration form?"
+      ],
+      "5": {
+        "task": "A patient needs to receive a home visit at a new time. Leave a voicemail message for the patient.",
+        "bullets": [
+          "say who you are and why you are calling",
+          "give the new visit time",
+          "ask the patient to confirm that someone will be at home"
+        ]
+      }
+    },
+    "31": {
+      "1": [
+        "What is your name?",
+        "Where do you live now?",
+        "Do you work or do you study?",
+        "What time do you usually get home?"
+      ],
+      "2": [
+        "How should a worker speak to an unhappy customer?",
+        "Tell me about a time when you received good service.",
+        "What should a company do after receiving a complaint?",
+        "Why is it important to follow up with a customer?"
+      ],
+      "3": [
+        "The customer wants to change the order.",
+        "I need to practise English every day.",
+        "Please write the new date in your calendar.",
+        "The office will reopen after the holiday."
+      ],
+      "4": [
+        "The office has received your complaint and is checking what happened during the delivery.",
+        "We'll call you by tomorrow afternoon with a clear solution.",
+        "If you prefer a refund, please keep the receipt and the damaged item.",
+        "Thank you for your patience while we speak to the delivery company."
+      ],
+      "5": {
+        "task": "Your company has agreed to replace a customer's damaged item. Leave a voicemail message for the customer.",
+        "bullets": [
+          "apologise and explain the solution",
+          "give the replacement delivery date",
+          "explain what to do with the damaged item"
+        ]
+      }
+    }
+  },
+  "audio_library": {
+    "1": [
+      {
+        "display": "Do you live alone or with family",
+        "file": "do_you_live_alone_or_with_family.mp3",
+        "original_zip_path": "Single section/Part 1/Do you live alone or with family.mp3",
+        "bytes": 49248
+      },
+      {
+        "display": "Do you prefer working indoors or outdoors",
+        "file": "do_you_prefer_working_indoors_or_outdoors.mp3",
+        "original_zip_path": "Single section/Part 1/Do you prefer working indoors or outdoors.mp3",
+        "bytes": 60951
+      },
+      {
+        "display": "where are you originally from",
+        "file": "where_are_you_originally_from.mp3",
+        "original_zip_path": "Single section/Part 1/where are you originally from.mp3",
+        "bytes": 49248
+      },
+      {
+        "display": "Do you like sports",
+        "file": "do_you_like_sports.mp3",
+        "original_zip_path": "Single section/Part 1/Do you like sports.mp3",
+        "bytes": 37545
+      },
+      {
+        "display": "How old are you",
+        "file": "how_old_are_you.mp3",
+        "original_zip_path": "Single section/Part 1/How old are you.mp3",
+        "bytes": 37545
+      },
+      {
+        "display": "How do you travel to work",
+        "file": "how_do_you_travel_to_work.mp3",
+        "original_zip_path": "Single section/Part 1/How do you travel to work.mp3",
+        "bytes": 44233
+      },
+      {
+        "display": "Do you work or study",
+        "file": "do_you_work_or_study.mp3",
+        "original_zip_path": "Single section/Part 1/Do you work or study.mp3",
+        "bytes": 49248
+      },
+      {
+        "display": "What_s the weather like today",
+        "file": "what_s_the_weather_like_today.mp3",
+        "original_zip_path": "Single section/Part 1/What_s the weather like today.mp3",
+        "bytes": 41725
+      },
+      {
+        "display": "what do you do in your free time",
+        "file": "what_do_you_do_in_your_free_time.mp3",
+        "original_zip_path": "Single section/Part 1/what do you do in your free time.mp3",
+        "bytes": 42979
+      },
+      {
+        "display": "What is your favourite colour",
+        "file": "what_is_your_favourite_colour.mp3",
+        "original_zip_path": "Single section/Part 1/What is your favourite colour.mp3",
+        "bytes": 40471
+      },
+      {
+        "display": "What_s your name",
+        "file": "what_s_your_name.mp3",
+        "original_zip_path": "Single section/Part 1/What_s your name.mp3",
+        "bytes": 39217
+      },
+      {
+        "display": "where do you live",
+        "file": "where_do_you_live.mp3",
+        "original_zip_path": "Single section/Part 1/where do you live.mp3",
+        "bytes": 39217
+      },
+      {
+        "display": "do you like cooking",
+        "file": "do_you_like_cooking.mp3",
+        "original_zip_path": "Single section/Part 1/do you like cooking.mp3",
+        "bytes": 33784
+      },
+      {
+        "display": "Do you work or do you study",
+        "file": "do_you_work_or_do_you_study.mp3",
+        "original_zip_path": "Single section/Part 1/Do you work or do you study.mp3",
+        "bytes": 51756
+      }
+    ],
+    "2": [
+      {
+        "display": "live in the future",
+        "file": "live_in_the_future.mp3",
+        "original_zip_path": "Single section/Part 2/live in the future.mp3",
+        "bytes": 63459
+      },
+      {
+        "display": "What kind of movies do you enjoy watching",
+        "file": "what_kind_of_movies_do_you_enjoy_watching.mp3",
+        "original_zip_path": "Single section/Part 2/What kind of movies do you enjoy watching.mp3",
+        "bytes": 51756
+      },
+      {
+        "display": "enjoy visiting",
+        "file": "enjoy_visiting.mp3",
+        "original_zip_path": "Single section/Part 2/enjoy visiting.mp3",
+        "bytes": 105673
+      },
+      {
+        "display": "What time do you start work or class",
+        "file": "what_time_do_you_start_work_or_class.mp3",
+        "original_zip_path": "Single section/Part 2/What time do you start work or class.mp3",
+        "bytes": 59697
+      },
+      {
+        "display": "Describe your hometown.",
+        "file": "describe_your_hometown.mp3",
+        "original_zip_path": "Single section/Part 2/Describe your hometown..mp3",
+        "bytes": 42979
+      },
+      {
+        "display": "What sports do you like",
+        "file": "what_sports_do_you_like.mp3",
+        "original_zip_path": "Single section/Part 2/What sports do you like.mp3",
+        "bytes": 41725
+      },
+      {
+        "display": "skill you have learned recently",
+        "file": "skill_you_have_learned_recently.mp3",
+        "original_zip_path": "Single section/Part 2/skill you have learned recently.mp3",
+        "bytes": 86447
+      },
+      {
+        "display": "classmates or coworkers would you like to have",
+        "file": "classmates_or_coworkers_would_you_like_to_have.mp3",
+        "original_zip_path": "Single section/Part 2/classmates or coworkers would you like to have.mp3",
+        "bytes": 74744
+      },
+      {
+        "display": "Describe an interesting person you met recently",
+        "file": "describe_an_interesting_person_you_met_recently.mp3",
+        "original_zip_path": "Single section/Part 2/Describe an interesting person you met recently.mp3",
+        "bytes": 68474
+      },
+      {
+        "display": "What do you do at the moment",
+        "file": "what_do_you_do_at_the_moment.mp3",
+        "original_zip_path": "Single section/Part 2/What do you do at the moment.mp3",
+        "bytes": 39217
+      },
+      {
+        "display": "usually travel to work or school",
+        "file": "usually_travel_to_work_or_school.mp3",
+        "original_zip_path": "Single section/Part 2/usually travel to work or school.mp3",
+        "bytes": 68474
+      },
+      {
+        "display": "How do you travel to work or class",
+        "file": "how_do_you_travel_to_work_or_class.mp3",
+        "original_zip_path": "Single section/Part 2/How do you travel to work or class.mp3",
+        "bytes": 53010
+      },
+      {
+        "display": "Describe your work experience",
+        "file": "describe_your_work_experience.mp3",
+        "original_zip_path": "Single section/Part 2/Describe your work experience.mp3",
+        "bytes": 50502
+      },
+      {
+        "display": "what do you do",
+        "file": "what_do_you_do.mp3",
+        "original_zip_path": "Single section/Part 2/what do you do.mp3",
+        "bytes": 27514
+      },
+      {
+        "display": "How do you travel to work every day",
+        "file": "how_do_you_travel_to_work_every_day.mp3",
+        "original_zip_path": "Single section/Part 2/How do you travel to work every day.mp3",
+        "bytes": 44233
+      },
+      {
+        "display": "Describe your best friend.",
+        "file": "describe_your_best_friend.mp3",
+        "original_zip_path": "Single section/Part 2/Describe your best friend..mp3",
+        "bytes": 45487
+      },
+      {
+        "display": "What time do you finish work or class",
+        "file": "what_time_do_you_finish_work_or_class.mp3",
+        "original_zip_path": "Single section/Part 2/What time do you finish work or class.mp3",
+        "bytes": 56772
+      },
+      {
+        "display": "What do you do every morning",
+        "file": "what_do_you_do_every_morning.mp3",
+        "original_zip_path": "Single section/Part 2/What do you do every morning.mp3",
+        "bytes": 49248
+      },
+      {
+        "display": "What were your favourite things to do as a child",
+        "file": "what_were_your_favourite_things_to_do_as_a_child.mp3",
+        "original_zip_path": "Single section/Part 2/What were your favourite things to do as a child.mp3",
+        "bytes": 68474
+      },
+      {
+        "display": "technology important nowadays",
+        "file": "technology_important_nowadays.mp3",
+        "original_zip_path": "Single section/Part 2/technology important nowadays.mp3",
+        "bytes": 58025
+      },
+      {
+        "display": "most challenging about your current job or studies",
+        "file": "most_challenging_about_your_current_job_or_studies.mp3",
+        "original_zip_path": "Single section/Part 2/most challenging about your current job or studies.mp3",
+        "bytes": 108181
+      },
+      {
+        "display": "quality in a good manager",
+        "file": "quality_in_a_good_manager.mp3",
+        "original_zip_path": "Single section/Part 2/quality in a good manager.mp3",
+        "bytes": 69728
+      },
+      {
+        "display": "city that you enjoy visiting",
+        "file": "city_that_you_enjoy_visiting.mp3",
+        "original_zip_path": "Single section/Part 2/city that you enjoy visiting.mp3",
+        "bytes": 111942
+      },
+      {
+        "display": "Do you travel by bus or on foot",
+        "file": "do_you_travel_by_bus_or_on_foot.mp3",
+        "original_zip_path": "Single section/Part 2/Do you travel by bus or on foot.mp3",
+        "bytes": 58025
+      },
+      {
+        "display": "What are you doing now",
+        "file": "what_are_you_doing_now.mp3",
+        "original_zip_path": "Single section/Part 2/What are you doing now.mp3",
+        "bytes": 35038
+      },
+      {
+        "display": "working indoors or outdoors",
+        "file": "working_indoors_or_outdoors.mp3",
+        "original_zip_path": "Single section/Part 2/working indoors or outdoors.mp3",
+        "bytes": 90208
+      },
+      {
+        "display": "What new skill do you want to learn and how will you learn it",
+        "file": "what_new_skill_do_you_want_to_learn_and_how_will_you_learn_it.mp3",
+        "original_zip_path": "Single section/Part 2/What new skill do you want to learn and how will you learn it.mp3",
+        "bytes": 72236
+      },
+      {
+        "display": "group work or working alone",
+        "file": "group_work_or_working_alone.mp3",
+        "original_zip_path": "Single section/Part 2/group work or working alone.mp3",
+        "bytes": 67221
+      },
+      {
+        "display": "technology are you using today",
+        "file": "technology_are_you_using_today.mp3",
+        "original_zip_path": "Single section/Part 2/technology are you using today.mp3",
+        "bytes": 49248
+      },
+      {
+        "display": "How do you usually get to work",
+        "file": "how_do_you_usually_get_to_work.mp3",
+        "original_zip_path": "Single section/Part 2/How do you usually get to work.mp3",
+        "bytes": 47994
+      },
+      {
+        "display": "What kind of movies do you like",
+        "file": "what_kind_of_movies_do_you_like.mp3",
+        "original_zip_path": "Single section/Part 2/What kind of movies do you like.mp3",
+        "bytes": 42979
+      },
+      {
+        "display": "who has influenced you. What did they do",
+        "file": "who_has_influenced_you_what_did_they_do.mp3",
+        "original_zip_path": "Single section/Part 2/who has influenced you. What did they do.mp3",
+        "bytes": 87701
+      },
+      {
+        "display": "like to do at weekends",
+        "file": "like_to_do_at_weekends.mp3",
+        "original_zip_path": "Single section/Part 2/like to do at weekends.mp3",
+        "bytes": 58025
+      },
+      {
+        "display": "Tell me about a hobby or activity you enjoy in your free time",
+        "file": "tell_me_about_a_hobby_or_activity_you_enjoy_in_your_free_time.mp3",
+        "original_zip_path": "Single section/Part 2/Tell me about a hobby or activity you enjoy in your free time.mp3",
+        "bytes": 77252
+      },
+      {
+        "display": "group work or single work",
+        "file": "group_work_or_single_work.mp3",
+        "original_zip_path": "Single section/Part 2/group work or single work.mp3",
+        "bytes": 70982
+      },
+      {
+        "display": "Do you like group work or single work",
+        "file": "do_you_like_group_work_or_single_work.mp3",
+        "original_zip_path": "Single section/Part 2/Do you like group work or single work.mp3",
+        "bytes": 69728
+      },
+      {
+        "display": "Who do you live with",
+        "file": "who_do_you_live_with.mp3",
+        "original_zip_path": "Single section/Part 2/Who do you live with.mp3",
+        "bytes": 32530
+      }
+    ]
+  },
+  "audio_match": {
+    "1": {
+      "Where are you from?": "where_are_you_originally_from.mp3",
+      "How old are you?": "how_old_are_you.mp3",
+      "How do you travel to work?": "how_do_you_travel_to_work.mp3",
+      "Do you work or study?": "do_you_work_or_study.mp3",
+      "What is your name?": "what_s_your_name.mp3",
+      "Where do you live?": "where_do_you_live.mp3",
+      "Do you work or do you study?": "do_you_work_or_do_you_study.mp3"
+    },
+    "2": {
+      "Describe your hometown.": "describe_your_hometown.mp3",
+      "What sports do you like?": "what_sports_do_you_like.mp3",
+      "What kind of classmates or coworkers would you like to have?": "classmates_or_coworkers_would_you_like_to_have.mp3",
+      "What are you doing at the moment?": "what_do_you_do_at_the_moment.mp3",
+      "Describe your work experience.": "describe_your_work_experience.mp3",
+      "How do you travel to work every day?": "how_do_you_travel_to_work_every_day.mp3",
+      "Describe your best friend.": "describe_your_best_friend.mp3",
+      "What were your favourite things to do as a child?": "what_were_your_favourite_things_to_do_as_a_child.mp3",
+      "Why is technology important nowadays?": "technology_important_nowadays.mp3",
+      "What is the most important quality in a good manager? Why?": "quality_in_a_good_manager.mp3",
+      "Describe a new skill you want to learn and explain how you plan to learn it.": "what_new_skill_do_you_want_to_learn_and_how_will_you_learn_it.mp3",
+      "What technology are you using today?": "technology_are_you_using_today.mp3",
+      "What kind of films do you like?": "what_kind_of_movies_do_you_like.mp3"
+    }
+  }
+}

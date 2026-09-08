@@ -1,0 +1,100 @@
+/* B1_DASHBOARD_WHATSAPP_V40_2_1 */
+.b1-activation-card-v4021{
+  position:relative!important;
+  isolation:isolate;
+  overflow:hidden!important;
+  border-color:rgba(255,255,255,.28)!important;
+  box-shadow:
+    0 16px 38px rgba(20,54,190,.24),
+    0 0 0 1px rgba(255,255,255,.07) inset,
+    0 0 28px rgba(255,64,88,.10)!important;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important;
+}
+.b1-activation-card-v4021::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  border-radius:inherit;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.12),
+    inset 0 -3px 0 rgba(255,64,88,.82);
+}
+.b1-activation-card-v4021::after{
+  content:"";
+  position:absolute;
+  top:-70%;
+  left:-22%;
+  width:18%;
+  height:240%;
+  z-index:0;
+  pointer-events:none;
+  transform:rotate(17deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.17),transparent);
+  animation:b1ActivationSweepV4021 5.8s ease-in-out infinite;
+}
+.b1-activation-card-v4021:hover{
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,.40)!important;
+  box-shadow:
+    0 20px 44px rgba(20,54,190,.30),
+    0 0 0 1px rgba(255,255,255,.10) inset,
+    0 0 34px rgba(255,64,88,.16)!important;
+}
+.b1-activation-card-v4021 > *{
+  position:relative;
+  z-index:1;
+}
+.b1-activation-whatsapp-v4021{
+  min-width:150px!important;
+  min-height:48px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  padding:0 18px!important;
+  border:1px solid rgba(255,255,255,.90)!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#08775e!important;
+  box-shadow:0 9px 24px rgba(0,0,0,.13)!important;
+  text-decoration:none!important;
+  font-weight:800!important;
+  line-height:1!important;
+  transition:transform .20s ease,box-shadow .20s ease,background .20s ease!important;
+}
+.b1-activation-whatsapp-v4021:hover{
+  transform:translateY(-2px);
+  background:#f4fff9!important;
+  color:#08775e!important;
+  box-shadow:0 13px 30px rgba(0,0,0,.18)!important;
+}
+.b1-activation-whatsapp-v4021 svg{
+  width:20px!important;
+  height:20px!important;
+  flex:0 0 20px;
+  fill:#25d366!important;
+}
+.b1-activation-whatsapp-v4021 .b1-wa-arrow-v4021{
+  color:#ff4058!important;
+  margin-left:2px;
+  font-size:16px;
+}
+@keyframes b1ActivationSweepV4021{
+  0%,58%,100%{left:-22%;opacity:0}
+  66%{opacity:1}
+  85%{left:110%;opacity:0}
+}
+@media(max-width:720px){
+  .b1-activation-whatsapp-v4021{
+    min-width:134px!important;
+    min-height:44px!important;
+    padding:0 14px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .b1-activation-card-v4021::after{animation:none!important}
+  .b1-activation-card-v4021,
+  .b1-activation-whatsapp-v4021{transition:none!important}
+}

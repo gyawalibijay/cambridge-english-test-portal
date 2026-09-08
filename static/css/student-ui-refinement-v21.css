@@ -1,0 +1,187 @@
+/*
+ * STUDENT_UI_REFINEMENT_V21_20260905
+ * Final student-area brand layer, excluded by base.html from Practice and
+ * Mock Test. Uses teal/orange accents and removes payment-page blue.
+ */
+:root{
+  --student-primary:#03bbb7;
+  --student-secondary:#ff6702;
+  --student-ink:#102f30;
+  --student-muted:#4d6869;
+  --student-white:#fff;
+}
+
+/* Payment pages carry their own legacy palette; remap it at the source edge. */
+.pay-page{
+  --pay-blue:var(--student-primary);
+  --pay-deep:var(--student-primary);
+  --pay-ink:var(--student-ink);
+  --pay-muted:var(--student-muted);
+  --pay-line:rgba(3,187,183,.22);
+  --pay-soft:rgba(3,187,183,.07);
+  --pay-red:var(--student-secondary);
+  --pay-green:var(--student-primary);
+  color:var(--student-ink)!important;
+}
+
+.pay-hero,
+.pay-invoice-hero,
+.pay-status-hero,
+.pay-status-hero.status-approved{
+  color:var(--student-white)!important;
+  background:var(--student-primary)!important;
+  box-shadow:0 14px 30px rgba(3,187,183,.18)!important;
+}
+.pay-status-hero.status-rejected{background:var(--student-secondary)!important}
+.pay-hero .pay-kicker,
+.pay-invoice-hero .pay-kicker,
+.pay-status-hero .pay-kicker,
+.pay-hero h1,
+.pay-invoice-hero h1,
+.pay-status-hero h1,
+.pay-hero p,
+.pay-invoice-hero p,
+.pay-status-hero p,
+.pay-invoice-number small{color:var(--student-white)!important}
+.pay-hero-icon,
+.pay-invoice-number,
+.pay-status-icon{
+  border-color:rgba(255,255,255,.42)!important;
+  color:var(--student-white)!important;
+  background:rgba(255,255,255,.12)!important;
+}
+
+.pay-kicker,
+.pay-section-head h2,
+.pay-package-card h3,
+.pay-price-row strong,
+.pay-submit-card h2,
+.pay-method-title,
+.pay-steps strong,
+.pay-status-grid strong{color:var(--student-ink)!important}
+.pay-package-card>p,
+.pay-price-row>span,
+.pay-price-row small,
+.pay-form-intro,
+.pay-summary-row span,
+.pay-method-copy p,
+.pay-security-note,
+.pay-status-grid small,
+.pay-history-row>div:first-child span{color:var(--student-muted)!important}
+
+.pay-package-card,
+.pay-how-card,
+.pay-history-card,
+.pay-summary-card,
+.pay-submit-card,
+.pay-status-card,
+.pay-method-card,
+.pay-steps>div{
+  border-color:rgba(3,187,183,.22)!important;
+  box-shadow:0 12px 28px rgba(3,187,183,.08)!important;
+}
+.pay-package-card{
+  background:
+    radial-gradient(circle at 92% 6%,rgba(3,187,183,.12),transparent 29%),
+    linear-gradient(180deg,#fff 0%,rgba(3,187,183,.035) 100%)!important;
+}
+.pay-package-card::before{background:var(--student-primary)!important}
+.pay-package-card:nth-child(2)::before{
+  background:linear-gradient(90deg,var(--student-primary) 0 68%,var(--student-secondary) 68% 100%)!important;
+}
+.pay-package-card:nth-child(3)::before{background:var(--student-secondary)!important}
+.pay-package-card::after{
+  border-color:rgba(3,187,183,.15)!important;
+  box-shadow:0 0 0 24px rgba(3,187,183,.04),0 0 0 48px rgba(255,103,2,.025)!important;
+}
+.pay-package-card:hover{
+  border-color:var(--student-primary)!important;
+  box-shadow:0 22px 44px rgba(3,187,183,.14)!important;
+}
+
+.pay-package-icon{
+  border-color:rgba(3,187,183,.25)!important;
+  color:var(--student-primary)!important;
+  background:rgba(3,187,183,.09)!important;
+  box-shadow:inset 0 1px 0 #fff,0 8px 18px rgba(3,187,183,.13)!important;
+}
+.pay-package-card:hover .pay-package-icon{box-shadow:inset 0 1px 0 #fff,0 12px 22px rgba(3,187,183,.18)!important}
+.pay-program-tags span,
+.pay-method-badge{
+  border-color:rgba(3,187,183,.24)!important;
+  color:var(--student-primary)!important;
+  background:rgba(3,187,183,.08)!important;
+}
+.pay-price-row,
+.pay-instructions{
+  border-color:rgba(3,187,183,.2)!important;
+  background:rgba(3,187,183,.06)!important;
+}
+
+.pay-btn.primary,
+.pay-steps>div>span{
+  border-color:var(--student-primary)!important;
+  color:var(--student-white)!important;
+  background:var(--student-primary)!important;
+  box-shadow:0 9px 18px rgba(3,187,183,.2)!important;
+}
+.pay-btn.primary:hover{box-shadow:0 12px 24px rgba(3,187,183,.27)!important}
+.pay-btn.outline,
+.pay-breadcrumb a{
+  border-color:var(--student-primary)!important;
+  color:var(--student-primary)!important;
+  background:var(--student-white)!important;
+}
+.pay-status{
+  border-color:rgba(3,187,183,.23)!important;
+  color:var(--student-primary)!important;
+  background:rgba(3,187,183,.08)!important;
+}
+.pay-status.is-pending,
+.pay-status.is-invoice,
+.pay-status.is-initiated,
+.pay-status.is-rejected{
+  border-color:rgba(255,103,2,.27)!important;
+  color:var(--student-secondary)!important;
+  background:rgba(255,103,2,.08)!important;
+}
+.pay-status.is-approved{
+  border-color:rgba(3,187,183,.25)!important;
+  color:var(--student-primary)!important;
+  background:rgba(3,187,183,.09)!important;
+}
+
+.pay-alert,
+.pay-important,
+.pay-alert-warning,
+.pay-review-note{
+  border-color:rgba(255,103,2,.3)!important;
+  color:var(--student-ink)!important;
+  background:rgba(255,103,2,.07)!important;
+}
+.pay-review-note{border-left-color:var(--student-secondary)!important}
+.pay-review-note p{color:var(--student-muted)!important}
+.pay-field label,
+.pay-input{color:var(--student-ink)!important}
+.pay-input{border-color:rgba(3,187,183,.24)!important}
+.pay-input:focus{
+  border-color:var(--student-primary)!important;
+  box-shadow:0 0 0 3px rgba(3,187,183,.12)!important;
+}
+.pay-field-error,
+.pay-form-error{
+  color:var(--student-secondary)!important;
+  background:rgba(255,103,2,.07)!important;
+}
+
+/* Preserve readable neutrals while limiting all accents to the two brand hues. */
+.sf-page-head h1,
+.sf-page-head p,
+.sf-action-card h3,
+.sf-action-card p,
+.sf-profile-main h2,
+.sf-profile-main>p,
+.sf-certificate-intro h2,
+.sf-certificate-intro p,
+.sf-report-copy h2,
+.sf-report-copy>p{opacity:1!important}

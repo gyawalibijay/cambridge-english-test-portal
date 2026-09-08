@@ -1,0 +1,61 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'css/b1-reading-set-builder-v36.css' %}?v=20260908-360">{% endblock %}
+{% block content %}
+<div class="b1r36-page">
+  <div class="b1r36-back"><a href="{% url 'admin:b1_reading_sets' %}">← All Reading Sets</a><a href="/admin/mock-builder/">Mock Builder ↗</a></div>
+  <header class="b1r36-editor-head">
+    <div class="b1r36-part-badge">P{{ part_no }}</div>
+    <div>
+      <span class="b1r36-kicker">READING SET {{ set_no }} · PART {{ part_no }}</span>
+      <h1>{{ guide.title }}</h1>
+      <p>{{ guide.help }}</p>
+    </div>
+    <div class="b1r36-navbuttons">
+      {% if previous_part %}<a href="{% url 'admin:b1_reading_set_part' set_no previous_part %}">← Part {{ previous_part }}</a>{% endif %}
+      {% if next_part %}<a href="{% url 'admin:b1_reading_set_part' set_no next_part %}">Part {{ next_part }} →</a>{% elif next_set %}<a href="{% url 'admin:b1_reading_set_part' next_set 1 %}">Set {{ next_set }} →</a>{% endif %}
+    </div>
+  </header>
+
+  <form method="post" class="b1r36-form">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="save">
+
+    {% if part_no == 4 or part_no == 5 %}
+    <section class="b1r36-shared">
+      <div><span>SHARED READING SOURCE</span><h2>{% if part_no == 4 %}Message / practical text{% else %}Longer reading text{% endif %}</h2><p>All four questions in this Part use this source.</p></div>
+      <textarea name="shared_source" rows="12" required>{{ shared_source }}</textarea>
+    </section>
+    {% endif %}
+
+    <div class="b1r36-question-list">
+      {% for item in rows %}
+      <section class="b1r36-question-card">
+        <header><span>QUESTION {{ item.index }}</span>{% if item.ready %}<b>✓ Ready</b>{% else %}<b class="warn">Needs review</b>{% endif %}</header>
+        {% if part_no == 1 %}
+        <label class="b1r36-field"><span>Short text / notice / message</span><textarea name="q{{ item.index }}_source" rows="5" required>{{ item.source }}</textarea></label>
+        {% endif %}
+        <label class="b1r36-field"><span>{% if part_no == 4 %}Form field label{% else %}Question / sentence{% endif %}</span><textarea name="q{{ item.index }}_prompt" rows="3" required>{{ item.question.prompt_text }}</textarea></label>
+
+        {% if part_no == 1 or part_no == 2 or part_no == 5 %}
+        <div class="b1r36-choice-grid">
+          {% for opt in item.option_slots %}
+          <label class="b1r36-option"><span>{{ opt.label }}</span><input type="text" name="q{{ item.index }}_option_{{ opt.number }}" value="{{ opt.text }}" required></label>
+          {% endfor %}
+        </div>
+        <label class="b1r36-field compact"><span>Correct answer</span><select name="q{{ item.index }}_correct" required><option value="1" {% if item.correct == '1' %}selected{% endif %}>A</option><option value="2" {% if item.correct == '2' %}selected{% endif %}>B</option><option value="3" {% if item.correct == '3' %}selected{% endif %}>C</option></select></label>
+        {% else %}
+        <label class="b1r36-field"><span>Correct answer{% if part_no == 4 %} / accepted wording{% endif %}</span><input type="text" name="q{{ item.index }}_answer" value="{{ item.answers }}" required><small>For alternatives, separate them with <b>|</b>. Example: <code>11 o'clock | 11 a.m.</code></small></label>
+        {% endif %}
+        <div class="b1r36-id">Stored as <code>{{ item.question.title }}</code> · Question ID {{ item.question.pk }}</div>
+      </section>
+      {% endfor %}
+    </div>
+
+    <div class="b1r36-savebar"><div><b>Set {{ set_no }} · Part {{ part_no }}</b><span>Saving edits keeps the same Question IDs, so existing Mock placements remain connected.</span></div><button class="b1r36-btn primary" type="submit">Save Part</button></div>
+  </form>
+
+  <form method="post" class="b1r36-restore" onsubmit="return confirm('Restore this Part exactly from the supplied 50-set source document? Your edits to this Part will be replaced.');">{% csrf_token %}<input type="hidden" name="action" value="restore"><span><b>Need to undo an edit?</b> Restore only this Set/Part from the supplied source workbook.</span><button type="submit">Restore source version</button></form>
+</div>
+{% endblock %}
+

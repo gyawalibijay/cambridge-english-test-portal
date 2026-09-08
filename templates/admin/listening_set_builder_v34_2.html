@@ -1,0 +1,262 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div
+  class="b1ls-page b1ls-v346"
+  data-listening-builder
+  data-initial-part="{{ initial_part }}"
+  data-initial-pattern="{{ initial_pattern }}"
+>
+  {{ server_draft|json_script:"b1-listening-server-draft" }}
+
+  <header class="b1ls-page-head">
+    <div>
+      <a class="b1ls-back" href="{% url 'admin:b1_listening_sets' %}">← Listening Sets</a>
+      <span class="b1ls-kicker">CAMBRIDGE · LISTENING BUILDER</span>
+      <h1>Add Listening Questions</h1>
+      <p>Choose the Set and Part first. Then choose the task pattern shown in your actual listening material.</p>
+    </div>
+  </header>
+
+  <section class="b1ls-v346-guide">
+    <div>
+      <span>IMPORTANT</span>
+      <strong>Part number and task pattern are separate.</strong>
+    </div>
+    <p>
+      Part 1 does not automatically mean one fixed question type, and Part 2 does not automatically mean another.
+      Follow the real audio/question material you have, then choose the matching task pattern below.
+    </p>
+  </section>
+
+  <div class="b1ls-v346-error" data-builder-error hidden>
+    <strong>Could not save yet</strong>
+    <span data-builder-error-text></span>
+  </div>
+
+  <div class="b1ls-v346-draft" data-draft-status hidden>
+    <span>Unsaved text draft restored.</span>
+    <button type="button" data-clear-draft>Clear draft</button>
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="b1ls-builder-form" data-listening-form novalidate>
+    {% csrf_token %}
+
+    <section class="b1ls-form-section">
+      <div class="b1ls-section-head">
+        <span class="b1ls-step">01</span>
+        <div>
+          <h2>Set, Part and task pattern</h2>
+          <p>The Part classifies where it belongs. The task pattern controls how the student answers.</p>
+        </div>
+      </div>
+
+      <div class="b1ls-form-grid is-four">
+        <label class="b1ls-field">
+          <span>Set number</span>
+          <input type="number" name="set_no" min="1" max="99" value="{{ initial_set }}" required>
+          <small>Example: Set 1, Set 2, Set 3…</small>
+        </label>
+
+        <label class="b1ls-field">
+          <span>Listening Part</span>
+          <select name="part_no" data-part-select required>
+            {% for number, guide in part_guide.items %}
+            <option value="{{ number }}" {% if initial_part == number %}selected{% endif %}>
+              Part {{ number }}
+            </option>
+            {% endfor %}
+          </select>
+          <small data-part-help></small>
+        </label>
+
+        <label class="b1ls-field">
+          <span>Task pattern</span>
+          <select name="task_pattern" data-pattern-select required>
+            {% for value, pattern in task_patterns.items %}
+            <option value="{{ value }}" {% if initial_pattern == value %}selected{% endif %}>
+              {{ pattern.label }}
+            </option>
+            {% endfor %}
+          </select>
+          <small data-pattern-help></small>
+        </label>
+
+        <div class="b1ls-field">
+          <span>Availability</span>
+          <label class="b1ls-switch-row">
+            <input type="checkbox" name="published" checked>
+            <span class="b1ls-switch"></span>
+            <b>Keep Listening practice available</b>
+          </label>
+          <small>This does not unpublish the existing student Listening practice.</small>
+        </div>
+      </div>
+
+      <div class="b1ls-v346-rule">
+        <b>Example:</b>
+        Part 1 + “Short recording → choose one answer / reply” means the student hears the audio, sees 3 choices and selects exactly 1.
+      </div>
+
+      <label class="b1ls-replace">
+        <input type="checkbox" name="replace_existing">
+        <span>
+          <strong>Replace existing questions in this exact Set + Part</strong>
+          <small>Only use this when intentionally rebuilding this same Set + Part. Other Sets and Parts are left alone.</small>
+        </span>
+      </label>
+    </section>
+
+    <section class="b1ls-form-section">
+      <div class="b1ls-section-head">
+        <span class="b1ls-step">02</span>
+        <div>
+          <h2>Audio tracks</h2>
+          <p>Three tracks are shown by default. Add another only when the source material needs it.</p>
+        </div>
+        <button type="button" class="b1ls-small-btn" data-add-track>＋ Add audio track</button>
+      </div>
+
+      <div class="b1ls-audio-grid" data-audio-grid>
+        {% for i in "12345678" %}
+        <label class="b1ls-audio-card" data-audio-card="{{ forloop.counter }}">
+          <span class="b1ls-audio-index">TRACK {{ forloop.counter|stringformat:"02d" }}</span>
+          <div class="b1ls-audio-icon">♫</div>
+          <strong>Upload audio track {{ forloop.counter }}</strong>
+          <small>MP3, WAV, M4A, OGG, WEBM or AAC.</small>
+          <input type="file" name="audio_{{ forloop.counter }}" accept="audio/*,.mp3,.wav,.m4a,.ogg,.webm,.aac">
+        </label>
+        {% endfor %}
+      </div>
+
+      <p class="b1ls-v346-file-note">
+        Your typed question data is auto-saved in the browser while you work.
+        Audio files remain selected when validation is caught on this page.
+        A full browser refresh cannot restore file inputs because browsers block that for security.
+      </p>
+    </section>
+
+    <section class="b1ls-form-section">
+      <div class="b1ls-section-head">
+        <span class="b1ls-step">03</span>
+        <div>
+          <h2>Questions and answer key</h2>
+          <p>No transcript, CEFR level or difficulty field is required here.</p>
+        </div>
+        <button type="button" class="b1ls-small-btn" data-add-question>＋ Add question</button>
+      </div>
+
+      <input type="hidden" name="question_count" value="1" data-question-count>
+
+      <div class="b1ls-v346-pattern-summary">
+        <small>CURRENT TASK PATTERN</small>
+        <strong data-pattern-label></strong>
+        <span data-pattern-summary></span>
+      </div>
+
+      <div class="b1ls-question-list" data-question-list>
+        {% for i in "1234567890" %}
+        <article class="b1ls-question-card" data-question-card="{{ forloop.counter }}">
+          <header>
+            <div>
+              <span>QUESTION {{ forloop.counter|stringformat:"02d" }}</span>
+              <h3>Listening question {{ forloop.counter }}</h3>
+            </div>
+            <button type="button" data-remove-question aria-label="Remove question">×</button>
+          </header>
+
+          <div class="b1ls-form-grid is-two">
+            <label class="b1ls-field">
+              <span>Audio track used by this question</span>
+              <select name="q{{ forloop.counter }}_track" data-track-select required>
+                {% for n in "12345678" %}
+                <option value="{{ forloop.counter }}">Track {{ forloop.counter }}</option>
+                {% endfor %}
+              </select>
+              <small>Several questions may use the same track when one recording has multiple questions.</small>
+            </label>
+
+            <div class="b1ls-field">
+              <span>Student display</span>
+              <div class="b1ls-mini-help" data-question-display-help>
+                The audio player and the selected task pattern are displayed using the existing student Listening design.
+              </div>
+            </div>
+          </div>
+
+          <label class="b1ls-field b1ls-optional-instruction">
+            <span>Student instruction <em>optional</em></span>
+            <textarea name="q{{ forloop.counter }}_text" rows="2" placeholder="Leave blank when the audio itself contains the question."></textarea>
+            <small>Do not paste the audio script/transcript. Add text only when the student genuinely needs a written instruction or question.</small>
+          </label>
+
+          <div class="b1ls-answer-panel" data-single-panel>
+            <div class="b1ls-answer-title">
+              <strong>3 answer choices · exactly 1 correct answer</strong>
+              <small>The student selects only one. The other two are answer choices/distractors, not extra correct answers.</small>
+            </div>
+
+            <label class="b1ls-clean-option-row">
+              <input type="radio" name="q{{ forloop.counter }}_correct" value="1">
+              <input type="text" name="q{{ forloop.counter }}_option_1" placeholder="First answer choice">
+              <span>Mark correct</span>
+            </label>
+
+            <label class="b1ls-clean-option-row">
+              <input type="radio" name="q{{ forloop.counter }}_correct" value="2">
+              <input type="text" name="q{{ forloop.counter }}_option_2" placeholder="Second answer choice">
+              <span>Mark correct</span>
+            </label>
+
+            <label class="b1ls-clean-option-row">
+              <input type="radio" name="q{{ forloop.counter }}_correct" value="3">
+              <input type="text" name="q{{ forloop.counter }}_option_3" placeholder="Third answer choice">
+              <span>Mark correct</span>
+            </label>
+          </div>
+
+          <div class="b1ls-answer-panel" data-short-panel hidden>
+            <div class="b1ls-answer-title">
+              <strong>Accepted answer</strong>
+              <small>The student types one answer. Put alternative accepted forms on separate lines if needed.</small>
+            </div>
+            <label class="b1ls-field">
+              <span>Accepted answer(s)</span>
+              <textarea name="q{{ forloop.counter }}_short_answer" rows="3" placeholder="Correct answer"></textarea>
+            </label>
+          </div>
+
+          <div class="b1ls-answer-panel" data-order-panel hidden>
+            <div class="b1ls-answer-title">
+              <strong>Ordering items</strong>
+              <small>Enter each item, then give the correct order. The key labels are for administration only.</small>
+            </div>
+            <label class="b1ls-field">
+              <span>Items</span>
+              <textarea name="q{{ forloop.counter }}_ordering_items" rows="6" placeholder="A | First item&#10;B | Second item&#10;C | Third item"></textarea>
+            </label>
+            <label class="b1ls-field">
+              <span>Correct order</span>
+              <input type="text" name="q{{ forloop.counter }}_correct_order" placeholder="Example: B,C,A">
+            </label>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="b1ls-save-bar">
+      <div>
+        <strong>Ready to save?</strong>
+        <small>Validation happens before any page reload. If there is a problem, your entered text stays on screen.</small>
+      </div>
+      <div>
+        <a href="{% url 'admin:b1_listening_sets' %}" class="b1ls-cancel-btn">Cancel</a>
+        <button type="submit" name="save_another" value="1" class="b1ls-secondary-btn">Save + next Part</button>
+        <button type="submit" class="b1ls-primary-btn">Save Listening Part</button>
+      </div>
+    </section>
+  </form>
+</div>
+{% endblock %}
+

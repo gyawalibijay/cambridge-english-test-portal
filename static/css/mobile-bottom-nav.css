@@ -1,0 +1,27 @@
+/* One shared mobile navigation: the desktop sidebar is unchanged. */
+.portal-bottom-nav{display:none}
+@media(max-width:860px){
+  .portal-bottom-nav{position:fixed;inset:auto 0 0;z-index:30;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));min-height:68px;padding:8px 8px max(8px,env(safe-area-inset-bottom));border-top:1px solid #e7ebe9;background:#fff}
+  .portal-bottom-nav a{display:flex;min-width:0;align-items:center;justify-content:center;flex-direction:column;gap:4px;padding:6px 1px;color:#66746f;text-decoration:none;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:10px;font-weight:500;line-height:1.25}
+  .portal-bottom-nav a.is-active{color:#04938d}
+  .portal-bottom-nav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .portal-bottom-nav a.is-active svg{stroke:#04bbb4;stroke-width:2.2}
+}
+.portal-bottom-nav a:focus-visible{outline:2px solid #04938d;outline-offset:-2px;border-radius:6px}
+
+/* MOBILE BOTTOM NAV SAFARI POLISH V14.6 */
+@media(max-width:860px){
+  .portal-bottom-nav{min-height:68px;padding-bottom:max(8px,env(safe-area-inset-bottom))}
+  html.portal-ios-safari{--portal-safari-lift:10px}
+  html.portal-ios-safari .portal-bottom-nav{
+    left:10px;right:10px;bottom:calc(var(--portal-safari-lift,10px) + env(safe-area-inset-bottom));
+    min-height:62px;padding:7px 7px 8px;border:1px solid #dfe6ee;border-radius:17px;background:rgba(255,255,255,.97);
+    box-shadow:0 12px 32px rgba(17,42,90,.16);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+  }
+  html.portal-ios-safari .portal-bottom-nav a{min-height:46px;border-radius:11px}
+  html.portal-ios-safari .portal-bottom-nav svg{width:21px;height:21px}
+  html.portal-ios-safari .sf-main{padding-bottom:calc(90px + var(--portal-safari-lift,10px) + env(safe-area-inset-bottom))!important}
+  html.portal-ios-safari .ref-dashboard,html.portal-ios-safari .practice-ref-page{
+    padding-bottom:calc(92px + var(--portal-safari-lift,10px) + env(safe-area-inset-bottom))!important
+  }
+}

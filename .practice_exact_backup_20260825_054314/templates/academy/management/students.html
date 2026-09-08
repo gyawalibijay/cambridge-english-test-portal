@@ -1,0 +1,44 @@
+{% extends "academy/management/base.html" %}
+
+{% block title %}Students{% endblock %}
+{% block header %}Students{% endblock %}
+
+{% block content %}
+<div class="pv2-page-title">
+  <div>
+    <div class="pv2-eyebrow">Access users</div>
+    <h1>Students with active access</h1>
+    <p>See which students currently have access to the test systems this admin account manages.</p>
+  </div>
+</div>
+
+<div class="pv2-card pv2-panel pv2-table-scroll">
+  <table class="pv2-admin-table">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Email</th>
+        <th>Active test systems</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for row in student_rows %}
+      <tr>
+        <td><strong>{{ row.user.get_full_name|default:row.user.username }}</strong></td>
+        <td>{{ row.user.email }}</td>
+        <td>
+          <div class="pv2-program-tags">
+            {% for program in row.programs %}
+            <span class="pv2-program-tag">{{ program.short_name|default:program.name }}</span>
+            {% endfor %}
+          </div>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3">No students have active access yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

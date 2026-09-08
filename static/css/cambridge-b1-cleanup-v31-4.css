@@ -1,0 +1,93 @@
+/* CAMBRIDGE_B1_CLEANUP_V31_4_20260906
+   Only sticky conversion CTA typography/button refinements. */
+
+/* English + Nepali text, no punctuation separator. */
+.b1x-page .b1x-sticky-cta>div strong{
+  display:flex!important;
+  align-items:baseline!important;
+  flex-wrap:wrap!important;
+  column-gap:.42em!important;
+  row-gap:2px!important;
+}
+
+.b1x-page .b1x-sticky-copy-en{
+  font-family:var(--b1x-hero-font)!important;
+  font-weight:650!important;
+}
+
+.b1x-page .b1x-sticky-copy-ne{
+  font-family:var(--b1x-nepali)!important;
+  font-weight:600!important;
+}
+
+/* Arya/Cambridge blue first, with the red brand accent carried by the arrow. */
+.b1x-page .b1x-sticky-cta>a{
+  position:relative!important;
+  overflow:hidden!important;
+  gap:14px!important;
+  color:#fff!important;
+  background:linear-gradient(135deg,#243ac7 0%,#4056e9 58%,#495ef0 100%)!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  box-shadow:0 12px 28px rgba(37,59,199,.24)!important;
+}
+
+.b1x-page .b1x-sticky-cta>a:hover{
+  color:#fff!important;
+  background:linear-gradient(135deg,#1d32b5 0%,#354bdd 60%,#4358e9 100%)!important;
+  box-shadow:0 15px 34px rgba(37,59,199,.30)!important;
+}
+
+.b1x-page .b1x-sticky-cta>a>span{
+  display:grid!important;
+  width:30px!important;
+  height:30px!important;
+  min-width:30px!important;
+  place-items:center!important;
+  border-radius:50%!important;
+  color:#fff!important;
+  background:#e83d55!important;
+  box-shadow:0 6px 14px rgba(232,61,85,.28)!important;
+  font-size:14px!important;
+  line-height:1!important;
+}
+
+@media (max-width:700px){
+  /* User-requested mobile treatment: Nepali is a true second line. */
+  .b1x-page .b1x-sticky-cta>div strong{
+    display:block!important;
+    width:100%!important;
+    text-align:center!important;
+    line-height:1.3!important;
+  }
+
+  .b1x-page .b1x-sticky-copy-en{
+    display:block!important;
+    width:100%!important;
+    font-size:14px!important;
+    line-height:1.3!important;
+  }
+
+  .b1x-page .b1x-sticky-copy-ne{
+    display:block!important;
+    width:100%!important;
+    margin-top:5px!important;
+    font-family:var(--b1x-nepali)!important;
+    font-size:15px!important;
+    font-weight:600!important;
+    line-height:1.35!important;
+  }
+
+  .b1x-page .b1x-sticky-cta>a{
+    min-height:56px!important;
+    justify-content:center!important;
+    gap:12px!important;
+    border-radius:999px!important;
+    font-size:14px!important;
+  }
+
+  .b1x-page .b1x-sticky-cta>a>span{
+    width:28px!important;
+    height:28px!important;
+    min-width:28px!important;
+  }
+}

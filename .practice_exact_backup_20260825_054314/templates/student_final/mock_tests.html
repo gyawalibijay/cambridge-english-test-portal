@@ -1,0 +1,60 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Mock Tests | Upskill Practice{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">MOCK TEST CENTRE</div>
+  <h1>Ready for the real test?</h1>
+  <p>Experience a complete Cambridge Upskill-style English Test simulation.</p>
+</section>
+
+{% if featured %}
+<section class="sf-featured-mock">
+  <div class="sf-featured-top">
+    <div>
+      <div class="sf-kicker sf-kicker-light">FULL MOCK TEST</div>
+      <h2>{{ featured.title }}</h2>
+      <p>{{ featured.description|default:"All four skills in exam order, under exam conditions. Reading and Listening are automatically marked; Writing and Speaking receive structured practice feedback." }}</p>
+      <div class="sf-mock-meta">
+        <div><small>DURATION</small><strong>{% if featured.duration_minutes %}{{ featured.duration_minutes }} min{% else %}Timed{% endif %}</strong></div>
+        <div><small>TARGET</small><strong>{{ target_level }} standard</strong></div>
+        <div><small>STATUS</small><strong>Available</strong></div>
+      </div>
+    </div>
+    <a class="sf-light-button" href="/practice/test/{{ featured.slug }}/">Start Mock Test <span>→</span></a>
+  </div>
+  <div class="sf-featured-sections">
+    {% for section in featured_sections %}
+      <div><small>SECTION {{ forloop.counter }}</small><strong>{{ section.title }}</strong><span>{% if section.duration_seconds %}{{ section.duration_seconds }} sec{% else %}Timed section{% endif %}</span></div>
+    {% empty %}
+      <div><small>SECTION 1</small><strong>Reading</strong><span>Timed section</span></div>
+      <div><small>SECTION 2</small><strong>Writing</strong><span>Timed section</span></div>
+      <div><small>SECTION 3</small><strong>Listening</strong><span>Timed section</span></div>
+      <div><small>SECTION 4</small><strong>Speaking</strong><span>Timed section</span></div>
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+<section class="sf-empty"><h2>No full mock is published yet</h2><p>Publish a full mock test from the administration area and it will appear here automatically.</p></section>
+{% endif %}
+
+<section class="sf-three-grid sf-info-row">
+  <article class="sf-action-card"><div class="sf-action-icon">▱</div><h3>Section practice</h3><p>Take a single mock section instead of the full test.</p></article>
+  <article class="sf-action-card"><div class="sf-action-icon">✓</div><h3>Automatic scoring</h3><p>Reading and Listening are marked when objective answers are available.</p></article>
+  <article class="sf-action-card"><div class="sf-action-icon">♙</div><h3>Practice report</h3><p>Completed attempts can generate a downloadable practice Test Report.</p></article>
+</section>
+
+<section class="sf-history">
+  <h2>Test history</h2>
+  <div class="sf-history-list">
+    {% for row in test_history %}
+      <div class="sf-history-row">
+        <div><strong>{{ row.title }}</strong><span>{{ row.date|date:"d M Y" }} · Attempt {{ row.attempt.id }}</span></div>
+        <div class="sf-history-score">{% if row.score != None %}<span>{{ target_level }}</span><strong>{{ row.score|floatformat:0 }}%</strong>{% else %}<strong>Pending</strong>{% endif %}</div>
+        <a href="/certificates/report/{{ row.attempt.id }}/">View report</a>
+      </div>
+    {% empty %}
+      <div class="sf-empty-row">Your completed mock tests will appear here.</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

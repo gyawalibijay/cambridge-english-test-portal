@@ -1,0 +1,87 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/mock-builder-v35-part1.css' %}?v=20260908-350">
+{% endblock %}
+
+{% block content %}
+<div class="mb35-page">
+  <header class="mb35-hero">
+    <div>
+      <span class="mb35-kicker">CAMBRIDGE · FULL MOCK TEST BUILDER · PART {{ mock_builder_part }}</span>
+      <h1>Build complete mock tests without duplicating questions.</h1>
+      <p>
+        Create a Full Mock, then assign Reading → Listening → Speaking → Writing.
+        Practice questions stay in the Question Bank and can be reused safely.
+      </p>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="create">
+      <button class="mb35-btn primary" type="submit">+ Create Mock Test</button>
+    </form>
+  </header>
+
+  <section class="mb35-flow">
+    <div><span>01</span><b>Create</b><small>Make Mock Test 01, 02, 03…</small></div>
+    <i>→</i>
+    <div><span>02</span><b>Build skills</b><small>Reading → Listening → Speaking → Writing</small></div>
+    <i>→</i>
+    <div><span>03</span><b>Assign Parts</b><small>Copy a Practice Set or choose existing questions.</small></div>
+    <i>→</i>
+    <div><span>04</span><b>Publish</b><small>Only after the readiness check passes.</small></div>
+  </section>
+
+  <section class="mb35-section-head">
+    <div>
+      <span class="mb35-kicker">YOUR MOCK TESTS</span>
+      <h2>Full Mock workspace</h2>
+    </div>
+    <a class="mb35-link" href="/mock-tests/" target="_blank" rel="noopener">Open student Mock page ↗</a>
+  </section>
+
+  {% if mocks %}
+  <div class="mb35-mock-grid">
+    {% for item in mocks %}
+    <article class="mb35-mock-card">
+      <div class="mb35-card-top">
+        <span class="mb35-mock-icon">✓</span>
+        {% if item.published %}
+          <span class="mb35-status live">Published</span>
+        {% elif item.ready %}
+          <span class="mb35-status ready">Ready</span>
+        {% else %}
+          <span class="mb35-status draft">Draft</span>
+        {% endif %}
+      </div>
+      <h3>{{ item.mock.title }}</h3>
+      <p>{{ item.ready_skills }}/4 skills ready · {{ item.questions }} questions assigned</p>
+
+      <div class="mb35-progress">
+        <span style="width:{% widthratio item.ready_skills 4 100 %}%"></span>
+      </div>
+
+      <a class="mb35-btn primary full" href="{% url 'admin:b1_mock_builder_detail' item.mock.pk %}">
+        Open Builder →
+      </a>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <section class="mb35-empty">
+    <span>✓</span>
+    <h2>No Full Mock has been created yet.</h2>
+    <p>Click <b>Create Mock Test</b>. Nothing from Practice will be deleted.</p>
+  </section>
+  {% endif %}
+
+  <aside class="mb35-note">
+    <b>Part 1 safety:</b>
+    This builder changes only Full Mock structure and PartQuestion placements.
+    It does not delete Practice questions, Reading passages, Listening audio,
+    Speaking prompts, Writing tasks, attempts or results.
+  </aside>
+</div>
+{% endblock %}

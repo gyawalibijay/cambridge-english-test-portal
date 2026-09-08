@@ -1,0 +1,114 @@
+{% load portal_nav %}
+
+{% portal_nav_active request "dashboard" as nav_dashboard %}
+{% portal_nav_active request "practice" as nav_practice %}
+{% portal_nav_active request "courses" as nav_courses %}
+{% portal_nav_active request "store" as nav_store %}
+{% portal_nav_active request "results" as nav_results %}
+{% portal_nav_active request "profile" as nav_profile %}
+{% portal_nav_active request "management" as nav_management %}
+{% portal_user_initial request.user as user_initial %}
+{% portal_profile_photo request.user as profile_photo_url %}
+
+<header class="pv2-topbar portal-shared-header">
+  <div class="pv2-topbar-inner">
+
+    <a class="pv2-app-brand" href="{% url 'dashboard' %}">
+      <span class="pv2-brand-mark">ST</span>
+      <span>
+        <strong>Upskill Practice</strong>
+        <small>Student Portal</small>
+      </span>
+    </a>
+
+    <nav class="pv2-topnav portal-main-nav" aria-label="Main navigation">
+      <a class="{{ nav_dashboard }}" href="{% url 'dashboard' %}">
+        Dashboard
+      </a>
+
+      <a class="{{ nav_practice }}" href="/practice/cambridge/">
+        Practice
+      </a>
+
+      <a class="{{ nav_courses }}" href="/courses/">
+        Courses
+      </a>
+
+      <a class="{{ nav_store }}" href="/store/">
+        Test Access
+      </a>
+
+      <a class="{{ nav_results }}" href="/results/">
+        Results
+      </a>
+
+      <a class="{{ nav_profile }}" href="{% url 'profile' %}">
+        Profile
+      </a>
+
+      {% if request.user.is_superuser or request.user.is_staff or request.user.role == "admin" %}
+      <a class="{{ nav_management }}" href="/management/">
+        Management
+      </a>
+      {% endif %}
+    </nav>
+
+    <div class="pv2-userbox portal-user-actions">
+      <button
+        type="button"
+        class="pv2-theme-toggle"
+        data-theme-toggle
+        title="Toggle light/dark mode"
+        aria-label="Toggle light/dark mode"
+      >
+        <span data-theme-icon>☾</span>
+      </button>
+
+      <a
+        href="{% url 'profile' %}"
+        class="pv2-avatar"
+        title="My profile"
+        aria-label="My profile"
+        style="overflow:hidden"
+      >
+        {% if profile_photo_url %}
+          <img
+            src="{{ profile_photo_url }}"
+            alt="{{ request.user.get_full_name|default:request.user.username }}"
+            style="width:100%;height:100%;object-fit:cover"
+          >
+        {% else %}
+          {{ user_initial }}
+        {% endif %}
+      </a>
+
+      <div class="name portal-user-name">
+        <strong>
+          {{ request.user.get_full_name|default:request.user.username }}
+        </strong>
+        <span>
+          {% if request.user.is_superuser %}
+            Super Admin
+          {% elif request.user.is_staff or request.user.role == "admin" %}
+            Admin
+          {% elif request.user.role == "evaluator" %}
+            Evaluator
+          {% else %}
+            Student
+          {% endif %}
+        </span>
+      </div>
+
+      <form method="post" action="{% url 'logout' %}" class="portal-logout-form">
+        {% csrf_token %}
+        <button
+          class="pv2-btn pv2-btn-outline portal-signout"
+          type="submit"
+        >
+          Sign out
+        </button>
+      </form>
+    </div>
+
+  </div>
+</header>

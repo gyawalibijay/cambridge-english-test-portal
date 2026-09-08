@@ -1,0 +1,605 @@
+/*
+ * CAMBRIDGE_B1_MOBILE_V31_1_20260905
+ * Mobile hero/header refinement based on the supplied WebVeda reference.
+ *
+ * IMPORTANT:
+ * - Mobile only (<=700px).
+ * - Desktop is untouched.
+ * - Existing content, routes, links, image assets and JavaScript stay intact.
+ * - Uses the project's existing hero-webveda.png as the full hero background.
+ */
+
+@media (max-width:700px){
+
+  /* -----------------------------------------------------------------------
+     1. MOBILE HEADER
+     Compact white bar: brand left, Dashboard/Login pill + menu right.
+     ----------------------------------------------------------------------- */
+  html,
+  body.b1x-page{
+    overflow-x:hidden!important;
+  }
+
+  .b1x-page .b1x-header{
+    position:sticky!important;
+    top:0!important;
+    z-index:1000!important;
+    height:76px!important;
+    min-height:76px!important;
+    border-bottom:1px solid rgba(17,25,86,.07)!important;
+    background:rgba(255,255,255,.98)!important;
+    box-shadow:none!important;
+    -webkit-backdrop-filter:blur(16px)!important;
+    backdrop-filter:blur(16px)!important;
+  }
+
+  .b1x-page .b1x-header .b1x-shell,
+  .b1x-page .b1x-header-inner{
+    width:calc(100% - 26px)!important;
+    max-width:none!important;
+    min-height:76px!important;
+    height:76px!important;
+    margin:0 auto!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:10px!important;
+  }
+
+  .b1x-page .b1x-brand{
+    min-width:0!important;
+    max-width:244px!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:8px!important;
+  }
+
+  .b1x-page .b1x-brand-logo{
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    max-width:40px!important;
+    flex:0 0 40px!important;
+    object-fit:contain!important;
+    border-radius:4px!important;
+  }
+
+  .b1x-page .b1x-brand-name{
+    display:block!important;
+    min-width:0!important;
+    max-width:184px!important;
+    color:#111827!important;
+    font-size:12.5px!important;
+    font-weight:700!important;
+    line-height:1.05!important;
+    letter-spacing:-.035em!important;
+    white-space:nowrap!important;
+  }
+
+  .b1x-page .b1x-brand-name small{
+    display:block!important;
+    margin-top:4px!important;
+    color:#707785!important;
+    font-size:5.7px!important;
+    font-weight:600!important;
+    line-height:1!important;
+    letter-spacing:.11em!important;
+    text-transform:uppercase!important;
+  }
+
+  .b1x-page .b1x-nav{
+    display:none!important;
+  }
+
+  .b1x-page .b1x-header-actions{
+    display:flex!important;
+    flex:0 0 auto!important;
+    align-items:center!important;
+    gap:8px!important;
+  }
+
+  .b1x-page .b1x-header-cta{
+    display:none!important;
+  }
+
+  .b1x-page .b1x-login{
+    min-width:111px!important;
+    height:44px!important;
+    min-height:44px!important;
+    padding:0 17px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border:1px solid #d7d9df!important;
+    border-radius:999px!important;
+    color:#14213d!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    font-size:14px!important;
+    font-weight:500!important;
+    line-height:1!important;
+  }
+
+  .b1x-page .b1x-menu-toggle{
+    width:46px!important;
+    height:44px!important;
+    min-width:46px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex-direction:column!important;
+    gap:5px!important;
+    padding:0!important;
+    border:0!important;
+    border-radius:13px!important;
+    background:#f4f5f7!important;
+    box-shadow:none!important;
+  }
+
+  .b1x-page .b1x-menu-toggle span{
+    width:18px!important;
+    height:2px!important;
+    margin:0!important;
+    border-radius:999px!important;
+    background:#111827!important;
+  }
+
+  /* -----------------------------------------------------------------------
+     2. FULL-BLEED MOBILE HERO
+     The photo is the hero background. No separate portrait/card on mobile.
+     ----------------------------------------------------------------------- */
+  .b1x-page .b1x-hero,
+  .b1x-page .b1x-hero-v5,
+  .b1x-page .b1x-hero-v24{
+    position:relative!important;
+    width:100%!important;
+    min-height:calc(100svh - 76px)!important;
+    height:auto!important;
+    max-height:none!important;
+    margin:0!important;
+    overflow:hidden!important;
+    isolation:isolate!important;
+    background:#321f18!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo{
+    position:absolute!important;
+    z-index:0!important;
+    top:0!important;
+    right:0!important;
+    bottom:0!important;
+    left:0!important;
+    display:block!important;
+    opacity:1!important;
+    background-image:url("../images/public/cambridge-b1/hero-webveda.png")!important;
+    /*
+      On the desktop composite the coach sits on the right.
+      This mobile crop moves him toward the center and lower in the frame,
+      leaving a calm dark area behind the headline/CTA like the reference.
+    */
+    background-size:auto 94%!important;
+    background-repeat:no-repeat!important;
+    background-position:84% calc(100% + 92px)!important;
+    filter:saturate(.84) contrast(1.02)!important;
+    transform:none!important;
+    will-change:auto!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-shade{
+    position:absolute!important;
+    z-index:1!important;
+    inset:0!important;
+    display:block!important;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(35,21,16,.78) 0%,
+        rgba(36,21,16,.56) 31%,
+        rgba(28,15,12,.20) 58%,
+        rgba(20,10,8,.69) 100%
+      )!important;
+    pointer-events:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24::before{
+    content:""!important;
+    position:absolute!important;
+    z-index:1!important;
+    inset:0!important;
+    display:block!important;
+    background:
+      radial-gradient(circle at 50% 22%,rgba(0,0,0,.04),rgba(0,0,0,.18) 52%,rgba(0,0,0,.30) 100%)!important;
+    pointer-events:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24::after{
+    content:""!important;
+    position:absolute!important;
+    z-index:2!important;
+    right:0!important;
+    bottom:0!important;
+    left:0!important;
+    display:block!important;
+    height:180px!important;
+    background:linear-gradient(0deg,rgba(18,9,7,.82),rgba(18,9,7,0))!important;
+    pointer-events:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{
+    position:relative!important;
+    z-index:4!important;
+    width:calc(100% - 30px)!important;
+    max-width:500px!important;
+    min-height:calc(100svh - 76px)!important;
+    margin:0 auto!important;
+    padding:38px 0 28px!important;
+    display:flex!important;
+    align-items:flex-start!important;
+    justify-content:flex-start!important;
+    text-align:center!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-copy{
+    position:relative!important;
+    z-index:5!important;
+    width:100%!important;
+    max-width:none!important;
+    min-height:calc(100svh - 142px)!important;
+    margin:0!important;
+    display:flex!important;
+    align-items:center!important;
+    flex-direction:column!important;
+    text-align:center!important;
+  }
+
+  /* -----------------------------------------------------------------------
+     3. PROOF + HEADLINE + SUBTITLE + CTA
+     Compact centred stack on top of the photograph.
+     ----------------------------------------------------------------------- */
+  .b1x-page .b1x-hero-v24 .b1x-proof{
+    width:auto!important;
+    max-width:100%!important;
+    min-height:25px!important;
+    margin:0 auto 22px!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:9px!important;
+    color:#fff!important;
+    font-size:10.5px!important;
+    font-weight:650!important;
+    line-height:1.25!important;
+    letter-spacing:-.015em!important;
+    text-align:center!important;
+    text-shadow:0 2px 14px rgba(0,0,0,.72)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-proof .b1x-proof-avatars{
+    position:relative!important;
+    width:52px!important;
+    height:23px!important;
+    min-width:52px!important;
+    flex:0 0 52px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-proof-avatars img{
+    position:absolute!important;
+    top:0!important;
+    width:23px!important;
+    height:23px!important;
+    border:1.5px solid rgba(255,255,255,.95)!important;
+    border-radius:50%!important;
+    object-fit:cover!important;
+    box-shadow:0 2px 9px rgba(0,0,0,.26)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-proof-avatars img:nth-child(1){left:0!important}
+  .b1x-page .b1x-hero-v24 .b1x-proof-avatars img:nth-child(2){left:14px!important}
+  .b1x-page .b1x-hero-v24 .b1x-proof-avatars img:nth-child(3){left:28px!important}
+
+  .b1x-page .b1x-hero-v24 h1{
+    width:100%!important;
+    max-width:380px!important;
+    margin:0 auto!important;
+    color:#fff!important;
+    font-size:clamp(3rem,13.6vw,4rem)!important;
+    font-weight:800!important;
+    line-height:.98!important;
+    letter-spacing:-.065em!important;
+    white-space:normal!important;
+    text-align:center!important;
+    text-wrap:balance!important;
+    text-shadow:0 3px 22px rgba(0,0,0,.32)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 h1 span,
+  .b1x-page .b1x-hero-v24 h1 em{
+    color:#fff!important;
+    font:inherit!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-lead{
+    width:100%!important;
+    max-width:330px!important;
+    margin:18px auto 0!important;
+    color:#fff!important;
+    font-size:17px!important;
+    font-weight:600!important;
+    line-height:1.42!important;
+    letter-spacing:-.025em!important;
+    text-align:center!important;
+    text-shadow:0 2px 13px rgba(0,0,0,.64)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions{
+    width:100%!important;
+    margin:24px auto 0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions .b1x-button-blue{
+    width:min(100%,278px)!important;
+    min-width:0!important;
+    height:54px!important;
+    min-height:54px!important;
+    padding:0 22px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border:0!important;
+    border-radius:999px!important;
+    color:#fff!important;
+    background:#4658e8!important;
+    box-shadow:
+      0 0 0 5px rgba(70,88,232,.19),
+      0 15px 34px rgba(12,22,80,.32)!important;
+    font-size:13.5px!important;
+    font-weight:750!important;
+    line-height:1!important;
+    text-align:center!important;
+  }
+
+  /* The desktop/mobile portrait element must never become a separate card. */
+  .b1x-page .b1x-hero-v24 .b1x-hero-person-mobile{
+    display:none!important;
+    visibility:hidden!important;
+  }
+
+  /* -----------------------------------------------------------------------
+     4. THREE BENEFITS AT THE BOTTOM OF THE IMAGE
+     Small icons centred over labels, matching the supplied mobile reference.
+     ----------------------------------------------------------------------- */
+  .b1x-page .b1x-hero-v24 .b1x-hero-features,
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{
+    position:absolute!important;
+    z-index:7!important;
+    right:7px!important;
+    bottom:28px!important;
+    left:7px!important;
+    width:auto!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    align-items:start!important;
+    justify-content:stretch!important;
+    gap:4px!important;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline>div{
+    width:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0 3px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    flex-direction:column!important;
+    gap:6px!important;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    text-align:center!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline svg{
+    width:22px!important;
+    height:22px!important;
+    min-width:22px!important;
+    flex:0 0 22px!important;
+    fill:none!important;
+    stroke:#fff!important;
+    stroke-width:1.55!important;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.58))!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline span{
+    width:100%!important;
+    max-width:116px!important;
+    margin:0 auto!important;
+    color:#fff!important;
+    font-size:9.3px!important;
+    font-weight:700!important;
+    line-height:1.12!important;
+    letter-spacing:-.025em!important;
+    text-align:center!important;
+    text-shadow:0 2px 6px rgba(0,0,0,.82)!important;
+  }
+
+  /* Opening animations should not move the hero's core layout after load. */
+  .b1x-page .b1x-hero-v24 .b1x-reveal.is-visible,
+  .b1x-page .b1x-hero-v24 .b1x-reveal{
+    transform:none!important;
+  }
+}
+
+
+/* Small phone refinement. */
+@media (max-width:390px){
+  .b1x-page .b1x-header,
+  .b1x-page .b1x-header .b1x-shell,
+  .b1x-page .b1x-header-inner{
+    height:72px!important;
+    min-height:72px!important;
+  }
+
+  .b1x-page .b1x-header .b1x-shell,
+  .b1x-page .b1x-header-inner{
+    width:calc(100% - 20px)!important;
+  }
+
+  .b1x-page .b1x-brand-logo{
+    width:37px!important;
+    height:37px!important;
+    min-width:37px!important;
+    max-width:37px!important;
+    flex-basis:37px!important;
+  }
+
+  .b1x-page .b1x-brand-name{
+    max-width:146px!important;
+    font-size:11.3px!important;
+  }
+
+  .b1x-page .b1x-brand-name small{
+    margin-top:3px!important;
+    font-size:5.2px!important;
+  }
+
+  .b1x-page .b1x-login{
+    min-width:96px!important;
+    height:41px!important;
+    min-height:41px!important;
+    padding:0 13px!important;
+    font-size:12.5px!important;
+  }
+
+  .b1x-page .b1x-menu-toggle{
+    width:42px!important;
+    height:41px!important;
+    min-width:42px!important;
+  }
+
+  .b1x-page .b1x-hero,
+  .b1x-page .b1x-hero-v5,
+  .b1x-page .b1x-hero-v24{
+    min-height:calc(100svh - 72px)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{
+    width:calc(100% - 24px)!important;
+    min-height:calc(100svh - 72px)!important;
+    padding-top:31px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-copy{
+    min-height:calc(100svh - 132px)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo{
+    background-size:auto 93%!important;
+    background-position:84% calc(100% + 82px)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-proof{
+    margin-bottom:18px!important;
+    font-size:9.6px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 h1{
+    max-width:340px!important;
+    font-size:clamp(2.7rem,14vw,3.35rem)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-lead{
+    max-width:300px!important;
+    margin-top:15px!important;
+    font-size:15.5px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions{
+    margin-top:20px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions .b1x-button-blue{
+    width:min(100%,252px)!important;
+    height:50px!important;
+    min-height:50px!important;
+    font-size:12.5px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{
+    right:4px!important;
+    bottom:20px!important;
+    left:4px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline svg{
+    width:20px!important;
+    height:20px!important;
+    min-width:20px!important;
+    flex-basis:20px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline span{
+    max-width:104px!important;
+    font-size:8.6px!important;
+  }
+}
+
+
+/* Short screens: keep the benefits visible without destroying proportions. */
+@media (max-width:700px) and (max-height:720px){
+  .b1x-page .b1x-hero-v24 .b1x-hero-content{
+    padding-top:26px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-proof{
+    margin-bottom:15px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 h1{
+    font-size:clamp(2.55rem,12.5vw,3.3rem)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-lead{
+    margin-top:13px!important;
+    font-size:15px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions{
+    margin-top:17px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-actions .b1x-button-blue{
+    height:48px!important;
+    min-height:48px!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo{
+    background-position:84% calc(100% + 74px)!important;
+  }
+
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{
+    bottom:17px!important;
+  }
+}
+
+
+@media (prefers-reduced-motion:reduce){
+  .b1x-page .b1x-hero-v24 .b1x-hero-photo,
+  .b1x-page .b1x-hero-v24 .b1x-hero-copy,
+  .b1x-page .b1x-hero-v24 .b1x-hero-features-inline{
+    transform:none!important;
+    transition:none!important;
+  }
+}

@@ -1,0 +1,31 @@
+{% extends "reading_reference/base.html" %}
+{% load static %}
+{% block title %}Reading Part {{ item.part.order }} · Set {{ set_number }} | Arya Academy{% endblock %}
+{% block content %}
+<section class="reading-runner" data-reading-runner data-attempt="{{ attempt.pk }}" data-item="{{ item.pk }}" data-remaining-ms="{{ remaining_ms }}">
+  <div class="reading-topbar">
+    <div class="reading-progress" role="progressbar" aria-label="Question" aria-valuemin="1" aria-valuemax="{{ total }}" aria-valuenow="{{ position }}" aria-valuetext="Question {{ position }} of {{ total }}">
+      <span class="reading-progress-fill" style="width:{{ progress }}%"><span>{{ position }}/{{ total }}</span></span>
+    </div>
+    <span class="reading-clock" aria-label="Time remaining"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span data-reading-time>{{ remaining_label }}</span></span>
+  </div>
+  <p class="reading-set-label">Reading Part {{ item.part.order }} · Set {{ set_number }}</p>
+  <h1 class="reading-instruction">{{ instruction }}</h1>
+  {% if item.question.stimulus.content %}<div class="reading-passage">{{ item.question.stimulus.content|linebreaksbr }}</div>{% endif %}
+  <form method="post" action="{% url 'assessments:reading_answer' attempt.pk %}" class="reading-answer-form" data-answer-form>
+    {% csrf_token %}<input type="hidden" name="item" value="{{ item.pk }}">
+    <p class="reading-question" id="reading-question">{{ item.question.prompt_text }}</p>
+    {% if error %}<p class="reading-error" role="alert">{{ error }}</p>{% endif %}
+    {% if is_choice %}
+      <div class="reading-options" role="group" aria-labelledby="reading-question">
+      {% for option in options %}<button type="submit" name="option" value="{{ option.pk }}" class="reading-option">{{ option.text }}</button>{% endfor %}
+      </div>
+    {% else %}
+      <input class="reading-word" type="text" name="text" aria-labelledby="reading-question" placeholder="Type here" value="{{ submitted }}" maxlength="120" autocomplete="off" autocapitalize="none" spellcheck="false" required data-word-input>
+      <button type="submit" class="reading-primary reading-next">NEXT</button>
+    {% endif %}
+  </form>
+  <form method="post" action="{% url 'assessments:reading_expire' attempt.pk %}" data-expire-form hidden>{% csrf_token %}</form>
+</section>
+{% endblock %}
+{% block after_content %}<script src="{% static 'js/reading-reference.js' %}?v=20260831" defer></script>{% endblock %}

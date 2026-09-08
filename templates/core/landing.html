@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>English Practice Portal | Arya Academy</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/arya-academy-official-v35-4.css' %}?v=20260908-354">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pv2-public">
+
+<header class="pv2-public-nav">
+  <div class="inner">
+    <a class="pv2-app-brand" href="/" aria-label="Arya Academy home">
+      <img class="aa-official-logo" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+    </a>
+
+    <nav class="pv2-public-links">
+      <a href="#modules">Modules</a>
+      <a href="#flow">How it works</a>
+      <a href="#analytics">Progress</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div style="display:flex;align-items:center;gap:9px">
+      <button type="button" class="pv2-theme-toggle" data-theme-toggle title="Toggle theme">
+        <span data-theme-icon>☾</span>
+      </button>
+      <a class="pv2-btn pv2-btn-outline" href="{% url 'login' %}">Sign in</a>
+      <a class="pv2-btn pv2-btn-primary" href="{% url 'signup' %}">Create account →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="pv2-public-hero">
+    <div class="grid">
+      <div>
+        <span class="pv2-kicker">Four-skill English practice · one focused portal</span>
+
+        <h1>
+          Build confidence through
+          <span>clear practice & useful feedback.</span>
+        </h1>
+
+        <p>
+          Practise Speaking, Listening, Reading and Writing in a clean exam-style
+          environment with timers, recordings, automatic objective marking,
+          writing support, result history and student progress tracking.
+        </p>
+
+        <div class="pv2-hero-actions">
+          <a class="pv2-btn pv2-btn-primary" href="{% url 'signup' %}">
+            Create Student Account →
+          </a>
+          <a class="pv2-btn pv2-btn-outline" href="{% url 'login' %}">
+            Sign in
+          </a>
+        </div>
+
+        <div class="pv2-metrics">
+          <div><strong>4</strong><span>Core skills</span></div>
+          <div><strong>17</strong><span>Practice parts</span></div>
+          <div><strong>92 min</strong><span>Approx. full-test time</span></div>
+          <div><strong>24/7</strong><span>Self-paced access</span></div>
+        </div>
+      </div>
+
+      <div class="pv2-preview">
+        <div class="pv2-preview-window">
+          <div class="pv2-preview-top">
+            <span>● ● ●</span>
+            <span>Student Practice</span>
+            <span>24:18 remaining</span>
+          </div>
+
+          <div class="pv2-preview-body">
+            <div class="pv2-eyebrow">Reading · Part 2</div>
+            <h3>Complete the sentence with the best answer.</h3>
+
+            <div class="pv2-mini-field">
+              My office is ____ the bank and the pharmacy.
+              <strong style="float:right;color:var(--pv2-teal-2)">between</strong>
+            </div>
+
+            <div class="pv2-mini-stats">
+              <div>
+                Practice status
+                <strong style="color:var(--pv2-success)">Saved ✓</strong>
+              </div>
+              <div>
+                Section progress
+                <strong>3 / 5</strong>
+              </div>
+            </div>
+
+            <div style="height:9px;border-radius:99px;background:var(--pv2-surface-2);margin-top:16px;overflow:hidden">
+              <div style="width:62%;height:100%;background:linear-gradient(90deg,var(--pv2-teal),var(--pv2-blue));border-radius:inherit"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="modules" class="pv2-public-section alt">
+    <div class="pv2-public-wrap">
+      <div class="pv2-center-head">
+        <div class="pv2-eyebrow">Complete coverage</div>
+        <h2>Purpose-built for all four English skills</h2>
+        <p>
+          Each module uses an interaction style suited to the task rather than
+          forcing every question into the same generic layout.
+        </p>
+      </div>
+
+      <div class="pv2-feature-grid">
+        <article class="pv2-card pv2-feature">
+          <div class="ico">◉</div>
+          <h3>Speaking</h3>
+          <p>Listen-and-answer, read-aloud and leave-a-message practice with timed microphone recording.</p>
+          <ul style="padding-left:17px;color:var(--pv2-muted);font-size:.72rem;line-height:1.8">
+            <li>Preparation countdown</li>
+            <li>Replay and retry</li>
+            <li>Local transcript feedback</li>
+          </ul>
+        </article>
+
+        <article class="pv2-card pv2-feature">
+          <div class="ico">♫</div>
+          <h3>Listening</h3>
+          <p>Audio-led chat, ordering, gap-fill and multiple-choice practice with automatic objective scoring.</p>
+          <ul style="padding-left:17px;color:var(--pv2-muted);font-size:.72rem;line-height:1.8">
+            <li>Audio check before start</li>
+            <li>Five practice parts</li>
+            <li>Instant objective results</li>
+          </ul>
+        </article>
+
+        <article class="pv2-card pv2-feature">
+          <div class="ico">▤</div>
+          <h3>Reading</h3>
+          <p>Short notices, sentence completion and longer-text comprehension in a clean distraction-free screen.</p>
+          <ul style="padding-left:17px;color:var(--pv2-muted);font-size:.72rem;line-height:1.8">
+            <li>Five practice parts</li>
+            <li>25-minute format</li>
+            <li>Automatic marking</li>
+          </ul>
+        </article>
+
+        <article class="pv2-card pv2-feature">
+          <div class="ico">✎</div>
+          <h3>Writing</h3>
+          <p>Personal email and formal reply tasks with word count, draft recovery and structured practice feedback.</p>
+          <ul style="padding-left:17px;color:var(--pv2-muted);font-size:.72rem;line-height:1.8">
+            <li>50-word minimum</li>
+            <li>Autosave</li>
+            <li>Evaluator review support</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="flow" class="pv2-public-section">
+    <div class="pv2-public-wrap">
+      <div class="pv2-center-head">
+        <div class="pv2-eyebrow">Simple test journey</div>
+        <h2>From sign-up to feedback in four steps</h2>
+        <p>
+          The student always knows what to do next, which section is active
+          and where to review completed work.
+        </p>
+      </div>
+
+      <div class="pv2-flow-grid">
+        <article class="pv2-card pv2-flow-card">
+          <h3>Create your student profile</h3>
+          <p>Register once and keep all attempts, recordings and results connected to one account.</p>
+        </article>
+
+        <article class="pv2-card pv2-flow-card">
+          <h3>Choose a practice skill</h3>
+          <p>Start Speaking, Listening, Reading or Writing independently from the student dashboard.</p>
+        </article>
+
+        <article class="pv2-card pv2-flow-card">
+          <h3>Complete the timed section</h3>
+          <p>Follow the section-specific exam interface with progress, timers and device checks where needed.</p>
+        </article>
+
+        <article class="pv2-card pv2-flow-card">
+          <h3>Review progress</h3>
+          <p>Open your result history, revisit feedback and practise the skill that needs the most attention.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="analytics" class="pv2-public-section alt">
+    <div class="pv2-public-wrap">
+      <div class="pv2-center-head">
+        <div class="pv2-eyebrow">Progress analytics</div>
+        <h2>A dashboard students can understand at a glance</h2>
+        <p>
+          Real attempt counts, completion status, scored performance and recent
+          practice are shown without advertising panels or distracting extras.
+        </p>
+      </div>
+
+      <div class="pv2-card" style="padding:30px;max-width:920px;margin:auto">
+        <div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap">
+          <div>
+            <div class="pv2-eyebrow">Example progress view</div>
+            <h3 style="font-size:1.45rem;margin:7px 0 0">Four-skill snapshot</h3>
+          </div>
+          <span style="font-size:.72rem;color:var(--pv2-muted)">Illustrative interface preview</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:25px">
+          <div style="padding:16px;border-radius:13px;background:var(--pv2-surface-2)">
+            <span style="font-size:.68rem;color:var(--pv2-muted)">Speaking</span>
+            <strong style="display:block;font-size:1.4rem;margin-top:5px">A2</strong>
+          </div>
+          <div style="padding:16px;border-radius:13px;background:var(--pv2-surface-2)">
+            <span style="font-size:.68rem;color:var(--pv2-muted)">Listening</span>
+            <strong style="display:block;font-size:1.4rem;margin-top:5px">B1</strong>
+          </div>
+          <div style="padding:16px;border-radius:13px;background:var(--pv2-surface-2)">
+            <span style="font-size:.68rem;color:var(--pv2-muted)">Reading</span>
+            <strong style="display:block;font-size:1.4rem;margin-top:5px">A2</strong>
+          </div>
+          <div style="padding:16px;border-radius:13px;background:var(--pv2-surface-2)">
+            <span style="font-size:.68rem;color:var(--pv2-muted)">Writing</span>
+            <strong style="display:block;font-size:1.4rem;margin-top:5px">A2</strong>
+          </div>
+        </div>
+
+        <div style="margin-top:22px;height:11px;border-radius:99px;background:var(--pv2-surface-2);overflow:hidden">
+          <div style="height:100%;width:68%;background:linear-gradient(90deg,var(--pv2-teal),var(--pv2-blue));border-radius:inherit"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="pv2-public-section">
+    <div class="pv2-public-wrap">
+      <div class="pv2-center-head">
+        <div class="pv2-eyebrow">FAQ</div>
+        <h2>Everything needed for a client-ready draft</h2>
+      </div>
+
+      <div style="max-width:850px;margin:auto;display:grid;gap:12px">
+        <details class="pv2-card" style="padding:18px 20px">
+          <summary style="font-weight:850;cursor:pointer">Can students practise sections separately?</summary>
+          <p style="color:var(--pv2-muted);font-size:.8rem;line-height:1.7">Yes. The student dashboard links directly to each of the four practice skills.</p>
+        </details>
+
+        <details class="pv2-card" style="padding:18px 20px">
+          <summary style="font-weight:850;cursor:pointer">Does the portal save student progress?</summary>
+          <p style="color:var(--pv2-muted);font-size:.8rem;line-height:1.7">Attempts, submitted responses and available feedback remain attached to the signed-in student account.</p>
+        </details>
+
+        <details class="pv2-card" style="padding:18px 20px">
+          <summary style="font-weight:850;cursor:pointer">Is there a dark mode?</summary>
+          <p style="color:var(--pv2-muted);font-size:.8rem;line-height:1.7">Yes. The public website, sign-in, registration, profile and dashboard use a persistent light/dark theme preference.</p>
+        </details>
+
+        <details class="pv2-card" style="padding:18px 20px">
+          <summary style="font-weight:850;cursor:pointer">Is this an official Cambridge website?</summary>
+          <p style="color:var(--pv2-muted);font-size:.8rem;line-height:1.7">No. It is an independent practice portal. Portal-authored material should remain labelled as practice content rather than official Cambridge examination material.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="pv2-cta">
+    <div class="pv2-public-wrap">
+      <h2>Ready to begin your practice?</h2>
+      <p>Create your student account and start with any of the four core skills.</p>
+      <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+        <a class="pv2-btn" style="background:#fff;color:#17355b" href="{% url 'signup' %}">
+          Create Account →
+        </a>
+        <a class="pv2-btn" style="border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.08)" href="{% url 'login' %}">
+          Sign in
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pv2-footer">
+  <div style="width:min(1180px,calc(100% - 32px));margin:auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:28px">
+    <div>
+      <a class="pv2-app-brand" href="/" aria-label="Arya Academy home">
+        <img class="aa-official-logo" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+      </a>
+      <p style="max-width:440px;line-height:1.7">
+        A focused four-skill English practice portal with clean test flows,
+        student progress tracking and structured feedback.
+      </p>
+    </div>
+
+    <div>
+      <strong style="display:block;margin-bottom:10px;color:var(--pv2-text)">Portal</strong>
+      <a style="display:block;margin:7px 0;text-decoration:none" href="{% url 'login' %}">Sign in</a>
+      <a style="display:block;margin:7px 0;text-decoration:none" href="{% url 'signup' %}">Create account</a>
+    </div>
+
+    <div>
+      <strong style="display:block;margin-bottom:10px;color:var(--pv2-text)">Practice</strong>
+      <span style="display:block;margin:7px 0">Speaking</span>
+      <span style="display:block;margin:7px 0">Listening</span>
+      <span style="display:block;margin:7px 0">Reading</span>
+      <span style="display:block;margin:7px 0">Writing</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

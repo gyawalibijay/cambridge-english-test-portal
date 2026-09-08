@@ -1,0 +1,105 @@
+{% load static website_tags %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Pricing | {{ site_settings.site_name|default:"Arya Academy" }} English Test Preparation</title>
+  <meta name="description" content="View Cambridge, IELTS and UKVI preparation pricing. Cambridge preparation is available now; IELTS and UKVI are in development.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#174ee8">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/public-launch-v14-9.css' %}?v=20260903-149">
+</head>
+<body class="launch-body launch-pricing">
+{% include "partials/public_header_v8.html" %}
+
+<main class="launch-stage pricing-stage">
+  <div class="launch-bg" aria-hidden="true">
+    <span class="launch-orb orb-one"></span>
+    <span class="launch-orb orb-two"></span>
+    <span class="launch-grid-light"></span>
+  </div>
+
+  <section class="launch-shell pricing-shell" aria-labelledby="pricing-title">
+    <header class="launch-heading pricing-heading launch-reveal" data-reveal>
+      <span class="launch-eyebrow"><i></i>SIMPLE ACCESS</span>
+      <h1 id="pricing-title">Choose your <span>access.</span></h1>
+      <p>Cambridge is available now. The other preparation programs are shown for launch planning only.</p>
+    </header>
+
+    <div class="pricing-grid">
+      {% for card in pricing_cards %}
+      <article class="pricing-card{% if card.enabled %} is-enabled{% else %} is-coming{% endif %} launch-reveal"
+               data-reveal data-tilt data-program="{{ card.key }}"
+               data-pointer-label="{% if card.enabled %}Get access{% else %}Coming soon{% endif %}">
+        <span class="launch-card-glow" aria-hidden="true"></span>
+
+        <div class="pricing-card-top">
+          <span class="launch-icon launch-icon-{{ card.key }}" aria-hidden="true">
+            {% if card.key == 'cambridge' %}
+              <svg viewBox="0 0 48 48"><path d="M24 4 40 10v12c0 10.5-6.5 17.8-16 22C14.5 39.8 8 32.5 8 22V10l16-6Z"/><path d="M16 18h16M16 25h16M24 12v24"/></svg>
+            {% elif card.key == 'ielts' %}
+              <svg viewBox="0 0 48 48"><rect x="7" y="8" width="34" height="32" rx="8"/><path d="M15 17h18M15 24h18M15 31h12"/></svg>
+            {% else %}
+              <svg viewBox="0 0 48 48"><path d="M9 11h30v23H20l-9 7v-7H9V11Z"/><path d="M16 20h16M16 26h11"/></svg>
+            {% endif %}
+          </span>
+          <span class="launch-status {% if card.enabled %}is-live{% else %}is-soon{% endif %}">
+            <i></i>{% if card.enabled %}AVAILABLE{% else %}COMING SOON{% endif %}
+          </span>
+        </div>
+
+        <div class="pricing-copy">
+          <small>{{ card.eyebrow }}</small>
+          <h2>{{ card.title }}</h2>
+          <p>{{ card.summary }}</p>
+        </div>
+
+        <div class="pricing-price">
+          <small>ACCESS PRICE</small>
+          <strong>
+            {% if card.package %}
+              {{ card.package.currency }} {{ card.package.price|floatformat:0 }}
+            {% else %}
+              NPR 1000
+            {% endif %}
+          </strong>
+          <span>{% if card.package and card.package.access_days %}{{ card.package.access_days }} days{% else %}Course access{% endif %}</span>
+        </div>
+
+        {% if card.enabled %}
+          {% if request.user.is_authenticated %}
+            <a class="pricing-action" href="{% url 'commerce:store' %}" data-pointer-label="Continue to payment">
+              Continue to payment <span>→</span>
+            </a>
+          {% else %}
+            {% url 'commerce:store' as store_target %}
+            <a class="pricing-action" href="{% url 'login' %}?next={{ store_target }}" data-pointer-label="Sign in">
+              Sign in to continue <span>→</span>
+            </a>
+          {% endif %}
+        {% else %}
+          <span class="pricing-action is-disabled" aria-disabled="true">Not available yet <span>•</span></span>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+
+    <a class="launch-pricing-link launch-reveal" data-reveal href="{% url 'website:home' %}" data-pointer-label="Back home">
+      ← Back to preparation options
+    </a>
+  </section>
+</main>
+
+<div class="launch-pointer" data-launch-pointer aria-hidden="true">
+  <span class="launch-pointer-dot"></span>
+  <span class="launch-pointer-label">Explore</span>
+</div>
+
+<script defer src="{% static 'js/public-launch-v14-9.js' %}?v=20260903-149"></script>
+</body>
+</html>

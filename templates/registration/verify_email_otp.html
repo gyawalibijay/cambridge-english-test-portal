@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Verify your email · Arya Academy{% endblock %}
+{% block body_class %}pv2-auth-page otp-verification-page{% endblock %}
+
+{% block content %}
+<section class="pv2-auth-shell otp-verify-shell">
+  <section class="pv2-auth-brand otp-auth-brand otp-auth-brand--premium">
+    <div class="pv2-brand otp-premium-brand">
+      <span class="pv2-brand-mark">ST</span>
+      <span>
+        Arya Academy
+        <small>by Arya Academy</small>
+      </span>
+    </div>
+
+    <div class="pv2-auth-copy otp-brand-copy">
+      <span class="tag">Email verification</span>
+      <h1>Confirm your student account with a secure code.</h1>
+      <p>
+        We’ve sent a 6-digit verification code to your email. Enter it below to activate
+        your student portal access for Cambridge, IELTS and UKVI preparation.
+      </p>
+
+      <div class="otp-brand-points">
+        <div class="otp-brand-point">
+          <strong>Quick setup</strong>
+          <span>Verify in seconds and continue to your dashboard.</span>
+        </div>
+        <div class="otp-brand-point">
+          <strong>Secure sign-in</strong>
+          <span>Your account email is confirmed before first login.</span>
+        </div>
+        <div class="otp-brand-point">
+          <strong>One portal</strong>
+          <span>Courses, results, practice and test access under one profile.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="pv2-auth-main otp-verify-main">
+    <div class="pv2-auth-top">
+      <a class="pv2-btn pv2-btn-outline" href="{% url 'login' %}">← Sign in</a>
+      <button type="button" class="pv2-theme-toggle" data-theme-toggle>
+        <span data-theme-icon></span>
+      </button>
+    </div>
+
+    <div class="pv2-auth-card otp-card otp-card--premium">
+      <div class="otp-mail-icon otp-mail-icon--premium">✉</div>
+      <div class="pv2-eyebrow">Almost done</div>
+      <h2>Verify your email</h2>
+      <p class="sub otp-sub">
+        Enter the 6-digit code sent to
+        <strong>{{ masked_email|default:user.email }}</strong>
+      </p>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="otp-message">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      {% if form.non_field_errors %}
+        <div class="otp-message">{{ form.non_field_errors|striptags }}</div>
+      {% endif %}
+
+      <form method="post" class="otp-verify-form" data-otp-form novalidate>
+        {% csrf_token %}
+        <div style="display:none">{{ form.code }}</div>
+
+        <label class="otp-boxes-label" for="id_code">Verification code</label>
+        <div class="otp-boxes" data-otp-boxes>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-digit-box" data-otp-digit autocomplete="one-time-code" autofocus>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-digit-box" data-otp-digit>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-digit-box" data-otp-digit>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-digit-box" data-otp-digit>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-digit-box" data-otp-digit>
+          <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="otp-digit-box" data-otp-digit>
+        </div>
+
+        {% if form.code.errors %}
+          <div class="pv2-field-error otp-field-error">{{ form.code.errors|striptags }}</div>
+        {% endif %}
+
+        <div class="otp-help-row">
+          <span>Code expires in 10 minutes</span>
+          <span>Only digits are accepted</span>
+        </div>
+
+        <button class="pv2-btn pv2-btn-primary pv2-submit otp-submit-btn" type="submit">
+          Verify email →
+        </button>
+      </form>
+
+      <div class="otp-secondary-actions otp-secondary-actions--premium">
+        <span>Didn’t receive it?</span>
+        <a href="{% url 'resend_verification' %}">Resend verification code →</a>
+      </div>
+    </div>
+  </main>
+</section>
+
+<script>
+(function() {
+  const form = document.querySelector('[data-otp-form]');
+  if (!form) return;
+
+  const hidden = form.querySelector('#id_code');
+  const boxes = Array.from(form.querySelectorAll('[data-otp-digit]'));
+
+  const sync = () => {
+    const code = boxes.map(box => (box.value || '').replace(/\D/g, '').slice(0, 1)).join('');
+    if (hidden) hidden.value = code;
+  };
+
+  boxes.forEach((box, index) => {
+    box.addEventListener('input', (e) => {
+      const clean = (e.target.value || '').replace(/\D/g, '').slice(0, 1);
+      e.target.value = clean;
+      sync();
+      if (clean && index < boxes.length - 1) {
+        boxes[index + 1].focus();
+        boxes[index + 1].select();
+      }
+    });
+
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !box.value && index > 0) {
+        boxes[index - 1].focus();
+        boxes[index - 1].select();
+      }
+      if (e.key === 'ArrowLeft' && index > 0) {
+        e.preventDefault();
+        boxes[index - 1].focus();
+      }
+      if (e.key === 'ArrowRight' && index < boxes.length - 1) {
+        e.preventDefault();
+        boxes[index + 1].focus();
+      }
+    });
+
+    box.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+      if (!pasted) return;
+      pasted.split('').forEach((char, i) => {
+        if (boxes[i]) boxes[i].value = char;
+      });
+      sync();
+      const next = boxes[Math.min(pasted.length, boxes.length - 1)];
+      if (next) next.focus();
+    });
+  });
+
+  form.addEventListener('submit', () => {
+    sync();
+  });
+
+  if (hidden && hidden.value) {
+    const initial = hidden.value.replace(/\D/g, '').slice(0, 6).split('');
+    initial.forEach((char, i) => {
+      if (boxes[i]) boxes[i].value = char;
+    });
+  }
+})();
+</script>
+{% endblock %}

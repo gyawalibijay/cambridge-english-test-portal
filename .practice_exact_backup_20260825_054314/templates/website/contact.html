@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact | Upskill Practice</title>
+  <script>(()=>{const s=localStorage.getItem("portal-theme-v2");const d=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=s||d;})();</script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<section class="pub4-page-hero">
+  <div class="pub4-shell">
+    <div class="pub4-eyebrow">Contact</div>
+    <h1>Talk to us before you decide.</h1>
+    <p>Students and parents can use this form for program selection, package access, payment clarification or general platform questions.</p>
+  </div>
+</section>
+
+<section class="pub4-section" style="padding-top:10px">
+  <div class="pub4-shell pub4-contact-grid">
+    <aside class="pub4-contact-panel">
+      <div class="pub4-eyebrow">Need help?</div>
+      <h2 style="font-size:1.55rem;letter-spacing:-.04em;margin:8px 0">
+        Tell us what you need.
+      </h2>
+      <p style="color:var(--pv2-muted);font-size:.76rem;line-height:1.75">
+        Use this form for program, account, purchase or platform questions.
+      </p>
+
+      <div class="pub4-contact-points">
+        <div class="pub4-contact-point">
+          <div class="ico">P</div>
+          <div><strong>Program questions</strong><span>Cambridge, IELTS or UKVI preparation access.</span></div>
+        </div>
+        <div class="pub4-contact-point">
+          <div class="ico">₨</div>
+          <div><strong>Purchase support</strong><span>Payment verification and test-access enquiries.</span></div>
+        </div>
+        <div class="pub4-contact-point">
+          <div class="ico">?</div>
+          <div><strong>Technical support</strong><span>Account, recording, course or results issues.</span></div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="pub4-contact-panel">
+      {% if messages %}
+        {% for message in messages %}
+        <div class="pv2-card" style="padding:13px 15px;margin-bottom:17px;color:var(--pv2-success)">
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="pv2-form-grid">
+          {% for field in form %}
+          <div class="pv2-field {% if field.name == 'message' or field.name == 'subject' %}full{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+            <div class="pv2-field-error">{{ field.errors|striptags }}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <button class="pub4-btn primary" style="margin-top:20px;min-height:50px" type="submit">
+          Send enquiry →
+        </button>
+      </form>
+    </section>
+  </div>
+</section>
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

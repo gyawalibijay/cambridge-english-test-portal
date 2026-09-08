@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ item.part.section.title }} | Upskill Practice</title>
+  <link rel="stylesheet" href="{% static 'css/cambridge-shell.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cambridge-exam.css' %}">
+</head>
+<body class="exam-page exam-shell">
+
+<header class="exam-top">
+  <div class="exam-brand"><b>Upskill</b> Practice</div>
+  <div id="sectionTimer" class="exam-clock" data-seconds="{{ item.part.section.duration_seconds|default:0 }}" data-started="{{ attempt.started_at|date:'c' }}">◷ --:--</div>
+  <div class="exam-tools"><button onclick="document.documentElement.requestFullscreen?.()" style="border:0;background:none;color:inherit;cursor:pointer">⛶ Full Screen</button></div>
+</header>
+
+<main class="exam-work">
+  <div class="exam-work-head">
+    <div><small>{{ item.part.section.title }} · {{ item.part.title }}</small><h1>{% if item.question.show_prompt_text %}Question{% else %}Listen and answer{% endif %}</h1></div>
+    <span class="exam-progress-pill">{{ answered|add:"1" }} / {{ total }}</span>
+  </div>
+
+  <div class="exam-progress-track"><span style="width:{% widthratio answered total 100 %}%"></span></div>
+
+  <section class="exam-question-card">
+    <div class="exam-question-body">
+      {% if stimulus and stimulus.content %}<div class="exam-stimulus">{{ stimulus.content }}</div>{% endif %}
+
+      {% if stimulus_audio_url %}
+      <div class="exam-device" style="padding-top:0;border-top:0;margin-top:0;margin-bottom:20px">
+        <h3>Listen carefully</h3>
+        <audio controls preload="metadata" src="{{ stimulus_audio_url }}" style="width:100%"></audio>
+      </div>
+      {% endif %}
+
+      {% if prompt_audio_url %}
+      <div class="exam-device" style="padding-top:0;border-top:0;margin-top:0;margin-bottom:20px">
+        <audio controls preload="metadata" src="{{ prompt_audio_url }}" style="width:100%"></audio>
+      </div>
+      {% endif %}
+
+      {% if item.question.show_prompt_text %}<div class="exam-question">{{ item.question.prompt_text }}</div>{% endif %}
+
+      <form method="post" action="{% url 'attempts:submit_objective_response' attempt.id item.id %}">
+        {% csrf_token %}
+
+        {% if item.question.question_type == "single_choice" %}
+        <div class="exam-options">
+          {% for option in item.question.options.all %}
+          <label class="exam-option"><input type="radio" name="option" value="{{ option.id }}" required><span>{{ option.text }}</span></label>
+          {% endfor %}
+        </div>
+
+        {% elif item.question.question_type == "multiple_choice" %}
+        <div class="exam-options">
+          {% for option in item.question.options.all %}
+          <label class="exam-option"><input type="checkbox" name="options" value="{{ option.id }}"><span>{{ option.text }}</span></label>
+          {% endfor %}
+        </div>
+
+        {% elif item.question.question_type == "short_answer" or item.question.question_type == "gap_fill" %}
+        <div style="margin-top:20px"><input name="text" required autocomplete="off" style="width:100%;height:46px;border:1px solid #d6e2e6;border-radius:10px;padding:0 13px;font-size:12px;outline:none" placeholder="Type your answer"></div>
+
+        {% elif item.question.question_type == "ordering" %}
+        <input type="hidden" name="ordering" id="orderingValue" value="[]">
+        <div id="orderingList" style="margin-top:16px">
+          {% for order_item in item.question.ordering_items.all %}
+          <div class="order-row" data-id="{{ order_item.id }}">
+            <span class="order-num">{{ forloop.counter }}</span><span style="font-size:11px">{{ order_item.text }}</span>
+            <span class="order-actions"><button type="button" data-dir="up">↑</button><button type="button" data-dir="down">↓</button></span>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="exam-submit"><button class="exam-btn" type="submit">Submit & Continue →</button></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<script>
+const timer=document.getElementById('sectionTimer');
+if(timer){
+ const configured=Number(timer.dataset.seconds||0), started=Date.parse(timer.dataset.started||'');
+ const fmt=s=>`${String(Math.floor(Math.max(0,s)/60)).padStart(2,'0')}:${String(Math.floor(Math.max(0,s)%60)).padStart(2,'0')}`;
+ function tick(){if(!configured){timer.textContent='Practice';return} const elapsed=Number.isFinite(started)?(Date.now()-started)/1000:0; timer.textContent='◷ '+fmt(configured-elapsed)}
+ tick(); setInterval(tick,1000);
+}
+const list=document.getElementById('orderingList');
+if(list){
+ const hidden=document.getElementById('orderingValue');
+ function sync(){const rows=[...list.querySelectorAll('.order-row')]; hidden.value=JSON.stringify(rows.map(r=>Number(r.dataset.id))); rows.forEach((r,i)=>r.querySelector('.order-num').textContent=i+1)}
+ list.addEventListener('click',e=>{const b=e.target.closest('button'), row=e.target.closest('.order-row'); if(!b||!row)return; if(b.dataset.dir==='up'&&row.previousElementSibling)list.insertBefore(row,row.previousElementSibling); if(b.dataset.dir==='down'&&row.nextElementSibling)list.insertBefore(row.nextElementSibling,row); sync()}); sync();
+}
+</script>
+</body>
+</html>

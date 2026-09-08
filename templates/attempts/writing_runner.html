@@ -1,0 +1,558 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <title>Writing | {% if attempt.metadata.practice_mode == "full_mock" %}Upskill Mock Test{% else %}Arya Academy{% endif %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/cambridge-writing-reference-v14-6.css' %}?v=20260903-148">
+  <link rel="stylesheet" href="{% static 'css/practice-mock-blue-v29.css' %}?v=20260905-teal-v30-1">
+</head>
+<body class="cw14-body">
+<main class="cw14-page{% if item.part.order != 1 %} cw14-skip-intro{% endif %}"
+      data-writing-runner
+      data-duration="{{ writing_duration_seconds|default:900 }}"
+      data-min="{{ min_word_count|default:50 }}"
+      data-max="{{ max_word_count|default:0 }}"
+      data-attempt="{{ attempt.id }}"
+      data-item="{{ item.id }}"
+      data-part-order="{{ item.part.order|default:1 }}"
+      data-force-task="{% if writing_error or submitted_text %}1{% else %}0{% endif %}"
+      data-full-mock="{% if attempt.metadata.practice_mode == 'full_mock' %}1{% else %}0{% endif %}">
+      <!-- B1_FULL_MOCK_TIMER_WRITING_V35_1 -->
+
+  <!-- WRITING_COMPACT_NOSCROLL_V14_8 -->
+  <section class="cw14-shell">
+    <header class="cw14-header">
+      <a class="cw14-back"
+         href="{% if attempt.mock_test.delivery_mode == 'full_mock' %}{% url 'student_mock_tests' %}{% else %}{% url 'student_practice_hub' %}{% endif %}"
+         aria-label="Leave writing test">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg>
+      </a>
+      <strong>Writing</strong>
+      <span class="cw14-header-spacer" aria-hidden="true"></span>
+    </header>
+
+    {% if writing_error %}
+      <div class="cw14-error" role="alert">{{ writing_error }}</div>
+    {% endif %}
+
+    <section class="cw14-intro" data-writing-intro>
+      <div class="cw14-intro-main">
+        <div class="cw14-writing-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><path d="M9 36.5 11.7 27l19.7-19.7a4.3 4.3 0 0 1 6.1 0l3.2 3.2a4.3 4.3 0 0 1 0 6.1L21 36.3 11.5 39 9 36.5Z"/><path d="m28.3 10.4 9.3 9.3"/></svg>
+        </div>
+
+        <h1>Writing Part {{ item.part.order|default:1 }}</h1>
+<div class="cw14-intro-divider"></div>
+
+        <div class="cw14-before">
+          <h2>Before you start</h2>
+          <ul>
+            <li>You have <strong>{{ writing_duration_minutes|default:15 }} minute{{ writing_duration_minutes|default:15|pluralize }}</strong> for this part and should write at least <strong>{{ min_word_count|default:50 }} words</strong>.</li>
+            <li>Work independently under normal test conditions.</li>
+            <li>Copy, cut, paste, autocorrect, spellcheck and writing assistants are disabled.</li>
+          </ul>
+        </div>
+      </div>
+
+      <button class="cw14-start" type="button" data-writing-start>
+        START
+        <span aria-hidden="true">→</span>
+      </button>
+    </section>
+
+    <section class="cw14-task" data-writing-task hidden>
+      <div class="cw14-task-status">
+        <div class="cw14-progress" aria-label="Writing question progress">
+          <span style="width:{% widthratio writing_question_number writing_part_total 100 %}%"></span>
+          <b>{{ writing_question_number|default:1 }}/{{ writing_part_total|default:1 }}</b>
+        </div>
+        <div class="cw14-timer" data-writing-timer aria-label="Time remaining"
+             data-full-mock-timer="{% if attempt.metadata.practice_mode == 'full_mock' %}1{% else %}0{% endif %}"
+             data-full-mock-timer-url="{% if attempt.metadata.practice_mode == 'full_mock' %}{% url 'attempts:full_mock_timer' attempt.id %}{% endif %}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+          <span>--:--</span>
+        </div>
+      </div>
+
+      <div class="cw14-task-content">
+        {% if item.question.stimulus and item.question.stimulus.content %}
+          <div class="cw14-context">{{ item.question.stimulus.content }}</div>
+        {% endif %}
+
+        {% if item.question.show_prompt_text %}
+          <div class="cw14-prompt">{{ item.question.prompt_text }}</div>
+        {% endif %}
+
+        {% if item.part.instructions %}
+          <div class="cw14-part-instructions">{{ item.part.instructions }}</div>
+        {% endif %}
+
+        <div class="cw14-word-rule">
+          Write at least <strong>{{ min_word_count|default:50 }} words</strong>.
+          {% if max_word_count %}<span>Maximum {{ max_word_count }} words.</span>{% endif %}
+        </div>
+
+        <form method="post"
+              action="{% url 'attempts:submit_writing_response' attempt.id item.id %}"
+              id="writingForm"
+              class="cw14-form">
+          {% csrf_token %}
+
+          <label class="cw14-answer-label" for="writingText">Your answer</label>
+          <textarea id="writingText"
+                    name="text_response"
+                    required
+                    placeholder="Start typing your answer..."
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    inputmode="text"
+                    data-gramm="false"
+                    data-gramm_editor="false"
+                    data-enable-grammarly="false">{{ submitted_text|default:"" }}</textarea>
+
+          <div class="cw14-meta">
+            <span><strong id="wordCount">0</strong> WORDS</span>
+            <span id="wordStatus">Minimum {{ min_word_count|default:50 }}</span>
+            <span class="cw14-typing-only">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              Typing only
+            </span>
+          </div>
+
+          <div class="cw14-save-line" aria-live="polite">
+            <span id="saveStatus">Draft autosave ready</span>
+          </div>
+
+          <button class="cw14-submit" type="submit">
+            SUBMIT &amp; CONTINUE
+            <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+    </section>
+  </section>
+</main>
+
+<script>
+(() => {
+  const root = document.querySelector('[data-writing-runner]');
+  if (!root) return;
+
+  const intro = root.querySelector('[data-writing-intro]');
+  const task = root.querySelector('[data-writing-task]');
+  const startButton = root.querySelector('[data-writing-start]');
+  const timerWrap = root.querySelector('[data-writing-timer]');
+  const timerText = timerWrap ? timerWrap.querySelector('span') : null;
+  const text = document.getElementById('writingText');
+  const form = document.getElementById('writingForm');
+  const count = document.getElementById('wordCount');
+  const status = document.getElementById('wordStatus');
+  const save = document.getElementById('saveStatus');
+  // WRITING_V14_8_DEDUPE_INSTRUCTIONS
+  const taskContext = root.querySelector('.cw14-context');
+  const taskPrompt = root.querySelector('.cw14-prompt');
+  const partInstructions = root.querySelector('.cw14-part-instructions');
+  if (partInstructions && (taskContext || taskPrompt)) {
+    partInstructions.hidden = true;
+  }
+
+  const syncWritingViewport = () => {
+    const viewportHeight = window.visualViewport
+      ? window.visualViewport.height
+      : window.innerHeight;
+    document.documentElement.style.setProperty(
+      '--cw-writing-height',
+      `${Math.max(300, Math.round(viewportHeight))}px`
+    );
+  };
+  syncWritingViewport();
+  window.addEventListener('resize', syncWritingViewport, { passive: true });
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncWritingViewport, { passive: true });
+    window.visualViewport.addEventListener('scroll', syncWritingViewport, { passive: true });
+  }
+
+
+  const duration = Math.max(60, Number(root.dataset.duration || 900));
+  const min = Math.max(0, Number(root.dataset.min || 50));
+  const max = Math.max(0, Number(root.dataset.max || 0));
+  const attemptId = root.dataset.attempt;
+  const itemId = root.dataset.item;
+  const forceTask = root.dataset.forceTask === '1';
+  const fullMockTimer = root.dataset.fullMock === '1';
+  const partOrder = Math.max(1, Number(root.dataset.partOrder || 1));
+
+  const draftKey = `writing-draft-${attemptId}-${itemId}`;
+  const startKey = `writing-started-${attemptId}-${itemId}`;
+
+  const wordCount = value =>
+    value.trim() ? value.trim().split(/\s+/).filter(Boolean).length : 0;
+
+  const updateCount = () => {
+    if (!text || !count || !status) return;
+    const n = wordCount(text.value);
+    count.textContent = n;
+
+    if (max && n > max) {
+      status.textContent = `Maximum exceeded by ${n - max}`;
+      status.className = 'is-error';
+    } else if (n >= min) {
+      status.textContent = 'Minimum reached';
+      status.className = 'is-ready';
+    } else {
+      status.textContent = `${min - n} more word${min - n === 1 ? '' : 's'} needed`;
+      status.className = '';
+    }
+  };
+
+  let autosaveTimer = null;
+  if (text) {
+    const savedDraft = localStorage.getItem(draftKey);
+    if (!text.value.trim() && savedDraft) text.value = savedDraft;
+
+    text.addEventListener('input', () => {
+      updateCount();
+      if (save) save.textContent = 'Saving…';
+      clearTimeout(autosaveTimer);
+      autosaveTimer = setTimeout(() => {
+        localStorage.setItem(draftKey, text.value);
+        if (save) save.textContent = 'Draft saved on this device';
+      }, 350);
+    });
+
+    updateCount();
+  }
+
+  const blockedInputTypes = new Set([
+    'insertFromPaste',
+    'insertFromPasteAsQuotation',
+    'insertFromDrop',
+    'insertFromYank',
+    'insertReplacementText'
+  ]);
+
+  if (text) {
+    ['copy', 'cut', 'paste', 'drop'].forEach(type => {
+      text.addEventListener(type, event => {
+        event.preventDefault();
+      });
+    });
+
+    text.addEventListener('beforeinput', event => {
+      if (blockedInputTypes.has(event.inputType)) event.preventDefault();
+    });
+
+    text.addEventListener('contextmenu', event => event.preventDefault());
+
+    text.addEventListener('keydown', event => {
+      const key = String(event.key || '').toLowerCase();
+      if ((event.ctrlKey || event.metaKey) && ['c', 'v', 'x'].includes(key)) {
+        event.preventDefault();
+      }
+    });
+  }
+
+  const formatTime = seconds => {
+    const safe = Math.max(0, Math.ceil(seconds));
+    const minutes = Math.floor(safe / 60);
+    const secs = safe % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
+  let timerHandle = null;
+
+  const ensureStartTime = () => {
+    let started = Number(localStorage.getItem(startKey) || 0);
+    if (!started) {
+      started = Date.now();
+      localStorage.setItem(startKey, String(started));
+    }
+    return started;
+  };
+
+  const startTimer = () => {
+    if (!timerText || fullMockTimer) return;
+    const started = ensureStartTime();
+
+    const tick = () => {
+      const elapsed = (Date.now() - started) / 1000;
+      const remaining = duration - elapsed;
+      timerText.textContent = formatTime(remaining);
+
+      if (timerWrap) {
+        timerWrap.classList.toggle('is-warning', remaining <= 60 && remaining > 0);
+        timerWrap.classList.toggle('is-expired', remaining <= 0);
+      }
+    };
+
+    tick();
+    clearInterval(timerHandle);
+    timerHandle = setInterval(tick, 1000);
+  };
+
+  const openTask = (focusAnswer = false) => {
+    if (intro) intro.hidden = true;
+    if (task) task.hidden = false;
+    root.classList.add('is-started');
+    ensureStartTime();
+    startTimer();
+
+    if (focusAnswer && text) {
+      requestAnimationFrame(() => {
+        const top = text.getBoundingClientRect().top + window.scrollY - 110;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        setTimeout(() => text.focus({ preventScroll: true }), 220);
+      });
+    }
+  };
+
+  if (startButton) {
+    startButton.addEventListener('click', () => openTask(false));
+  }
+
+  if (partOrder > 1 || forceTask || localStorage.getItem(startKey)) {
+    openTask(false);
+  }
+
+  if (form) {
+    form.addEventListener('submit', event => {
+      const n = wordCount(text ? text.value : '');
+
+      if (n < min) {
+        event.preventDefault();
+        alert(`Please write at least ${min} words.`);
+        if (text) text.focus();
+        return;
+      }
+
+      if (max && n > max) {
+        event.preventDefault();
+        alert(`Please keep your answer within ${max} words.`);
+        if (text) text.focus();
+        return;
+      }
+
+      localStorage.removeItem(draftKey);
+      localStorage.removeItem(startKey);
+    });
+  }
+
+  window.addEventListener('pagehide', () => {
+    if (text && text.value.trim()) localStorage.setItem(draftKey, text.value);
+  });
+})();
+</script>
+<script defer src="{% static 'js/full-mock-section-timer-v35-part2.js' %}?v=20260908-351"></script>
+
+<!-- BEGIN WRITING_SINGLE_INSTRUCTION_NO_LOADER_V14_8_1 -->
+<style id="WRITING_SINGLE_INSTRUCTION_NO_LOADER_V14_8_1-style">
+  /* Keep the real Writing prompt once; remove the second generic instruction card. */
+  .cw14-part-instructions {
+    display: none !important;
+  }
+</style>
+<script id="WRITING_SINGLE_INSTRUCTION_NO_LOADER_V14_8_1-script">
+(function () {
+  'use strict';
+
+  const normalize = (value) => String(value || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+
+  function removeExactPromptDuplicate() {
+    const context = document.querySelector('.cw14-context');
+    const prompt = document.querySelector('.cw14-prompt');
+    if (!context || !prompt) return;
+
+    const a = normalize(context.textContent);
+    const b = normalize(prompt.textContent);
+
+    // Only remove when the two visible blocks are genuinely the same text.
+    if (a && b && a === b) {
+      context.hidden = true;
+      context.style.display = 'none';
+    }
+  }
+
+  function suppressLoadingModulePopup(root) {
+    const scope = root && root.querySelectorAll ? root : document;
+    const selectors = [
+      '[role="dialog"]',
+      '[role="alertdialog"]',
+      '[role="status"]',
+      '[role="alert"]',
+      '.modal',
+      '.popup',
+      '.toast',
+      '.overlay',
+      '.loading-overlay',
+      '.loader-overlay',
+      '[class*="loading"][class*="modal"]',
+      '[class*="loading"][class*="overlay"]',
+      '[id*="loading"][id*="modal"]',
+      '[id*="loading"][id*="overlay"]'
+    ];
+
+    scope.querySelectorAll(selectors.join(',')).forEach((node) => {
+      const label = normalize(
+        (node.getAttribute && (
+          node.getAttribute('aria-label') ||
+          node.getAttribute('data-message')
+        )) || node.textContent
+      );
+
+      if (
+        /loading\s+(the\s+|your\s+)?module/.test(label) ||
+        /module\s+is\s+loading/.test(label) ||
+        /loading\s+(the\s+)?writing\s+module/.test(label)
+      ) {
+        node.hidden = true;
+        node.style.setProperty('display', 'none', 'important');
+        node.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  function clean() {
+    removeExactPromptDuplicate();
+    suppressLoadingModulePopup(document);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', clean, { once: true });
+  } else {
+    clean();
+  }
+
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      mutation.addedNodes.forEach((node) => {
+        if (node.nodeType === 1) suppressLoadingModulePopup(node);
+      });
+    }
+  });
+
+  if (document.documentElement) {
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  }
+})();
+</script>
+<!-- END WRITING_SINGLE_INSTRUCTION_NO_LOADER_V14_8_1 -->
+
+<!-- BEGIN WRITING_APPEND_ONLY_CURSOR_V39_0 -->
+<script id="WRITING_APPEND_ONLY_CURSOR_V39_0">
+(() => {
+  'use strict';
+
+  function installAppendOnlyWriting() {
+    const area = document.getElementById('writingText');
+    if (!area || area.dataset.appendOnlyCursor === '1') return;
+    area.dataset.appendOnlyCursor = '1';
+
+    let locking = false;
+    let composing = false;
+
+    const atEnd = () => {
+      const end = area.value.length;
+      return area.selectionStart === end && area.selectionEnd === end;
+    };
+
+    const lockToEnd = () => {
+      if (locking || composing) return;
+      locking = true;
+      try {
+        const end = area.value.length;
+        if (area.selectionStart !== end || area.selectionEnd !== end) {
+          area.setSelectionRange(end, end, 'none');
+        }
+      } catch (_) {
+        /* Mobile browsers can transiently reject selection changes during focus. */
+      } finally {
+        locking = false;
+      }
+    };
+
+    const lockSoon = () => {
+      window.requestAnimationFrame(lockToEnd);
+      window.setTimeout(lockToEnd, 0);
+    };
+
+    area.addEventListener('compositionstart', () => {
+      composing = true;
+    });
+
+    area.addEventListener('compositionend', () => {
+      composing = false;
+      lockSoon();
+    });
+
+    area.addEventListener('focus', lockSoon);
+    area.addEventListener('click', lockSoon);
+    area.addEventListener('mouseup', lockSoon);
+    area.addEventListener('touchend', lockSoon, { passive: true });
+    area.addEventListener('select', lockSoon);
+    area.addEventListener('input', lockSoon);
+
+    document.addEventListener('selectionchange', () => {
+      if (document.activeElement === area && !atEnd()) lockToEnd();
+    });
+
+    area.addEventListener('keydown', (event) => {
+      if (composing || event.isComposing) return;
+
+      const navKeys = new Set([
+        'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
+        'Home', 'End', 'PageUp', 'PageDown'
+      ]);
+
+      if (navKeys.has(event.key)) {
+        event.preventDefault();
+        lockToEnd();
+        return;
+      }
+
+      if ((event.ctrlKey || event.metaKey) && String(event.key).toLowerCase() === 'a') {
+        event.preventDefault();
+        lockToEnd();
+        return;
+      }
+
+      // Before any normal typing/backspace, force the caret back to the end.
+      // Backspace still works normally from the end, so correcting an earlier
+      // word requires deleting back to it exactly as requested.
+      if (!atEnd()) lockToEnd();
+    }, true);
+
+    area.addEventListener('beforeinput', () => {
+      if (!composing && !atEnd()) lockToEnd();
+    }, true);
+
+    // Prevent drag-selection from leaving a movable caret behind.
+    area.addEventListener('dragstart', (event) => {
+      event.preventDefault();
+      lockToEnd();
+    });
+
+    lockSoon();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', installAppendOnlyWriting, { once: true });
+  } else {
+    installAppendOnlyWriting();
+  }
+})();
+</script>
+<!-- END WRITING_APPEND_ONLY_CURSOR_V39_0 -->
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static website_tags %}
+{% public_site_settings as portal_site %}
+<header class="pub8-header" data-public-header>
+  <div class="pub8-shell">
+    <a class="pub8-brand" href="{% url 'website:home' %}" aria-label="Arya Academy home" data-pointer-label="Home">
+      <img src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+    </a>
+
+    <nav class="pub8-nav" data-public-menu aria-label="Public navigation">
+      <a href="{% url 'website:home' %}" data-pointer-label="Home">Home</a>
+      <a href="/pricing/" data-pointer-label="Pricing">Pricing</a>
+    </nav>
+
+    <div class="pub8-actions">
+      {% if request.user.is_authenticated %}
+        <a class="pub8-login" href="{% url 'dashboard' %}" data-pointer-label="Dashboard">Dashboard</a>
+      {% else %}
+        <a class="pub8-login" href="{% url 'login' %}" data-pointer-label="Sign in">Sign in</a>
+        <a class="pub8-signup" href="{% url 'signup' %}" data-pointer-label="Create account">Create account <span>→</span></a>
+      {% endif %}
+      <button class="pub8-menu-button" type="button" data-public-menu-toggle aria-label="Open menu" aria-expanded="false">
+        <span data-public-menu-icon>☰</span>
+      </button>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,100 @@
+:root{
+  --ps-bg:#eef5f8;
+  --ps-panel:#ffffff;
+  --ps-text:#20242c;
+  --ps-muted:#606975;
+  --ps-line:#edf0f2;
+  --ps-teal:#15b8b7;
+  --ps-navy:#314a68;
+  --ps-navy-hover:#263d58;
+}
+*{box-sizing:border-box}
+html{color-scheme:light;background:var(--ps-bg)}
+body{
+  margin:0;min-width:320px;min-height:100vh;background:var(--ps-bg);color:var(--ps-text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+button,a{font:inherit}
+.ps-page{min-height:100vh;display:flex;justify-content:center;align-items:flex-start}
+.ps-panel{position:relative;width:min(100%,760px);background:transparent}
+.ps-topbar{
+  position:relative;height:72px;display:flex;align-items:center;justify-content:center;
+  border:0;background:transparent;color:#171b22;font-size:18px;font-weight:600;
+}
+.ps-back{
+  position:absolute;left:28px;top:50%;transform:translateY(-50%);width:38px;height:38px;
+  border:0;background:transparent;border-radius:50%;display:grid;place-items:center;
+  color:#313740;font-size:31px;line-height:1;text-decoration:none;
+}
+.ps-back:hover{background:rgba(255,255,255,.7)}
+.ps-instructions{
+  position:relative;width:min(calc(100% - 32px),620px);margin:12px auto 24px;
+  padding:26px 30px 24px;border:1px solid var(--ps-line);border-radius:14px;
+  background:#fff;box-shadow:0 4px 16px rgba(36,63,77,.04);
+}
+.ps-part-icon{
+  width:64px;height:64px;margin:0 auto 14px;border:2px solid #7fd2d0;border-radius:50%;
+  display:grid;place-items:center;color:#6abdbb;
+}
+.ps-part-icon svg{width:32px;height:32px;stroke:currentColor}
+.ps-instructions h1{margin:0;text-align:center;color:#30343b;font-size:21px;line-height:1.35;font-weight:600}
+.ps-bullets{margin:16px 0 0;padding-left:20px;color:#46515e;font-size:14px;line-height:1.65}
+.ps-bullets li{margin:10px 0}
+.ps-before{margin:24px -30px 0;padding:20px 30px 0;border-top:1px solid var(--ps-line)}
+.ps-before h2{margin:0 0 15px;color:#30343b;font-size:17px;line-height:1.35;font-weight:600}
+.ps-before ul{margin:0;padding-left:18px;color:#56616d;font-size:13px;line-height:1.7}
+.ps-before li{margin:10px 0}
+.ps-start-form{position:static;margin-top:22px}
+.ps-start-button{
+  width:100%;height:48px;border:0;border-radius:6px;background:var(--ps-navy);color:#fff;
+  font-size:13px;font-weight:700;letter-spacing:.01em;cursor:pointer;
+}
+.ps-start-button:hover{background:var(--ps-navy-hover)}
+.ps-set-note{display:none!important}
+
+.ps-resume{
+  width:min(calc(100% - 32px),460px);margin:24px auto;padding:20px 22px;
+  border:1px solid var(--ps-line);border-radius:14px;background:#fff;
+}
+.ps-resume h1{margin:0 0 6px;color:#343941;font-size:20px;line-height:1.25;font-weight:700}
+.ps-resume p{margin:0 0 14px;color:#656d77;font-size:14px;line-height:1.5}
+.ps-stack{display:grid;gap:8px}
+.ps-btn{
+  width:100%;min-height:44px;border-radius:6px;border:1px solid #bcc3ca;
+  display:flex;align-items:center;justify-content:center;background:#fff;color:#4c525b;
+  font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;
+}
+.ps-btn.primary{border-color:var(--ps-navy);background:var(--ps-navy);color:#fff}
+.ps-btn.primary:hover{background:var(--ps-navy-hover)}
+.ps-btn.secondary:hover{background:#f7f8f9}
+
+.ps-loading{
+  position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;
+  background:var(--ps-bg);
+}
+.ps-loading[hidden]{display:none}
+.ps-loading-card{
+  width:min(100%,380px);min-height:160px;padding:26px;display:grid;place-content:center;
+  border:1px solid var(--ps-line);border-radius:14px;background:#fff;text-align:center;
+  box-shadow:0 8px 24px rgba(36,63,77,.06);
+}
+.ps-loading-card strong{display:block;color:#30343b;font-size:17px;font-weight:600}
+.ps-loading-card span{display:block;margin-top:5px;color:var(--ps-muted);font-size:12px}
+
+@media(max-width:700px){
+  html,body{background:#fff}
+  .ps-panel{width:100%;background:#fff}
+  .ps-topbar{height:64px;border-bottom:1px solid var(--ps-line);font-size:16px}
+  .ps-back{left:12px;font-size:27px}
+  .ps-instructions{width:100%;margin:0;padding:24px 20px;border:0;border-radius:0;box-shadow:none}
+  .ps-part-icon{width:60px;height:60px;margin-bottom:14px}
+  .ps-part-icon svg{width:32px;height:32px}
+  .ps-instructions h1{font-size:18px}
+  .ps-bullets{font-size:13px}
+  .ps-before{margin:20px -20px 0;padding:20px 20px 0}
+  .ps-before h2{font-size:15px}
+  .ps-before ul{font-size:12px}
+  .ps-start-form{margin-top:20px}
+  .ps-resume{margin:20px auto;padding:20px}
+}

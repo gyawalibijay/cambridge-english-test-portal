@@ -1,0 +1,76 @@
+.cambridge-access-only .pay-package-grid{grid-template-columns:minmax(0,560px)!important;justify-content:center}
+.cambridge-access-only .pay-package-card{min-height:340px}
+.cambridge-access-only .pay-section-head{max-width:560px;margin-left:auto;margin-right:auto}
+.cambridge-access-only .pay-how-card{margin-top:22px}
+@media(max-width:700px){
+  .cambridge-access-only .pay-package-grid{grid-template-columns:1fr!important}
+  .cambridge-access-only .pay-package-card{min-height:0}
+}
+
+/* CAMBRIDGE_OFFER_PRICE_V33_1 START */
+.cambridge-access-only .cambridge-offer-price{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:7px;line-height:1.1}
+.cambridge-access-only .cambridge-original-price{color:#7b879f;font-size:15px;font-weight:700;text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:#ff4f64}
+.cambridge-access-only .cambridge-offer-label{display:inline-flex;align-items:center;min-height:22px;padding:3px 8px;border-radius:999px;background:#fff0f3;border:1px solid rgba(255,79,100,.28);color:#e83d55;font-size:9px;font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.cambridge-access-only .cambridge-current-price{color:#102a66;font-size:27px;font-weight:850;letter-spacing:-.035em;white-space:nowrap}
+.cambridge-access-only .cambridge-save-price{display:inline-flex;align-items:center;min-height:22px;padding:3px 8px;border-radius:999px;background:rgba(31,88,255,.08);color:#1f58ff;font-size:10px;font-weight:800;letter-spacing:.04em;white-space:nowrap}
+@media(max-width:700px){.cambridge-access-only .cambridge-offer-price{gap:7px;margin-top:6px}.cambridge-access-only .cambridge-current-price{width:100%;font-size:25px}.cambridge-access-only .cambridge-original-price{font-size:14px}}
+/* CAMBRIDGE_OFFER_PRICE_V33_1 END */
+
+/* CAMBRIDGE_OFFER_PRICE_V40_8 START */
+.cambridge-access-only .cambridge-offer-price{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:7px;
+  line-height:1.1;
+}
+.cambridge-access-only .cambridge-original-price{
+  color:#7b879f;
+  font-size:15px;
+  font-weight:700;
+  text-decoration:line-through;
+  text-decoration-thickness:2px;
+  text-decoration-color:#ff4f64;
+  white-space:nowrap;
+}
+.cambridge-access-only .cambridge-offer-label{
+  display:inline-flex;
+  align-items:center;
+  min-height:22px;
+  padding:3px 9px;
+  border-radius:999px;
+  background:#fff0f3;
+  border:1px solid rgba(255,79,100,.28);
+  color:#e83d55;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
+.cambridge-access-only .cambridge-current-price{
+  color:#102a66;
+  font-size:27px;
+  font-weight:850;
+  letter-spacing:-.035em;
+  white-space:nowrap;
+}
+.cambridge-access-only .cambridge-save-price{
+  display:inline-flex;
+  align-items:center;
+  min-height:22px;
+  padding:3px 9px;
+  border-radius:999px;
+  background:rgba(31,88,255,.08);
+  color:#1f58ff;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.03em;
+  white-space:nowrap;
+}
+@media(max-width:700px){
+  .cambridge-access-only .cambridge-offer-price{gap:7px;margin-top:6px}
+  .cambridge-access-only .cambridge-current-price{width:100%;font-size:25px}
+  .cambridge-access-only .cambridge-original-price{font-size:14px}
+}
+/* CAMBRIDGE_OFFER_PRICE_V40_8 END */

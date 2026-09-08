@@ -1,0 +1,18 @@
+/* B1 READY Listening authoritative timer V34.6.3 */
+body[data-question-skill="listening"] #sectionTimer{
+  min-width:86px;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.01em;
+  transition:color .2s ease,background .2s ease,border-color .2s ease;
+}
+body[data-question-skill="listening"] #sectionTimer.is-warning{
+  color:#b65d00!important;
+}
+body[data-question-skill="listening"] #sectionTimer.is-expired{
+  color:#c5394d!important;
+}
+@media(max-width:640px){
+  body[data-question-skill="listening"] #sectionTimer{
+    min-width:72px;
+  }
+}

@@ -1,0 +1,525 @@
+/* =========================================================
+   PUBLIC V5 OVERRIDES
+   A brighter, more premium and more student-friendly finish
+   ========================================================= */
+
+:root{
+  --brand-royal:#4361ee;
+  --brand-indigo:#5b4cf4;
+  --brand-sky:#22b8cf;
+  --brand-teal:#14b8a6;
+  --brand-gold:#f4c95d;
+  --brand-ink:#0f172a;
+  --brand-soft:#f5f8ff;
+  --brand-card:#ffffff;
+  --brand-line:#dbe5f2;
+  --brand-muted:#55657f;
+  --brand-shadow:0 22px 60px rgba(50, 84, 143, .12);
+}
+
+html[data-theme="light"] body.pub4-body{
+  background:
+    radial-gradient(circle at top left, rgba(67,97,238,.08), transparent 30%),
+    radial-gradient(circle at right 10% top 20%, rgba(34,184,207,.08), transparent 26%),
+    linear-gradient(180deg,#f7fbff 0%, #eef4fb 100%);
+  color:var(--brand-ink);
+}
+
+html[data-theme="dark"] body.pub4-body{
+  background:
+    radial-gradient(circle at top left, rgba(82,118,255,.14), transparent 32%),
+    radial-gradient(circle at right 10% top 20%, rgba(34,184,207,.10), transparent 25%),
+    linear-gradient(180deg,#09101f 0%, #0d1526 100%);
+}
+
+html[data-theme="light"] .pub4-header{
+  background:rgba(255,255,255,.78);
+  border-bottom:1px solid rgba(200,214,233,.9);
+  box-shadow:0 4px 24px rgba(30,56,110,.05);
+}
+
+html[data-theme="dark"] .pub4-header{
+  background:rgba(10,16,31,.82);
+  border-bottom:1px solid rgba(83,102,137,.22);
+}
+
+.pub4-nav-wrap{
+  width:min(1280px, calc(100% - 34px));
+}
+
+.pub4-logo-mark{
+  background:linear-gradient(145deg, #ffd978, #f0ba34);
+  box-shadow:0 14px 30px rgba(233,175,47,.26);
+}
+
+.pub4-logo strong{
+  font-size:1rem;
+  letter-spacing:-.02em;
+}
+
+.pub4-logo small{
+  font-size:.66rem;
+}
+
+.pub4-nav a{
+  font-size:.79rem;
+  font-weight:800;
+  padding:12px 13px;
+  transition:all .18s ease;
+}
+
+html[data-theme="light"] .pub4-nav a{
+  color:#45556f;
+}
+
+html[data-theme="dark"] .pub4-nav a{
+  color:#9fb0cb;
+}
+
+.pub4-nav a:hover{
+  transform:translateY(-1px);
+  color:#183a87;
+  background:rgba(67,97,238,.08);
+}
+
+html[data-theme="dark"] .pub4-nav a:hover{
+  color:#f4f8ff;
+  background:rgba(92,110,255,.14);
+}
+
+.pub4-theme{
+  box-shadow:none;
+}
+
+.pub4-btn,
+.pub4-btn.primary,
+.pub4-btn.ghost{
+  min-height:46px;
+  border-radius:14px;
+  font-weight:900;
+  letter-spacing:-.01em;
+}
+
+.pub4-btn.primary{
+  background:linear-gradient(120deg, var(--brand-royal), var(--brand-indigo));
+  box-shadow:0 16px 35px rgba(67,97,238,.28);
+}
+
+.pub4-btn.primary:hover{
+  box-shadow:0 18px 42px rgba(67,97,238,.34);
+}
+
+.pub4-btn.ghost{
+  border:1px solid rgba(67,97,238,.15);
+  background:rgba(255,255,255,.72);
+}
+
+html[data-theme="dark"] .pub4-btn.ghost{
+  background:rgba(19,28,49,.84);
+  border-color:rgba(103,127,201,.24);
+}
+
+.pub4-signin{
+  font-size:.78rem;
+  font-weight:900;
+}
+
+.pub4-hero{
+  padding:92px 0 84px;
+}
+
+.pub4-hero:after{
+  content:"";
+  position:absolute;
+  inset:auto auto 6% -6%;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(244,201,93,.16), transparent 62%);
+  pointer-events:none;
+}
+
+.pub4-hero-grid{
+  gap:54px;
+}
+
+.pub4-kicker{
+  padding:9px 14px;
+  font-size:.72rem;
+  border:1px solid rgba(67,97,238,.16);
+  box-shadow:0 8px 24px rgba(67,97,238,.09);
+}
+
+.pub4-hero h1{
+  font-size:clamp(3.5rem, 7vw, 6.2rem);
+  line-height:.95;
+  max-width:720px;
+}
+
+.pub4-hero h1 span{
+  background:linear-gradient(120deg, var(--brand-royal), #6d59ff 45%, var(--brand-sky));
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+
+.pub4-hero-copy{
+  max-width:650px;
+  font-size:1.04rem;
+  line-height:1.85;
+}
+
+html[data-theme="light"] .pub4-hero-copy{
+  color:#53637f;
+}
+
+html[data-theme="dark"] .pub4-hero-copy{
+  color:#aab7cf;
+}
+
+.pub4-hero-proof{
+  gap:34px;
+  margin-top:34px;
+}
+
+.pub4-proof-item strong{
+  font-size:1.5rem;
+}
+
+.pub4-proof-item span{
+  font-size:.69rem;
+}
+
+.pub4-product-preview{
+  min-height:540px;
+}
+
+.pub4-preview-main{
+  width:92%;
+  transform:rotate(.7deg);
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 28px 80px rgba(45, 78, 135, .16);
+  border:1px solid rgba(67,97,238,.10);
+}
+
+html[data-theme="light"] .pub4-preview-main{
+  background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
+}
+
+html[data-theme="dark"] .pub4-preview-main{
+  background:linear-gradient(180deg,#10192d 0%, #0f1829 100%);
+  border-color:rgba(106,126,184,.16);
+}
+
+.pub4-preview-toolbar{
+  font-size:.69rem;
+}
+
+.pub4-preview-hero{
+  padding:24px 24px 22px;
+  border-radius:20px;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(69,224,214,.18), transparent 34%),
+    linear-gradient(135deg,#15274d,#1f4e78 56%, #118d8f);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+.pub4-preview-grid{
+  gap:12px;
+  margin-top:14px;
+}
+
+.pub4-preview-card{
+  border-radius:16px;
+  padding:16px;
+}
+
+html[data-theme="light"] .pub4-preview-card{
+  background:#f4f8fd;
+  border:1px solid rgba(218,228,240,.75);
+}
+
+html[data-theme="dark"] .pub4-preview-card{
+  background:#121d34;
+  border:1px solid rgba(92,107,143,.18);
+}
+
+.pub4-float-card{
+  bottom:30px;
+  left:-14px;
+  width:220px;
+  border-radius:18px;
+}
+
+html[data-theme="light"] .pub4-float-card{
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(219,229,242,.95);
+}
+
+html[data-theme="dark"] .pub4-float-card{
+  background:rgba(16,25,45,.94);
+  border:1px solid rgba(92,107,143,.18);
+}
+
+.pub4-section{
+  padding:84px 0;
+}
+
+html[data-theme="light"] .pub4-section.alt{
+  background:rgba(255,255,255,.58);
+  backdrop-filter:blur(8px);
+}
+
+html[data-theme="dark"] .pub4-section.alt{
+  background:rgba(13,22,40,.54);
+}
+
+.pub4-section-head .pub4-eyebrow{
+  font-size:.7rem;
+  letter-spacing:.14em;
+}
+
+.pub4-section-head h2{
+  font-size:clamp(2.2rem, 4vw, 3.15rem);
+  line-height:1.13;
+  max-width:780px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.pub4-section-head p{
+  max-width:720px;
+  margin-left:auto;
+  margin-right:auto;
+  font-size:.9rem;
+}
+
+.pub4-program-grid{
+  gap:18px;
+}
+
+.pub4-program-card,
+.pub4-feature-card,
+.pub4-flow-card,
+.pub4-price-card,
+.pub4-detail-panel,
+.pub4-content-card,
+.pub4-info-item,
+.pub4-contact-panel,
+.pub4-legal{
+  box-shadow:var(--brand-shadow);
+  border-radius:22px;
+  border:1px solid rgba(220,229,241,.92);
+}
+
+html[data-theme="light"] .pub4-program-card,
+html[data-theme="light"] .pub4-feature-card,
+html[data-theme="light"] .pub4-flow-card,
+html[data-theme="light"] .pub4-price-card,
+html[data-theme="light"] .pub4-detail-panel,
+html[data-theme="light"] .pub4-content-card,
+html[data-theme="light"] .pub4-info-item,
+html[data-theme="light"] .pub4-contact-panel,
+html[data-theme="light"] .pub4-legal{
+  background:linear-gradient(180deg,#ffffff 0%, #fbfdff 100%);
+}
+
+html[data-theme="dark"] .pub4-program-card,
+html[data-theme="dark"] .pub4-feature-card,
+html[data-theme="dark"] .pub4-flow-card,
+html[data-theme="dark"] .pub4-price-card,
+html[data-theme="dark"] .pub4-detail-panel,
+html[data-theme="dark"] .pub4-content-card,
+html[data-theme="dark"] .pub4-info-item,
+html[data-theme="dark"] .pub4-contact-panel,
+html[data-theme="dark"] .pub4-legal{
+  background:linear-gradient(180deg,#10192d 0%, #0d1728 100%);
+  border-color:rgba(95,110,145,.18);
+  box-shadow:none;
+}
+
+.pub4-program-card:hover,
+.pub4-feature-card:hover,
+.pub4-flow-card:hover,
+.pub4-price-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 26px 60px rgba(51,84,144,.16);
+}
+
+.pub4-program-icon,
+.pub4-feature-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+}
+
+.pub4-program-card h3,
+.pub4-feature-card h3,
+.pub4-flow-card h3{
+  font-size:1.08rem;
+}
+
+.pub4-program-card p,
+.pub4-feature-card p,
+.pub4-flow-card p,
+.pub4-price-card p,
+.pub4-detail-panel p,
+.pub4-content-card p,
+.pub4-content-card li,
+.pub4-faq-answer,
+.pub4-contact-point span,
+.pub4-legal p,
+.pub4-legal li{
+  font-size:.78rem;
+  line-height:1.75;
+}
+
+.pub4-program-meta{
+  font-size:.67rem;
+}
+
+.pub4-card-link{
+  margin-top:18px;
+  font-size:.76rem;
+  font-weight:900;
+}
+
+.pub4-flow-card:before{
+  width:40px;
+  height:40px;
+  font-size:.82rem;
+  box-shadow:0 10px 25px rgba(67,97,238,.24);
+}
+
+.pub4-price-grid{
+  gap:20px;
+}
+
+.pub4-price-card.featured{
+  position:relative;
+  border-color:rgba(67,97,238,.28);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(245,248,255,.98) 100%);
+}
+
+html[data-theme="dark"] .pub4-price-card.featured{
+  background:
+    linear-gradient(180deg, rgba(17,27,48,.98) 0%, rgba(14,24,41,.98) 100%);
+}
+
+.pub4-price-card.featured:before{
+  content:"Most popular";
+  position:absolute;
+  top:18px;
+  right:18px;
+  padding:6px 11px;
+  border-radius:999px;
+  font-size:.62rem;
+  font-weight:900;
+  color:#fff;
+  background:linear-gradient(120deg,var(--brand-royal), var(--brand-indigo));
+}
+
+.pub4-price strong{
+  font-size:2.6rem;
+}
+
+.pub4-price span{
+  font-size:.74rem;
+}
+
+.pub4-cta-box{
+  border-radius:32px;
+  box-shadow:0 28px 70px rgba(64,88,180,.24);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255,255,255,.14), transparent 24%),
+    radial-gradient(circle at 16% 18%, rgba(79,232,228,.18), transparent 28%),
+    linear-gradient(120deg,#2f5de0,#5c4af1 55%, #19b8bc);
+}
+
+.pub4-cta-box h2{
+  font-size:2.8rem;
+}
+
+.pub4-cta-box p{
+  font-size:.88rem;
+}
+
+.pub4-footer{
+  padding-top:60px;
+}
+
+html[data-theme="light"] .pub4-footer{
+  background:rgba(255,255,255,.72);
+}
+
+html[data-theme="dark"] .pub4-footer{
+  background:rgba(10,17,31,.86);
+}
+
+.pub4-footer-grid{
+  gap:42px;
+}
+
+.pub4-footer h4{
+  font-size:.8rem;
+}
+
+.pub4-footer a:not(.pub4-logo){
+  font-size:.72rem;
+  margin:11px 0;
+}
+
+.pub4-page-hero{
+  padding:84px 0 58px;
+}
+
+.pub4-page-hero h1{
+  font-size:clamp(3rem, 5vw, 4.5rem);
+}
+
+.pub4-page-hero p{
+  font-size:.9rem;
+}
+
+.pub4-detail-list li{
+  border-radius:14px;
+  font-size:.75rem;
+}
+
+.pub4-contact-panel .pv2-input{
+  min-height:50px;
+  border-radius:14px;
+}
+
+.pub4-contact-panel textarea.pv2-input{
+  min-height:164px;
+}
+
+@media(max-width:900px){
+  .pub4-hero{
+    padding:76px 0 64px;
+  }
+
+  .pub4-product-preview{
+    min-height:450px;
+  }
+}
+
+@media(max-width:620px){
+  .pub4-hero h1{
+    font-size:3.3rem;
+  }
+
+  .pub4-section{
+    padding:64px 0;
+  }
+
+  .pub4-cta-box h2{
+    font-size:2.1rem;
+  }
+
+  .pub4-price strong{
+    font-size:2.3rem;
+  }
+}

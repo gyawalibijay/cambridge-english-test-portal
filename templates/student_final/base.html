@@ -1,0 +1,164 @@
+{% load static %}
+{# DASHBOARD_REFERENCE_REPLICA_20260826 #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <meta name="student-ui-build" content="20260905-v22">
+  <title>{% block title %}Arya Academy{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/student-final.css' %}?v=client-20260901-payments">
+  <link rel="stylesheet" href="{% static 'css/arya-academy-official-v35-4.css' %}?v=20260908-354">
+  <link rel="stylesheet" href="{% static 'css/mobile-bottom-nav.css' %}?v=20260903-safari-v14-6">
+  {% block extra_head %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/student-top-actions-v13.css' %}?v=20260903-1412">
+  {% if active != 'practice' and active != 'mock' %}
+  <link rel="stylesheet" href="{% static 'css/dashboard-brand-v15.css' %}?v=20260905-20">
+  <link rel="stylesheet" href="{% static 'css/dashboard-font-colors-v18.css' %}?v=20260905-20">
+  <link rel="stylesheet" href="{% static 'css/dashboard-final-v20.css' %}?v=20260905-20">
+  <link rel="stylesheet" href="{% static 'css/student-ui-refinement-v21.css' %}?v=20260905-21">
+  <link rel="stylesheet" href="{% static 'css/dashboard-color-restore-v22.css' %}?v=20260905-22">
+  {% endif %}
+  <link rel="stylesheet" href="{% static 'css/dashboard-brand-lockup-fix-v35-6.css' %}?v=20260908-356">
+  {% block theme_head %}{% endblock %}
+</head>
+<body>
+<div class="sf-app">
+  <aside class="sf-sidebar" aria-label="Student navigation">
+    <a href="{% url 'dashboard' %}" class="sf-brand" aria-label="Cambridge English Test powered by Arya Academy home">
+      <img class="aa-official-logo" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+      <span class="sf-brand-copy aa-brand-text-copy">
+        <strong>Cambridge English Test</strong>
+        <small>POWERED BY ARYA ACADEMY</small>
+      </span>
+    </a>
+
+    <div class="sf-nav-group">
+      <div class="sf-nav-label">STUDY</div>
+
+      <a class="sf-nav-item {% if active == 'home' %}is-active{% endif %}" href="{% url 'dashboard' %}" {% if active == 'home' %}aria-current="page"{% endif %}>
+        <svg class="sf-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><rect x="14" y="14" width="6" height="6" rx="1"></rect></svg>
+        <span>Home</span>
+      </a>
+
+      <a class="sf-nav-item {% if active == 'learn' %}is-active{% endif %}" href="{% url 'student_learn' %}" {% if active == 'learn' %}aria-current="page"{% endif %}>
+        <svg class="sf-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z"></path><path d="M6.5 11.5v4c3 2 8 2 11 0v-4M20 10v5"></path></svg>
+        <span>Learning Materials</span>
+      </a>
+
+      <a class="sf-nav-item {% if active == 'practice' %}is-active{% endif %}" href="{% url 'student_practice_hub' %}" {% if active == 'practice' %}aria-current="page"{% endif %}>
+        <svg class="sf-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6.5 6.5 11 11M4 9l5-5M15 20l5-5M2 7l5-5M17 22l5-5M5 12l7-7M12 19l7-7"></path></svg>
+        <span>Practice</span>
+      </a>
+
+      <a class="sf-nav-item {% if active == 'mock' %}is-active{% endif %}" href="{% url 'student_mock_tests' %}" {% if active == 'mock' %}aria-current="page"{% endif %}>
+        <svg class="sf-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="16" rx="2"></rect><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="m9 13 2 2 4-4"></path></svg>
+        <span>Mock Test</span>
+      </a>
+    </div>
+
+    <div class="sf-nav-group sf-account-nav">
+      <div class="sf-nav-label">YOUR ACCOUNT</div>
+
+      <a class="sf-nav-item {% if active == 'progress' %}is-active{% endif %}" href="{% url 'student_progress' %}" {% if active == 'progress' %}aria-current="page"{% endif %}>
+        <svg class="sf-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V10M10 19V5M15 19v-7M20 19V8M3.5 19.5h18"></path></svg>
+        <span>Progress</span>
+      </a>
+
+      <a class="sf-nav-item {% if active == 'certificates' %}is-active{% endif %}" href="{% url 'student_certificates' %}" {% if active == 'certificates' %}aria-current="page"{% endif %}>
+        <svg class="sf-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"></circle><path d="M9.6 12 8.7 19.5 12 17.5l3.3 2-.9-7.5"></path></svg>
+        <span>Certificates</span>
+      </a>
+
+      <a class="sf-nav-item {% if active == 'profile' %}is-active{% endif %}" href="{% url 'student_profile_summary' %}" {% if active == 'profile' %}aria-current="page"{% endif %}>
+        <svg class="sf-nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5.5 20c.6-4 3-6 6.5-6s5.9 2 6.5 6"></path></svg>
+        <span>Profile</span>
+      </a>
+    </div>
+
+    <div class="sf-sidebar-spacer"></div>
+<div class="sf-target-card">
+      <small>TARGET LEVEL</small>
+      <strong>{{ target_level|default:"B1" }}</strong>
+      <span>Estimated readiness {{ readiness|default:0|floatformat:0 }}% — one mock test away.</span>
+    </div>
+  </aside>
+
+  {% if active != 'home' %}
+  <header class="sf-mobile-header">
+    <a href="{% url 'dashboard' %}" class="sf-mobile-brand" aria-label="Cambridge English Test powered by Arya Academy home">
+      <img class="aa-official-logo" src="{% static 'images/public/cambridge-b1/arya-academy-logo.jpg' %}" alt="Arya Academy">
+      <span class="sf-brand-copy aa-brand-text-copy">
+        <strong>Cambridge English Test</strong>
+        <small>POWERED BY ARYA ACADEMY</small>
+      </span>
+    </a>
+    {% if active != 'practice' and active != 'mock' %}
+      {% include "partials/student_top_actions.html" with top_actions_variant="compact" %}
+    {% endif %}
+  </header>
+  {% endif %}
+
+  {# PRACTICE_FOCUS_NO_VISIBLE_SETS_20260828 #}
+  {% include "student_final/_mobile_nav.html" %}
+
+  <main class="sf-main{% if active == 'home' %} sf-reference-main{% endif %}">
+    {% if active != 'home' and active != 'practice' and active != 'mock' %}
+      <div class="portal-page-actions-bar">{% include "partials/student_top_actions.html" %}</div>
+    {% endif %}
+    {% if messages %}
+      <div class="sf-messages">
+        {% for message in messages %}<div class="sf-message">{{ message }}</div>{% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+  <script defer src="{% static 'js/student-top-actions-v13.js' %}?v=20260903-1412"></script>
+
+<!-- BEGIN PORTAL_HIDE_LOADING_MODULE_NOTICE_V14_8_1 -->
+<script id="PORTAL_HIDE_LOADING_MODULE_NOTICE_V14_8_1">
+(function () {
+  'use strict';
+  const norm = (v) => String(v || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+  function hideLoadingNotice(root) {
+    const scope = root && root.querySelectorAll ? root : document;
+    const selectors = [
+      '[role="dialog"]','[role="alertdialog"]','[role="status"]','[role="alert"]',
+      '.modal','.popup','.toast','.overlay','.loading-overlay','.loader-overlay'
+    ];
+    scope.querySelectorAll(selectors.join(',')).forEach((node) => {
+      const t = norm(node.textContent || node.getAttribute('aria-label'));
+      if (
+        /loading\s+(the\s+|your\s+)?module/.test(t) ||
+        /module\s+is\s+loading/.test(t)
+      ) {
+        node.hidden = true;
+        node.style.setProperty('display','none','important');
+        node.setAttribute('aria-hidden','true');
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => hideLoadingNotice(document), { once:true });
+  } else {
+    hideLoadingNotice(document);
+  }
+
+  new MutationObserver((mutations) => {
+    mutations.forEach((m) => m.addedNodes.forEach((node) => {
+      if (node.nodeType === 1) hideLoadingNotice(node);
+    }));
+  }).observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+<!-- END PORTAL_HIDE_LOADING_MODULE_NOTICE_V14_8_1 -->
+
+</body>
+</html>

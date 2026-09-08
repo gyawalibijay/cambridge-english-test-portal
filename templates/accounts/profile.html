@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profile & Settings | Arya Academy</title>
+
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/profile-settings-v3.js' %}"></script>
+</head>
+
+<body class="pv2-app">
+{% include "partials/student_header.html" %}
+
+<main class="pv2-container profile-settings-v3">
+
+  {% if messages %}
+    {% for message in messages %}
+    <div class="pv2-card profile-flash">
+      {{ message }}
+    </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="pv2-page-title profile-heading">
+    <div>
+      <div class="pv2-eyebrow">Student account</div>
+      <h1>Profile & Settings</h1>
+      <p>
+        Keep your personal details, profile photo and communication preferences up to date.
+      </p>
+    </div>
+  </div>
+
+  <div class="profile-v3-grid">
+
+    <aside class="pv2-card profile-v3-sidebar">
+      <div class="profile-photo-shell">
+        {% if profile.profile_photo %}
+          <img
+            id="profilePhotoPreview"
+            src="{{ profile.profile_photo.url }}"
+            alt="{{ request.user.get_full_name|default:request.user.username }}"
+          >
+        {% else %}
+          <div id="profilePhotoFallback" class="profile-photo-fallback">
+            {{ request.user.first_name|default:request.user.username|slice:":1"|upper }}
+          </div>
+          <img
+            id="profilePhotoPreview"
+            src=""
+            alt="Profile photo preview"
+            hidden
+          >
+        {% endif %}
+      </div>
+
+      <h2>
+        {{ request.user.get_full_name|default:request.user.username }}
+      </h2>
+
+      <p class="profile-email">
+        {{ request.user.email }}
+      </p>
+
+      <div class="profile-badges">
+        <span class="profile-badge">
+          {{ request.user.role|default:"student"|title }}
+        </span>
+
+        {% if certificate_ready %}
+        <span class="profile-badge ready">
+          Certificate profile ready
+        </span>
+        {% else %}
+        <span class="profile-badge pending">
+          Certificate profile incomplete
+        </span>
+        {% endif %}
+      </div>
+
+      <div class="certificate-readiness">
+        <div class="certificate-readiness-head">
+          <strong>Future certificate profile</strong>
+          {% if certificate_ready %}
+            <span class="ready-text">Ready</span>
+          {% else %}
+            <span>Needs details</span>
+          {% endif %}
+        </div>
+
+        <p>
+          We are preparing the profile structure now so that your photo and certificate name
+          can be reused when automatic certificate generation is added later.
+        </p>
+
+        <div class="certificate-check">
+          <span class="{% if profile.profile_photo %}ok{% endif %}">✓</span>
+          Profile photo
+        </div>
+
+        <div class="certificate-check">
+          <span class="{% if profile.certificate_name or request.user.get_full_name %}ok{% endif %}">✓</span>
+          Certificate name
+        </div>
+      </div>
+    </aside>
+
+    <section class="pv2-card profile-v3-main">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="pv2-error">
+          {{ form.non_field_errors|striptags }}
+        </div>
+        {% endif %}
+
+        <div class="profile-section">
+          <div class="profile-section-head">
+            <div><span class="section-icon">01</span></div>
+            <div>
+              <h2>Profile photo</h2>
+              <p>
+                Upload a clear student photo. We can reuse it later for certificate generation
+                after the final certificate format is provided.
+              </p>
+            </div>
+          </div>
+
+          <div class="photo-upload-box">
+            {{ form.profile_photo }}
+            {% if form.profile_photo.help_text %}<small>{{ form.profile_photo.help_text }}</small>{% endif %}
+            {% if form.profile_photo.errors %}<div class="pv2-field-error">{{ form.profile_photo.errors|striptags }}</div>{% endif %}
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <div class="profile-section-head">
+            <div><span class="section-icon">02</span></div>
+            <div>
+              <h2>Personal information</h2>
+              <p>These details are used throughout your student account.</p>
+            </div>
+          </div>
+
+          <div class="profile-form-grid">
+            <div class="pv2-field">
+              <label for="{{ form.first_name.id_for_label }}">First name</label>
+              {{ form.first_name }}
+              {% if form.first_name.errors %}<div class="pv2-field-error">{{ form.first_name.errors|striptags }}</div>{% endif %}
+            </div>
+
+            <div class="pv2-field">
+              <label for="{{ form.last_name.id_for_label }}">Last name</label>
+              {{ form.last_name }}
+              {% if form.last_name.errors %}<div class="pv2-field-error">{{ form.last_name.errors|striptags }}</div>{% endif %}
+            </div>
+
+            <div class="pv2-field full">
+              <label>Email address</label>
+              <input class="pv2-input" value="{{ request.user.email }}" disabled>
+              <small>Contact an administrator if the account email needs to be changed.</small>
+            </div>
+
+            <div class="pv2-field full certificate-name-field">
+              <label for="{{ form.certificate_name.id_for_label }}">Certificate name</label>
+              {{ form.certificate_name }}
+              {% if form.certificate_name.help_text %}<small>{{ form.certificate_name.help_text }}</small>{% endif %}
+              {% if form.certificate_name.errors %}<div class="pv2-field-error">{{ form.certificate_name.errors|striptags }}</div>{% endif %}
+            </div>
+
+            <div class="pv2-field">
+              <label for="{{ form.date_of_birth.id_for_label }}">Date of birth</label>
+              {{ form.date_of_birth }}
+              {% if form.date_of_birth.errors %}<div class="pv2-field-error">{{ form.date_of_birth.errors|striptags }}</div>{% endif %}
+            </div>
+
+            <div class="pv2-field">
+              <label for="{{ form.gender.id_for_label }}">Gender</label>
+              {{ form.gender }}
+              {% if form.gender.errors %}<div class="pv2-field-error">{{ form.gender.errors|striptags }}</div>{% endif %}
+            </div>
+
+            <div class="pv2-field">
+              <label for="{{ form.phone_number.id_for_label }}">Phone number</label>
+              {{ form.phone_number }}
+              {% if form.phone_number.errors %}<div class="pv2-field-error">{{ form.phone_number.errors|striptags }}</div>{% endif %}
+            </div>
+
+            <div class="pv2-field">
+              <label for="{{ form.country.id_for_label }}">Country</label>
+              {{ form.country }}
+              {% if form.country.errors %}<div class="pv2-field-error">{{ form.country.errors|striptags }}</div>{% endif %}
+            </div>
+
+            <div class="pv2-field full">
+              <label for="{{ form.city_address.id_for_label }}">City / address</label>
+              {{ form.city_address }}
+              {% if form.city_address.errors %}<div class="pv2-field-error">{{ form.city_address.errors|striptags }}</div>{% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-section">
+          <div class="profile-section-head">
+            <div><span class="section-icon">03</span></div>
+            <div>
+              <h2>Preferences</h2>
+              <p>Choose how the portal should communicate with you.</p>
+            </div>
+          </div>
+
+          <div class="profile-form-grid">
+            <div class="pv2-field full">
+              <label for="{{ form.preferred_language.id_for_label }}">Communication language</label>
+              {{ form.preferred_language }}
+            </div>
+          </div>
+
+          <div class="preference-toggle-grid">
+            <label class="preference-toggle-card">
+              <span>
+                <strong>Email notifications</strong>
+                <small>Receive important account, access and course-related updates.</small>
+              </span>
+              {{ form.email_notifications }}
+            </label>
+
+            <label class="preference-toggle-card">
+              <span>
+                <strong>Result notifications</strong>
+                <small>Receive a notification when a result or reviewed response is available.</small>
+              </span>
+              {{ form.result_notifications }}
+            </label>
+          </div>
+        </div>
+
+        <div class="profile-savebar">
+          <div>
+            <strong>Save your profile</strong>
+            <span>
+              Certificate generation itself will be implemented later when the consultancy provides the final certificate format.
+            </span>
+          </div>
+
+          <button class="pv2-btn pv2-btn-primary" type="submit">
+            Save profile & settings
+          </button>
+        </div>
+      </form>
+    </section>
+
+  </div>
+</main>
+</body>
+</html>

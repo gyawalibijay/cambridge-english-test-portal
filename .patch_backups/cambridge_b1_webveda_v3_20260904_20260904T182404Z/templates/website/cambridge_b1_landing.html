@@ -1,0 +1,256 @@
+{% load static website_tags %}
+{% url 'public_home' as page_url %}
+{% url 'dashboard' as dashboard_url %}
+{% url 'login' as login_url %}
+{% url 'signup' as signup_url %}
+{% url 'student_mock_tests' as mock_url %}
+{% url 'commerce:store' as store_url %}
+{% url 'academy_student:library' as course_url %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Cambridge Upskill B1 Preparation Nepal | Speaking, Mock Tests & Feedback</title>
+  <meta name="description" content="Prepare for the Cambridge Upskill English Test in Nepal with B1 Speaking, A2 Reading, A2 Listening and A1 Writing practice, live classes, feedback and computer-based mock tests.">
+  <meta name="keywords" content="Cambridge Upskill English Test Nepal, Cambridge Upskill preparation Nepal, B1 speaking preparation Nepal, Cambridge Upskill mock test Nepal, English B1 course Kathmandu">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#17120f">
+  <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ page_url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_NP">
+  <meta property="og:title" content="B1 सम्भव छ — Cambridge Upskill Preparation Nepal">
+  <meta property="og:description" content="Learn, practise, get feedback and take computer-based mock tests before facing the real exam.">
+  <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ page_url }}">
+  {% if landing.hero_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ landing.hero_image.url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="B1 सम्भव छ — Cambridge Upskill Preparation Nepal">
+  <meta name="twitter:description" content="Speaking B1, Reading A2, Listening A2 and Writing A1 preparation for Nepalese learners.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Radio+Canada+Big:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="{% static 'images/public/cambridge-b1/b1-hero-studio-v2.webp' %}" type="image/webp">
+  <link rel="stylesheet" href="{% static 'css/cambridge-b1-webveda.css' %}?v=20260904-3">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Course",
+        "@id":"{{ request.scheme }}://{{ request.get_host }}{{ page_url }}#course",
+        "name":"Cambridge Upskill B1 Preparation",
+        "description":"Preparation for Speaking B1, Reading A2, Listening A2 and Writing A1 with active practice, feedback and mock testing.",
+        "provider":{"@type":"EducationalOrganization","name":"{{ site_settings.site_name|default:'Arya Academy Pvt. Ltd.'|escapejs }}"},
+        "inLanguage":["en","ne"],
+        "educationalLevel":"CEFR A1-B1",
+        "areaServed":{"@type":"Country","name":"Nepal"},
+        "offers":[
+          {"@type":"Offer","name":"B1 Preparation","price":"2999","priceCurrency":"NPR","url":"{{ request.scheme }}://{{ request.get_host }}{{ store_url }}"},
+          {"@type":"Offer","name":"B1 Complete Preparation","price":"4999","priceCurrency":"NPR","url":"{{ request.scheme }}://{{ request.get_host }}{{ store_url }}"},
+          {"@type":"Offer","name":"Mock Test Portal","price":"1999","priceCurrency":"NPR","url":"{{ request.scheme }}://{{ request.get_host }}{{ store_url }}"}
+        ]
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"Is this the official Cambridge English Test website?","acceptedAnswer":{"@type":"Answer","text":"No. This is an independent preparation and mock testing platform and is not affiliated with or endorsed by Cambridge English or an official examination body."}},
+          {"@type":"Question","name":"Which levels should I prepare for?","acceptedAnswer":{"@type":"Answer","text":"The preparation targets are Speaking B1, Reading A2, Listening A2 and Writing A1, with special focus on Speaking B1."}},
+          {"@type":"Question","name":"Are mock scores official?","acceptedAnswer":{"@type":"Answer","text":"No. Mock scores, estimated levels, AI feedback and preparation certificates are for practice only."}}
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="b1x-page">
+{% with support_url=site_settings|whatsapp_url %}
+  <a class="b1x-skip" href="#main-content">Skip to content</a>
+
+  <header class="b1x-header" data-b1-header>
+    <div class="b1x-shell b1x-header-inner">
+      <a class="b1x-brand" href="{{ page_url }}" aria-label="{{ site_settings.site_name|default:'Upskill' }} home">
+        {% if site_settings.logo %}
+          <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name|default:'Upskill' }}">
+        {% else %}
+          <span class="b1x-brand-mark">B1</span>
+          <span class="b1x-brand-name">Cambridge Upskill<small>Preparation Nepal</small></span>
+        {% endif %}
+      </a>
+      <nav class="b1x-nav" id="b1x-navigation" data-b1-menu aria-label="Main navigation">
+        <a href="#targets">The target</a><a href="#method">How it works</a><a href="#portal">Mock portal</a><a href="#program">Program</a><a href="#pricing">Pricing</a><a href="#faqs">FAQs</a>
+      </nav>
+      <div class="b1x-header-actions">
+        <a class="b1x-login" href="{% if request.user.is_authenticated %}{{ dashboard_url }}{% else %}{{ login_url }}{% endif %}">{% if request.user.is_authenticated %}Dashboard{% else %}Login{% endif %}</a>
+        <a class="b1x-header-cta" href="{% if request.user.is_authenticated %}{{ dashboard_url }}{% else %}{{ signup_url }}{% endif %}">Start preparation</a>
+        <button class="b1x-menu-toggle" type="button" data-b1-menu-toggle aria-controls="b1x-navigation" aria-expanded="false" aria-label="Open navigation"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="b1x-hero" data-b1-parallax aria-labelledby="b1x-hero-title">
+      <div class="b1x-hero-photo" aria-hidden="true"></div><div class="b1x-hero-shade" aria-hidden="true"></div>
+      <div class="b1x-shell b1x-hero-content">
+        <div class="b1x-hero-copy">
+          <p class="b1x-proof b1x-reveal"><span></span> Cambridge Upskill preparation · Nepal</p>
+          <h1 id="b1x-hero-title" class="b1x-reveal" data-delay="60"><span>B1</span><em lang="ne">सम्भव छ।</em></h1>
+          <p class="b1x-hero-lead b1x-reveal" data-delay="120">English बुझेर मात्रै होइन—बोलेर, लेखेर, सुनेर र test दिएर तयार हुनुहोस्।</p>
+          <p class="b1x-hero-support b1x-reveal" data-delay="170">Structured learning, active practice, human guidance and computer-based mock testing before the real exam.</p>
+          <div class="b1x-hero-actions b1x-reveal" data-delay="220">
+            <a class="b1x-button b1x-button-blue" href="{% if request.user.is_authenticated %}{{ dashboard_url }}{% else %}{{ signup_url }}{% endif %}" data-b1-magnetic>Start your preparation <span>↗</span></a>
+            <a class="b1x-button b1x-button-ghost" href="{% if request.user.is_authenticated %}{{ mock_url }}{% else %}{{ login_url }}?next={{ mock_url }}{% endif %}">Explore the mock portal</a>
+          </div>
+        </div>
+      </div>
+      <div class="b1x-shell b1x-hero-levels b1x-reveal" data-delay="280">
+        <div class="is-main"><span>Speaking</span><strong>B1</strong><small>Main target</small></div><div><span>Reading</span><strong>A2</strong></div><div><span>Listening</span><strong>A2</strong></div><div><span>Writing</span><strong>A1</strong></div>
+      </div>
+    </section>
+
+    <section class="b1x-manifesto" id="targets">
+      <div class="b1x-shell b1x-manifesto-inner">
+        <p class="b1x-kicker b1x-reveal">The target is clear</p>
+        <h2 class="b1x-reveal">The exam doesn’t ask what you <i>know.</i><br>It shows what you can <span>do.</span></h2>
+        <p class="b1x-reveal">That is why Speaking B1 needs more than grammar notes. You need to think, respond and continue—under real test conditions.</p>
+      </div>
+      <div class="b1x-shell b1x-skill-stage">
+        <article class="b1x-speaking-stage b1x-reveal">
+          <div class="b1x-stage-top"><span>01 / Main challenge</span><strong>B1</strong></div>
+          <div class="b1x-stage-copy"><p>Speaking</p><h3>Your voice.<br>Your answer.<br>Your confidence.</h3></div>
+          <div class="b1x-soundline" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="b1x-stage-foot"><span>Think clearly</span><span>Speak naturally</span><span>Develop the answer</span></div>
+        </article>
+        <div class="b1x-skill-stack">
+          <article class="b1x-skill-row b1x-reveal" data-delay="60"><span>02</span><div><small>Read on screen</small><h3>Reading</h3></div><strong>A2</strong></article>
+          <article class="b1x-skill-row b1x-reveal" data-delay="110"><span>03</span><div><small>Hear with purpose</small><h3>Listening</h3></div><strong>A2</strong></article>
+          <article class="b1x-skill-row b1x-reveal" data-delay="160"><span>04</span><div><small>Write with clarity</small><h3>Writing</h3></div><strong>A1</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b1x-truth">
+      <div class="b1x-truth-marquee" aria-label="Common learner challenges"><div><span>“English बुझ्छु, तर बोल्न सक्दिनँ।”</span><i></i><span>“मेरो answer धेरै छोटो हुन्छ।”</span><i></i><span>“Computer मा exam दिएको छैन।”</span><i></i><span aria-hidden="true">“English बुझ्छु, तर बोल्न सक्दिनँ।”</span><i aria-hidden="true"></i><span aria-hidden="true">“मेरो answer धेरै छोटो हुन्छ।”</span></div></div>
+      <div class="b1x-shell b1x-truth-grid">
+        <p class="b1x-kicker b1x-kicker-light b1x-reveal">The real preparation gap</p>
+        <h2 class="b1x-reveal">Knowing English and<br><span>performing in English</span><br>are not the same thing.</h2>
+        <div class="b1x-truth-side b1x-reveal"><p>Question अचानक आउँदा answer सोच्न गाह्रो हुन्छ। Grammar थाहा हुन्छ, तर बोल्दा प्रयोग गर्न सकिँदैन। Practice गरे पनि के सुधार गर्ने थाहा हुँदैन।</p><strong>That gap is exactly what this program is built to close.</strong></div>
+      </div>
+    </section>
+
+    <section class="b1x-method" id="method">
+      <div class="b1x-shell b1x-method-grid">
+        <div class="b1x-method-intro b1x-reveal"><p class="b1x-kicker">One connected method</p><h2>A preparation loop that keeps moving.</h2><p>Every round gives you a clear next step. सिक्ने, गर्ने, feedback लिने अनि फेरि राम्रो गर्ने।</p></div>
+        <div class="b1x-method-steps" aria-label="Preparation method">
+          <article data-system-step class="is-active b1x-reveal"><span>01</span><h3>Learn</h3><p>Understand the task, useful language and answer structure.</p></article>
+          <article data-system-step class="b1x-reveal"><span>02</span><h3>Practise</h3><p>Speak, read, listen and write actively—not passively.</p></article>
+          <article data-system-step class="b1x-reveal"><span>03</span><h3>Get feedback</h3><p>See what is working and what must change next.</p></article>
+          <article data-system-step class="b1x-reveal"><span>04</span><h3>Test</h3><p>Perform inside the computer-based mock format.</p></article>
+          <article data-system-step class="b1x-reveal"><span>05</span><h3>Improve</h3><p>Fix the weak point while the feedback is still useful.</p></article>
+          <article data-system-step class="b1x-reveal"><span>06</span><h3>Repeat</h3><p>Build familiarity, speed and confidence through another round.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b1x-included">
+      <div class="b1x-shell">
+        <div class="b1x-editorial-head b1x-reveal"><p class="b1x-kicker">Everything connected</p><h2>Learn, perform<br>and measure.</h2><p>Not a folder of random videos. A complete path from explanation to evidence.</p></div>
+        <div class="b1x-included-grid">
+          <article class="b1x-included-live b1x-reveal"><span>Live + recorded</span><h3>Learning that turns into action.</h3><p>Simple explanations, scheduled guidance, recorded learning and B1-ready notes.</p><ul><li>Live learning</li><li>Recorded lessons</li><li>Notes & templates</li></ul></article>
+          <article class="b1x-included-number b1x-reveal" data-delay="60"><small>Practice bank</small><strong>500<span>+</span></strong><p>practice questions across the preparation system.</p></article>
+          <article class="b1x-included-feedback b1x-reveal" data-delay="110"><small>Feedback</small><h3>Human direction.<br>AI-supported insight.</h3><p>Know what to change—not just whether an answer was submitted.</p></article>
+          <article class="b1x-included-progress b1x-reveal" data-delay="160"><div><small>Your progress</small><strong>Getting closer</strong></div><div class="b1x-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><p>Previous mock scores, estimated skill levels and visible improvement.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b1x-coach">
+      <div class="b1x-shell b1x-coach-grid">
+        <div class="b1x-coach-visual b1x-reveal"><div class="b1x-coach-word" aria-hidden="true">B1</div><img src="{% static 'images/public/cambridge-b1/b1-coach-seated.webp' %}" width="1024" height="1536" loading="lazy" decoding="async" alt="Cambridge Upskill preparation instructor"><p><span></span> Your preparation coach</p></div>
+        <div class="b1x-coach-copy">
+          <p class="b1x-kicker b1x-reveal">Teacher-led. Practice-first.</p><h2 class="b1x-reveal">Simple explanation.<br><span>Active practice.</span><br>Real feedback.</h2>
+          <p class="b1x-coach-lead b1x-reveal">The goal is not to impress you with difficult grammar. The goal is to make the next answer clearer, longer and more confident.</p>
+          <div class="b1x-coach-values b1x-reveal"><div><strong>01</strong><span>Understand the question</span></div><div><strong>02</strong><span>Build the answer</span></div><div><strong>03</strong><span>Practise the performance</span></div></div>
+          <a class="b1x-text-arrow b1x-reveal" href="{% if support_url %}{{ support_url }}{% else %}https://wa.me/9779851319370?text=Hello%2C%20I%20want%20to%20prepare%20for%20B1.{% endif %}" target="_blank" rel="noopener">Talk about your B1 preparation <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="b1x-portal" id="portal">
+      <div class="b1x-shell">
+        <div class="b1x-portal-head"><div class="b1x-reveal"><p class="b1x-kicker b1x-kicker-light">The mock portal</p><h2>Practise the exam<br>before you face it.</h2></div><p class="b1x-reveal">Speaking, Reading, Listening and Writing in one focused product—with mock results, feedback, estimated levels and previous scores.</p></div>
+        <div class="b1x-browser b1x-reveal">
+          <div class="b1x-browser-bar"><i></i><i></i><i></i><span>Cambridge Upskill · Mock Test Portal</span><b>Secure practice</b></div>
+          <div class="b1x-browser-body">
+            <aside><div class="b1x-mini-brand">B1<span>•</span></div><nav><span class="active">Overview</span><span>Practice</span><span>Mock tests</span><span>Results</span><span>Progress</span></nav><small>Preparation portal</small></aside>
+            <div class="b1x-dashboard">
+              <div class="b1x-dash-top"><div><small>Welcome back</small><h3>Ready for the next round?</h3></div><button type="button" tabindex="-1">Start mock test</button></div>
+              <div class="b1x-dash-grid">
+                <article class="b1x-score-card"><small>Estimated level</small><strong>B1</strong><span>Speaking target</span></article>
+                <article class="b1x-dash-chart"><div><small>Recent performance</small><strong>Moving upward</strong></div><div class="b1x-chart-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+                <article class="b1x-skill-list"><small>Four skills</small><div><span>Speaking</span><b>B1</b></div><div><span>Reading</span><b>A2</b></div><div><span>Listening</span><b>A2</b></div><div><span>Writing</span><b>A1</b></div></article>
+                <article class="b1x-feedback-card"><small>Latest feedback</small><h4>Develop the answer with one reason and one example.</h4><span>Teacher + AI-supported feedback</span></article>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="b1x-portal-links b1x-reveal"><span>Mock tests</span><span>AI-supported feedback</span><span>Progress tracking</span><span>Previous scores</span><span>Estimated levels</span></div>
+      </div>
+    </section>
+
+    <section class="b1x-comparison">
+      <div class="b1x-shell"><p class="b1x-kicker b1x-reveal">Passive knowledge ≠ exam performance</p><h2 class="b1x-reveal">Watching can teach you.<br><span>Doing tells you if you can perform.</span></h2>
+        <div class="b1x-compare-grid"><article class="b1x-watch b1x-reveal"><span>Watching</span><h3>Learn by observing.</h3><p>Useful for understanding—but you still do not know what happens when the question is yours.</p><small>Video → Notes → More video</small></article><article class="b1x-do b1x-reveal" data-delay="90"><span>Active preparation</span><h3>Improve by performing.</h3><p>Answer, test, review the evidence and practise the specific weakness again.</p><small>Practice → Test → Feedback → Improve</small></article></div>
+      </div>
+    </section>
+
+    <section class="b1x-journey">
+      <div class="b1x-shell b1x-journey-head b1x-reveal"><p class="b1x-kicker">Your preparation journey</p><h2>From “म सक्दिनँ”<br>to <span>“I know what to improve.”</span></h2></div>
+      <div class="b1x-journey-line"><div><span>01</span><strong>Know the target</strong></div><div><span>02</span><strong>Practise daily</strong></div><div><span>03</span><strong>Take a mock</strong></div><div><span>04</span><strong>See your level</strong></div><div><span>05</span><strong>Find the weakness</strong></div><div><span>06</span><strong>Get feedback</strong></div><div><span>07</span><strong>Practise again</strong></div></div>
+    </section>
+
+    <section class="b1x-program" id="program">
+      <div class="b1x-shell b1x-program-grid">
+        <div class="b1x-program-copy"><p class="b1x-kicker b1x-reveal">Cambridge Upskill B1 Preparation</p><h2 class="b1x-reveal">One focused program.<br>Everything points to the test.</h2><p class="b1x-reveal">Designed for learners in Nepal who need structured preparation, speaking confidence and familiarity with the computer-based format.</p><div class="b1x-program-list b1x-reveal"><span>Live learning</span><span>Recorded lessons</span><span>Speaking practice</span><span>Four-skill question bank</span><span>Teacher guidance</span><span>Mock-test portal</span></div><a class="b1x-button b1x-button-dark b1x-reveal" href="{% if request.user.is_authenticated %}{{ course_url }}{% else %}{{ signup_url }}{% endif %}">Explore the preparation <span>↗</span></a></div>
+        <div class="b1x-program-poster b1x-reveal"><small>Preparation system</small><h3>Learn.<br>Practise.<br>Test.<br><em>Improve.</em></h3><div><span>Speaking B1</span><span>Reading A2</span><span>Listening A2</span><span>Writing A1</span></div><b>NEPAL / 2026</b></div>
+      </div>
+    </section>
+
+    <section class="b1x-pricing" id="pricing">
+      <div class="b1x-shell">
+        <div class="b1x-pricing-head"><div class="b1x-reveal"><p class="b1x-kicker b1x-kicker-light">Choose your preparation</p><h2>Pay for the support<br>you actually need.</h2></div><p class="b1x-reveal">Clear packages. No fake countdown. No guaranteed-result claims.</p></div>
+        <div class="b1x-price-grid">
+          <article class="b1x-price-card b1x-reveal"><small>Teacher-led preparation</small><h3>B1 Preparation</h3><div class="b1x-price"><span>NPR</span><strong>2,999</strong></div><ul><li>Live preparation classes</li><li>Recorded learning access</li><li>Speaking-focused practice</li><li>Teacher guidance</li></ul><a href="{{ store_url }}">Choose preparation <span>↗</span></a></article>
+          <article class="b1x-price-card is-featured b1x-reveal" data-delay="80"><div class="b1x-recommended">Recommended</div><small>Complete system</small><h3>B1 Complete Preparation</h3><div class="b1x-price"><span>NPR</span><strong>4,999</strong></div><ul><li>Everything in B1 Preparation</li><li>Full mock-test portal</li><li>AI-supported feedback</li><li>Results and progress history</li><li>Estimated skill levels</li></ul><a href="{{ store_url }}">Start complete preparation <span>↗</span></a></article>
+          <article class="b1x-price-card b1x-reveal" data-delay="150"><small>Independent practice</small><h3>Mock Test Portal</h3><div class="b1x-price"><span>NPR</span><strong>1,999</strong></div><ul><li>Four-skill practice</li><li>Computer-based mock tests</li><li>Previous score history</li><li>Progress tracking</li></ul><a href="{{ store_url }}">Choose portal access <span>↗</span></a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b1x-honesty"><div class="b1x-shell b1x-honesty-grid"><div class="b1x-honesty-statement b1x-reveal"><span>No fake pass rate.</span><span>No guaranteed score.</span><strong>Just preparation you can see and practise.</strong></div><div class="b1x-honesty-note b1x-reveal"><p>We do not invent student stories or promise an official result. The value is the work: structured learning, repeated performance, clear feedback and test-format familiarity.</p><small>Independent preparation platform</small></div></div></section>
+
+    <section class="b1x-faq" id="faqs">
+      <div class="b1x-shell b1x-faq-grid">
+        <div class="b1x-faq-title b1x-reveal"><p class="b1x-kicker">Before you join</p><h2>Clear answers.<br>सिधा कुरा।</h2><p>Still unsure? Message us on WhatsApp and ask about your current level or preparation plan.</p></div>
+        <div class="b1x-accordion" data-b1-accordion>
+          <article class="b1x-reveal"><button type="button" aria-expanded="true" aria-controls="faq-1"><span>Is this the official Cambridge examination website?</span><i></i></button><div id="faq-1"><p>No. This is an independent preparation and mock testing platform. It is not affiliated with or endorsed by Cambridge English or an official examination body.</p></div></article>
+          <article class="b1x-reveal"><button type="button" aria-expanded="false" aria-controls="faq-2"><span>Which levels should I prepare for?</span><i></i></button><div id="faq-2" hidden><p>The targets are Speaking B1, Reading A2, Listening A2 and Writing A1. Speaking B1 receives the strongest focus.</p></div></article>
+          <article class="b1x-reveal"><button type="button" aria-expanded="false" aria-controls="faq-3"><span>Can I practise on mobile?</span><i></i></button><div id="faq-3" hidden><p>Yes. The portal is designed for mobile, laptop and desktop access. A laptop or desktop is useful for becoming familiar with the computer-based test experience.</p></div></article>
+          <article class="b1x-reveal"><button type="button" aria-expanded="false" aria-controls="faq-4"><span>Are the mock scores official Cambridge results?</span><i></i></button><div id="faq-4" hidden><p>No. Mock scores, estimated levels, AI feedback and preparation certificates are for practice purposes only.</p></div></article>
+          <article class="b1x-reveal"><button type="button" aria-expanded="false" aria-controls="faq-5"><span>Do I get feedback on my practice?</span><i></i></button><div id="faq-5" hidden><p>The complete preparation system includes teacher guidance and AI-supported feedback where available, helping you decide what to improve next.</p></div></article>
+          <article class="b1x-reveal"><button type="button" aria-expanded="false" aria-controls="faq-6"><span>How do I start?</span><i></i></button><div id="faq-6" hidden><p>Create your account, choose the preparation package that fits your needs or message “B1” on WhatsApp for guidance.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="b1x-final"><div class="b1x-final-rings" aria-hidden="true"></div><div class="b1x-shell b1x-final-grid"><div class="b1x-final-copy b1x-reveal"><p>One target. One system. Your next round starts here.</p><h2>B1 <span lang="ne">सम्भव छ।</span></h2><div><a class="b1x-button b1x-button-white" href="{% if request.user.is_authenticated %}{{ dashboard_url }}{% else %}{{ signup_url }}{% endif %}">Start your preparation <span>↗</span></a><a href="{% if support_url %}{{ support_url }}{% else %}https://wa.me/9779851319370?text=Hello%2C%20I%20want%20to%20prepare%20for%20B1.{% endif %}" target="_blank" rel="noopener">WhatsApp “B1”</a></div></div><img src="{% static 'images/public/cambridge-b1/b1-coach-seated.webp' %}" width="1024" height="1536" loading="lazy" decoding="async" alt=""></div></section>
+  </main>
+
+  <footer class="b1x-footer">
+    <div class="b1x-shell b1x-footer-top"><div class="b1x-footer-brand"><a href="{{ page_url }}">{% if site_settings.logo %}<img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}">{% else %}<strong>B1 Ready<span>•</span></strong>{% endif %}</a><p>Cambridge Upskill English Test preparation and mock practice for learners in Nepal.</p></div><div><strong>Explore</strong><a href="#targets">The target</a><a href="#method">How it works</a><a href="#portal">Mock portal</a><a href="#pricing">Pricing</a></div><div><strong>Access</strong><a href="{{ login_url }}">Login</a><a href="{{ signup_url }}">Create account</a><a href="{{ dashboard_url }}">Dashboard</a><a href="{{ store_url }}">Packages</a></div><div><strong>Contact</strong><a href="{% if support_url %}{{ support_url }}{% else %}https://wa.me/9779851319370{% endif %}" target="_blank" rel="noopener">WhatsApp</a><span>Chabahil, Kathmandu</span><span>Nepal</span></div></div>
+    <div class="b1x-shell b1x-disclaimer">Independent preparation and mock testing platform. Not the official Cambridge examination website and not affiliated with or endorsed by Cambridge English or an official examination body. Mock scores, AI feedback and certificates are for preparation purposes only.</div>
+    <div class="b1x-shell b1x-footer-bottom"><span>© {% now "Y" %} {{ site_settings.site_name|default:"Arya Academy Pvt. Ltd." }}</span><div><a href="{% url 'website:privacy' %}">Privacy</a><a href="{% url 'website:terms' %}">Terms</a></div></div>
+  </footer>
+{% endwith %}
+<script src="{% static 'js/cambridge-b1-webveda.js' %}?v=20260904-3" defer></script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+/* =========================================================
+   CAMBRIDGE SPEAKING VIDEO LAYOUT V14
+   Based on the supplied reference video:
+   - narrow white test column
+   - progress badge top-left
+   - session clock top-right
+   - centered task instruction
+   - full-width dark Listen button
+   - clean preparation / recording rings
+   - larger readable typography
+   - no distracting microphone debug bars/text
+   ========================================================= */
+
+:root{
+  --csp-page:#f1f7fa;
+  --csp-paper:#ffffff;
+  --csp-teal:#4cc9c3;
+  --csp-teal-dark:#28aaa5;
+  --csp-navy:#35536f;
+  --csp-navy-dark:#29445f;
+  --csp-text:#26384c;
+  --csp-muted:#8693a6;
+  --csp-line:#e6ebef;
+  --csp-ring:#cfd5da;
+  --csp-ring-active:#aeb6bd;
+  --csp-red:#e85b64;
+}
+
+body.cambridge-video-speaking{
+  margin:0!important;
+  background:var(--csp-page)!important;
+  color:var(--csp-text)!important;
+  font-family:Inter, "Segoe UI", Arial, sans-serif!important;
+}
+
+body.cambridge-video-speaking main,
+body.cambridge-video-speaking .page,
+body.cambridge-video-speaking .page-shell,
+body.cambridge-video-speaking .attempt-shell{
+  background:transparent!important;
+}
+
+/* Main exam canvas: same distraction-free narrow column as the video. */
+body.cambridge-video-speaking .csp-v14-stage{
+  position:relative!important;
+  width:min(100%, 480px)!important;
+  min-height:calc(100vh - 0px)!important;
+  margin:0 auto!important;
+  padding:24px 24px 54px!important;
+  box-sizing:border-box!important;
+  background:var(--csp-paper)!important;
+  box-shadow:none!important;
+  border:0!important;
+}
+
+/* Status row: 1/4 left, clock right. */
+body.cambridge-video-speaking .csp-v14-status{
+  width:100%!important;
+  min-height:32px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:20px!important;
+  margin:0 0 36px!important;
+}
+
+body.cambridge-video-speaking .csp-v14-progress{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:52px!important;
+  height:24px!important;
+  padding:0 13px!important;
+  border-radius:999px!important;
+  background:var(--csp-teal)!important;
+  color:#fff!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+body.cambridge-video-speaking .csp-v14-clock{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:6px!important;
+  color:#3f4f61!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+body.cambridge-video-speaking .csp-v14-clock svg{
+  width:14px!important;
+  height:14px!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.7!important;
+}
+
+/* Task headings */
+body.cambridge-video-speaking .csp-v14-task-title{
+  margin:0 0 17px!important;
+  color:#27384b!important;
+  text-align:center!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  font-weight:600!important;
+}
+
+body.cambridge-video-speaking .csp-v14-hidden-question{
+  display:none!important;
+}
+
+/* Listen button matching the video. */
+body.cambridge-video-speaking .csp-v14-listen{
+  width:100%!important;
+  min-height:50px!important;
+  margin:0 0 32px!important;
+  padding:0 18px!important;
+  border:0!important;
+  border-radius:3px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:9px!important;
+  background:var(--csp-navy)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:15px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+
+body.cambridge-video-speaking .csp-v14-listen:disabled,
+body.cambridge-video-speaking .csp-v14-listen.is-playing{
+  background:#a5aab2!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Divider under Listen, as visible in the reference. */
+body.cambridge-video-speaking .csp-v14-listen-wrap{
+  border-bottom:1px solid var(--csp-line)!important;
+  margin-bottom:28px!important;
+}
+
+/* Answer heading */
+body.cambridge-video-speaking .csp-v14-answer-title{
+  margin:0 0 20px!important;
+  color:#1f3044!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+  text-align:left!important;
+}
+
+/* Preparation/recording state title */
+body.cambridge-video-speaking .csp-v14-state-title{
+  margin:0 0 12px!important;
+  color:#394b61!important;
+  text-align:center!important;
+  font-size:16px!important;
+  line-height:1.35!important;
+  font-weight:500!important;
+}
+
+body.cambridge-video-speaking .csp-v14-state-title strong{
+  font-weight:800!important;
+}
+
+/* Existing countdown circles — enlarged, centered, clean. */
+body.cambridge-video-speaking .csp-v14-ring,
+body.cambridge-video-speaking #prepRing,
+body.cambridge-video-speaking .prep-ring,
+body.cambridge-video-speaking .countdown-ring,
+body.cambridge-video-speaking .recording-ring{
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* SVG rings */
+body.cambridge-video-speaking .csp-v14-ring svg,
+body.cambridge-video-speaking #prepRing svg,
+body.cambridge-video-speaking .prep-ring svg,
+body.cambridge-video-speaking .countdown-ring svg,
+body.cambridge-video-speaking .recording-ring svg{
+  width:122px!important;
+  height:122px!important;
+}
+
+/* Common circular element fallback. */
+body.cambridge-video-speaking .csp-v14-round{
+  width:122px!important;
+  height:122px!important;
+  margin:0 auto 13px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  color:#40546b!important;
+}
+
+body.cambridge-video-speaking .csp-v14-count-number,
+body.cambridge-video-speaking #prepNumber{
+  color:#40546b!important;
+  font-size:46px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  letter-spacing:-.04em!important;
+}
+
+/* Speak / Done buttons */
+body.cambridge-video-speaking .csp-v14-action{
+  min-width:126px!important;
+  min-height:39px!important;
+  margin:0 auto!important;
+  padding:0 22px!important;
+  border:0!important;
+  border-radius:3px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:var(--csp-navy)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:14px!important;
+  line-height:1!important;
+  font-weight:800!important;
+  box-shadow:none!important;
+}
+
+/* Recording label */
+body.cambridge-video-speaking .csp-v14-recording{
+  margin:11px 0 17px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  color:#38495e!important;
+  font-size:15px!important;
+  line-height:1.3!important;
+  font-weight:500!important;
+}
+
+body.cambridge-video-speaking .csp-v14-recording::before{
+  content:""!important;
+  width:10px!important;
+  height:10px!important;
+  border-radius:999px!important;
+  background:var(--csp-red)!important;
+}
+
+/* Hide debug/status UI that is not present in the supplied video. */
+body.cambridge-video-speaking .csp-v14-debug-hidden{
+  display:none!important;
+}
+
+body.cambridge-video-speaking progress,
+body.cambridge-video-speaking [role="progressbar"].csp-v14-mic-bar{
+  display:none!important;
+}
+
+/* Completed-answer/replay screen */
+body.cambridge-video-speaking .csp-v14-thanks{
+  margin:2px 0 18px!important;
+  text-align:center!important;
+  color:#49586c!important;
+  font-size:16px!important;
+  line-height:1.4!important;
+  font-weight:500!important;
+}
+
+body.cambridge-video-speaking audio.csp-v14-audio{
+  width:100%!important;
+  height:42px!important;
+  margin:0 0 18px!important;
+}
+
+body.cambridge-video-speaking .csp-v14-post-actions{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+}
+
+body.cambridge-video-speaking .csp-v14-retry,
+body.cambridge-video-speaking .csp-v14-submit{
+  min-height:42px!important;
+  border-radius:2px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:14px!important;
+  line-height:1!important;
+  font-weight:800!important;
+}
+
+body.cambridge-video-speaking .csp-v14-retry{
+  border:1px solid #aab3bd!important;
+  background:#fff!important;
+  color:#4b5767!important;
+}
+
+body.cambridge-video-speaking .csp-v14-submit{
+  border:1px solid var(--csp-navy)!important;
+  background:var(--csp-navy)!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Remove decorative cards/shadows from runner content. */
+body.cambridge-video-speaking .csp-v14-stage .card,
+body.cambridge-video-speaking .csp-v14-stage [class*="shadow"]{
+  box-shadow:none!important;
+}
+
+/* Larger readable type across the practice runner. */
+body.cambridge-video-speaking .csp-v14-stage p,
+body.cambridge-video-speaking .csp-v14-stage span,
+body.cambridge-video-speaking .csp-v14-stage label{
+  letter-spacing:0!important;
+}
+
+@media (max-width:560px){
+  body.cambridge-video-speaking .csp-v14-stage{
+    width:100%!important;
+    padding:20px 18px 40px!important;
+  }
+  body.cambridge-video-speaking .csp-v14-status{
+    margin-bottom:31px!important;
+  }
+  body.cambridge-video-speaking .csp-v14-task-title,
+  body.cambridge-video-speaking .csp-v14-answer-title{
+    font-size:16px!important;
+  }
+}

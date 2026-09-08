@@ -1,0 +1,40 @@
+{% extends 'student_final/base.html' %}
+{% block title %}Progress | Upskill Practice{% endblock %}
+{% block content %}
+<section class="sf-page-head">
+  <div class="sf-kicker">PROGRESS</div>
+  <h1>Your progress</h1>
+  <p>A calm, honest view of where you are and what to do next.</p>
+</section>
+
+<section class="sf-overall-card">
+  <div class="sf-ring" style="--p:{{ overall_progress }}"><div><strong>{{ overall_progress|floatformat:0 }}%</strong><span>OVERALL PROGRESS</span></div></div>
+  <div>
+    <h2>You are building toward {{ target_level }} readiness</h2>
+    <p>Your progress is calculated from completed practice against the configured skill targets. Accuracy uses only stored scored responses and is capped safely between 0% and 100%.</p>
+  </div>
+</section>
+
+<section class="sf-two-grid sf-progress-cards">
+  {% for key, stat in skill_stats.items %}
+    <article class="sf-progress-card">
+      <div class="sf-progress-card-head"><strong>{{ stat.label }}</strong><b>{{ stat.progress|floatformat:0 }}%</b></div>
+      <div class="sf-progress"><span style="width:{{ stat.progress }}%"></span></div>
+      <div class="sf-progress-metrics">
+        <div><small>ACCURACY</small><strong>{{ stat.accuracy|floatformat:0 }}%</strong></div>
+        <div><small>COMPLETED</small><strong>{{ stat.completed }}</strong></div>
+        <div><small>CEFR</small><strong>{{ stat.cefr|default:"Pending" }}</strong></div>
+      </div>
+    </article>
+  {% endfor %}
+</section>
+
+<section class="sf-journey">
+  <h2>Your learning journey</h2>
+  <div class="sf-journey-step"><span>◇</span><div><strong>Learn</strong><p>Use uploaded lessons, PDFs and course resources.</p></div></div>
+  <div class="sf-journey-step"><span>◎</span><div><strong>Practice</strong><p>{{ response_count }} responses saved across your skills.</p></div></div>
+  <div class="sf-journey-step"><span>◴</span><div><strong>Mock Test</strong><p>{{ completed_attempts }} completed/submitted attempts recorded.</p></div></div>
+  <div class="sf-journey-step"><span>↗</span><div><strong>Improve</strong><p>Use real response accuracy and feedback to decide what to practise next.</p></div></div>
+  <div class="sf-journey-step"><span>↻</span><div><strong>Mock Test Again</strong><p>Repeat after focused practice and compare your reports.</p></div></div>
+</section>
+{% endblock %}

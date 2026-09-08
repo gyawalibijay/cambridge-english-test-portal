@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>How It Works | Arya Academy</title>
+  <script>(()=>{const s=localStorage.getItem("portal-theme-v2");const d=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=s||d;})();</script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<section class="pub4-page-hero">
+  <div class="pub4-shell">
+    <div class="pub4-eyebrow">How it works</div>
+    <h1>Know exactly what happens after you create an account.</h1>
+    <p>
+      The portal keeps the purchase, learning, practice and result flow simple and visible.
+    </p>
+  </div>
+</section>
+
+<section class="pub4-section" style="padding-top:10px">
+  <div class="pub4-shell">
+    <div class="pub4-flow">
+      <article class="pub4-flow-card"><h3>Create your profile</h3><p>Register once with your student details and sign in to your personal dashboard.</p></article>
+      <article class="pub4-flow-card"><h3>Choose test access</h3><p>Select the program package you need and submit your payment details for verification.</p></article>
+      <article class="pub4-flow-card"><h3>Use courses and materials</h3><p>Published resources for your purchased program become available inside the course library.</p></article>
+      <article class="pub4-flow-card"><h3>Practise and review</h3><p>Complete test sections, save responses and review your practice reports and progress.</p></article>
+    </div>
+
+    <div class="pub4-content-grid" style="margin-top:22px">
+      <article class="pub4-content-card">
+        <div class="pub4-eyebrow">Speaking</div>
+        <h3>Record → replay → submit → review</h3>
+        <p>
+          Speaking uses microphone recording, timing and replay. Audio-quality checks prevent
+          silent or unusable recordings from receiving misleading practice credit.
+        </p>
+      </article>
+
+      <article class="pub4-content-card">
+        <div class="pub4-eyebrow">Reading & Listening</div>
+        <h3>Answer → submit → objective marking</h3>
+        <p>
+          Where structured answer keys exist, objective responses can be marked automatically
+          and shown in the student's results.
+        </p>
+      </article>
+
+      <article class="pub4-content-card">
+        <div class="pub4-eyebrow">Writing</div>
+        <h3>Write → autosave → submit → feedback</h3>
+        <p>
+          Writing uses focused task screens, live word count and a workflow that can support
+          automated practice feedback and evaluator review.
+        </p>
+      </article>
+
+      <article class="pub4-content-card">
+        <div class="pub4-eyebrow">Results</div>
+        <h3>History → report → next practice</h3>
+        <p>
+          Students can revisit attempts and use the report to decide which skill or course
+          resource to work on next.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

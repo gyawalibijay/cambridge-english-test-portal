@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Privacy | Arya Academy</title>
+  <script>(()=>{const s=localStorage.getItem("portal-theme-v2");const d=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=s||d;})();</script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+<section class="pub4-page-hero"><div class="pub4-shell"><div class="pub4-eyebrow">Privacy</div><h1>Privacy notice</h1><p>A development-stage privacy summary for the current portal.</p></div></section>
+<section class="pub4-section" style="padding-top:10px"><div class="pub4-shell"><div class="pub4-legal">
+  <h2>Information collected</h2><p>The portal may store account details, profile information, purchase submissions, practice responses, uploaded recordings, results and contact enquiries needed to provide the service.</p>
+  <h2>Practice recordings</h2><p>Speaking recordings may be stored so they can be replayed, transcribed and used to generate practice feedback. Access should be limited to the student and authorized administration/evaluation roles.</p>
+  <h2>Payments</h2><p>The current workflow can store transaction references and uploaded receipts for administrator verification. It does not itself claim to be a bank or payment processor.</p>
+  <h2>Use of information</h2><p>Information is used to operate student accounts, verify access, deliver courses and tests, generate results, manage enquiries and improve platform functionality.</p>
+  <h2>Production review</h2><p>This notice should receive a formal legal/privacy review before a full public production launch, especially if payment gateways, analytics, email automation or additional third-party services are added.</p>
+</div></div></section>
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

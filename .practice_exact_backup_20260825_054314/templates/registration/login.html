@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Sign in | English Practice Portal</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("portal-theme-v2");
+      const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = saved || system;
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+</head>
+<body>
+<div class="pv2-auth">
+  <section class="pv2-auth-brand">
+    <div class="pv2-brand">
+      <span class="pv2-brand-mark">ST</span>
+      <span>Surakshya Technologies<small>English Assessment Platform</small></span>
+    </div>
+
+    <div class="pv2-auth-copy">
+      <span class="tag">Four-skill practice · one clean portal</span>
+      <h1>Prepare. Practise. <span>Progress.</span></h1>
+      <p>
+        Continue your Cambridge/Upskill-format practice, review results,
+        replay recorded answers and track your progress across all four skills.
+      </p>
+
+      <ul class="pv2-auth-benefits">
+        <li>Speaking recording, replay and local feedback</li>
+        <li>Listening and Reading automatic objective marking</li>
+        <li>Writing autosave, word count and practice analysis</li>
+        <li>Detailed results and attempt history</li>
+      </ul>
+    </div>
+
+    <div class="pv2-auth-foot">
+      Independent practice portal · Surakshya Technologies
+    </div>
+  </section>
+
+  <main class="pv2-auth-main">
+    <div class="pv2-auth-top">
+      <button type="button" class="pv2-theme-toggle" data-theme-toggle>
+        <span data-theme-icon>☾</span>
+        <span data-theme-label>Dark mode</span>
+      </button>
+    </div>
+
+    <div class="pv2-auth-card">
+      <div class="pv2-eyebrow">Welcome back</div>
+      <h2>Sign in</h2>
+      <p class="sub">Access your practice tests, results and evaluation history.</p>
+
+      {% if form.non_field_errors %}
+      <div class="pv2-error">{{ form.non_field_errors|striptags }}</div>
+      {% endif %}
+
+      <form method="post" class="pv2-form-grid">
+        {% csrf_token %}
+
+        <div class="pv2-field full">
+          <label for="id_username">Email or username</label>
+          <input class="pv2-input" id="id_username" name="username" type="text" autocomplete="username" autofocus required placeholder="you@example.com">
+        </div>
+
+        <div class="pv2-field full">
+          <label for="id_password">Password</label>
+          <input class="pv2-input" id="id_password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
+        </div>
+
+        {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+
+        <div class="pv2-field full">
+          <button class="pv2-btn pv2-btn-primary pv2-submit" type="submit">
+            Sign in →
+          </button>
+        </div>
+      </form>
+
+      <div class="pv2-divider"></div>
+
+      <div class="pv2-auth-actions">
+        <span>New student?</span>
+        <a href="{% url 'signup' %}">Create free account →</a>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

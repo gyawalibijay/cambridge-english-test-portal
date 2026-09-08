@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>{{ app_name }} verification code</title>
+</head>
+
+<body style="margin:0;padding:0;background:#edf3f1;font-family:Arial,Helvetica,sans-serif;color:#17212f;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#edf3f1;">
+    <tr>
+      <td align="center" style="padding:34px 16px;">
+
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#162231;border-radius:28px;overflow:hidden;">
+          <tr>
+            <td style="padding:26px 30px;background:#17333f;">
+
+              <table role="presentation" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="width:52px;height:52px;border-radius:16px;background:#efbd5b;color:#17212f;font-size:18px;font-weight:800;text-align:center;vertical-align:middle;">
+                    ST
+                  </td>
+
+                  <td style="padding-left:13px;">
+                    <div style="font-size:20px;font-weight:800;color:#ffffff;">
+                      Arya Academy
+                    </div>
+                    <div style="margin-top:3px;font-size:12px;color:#c9dbdf;">
+                      by Arya Academy
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:0 24px 24px;">
+
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#ffffff;border-radius:24px;">
+                <tr>
+                  <td style="padding:32px 30px;">
+
+                    <div style="font-size:12px;font-weight:800;letter-spacing:1.6px;color:#0f8f84;text-transform:uppercase;">
+                      Email verification
+                    </div>
+
+                    <h1 style="margin:10px 0 12px;font-size:30px;line-height:1.18;color:#17212f;">
+                      Confirm your student account
+                    </h1>
+
+                    <p style="margin:0;font-size:15px;line-height:1.7;color:#607284;">
+                      Hello {{ student_name }}, welcome to Arya Academy.
+                      Use the secure code below to verify your email and activate your student portal.
+                    </p>
+
+                    <div style="margin:24px 0;padding:23px 16px;border:1px solid #dce9e5;border-radius:20px;background:#f2f8f6;text-align:center;">
+                      <div style="margin-bottom:9px;font-size:12px;color:#607284;">
+                        YOUR VERIFICATION CODE
+                      </div>
+
+                      <div style="font-size:34px;line-height:1;font-weight:800;letter-spacing:9px;color:#17212f;">
+                        {{ code }}
+                      </div>
+                    </div>
+
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="width:50%;padding:0 6px 0 0;">
+                          <div style="padding:15px;border:1px solid #e2ebe7;border-radius:16px;background:#fbfdfc;">
+                            <div style="font-size:11px;color:#70808e;text-transform:uppercase;letter-spacing:1px;">
+                              Expires in
+                            </div>
+                            <div style="margin-top:5px;font-size:18px;font-weight:800;color:#17212f;">
+                              {{ expiry_minutes }} minutes
+                            </div>
+                          </div>
+                        </td>
+
+                        <td style="width:50%;padding:0 0 0 6px;">
+                          <div style="padding:15px;border:1px solid #e2ebe7;border-radius:16px;background:#fbfdfc;">
+                            <div style="font-size:11px;color:#70808e;text-transform:uppercase;letter-spacing:1px;">
+                              Account email
+                            </div>
+                            <div style="margin-top:5px;font-size:13px;font-weight:700;color:#17212f;word-break:break-word;">
+                              {{ student_email }}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <div style="margin-top:20px;padding:16px 17px;border:1px solid #f0dfb1;border-radius:16px;background:#fff8ea;color:#675126;font-size:13px;line-height:1.65;">
+                      <strong style="display:block;margin-bottom:4px;color:#17212f;">
+                        Keep your code private
+                      </strong>
+                      Arya Academy will never ask you to share this verification code with another person.
+                      If you did not create this account, you can ignore this email.
+                    </div>
+
+                    <div style="margin-top:24px;padding-top:18px;border-top:1px solid #e7efeb;font-size:12px;line-height:1.7;color:#7c8c98;">
+                      This verification email was sent by
+                      <strong style="color:#17212f;">Arya Academy</strong>
+                      · Arya Academy.
+                    </div>
+
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

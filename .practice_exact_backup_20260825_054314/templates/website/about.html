@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About | Upskill Practice</title>
+  <script>(()=>{const s=localStorage.getItem("portal-theme-v2");const d=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=s||d;})();</script>
+  <link rel="stylesheet" href="{% static 'css/portal-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/portal-v3.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v4.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v5.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public-v6.css' %}">
+  <script defer src="{% static 'js/portal-theme.js' %}"></script>
+  <script defer src="{% static 'js/public-v4.js' %}"></script>
+</head>
+<body class="pub4-body">
+{% include "partials/public_header_v4.html" %}
+
+<section class="pub4-page-hero">
+  <div class="pub4-shell">
+    <div class="pub4-eyebrow">About the platform</div>
+    <h1>A focused English practice environment built around the learner journey.</h1>
+    <p>
+      Upskill Practice brings test access, learning resources, timed practice,
+      recorded responses and progress reporting together in one portal.
+    </p>
+  </div>
+</section>
+
+<section class="pub4-section" style="padding-top:10px">
+  <div class="pub4-shell">
+    <div class="pub4-content-grid">
+      <article class="pub4-content-card">
+        <div class="pub4-eyebrow">What we are building</div>
+        <h2>One system from preparation to results</h2>
+        <p>
+          Students should not need one website for courses, another for payments,
+          another for test practice and another for feedback. The portal is designed
+          to keep those activities connected to the same account.
+        </p>
+      </article>
+
+      <article class="pub4-content-card">
+        <div class="pub4-eyebrow">For administrators</div>
+        <h2>Content and access can be managed centrally</h2>
+        <p>
+          Administrators can manage licensed programs, student access, purchases,
+          courses, learning materials, test content, question-bank workflows and evaluations.
+        </p>
+      </article>
+    </div>
+
+    <div class="pub4-info-strip" style="margin-top:18px">
+      <div class="pub4-info-item">
+        <strong>Student-first UI</strong>
+        <span>Clear navigation, dedicated test runners and result history.</span>
+      </div>
+      <div class="pub4-info-item">
+        <strong>Program-based access</strong>
+        <span>Students purchase only the test system they need.</span>
+      </div>
+      <div class="pub4-info-item">
+        <strong>Independent practice</strong>
+        <span>Practice feedback is clearly distinguished from official examination scoring.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "partials/public_footer_v4.html" %}
+</body>
+</html>

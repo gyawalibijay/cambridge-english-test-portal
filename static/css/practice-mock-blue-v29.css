@@ -1,0 +1,91 @@
+/* PRACTICE_MOCK_TEAL_V30_1 — color-only restoration. Accent: #03bbb7. */
+:root {
+  --pm-blue: #03bbb7;
+  --pm-blue-hover: #029f9b;
+  --pm-border: #d5eeee;
+  --pm-soft: #f8fcfc;
+  --pr-bg: #f4fafc; --pr-line: var(--pm-border); --pr-teal: var(--pm-blue);
+  --ps-bg: #f4fafc; --ps-line: var(--pm-border); --ps-teal: var(--pm-blue);
+  --ps-navy: var(--pm-blue); --ps-navy-hover: var(--pm-blue-hover);
+  --reading-line: var(--pm-border); --reading-accent: var(--pm-blue); --reading-button: var(--pm-blue);
+  --exam-teal: var(--pm-blue); --exam-line: var(--pm-border); --exam-bg: #f4fafc;
+  --writing-page: #f4fafc; --writing-line: var(--pm-border);
+  --writing-teal: var(--pm-blue); --writing-teal-track: #d9f4f3; --writing-navy: var(--pm-blue);
+  --sp-bg: #f4fafc; --sp-line: var(--pm-border);
+  --sp-teal: var(--pm-blue); --sp-teal-track: #d9f4f3; --sp-navy: var(--pm-blue);
+}
+.practice-ref-panel, .reading-shell {
+  border-inline: 1px solid var(--pm-border);
+}
+.practice-ref-icon, .ps-part-icon {border-color: rgba(3,187,183,.72); color: var(--pm-blue); background: #fff}
+.practice-ref-row:hover, a.reading-part:hover {background: var(--pm-soft)}
+.practice-ref-mock {border-color: #aee4e5; background: #f8fcfc}
+.practice-ref-action {font-weight: 600}
+.reading-shell {background: #fff}
+body:has(.reading-shell) {background: #f4fafc}
+.reading-option:hover, .reading-option[aria-pressed="true"] {background: var(--pm-soft); border-color: var(--pm-blue)}
+.reading-progress span {color: #fff}
+.exam-top, .exam-card, .exam-question-card, .exam-option, .exam-stimulus,
+.exam-submit, .order-row, .write-panel, .write-editor textarea {border-color: var(--pm-border)}
+.exam-work-head small, .exam-progress-pill, .exam-rule-icon {color: var(--pm-blue)}
+.exam-progress-pill, .exam-stimulus, .order-num, .exam-rule-icon {background: var(--pm-soft)}
+.exam-progress-track {background: #d9f4f3}
+.exam-progress-track span, .exam-part-num {background: var(--pm-blue)}
+.exam-option input {accent-color: var(--pm-blue)}
+.exam-option:hover, .exam-option:has(input:checked) {border-color: var(--pm-blue); background: var(--pm-soft)}
+.exam-btn {background: var(--pm-blue)}
+.exam-btn:hover {background: var(--pm-blue-hover)}
+.exam-btn.light {background: #fff; color: var(--pm-blue); border-color: var(--pm-border)}
+.exam-question-body audio {max-width: 100%}
+.exam-option {font-size: 14px}
+.exam-stimulus {font-size: 15px}
+.exam-tools a {color: var(--pm-blue); text-decoration: none}
+.exam-question-body input[name="text"] {border-color: var(--pm-border) !important; font-size: 16px !important}
+.exam-question-body input:focus-visible, .exam-btn:focus-visible {outline: 2px solid var(--pm-blue); outline-offset: 3px}
+.cw14-shell, .cw14-header, .cw14-context, .cw14-word-rule, .cw14-form textarea {border-color: var(--pm-border) !important}
+body:has(#runner) {background: #f4fafc !important}
+.speaking-module-card, .speaking-module-surface {border-color: var(--pm-border) !important}
+.portal-bottom-nav, html.portal-ios-safari .portal-bottom-nav {border-color: var(--pm-border)}
+.portal-bottom-nav a.is-active {color: var(--pm-blue)}
+.portal-bottom-nav a.is-active svg {stroke: var(--pm-blue)}
+.portal-bottom-nav a:focus-visible {outline-color: var(--pm-blue)}
+
+/* New mock pages retain the existing compact, four-skill Practice structure. */
+.mock-intro {padding: 24px 20px 8px}
+.mock-intro h1, .mock-detail h1 {margin: 0 0 8px; font-size: 22px; line-height: 1.3; font-weight: 650}
+.mock-intro p, .mock-detail p {margin: 0; font-size: 14px; line-height: 1.6; color: #596579}
+.mock-row-disabled {background: #fbfefe; color: #657087}
+.mock-row-disabled .practice-ref-action {color: #657087}
+.mock-notice {margin: 16px; padding: 16px; border: 1px solid var(--pm-border); border-radius: 12px; background: var(--pm-soft); font-size: 14px}
+.mock-notice p {margin: 6px 0 12px; font-size: 13px; line-height: 1.5}
+.mock-notice a {color: var(--pm-blue); font-weight: 600; text-decoration: none}
+.mock-footnote, .mock-detail .mock-footnote {margin: 24px 20px; font-size: 12px; line-height: 1.6; color: #6b7280}
+.mock-detail {padding: 24px 20px 32px}
+.mock-detail h1, .mock-detail .mock-summary {text-align: center}
+.mock-detail-icon {margin: 0 auto 16px}
+.mock-detail h2 {margin: 28px 0 12px; font-size: 16px; font-weight: 600}
+.mock-detail .mock-notice {margin: 24px 0}
+.mock-detail .mock-footnote {margin-inline: 0}
+.mock-rules {padding-left: 20px; margin: 0 0 24px; font-size: 14px; color: #596579}
+.mock-rules li {margin: 12px 0}
+.mock-button {display: flex; align-items: center; justify-content: center; min-height: 48px; width: 100%; margin: 20px 0 0; padding: 12px 16px; border: 1px solid var(--pm-blue); border-radius: 10px; background: var(--pm-blue); color: #fff; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer}
+.mock-button:hover {background: var(--pm-blue-hover)}
+.mock-button:focus-visible, .mock-text-link:focus-visible, .mock-notice a:focus-visible {outline: 2px solid var(--pm-blue); outline-offset: 3px}
+.mock-button-secondary {background: #fff; color: var(--pm-blue); border-color: var(--pm-border)}
+.mock-button-secondary:hover {background: var(--pm-soft)}
+.mock-score {margin: 24px 0; padding: 24px; border: 1px solid var(--pm-border); border-radius: 14px; text-align: center; background: var(--pm-soft)}
+.mock-score strong {display: block; margin: 8px 0; color: var(--pm-blue); font-size: 24px; line-height: 1.35}
+.mock-score span {color: #596579; font-size: 14px}
+.mock-response {padding: 16px 0; border-bottom: 1px solid var(--pm-border); font-size: 14px}
+.mock-response summary {cursor: pointer; font-weight: 600; line-height: 1.6}
+.mock-response summary span {float: right; color: #596579; font-size: 12px}
+.mock-response p {padding-top: 12px; overflow-wrap: anywhere}
+.mock-response audio {width: 100%; margin-top: 12px}
+.mock-answer {white-space: pre-wrap}
+.mock-text-link {display: block; text-align: center; margin-top: 20px; color: var(--pm-blue); font-size: 14px; text-decoration: none}
+@media (max-width: 480px) {
+  .practice-ref-panel, .reading-shell {border-inline-width: 0}
+  .mock-intro {padding-top: 20px}
+  .mock-detail {padding: 20px 16px 32px}
+  .mock-intro h1, .mock-detail h1 {font-size: 20px}
+}
